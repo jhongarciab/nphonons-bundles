@@ -8,22 +8,23 @@ import math
 # =============================================================================
 omega_b = 1.0
 
-lam_over_ob = 0.03
-Omega_over_ob = 0.003
-kappa_over_ob = 0.002
-gamma_over_ob = 0.0002
-gphi_over_ob = 0.0004
+lam_over_ob = 0.08      # 0.03   | 2.3×
+Omega_over_ob = 0.01    # 0.003  | 3.3×
+kappa_over_ob = 0.003   # 0.002  | 1.5×
+gamma_over_ob = 0.0004  # 0.0002 | 2×
+gphi_over_ob = 0.0004   # 0.0004 | Sin cambios
 
-# VALORES DE J
-J_values = [0.3, 0.5, 0.8, 1.0]
+J_over_ob = 0.5  # Extensión: Acoplamiento Förster (fijo)
 
-Delta_list = np.linspace(0.0, -5.0, 501)
-n_order = 3
+Delta_list = np.linspace(0.0, -6.0, 501)
+
+# ÓRDENES DE CORRELACIÓN A CALCULAR
+n_orders = [2, 3, 4, 5]
 
 # =============================================================================
 # TRUNCAMIENTO
 # =============================================================================
-Ncut = 5
+Ncut = 8
 print(f"Usando Ncut = {Ncut}")
 
 # =============================================================================
@@ -56,6 +57,7 @@ proj_e2 = sp2 * sm2
 
 I_sys = qt.tensor(I_q, I_q, I_b)
 
+
 # =============================================================================
 # OPERADOR ESTABLE b†^n b^n (FACTORIAL)
 # =============================================================================
@@ -64,8 +66,6 @@ def factorial_number_operator(num_op, n, I_op):
     for k in range(n):
         op = op * (num_op - k * I_op)
     return op
-
-bdagb_n = factorial_number_operator(num_sys, n_order, I_sys)
 
 # =============================================================================
 # OPERADORES DE COLAPSO (LINDBLAD)
@@ -79,7 +79,7 @@ c_ops = [
 ]
 
 # =============================================================================
-# HAMILTONIANOS INDEPENDIENTES DE J
+# HAMILTONIANOS (FIJOS)
 # =============================================================================
 H_phonon = omega_b * num_sys
 
@@ -92,8 +92,8 @@ H_drive = Omega_over_ob * (
         sm2 + sp2
 )
 
-# Término Förster
-H_Forster_base = (sp1 * sm2 + sp2 * sm1)
+H_Forster = J_over_ob * (sp1 * sm2 + sp2 * sm1)
+
 
 # =============================================================================
 # SOLVER ROBUSTO DE ESTADO ESTACIONARIO
@@ -108,6 +108,7 @@ def validate_steady_state(rho, tol=1e-8):
         return False
     return True
 
+
 def solve_steady_state_robust(H, c_ops, methods=('direct', 'eigen', 'svd')):
     for method in methods:
         try:
@@ -118,27 +119,28 @@ def solve_steady_state_robust(H, c_ops, methods=('direct', 'eigen', 'svd')):
             pass
     return None
 
+
 # =============================================================================
 # ALMACENAR RESULTADOS
 # =============================================================================
 results = {}
 
 print(f"\n{'=' * 70}")
-print(f"Calculando g^({n_order}) para diferentes valores de J/ωb")
+print(f"Calculando g^(n) para órdenes {n_orders} con J/ωb = {J_over_ob}")
 print(f"{'=' * 70}\n")
 
 # =============================================================================
-# BUCLE SOBRE VALORES DE J
+# BUCLE SOBRE ÓRDENES DE CORRELACIÓN
 # =============================================================================
-for J_over_ob in J_values:
+for n_order in n_orders:
 
-    print(f"\n>>> J/ωb = {J_over_ob} <<<")
+    print(f"\n>>> Calculando g^({n_order}) <<<")
+
+    # Construir operador para este orden
+    bdagb_n = factorial_number_operator(num_sys, n_order, I_sys)
 
     g_vals = np.full_like(Delta_list, np.nan, dtype=float)
     nbar_vals = np.full_like(Delta_list, np.nan, dtype=float)
-
-    # Hamiltoniano Förster con J actual
-    H_Forster = J_over_ob * H_Forster_base
 
     for i, Delta in enumerate(Delta_list):
 
@@ -169,50 +171,54 @@ for J_over_ob in J_values:
             print(f"  {i + 1}/{len(Delta_list)}  Δ={Delta:.2f}  ⟨n⟩={nbar:.2e}")
 
     # Guardar resultados
-    results[J_over_ob] = {
+    results[n_order] = {
         'g_vals': g_vals.copy(),
         'nbar_vals': nbar_vals.copy()
     }
 
-    print(f"  ✓ Completado para J/ωb = {J_over_ob}")
+    print(f"  ✓ Completado para g^({n_order})")
 
 print(f"\n{'=' * 70}")
 print("Todos los cálculos completados")
 print(f"{'=' * 70}\n")
 
 # =============================================================================
-# 4 SUBPLOTS
+# 4 SUBPLOTS (uno por cada orden n)
 # =============================================================================
 fig, axes = plt.subplots(2, 2, figsize=(12, 10))
 axes = axes.flatten()
 
 colors = ['blue', 'green', 'orange', 'red']
 
-for idx, J_over_ob in enumerate(J_values):
+# Límites en y para cada orden
+ylims = {
+    2: (1e-2, 1e10),
+    3: (1e-2, 1e20),
+    4: (1e-2, 1e30),
+    5: (1e-2, 1e40)
+}
+
+for idx, n_order in enumerate(n_orders):
     ax = axes[idx]
-    ax.plot(Delta_list, results[J_over_ob]['g_vals'],
+    ax.plot(Delta_list, results[n_order]['g_vals'],
             lw=1.8,
             color=colors[idx])
 
     ax.set_yscale('log')
-    ax.set_xlim(0.0, -5.0)
+    ax.set_xlim(0.0, -6.0)
     ax.set_xlabel(r'$\Delta/\omega_b$', fontsize=12)
     ax.set_ylabel(rf'$g^{{({n_order})}}(0)$', fontsize=12)
-    ax.set_title(f'J/ωb = {J_over_ob}', fontsize=13)
+    ax.set_title(f'$g^{{({n_order})}}(0)$', fontsize=13)
     ax.grid(True, which='both', ls=':', alpha=0.4)
 
-    if n_order == 2:
-        ax.set_ylim(0, 1e10)
-    elif n_order == 3:
-        ax.set_ylim(0, 1e20)
-    elif n_order == 4:
-        ax.set_ylim(0, 1e30)
-    elif n_order == 5:
-        ax.set_ylim(0, 1e40)
+    # Aplicar límites específicos por orden
+    if n_order in ylims:
+        ax.set_ylim(ylims[n_order])
 
 plt.tight_layout()
-plt.savefig(
-    f"./figs/g{n_order}_4subplots.pdf",
-    bbox_inches="tight"
-)
+#plt.savefig(
+#    f"./figs/g_n_orders_4subplots.pdf",
+#    bbox_inches="tight"
+#)
+#print(f"\n✓ Figura guardada: ./figs/g_n_orders_4subplots.pdf")
 plt.show()

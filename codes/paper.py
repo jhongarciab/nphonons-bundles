@@ -13,20 +13,13 @@ kappa_over_ob = 0.002
 gamma_over_ob = 0.0002
 gphi_over_ob  = 0.0004
 
-Delta_list = np.linspace(0.0, -5.0, 501)
-n_order = 3
+Delta_list = np.linspace(0.0, -6.0, 501)
+n_order = 2
 
 # =============================================================================
 # TRUNCAMIENTO
 # =============================================================================
-def estimate_ncut(lam, Omega, kappa, n_max):
-    n_phonons = n_max + int(10 * lam)
-    margin = max(10, int(5 * Omega / kappa))
-    Ncut = n_phonons + margin
-    Ncut = max(40, (Ncut + 3) // 4 * 4)
-    return Ncut
-
-Ncut = estimate_ncut(lam_over_ob, Omega_over_ob, kappa_over_ob, n_order)
+Ncut = 5
 print(f"Usando Ncut = {Ncut}")
 
 # =============================================================================
@@ -133,7 +126,7 @@ print("Cálculo completado.")
 fig, ax = plt.subplots(figsize=(7.5, 4.2))
 ax.plot(Delta_list, g_vals, lw=1.5)
 ax.set_yscale('log')
-ax.set_xlim(0.0, -5.0)
+ax.set_xlim(0.0, -6.0)
 ax.set_xlabel(r'$\Delta/\omega_b$', fontsize=12)
 ax.set_ylabel(rf'$g^{{({n_order})}}(0)$', fontsize=12)
 ax.grid(True, which='both', ls=':', alpha=0.4)

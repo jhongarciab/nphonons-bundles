@@ -8,16 +8,16 @@ import math
 # =============================================================================
 omega_b = 1.0
 
-lam_over_ob   = 0.03
-Omega_over_ob = 0.003
-kappa_over_ob = 0.002
-gamma_over_ob = 0.0002
-gphi_over_ob  = 0.0004
+lam_over_ob = 0.08      # 0.03   | 2.3×
+Omega_over_ob = 0.01    # 0.003  | 3.3×
+kappa_over_ob = 0.003   # 0.002  | 1.5×
+gamma_over_ob = 0.0004  # 0.0002 | 2×
+gphi_over_ob = 0.0004   # 0.0004 | Sin cambios
 
-J_over_ob     = 0    # Förster
+J_over_ob     = 0.5   # Förster
 
-Delta_list = np.linspace(0.0, -6.0, 1001)
-n_order = 4
+Delta_list = np.linspace(0.0, -6.0, 501)
+n_order = 3
 
 # =============================================================================
 # TRUNCAMIENTO
@@ -97,7 +97,7 @@ H_Forster = J_over_ob * (
 )
 
 # =============================================================================
-# SOLVER ROBUSTO DE ESTADO ESTACIONARIO (SIN CAMBIOS)
+# SOLVER ROBUSTO DE ESTADO ESTACIONARIO
 # =============================================================================
 def validate_steady_state(rho, tol=1e-8):
     if abs(rho.tr() - 1.0) > 1e-6:
@@ -179,8 +179,8 @@ elif n_order == 5:
     ax.set_ylim(0, 1e40)
 
 plt.tight_layout()
-plt.savefig(
-    f"./figs/g{n_order}.png",
-    bbox_inches="tight"
-)
+#plt.savefig(
+#    f"./figs/g{n_order}.png",
+#    bbox_inches="tight"
+#)
 plt.show()
