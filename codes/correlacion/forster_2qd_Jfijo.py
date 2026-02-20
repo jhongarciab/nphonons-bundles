@@ -180,7 +180,7 @@ elif n_order == 5:
 
 plt.tight_layout()
 #plt.savefig(
-#    f"./figs/g{n_order}.png",
+#    f"../figs/g{n_order}.png",
 #    bbox_inches="tight"
 #)
 plt.show()

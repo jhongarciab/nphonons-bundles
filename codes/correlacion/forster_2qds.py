@@ -217,7 +217,7 @@ for idx, n_order in enumerate(n_orders):
 
 plt.tight_layout()
 #plt.savefig(
-#    f"./figs/g_n_orders_4subplots.pdf",
+#    f"../figs/g_n_orders_4subplots.pdf",
 #    bbox_inches="tight"
 #)
 #print(f"\n✓ Figura guardada: ./figs/g_n_orders_4subplots.pdf")
