@@ -220,5 +220,4 @@ plt.tight_layout()
 #    f"../figs/g_n_orders_4subplots.pdf",
 #    bbox_inches="tight"
 #)
-#print(f"\n✓ Figura guardada: ./figs/g_n_orders_4subplots.pdf")
 plt.show()
