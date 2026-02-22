@@ -1,0 +1,232 @@
+\begin{appendix}
+\chapter{Derivación de las tasas de transición de n-fonones}\label{AnexoA}
+
+Consideramos dos puntos cuánticos (QDs) idénticos acoplados a un modo fonónico común.
+En el laboratorio ($\hbar=1$), el Hamiltoniano dependiente del tiempo es
+\begin{equation}
+H_{\mathrm{lab}}(t)= \omega_b\, b^\dagger b
++ \omega_\sigma\sum_{j=1}^{2}\sigma_j^\dagger\sigma_j
++ \lambda\sum_{j=1}^{2}\sigma_j^\dagger\sigma_j\,(b^\dagger + b)
++ \Omega\!\left(e^{i\omega_L t}\sum_{j=1}^{2}\sigma_j
++ e^{-i\omega_L t}\sum_{j=1}^{2}\sigma_j^\dagger\right)
++ J\!\left(\sigma_1^\dagger\sigma_2 + \sigma_2^\dagger\sigma_1\right).
+\label{eq:H_lab}
+\end{equation}
+donde $b$ ($b^\dagger$) aniquila (crea) fonones a frecuencia $\omega_b$, $\sigma_j=\ket{\vv_j}\bra{\cc_j}$ es el operador de bajada del QD $j$ con frecuencia de transición $\omega_\sigma$, $\lambda$ es el acoplamiento electrón--fonón, $\Omega$ es la amplitud del bombeo (frecuencia de Rabi), y $J$ es el acoplamiento de F\"orster.
+
+\noindent
+En el marco rotante a la frecuencia del láser $\omega_L$ (y tras aplicar la aproximación de onda rotante al bombeo), se obtiene un Hamiltoniano efectivo independiente del tiempo:
+\begin{equation}
+H = \omega_b\, b^\dagger b
++ \Delta\sum_{j=1}^{2}\sigma_j^\dagger\sigma_j
++ \lambda\sum_{j=1}^{2}\sigma_j^\dagger\sigma_j\,(b^\dagger + b)
++ \Omega\sum_{j=1}^{2}(\sigma_j + \sigma_j^\dagger)
++ J\!\left(\sigma_1^\dagger\sigma_2 + \sigma_2^\dagger\sigma_1\right),
+\label{eq:H_rot}
+\end{equation}
+donde $\Delta=\omega_\sigma-\omega_L$ es la desintonía del láser. La base de estados producto es $\ket{m,s_1s_2}$, con $m\in\mathbb{N}_0$ el número de fonones y $s_j\in\{\vv,\cc\}$ el estado electrónico del QD $j$.
+
+\subsection{Régimen de bajo bombeo y acoplamiento débil}
+
+El término de F\"orster acopla los estados electrónicos de una excitación $\ket{\cc\vv}$ y $\ket{\vv\cc}$.
+Definimos los estados simétrico y antisimétrico:
+\begin{align}
+\ket{S} &= \frac{1}{\sqrt{2}}\!\left(\ket{\cc\vv} + \ket{\vv\cc}\right), \label{eq:S_def}\\[2pt]
+\ket{A} &= \frac{1}{\sqrt{2}}\!\left(\ket{\cc\vv} - \ket{\vv\cc}\right). \label{eq:A_def}
+\end{align}
+En este subespacio, las energías electrónicas son
+\begin{align}
+E_S &= \Delta + J, \label{eq:E_S}\\
+E_A &= \Delta - J. \label{eq:E_A}
+\end{align}
+y para los estados compuestos fonón--electrón se tiene
+\begin{align}
+E(\ket{m,S}) &= m\omega_b + \Delta + J, \label{eq:E_mS}\\
+E(\ket{m,A}) &= m\omega_b + \Delta - J, \label{eq:E_mA}\\
+E(\ket{m,\vv\vv}) &= m\omega_b. \label{eq:E_mvv}
+\end{align}
+
+El operador de bombeo $H_{\mathrm{drive}}=\Omega(\sigma_1+\sigma_2+\sigma_1^\dagger+\sigma_2^\dagger)$ cumple
+\begin{equation}
+(\sigma_1^\dagger+\sigma_2^\dagger)\ket{\vv\vv}
+=\ket{\cc\vv}+\ket{\vv\cc}
+=\sqrt{2}\,\ket{S}.
+\label{eq:drive_vv}
+\end{equation}
+Por lo tanto, para cualquier $m$,
+\begin{align}
+\mel{m,S}{H_{\mathrm{drive}}}{m,\vv\vv} &= \sqrt{2}\,\Omega, \label{eq:mel_drive_S}\\
+\mel{m,A}{H_{\mathrm{drive}}}{m,\vv\vv} &= 0. \label{eq:mel_drive_A}
+\end{align}
+La ecuación \eqref{eq:mel_drive_A} muestra que el estado antisimétrico $\ket{A}$ es oscuro respecto al bombeo cuando el drive es perfectamente simétrico.
+
+La interacción se escribe como $H_{\mathrm{int}}=\lambda\,\hat n_{\mathrm{exc}}(b^\dagger+b)$ con
+$\hat n_{\mathrm{exc}}=\sigma_1^\dagger\sigma_1+\sigma_2^\dagger\sigma_2$.
+En el sector de una excitación, $\hat n_{\mathrm{exc}}\ket{S}=\ket{S}$ y $\hat n_{\mathrm{exc}}\ket{A}=\ket{A}$, de modo que
+\begin{align}
+\mel{k,S}{H_{\mathrm{int}}}{k-1,S} &= \lambda\sqrt{k}, \label{eq:mel_int_SS}\\
+\mel{k,A}{H_{\mathrm{int}}}{k-1,A} &= \lambda\sqrt{k}, \label{eq:mel_int_AA}\\
+\mel{k,S}{H_{\mathrm{int}}}{k-1,A} &= 0. \label{eq:mel_int_SA}
+\end{align}
+Por \eqref{eq:mel_drive_A} y \eqref{eq:mel_int_SA}, el subespacio antisimétrico permanece desacoplado de
+$\ket{0,\vv\vv}$ bajo las simetrías asumidas (QDs idénticos y bombeo en fase).
+
+Suponemos el régimen $\Omega,\lambda,J\ll \omega_b$. En estas condiciones, el proceso relevante conecta
+\[
+\ket{0,\vv\vv}\ \longleftrightarrow\ \ket{n,S},
+\]
+y la condición de resonancia (degeneración en el marco rotante) es
+\begin{equation}
+E(\ket{n,S})=n\omega_b+\Delta+J=0=E(\ket{0,vv}),
+\label{eq:resonancia_cond}
+\end{equation}
+de donde
+\begin{equation}
+\boxed{\Delta=\omega_\sigma-\omega_L=-n\omega_b-J,.}
+\label{eq:resonancia_2QD}
+\end{equation}
+
+\medskip
+\noindent
+Para obtener una tasa de transición efectiva (acoplamiento coherente efectivo) en el subespacio resonante
+$\{\ket{0,\vv\vv},\ket{n,S}\}$, consideramos una eliminación adiabática de estados intermedios en un truncamiento mínimo.
+Introducimos el bloque de cuatro estados
+\[
+\{\ket{0,\vv\vv},\ \ket{n,S},\ \ket{n-1,S},\ \ket{n,\vv\vv}\},
+\]
+donde los elementos de matriz dominantes son:
+\begin{itemize}
+\item acoplamiento efectivo $\Omega_{\mathrm{eff}}^{(n-1)}$ entre $\ket{0,vv}$ y $\ket{n-1,S}$;
+\item acoplamiento electrón--fonón $\sqrt{n}\,\lambda$ entre $\ket{n-1,S}$ y $\ket{n,S}$;
+\item bombeo $\sqrt{2}\,\Omega$ entre $\ket{n,\vv\vv}$ y $\ket{n,S}$.
+\end{itemize}
+En esta base, el Hamiltoniano reducido es
+\begin{equation}
+H^{(n)}=
+\begin{pmatrix}
+0 & 0 & \Omega_{\mathrm{eff}}^{(n-1)} & 0 \\[6pt]
+0 & \Delta+n\omega_b+J & \sqrt{n}\,\lambda & \sqrt{2}\,\Omega \\[6pt]
+\Omega_{\mathrm{eff}}^{(n-1)} & \sqrt{n}\,\lambda & \Delta+(n-1)\omega_b+J & 0 \\[6pt]
+0 & \sqrt{2}\,\Omega & 0 & n\omega_b
+\end{pmatrix}.
+\label{eq:Hn_4x4}
+\end{equation}
+
+\medskip
+\noindent
+Particionamos $H^{(n)}$ en bloques como
+\begin{equation}
+H^{(n)}=
+\begin{pmatrix}
+\mathcal{H}^{(n)} & \mathcal{X}^{(n)}\\[4pt]
+\mathcal{X}^{(n)\mathsf{T}} & \mathcal{R}^{(n)}
+\end{pmatrix},
+\label{eq:Hn_bloques}
+\end{equation}
+donde el subespacio resonante es $\{\ket{0,\vv\vv},\ket{n,S}\}$ y el subespacio intermedio es $\{\ket{n-1,S},\ket{n,\vv\vv}\}$.
+En resonancia \eqref{eq:resonancia_2QD}, ambos estados resonantes tienen energía cero, de modo que
+\begin{equation}
+\mathcal{H}^{(n)}=
+\begin{pmatrix}
+0 & 0\\
+0 & 0
+\end{pmatrix}.
+\label{eq:Hn_sub}
+\end{equation}
+Los bloques $\mathcal{X}^{(n)}$ y $\mathcal{R}^{(n)}$ (aquí de tamaño $2\times 2$) son
+\begin{equation}
+\mathcal{X}^{(n)}=
+\begin{pmatrix}
+\Omega_{\mathrm{eff}}^{(n-1)} & 0 \\[4pt]
+\sqrt{n}\,\lambda & \sqrt{2}\,\Omega
+\end{pmatrix},
+\qquad
+\mathcal{R}^{(n)}=
+\begin{pmatrix}
+\Delta+(n-1)\omega_b+J & 0 \\[4pt]
+0 & n\omega_b
+\end{pmatrix}.
+\label{eq:Xn_Rn}
+\end{equation}
+
+Aplicando la partición de Löwdin (a segundo orden en los acoplamientos entre subespacios),
+el Hamiltoniano efectivo en el subespacio resonante es
+\begin{equation}
+\mathcal{H}_{\mathrm{eff}}^{(n)}=\mathcal{H}^{(n)}+\mathcal{X}^{(n)}\left(-\mathcal{R}^{(n)}\right)^{-1}\mathcal{X}^{(n)\mathsf{T}}.
+\label{eq:Lowdin}
+\end{equation}
+Como $\mathcal{R}^{(n)}$ es diagonal,
+\begin{equation}
+\left(-\mathcal{R}^{(n)}\right)^{-1}=
+\begin{pmatrix}
+\dfrac{-1}{\Delta+(n-1)\omega_b+J} & 0 \\[10pt]
+0 & \dfrac{-1}{n\omega_b}
+\end{pmatrix}.
+\label{eq:Rn_inv}
+\end{equation}
+
+
+\medskip
+\noindent
+El acoplamiento efectivo buscado es el elemento fuera de la diagonal
+\begin{equation}
+\Omega_{\mathrm{eff}}^{(n)}\equiv \mathcal{H}*{\mathrm{eff}}^{(n)}(1,2)=\mathcal{H}*{\mathrm{eff}}^{(n)}(2,1).
+\end{equation}
+Usando \eqref{eq:Lowdin}--\eqref{eq:Rn_inv}, se obtiene directamente
+\begin{equation}
+\boxed{
+\Oeff^{(n)}
+=-
+\frac{\sqrt{n}\,\lambda}{\Delta+(n-1)\ob+J}\,\Oeff^{(n-1)}\;.
+}
+\label{eq:recurrencia}
+\end{equation}
+
+Para $n=1$ consideramos el truncamiento $\{\ket{0,\vv\vv},\ket{1,S},\ket{0,S},\ket{1,\vv\vv}\}$.
+El bloque intermedio relevante para conectar $\ket{0,\vv\vv}\leftrightarrow\ket{1,S}$ incluye
+$\ket{0,S}$ (energía $\Delta+J$) y $\ket{1,vv}$ (energía $\omega_b$), con acoplamientos $\sqrt{2},\Omega$ y $\lambda$.
+Aplicando \eqref{eq:Lowdin}, se obtiene
+\begin{equation}
+\boxed{
+\Oeff^{(1)}=
+-\frac{\sqrt{2}\,\Omega\,\lambda}{\Delta+J}.
+}
+\label{eq:Oeff1}
+\end{equation}
+
+\medskip
+\noindent
+Iterando \eqref{eq:recurrencia} desde $n$ hasta $1$ y sustituyendo \eqref{eq:Oeff1}, resulta
+\begin{equation}
+\Omega_{\mathrm{eff}}^{(n)}
+=
+(-1)^n,
+\frac{\sqrt{2},\Omega,\sqrt{n!},\lambda^n}{\displaystyle\prod_{k=0}^{n-1}\big(\Delta+k\omega_b+J\big)}.
+\label{eq:Oeff_general}
+\end{equation}
+En la resonancia de $n$ fonones \eqref{eq:resonancia_2QD}, cada factor del denominador evalúa como
+\begin{equation}
+\Delta+k\omega_b+J=-n\omega_b-J+k\omega_b+J=-(n-k)\omega_b,
+\qquad k=0,1,\ldots,n-1,
+\end{equation}
+y por tanto
+\begin{equation}
+\prod_{k=0}^{n-1}\big(\Delta+k\omega_b+J\big)=(-1)^n,\omega_b^n,n!.
+\label{eq:prod_denom}
+\end{equation}
+Sustituyendo \eqref{eq:prod_denom} en \eqref{eq:Oeff_general} se obtiene finalmente
+\begin{equation}
+\boxed{
+\Omega_{\mathrm{eff}}^{(n)}=
+\sqrt{2}\left(\frac{\lambda}{\omega_b}\right)^n\frac{\Omega}{\sqrt{n!}}.
+}
+\label{eq:Oeff_final}
+\end{equation}
+
+\bigskip
+\noindent
+Las oscilaciones super-Rabi ocurren a la tasa $\Omega_{\mathrm{eff}}^{(n)}$ entre los estados $\ket{0,vv}$ y $\ket{n,S}=(\ket{n,cv}+\ket{n,vc})/\sqrt{2}$ bajo la condición de resonancia $\Delta=-n\omega_b-J$. El factor $\sqrt{2}$ refleja la interferencia constructiva asociada al bombeo simétrico de dos emisores. El estado antisimétrico $\ket{n,A}=(\ket{n,cv}-\ket{n,vc})/\sqrt{2}$ permanece oscuro bajo las simetrías asumidas; su condición resonante $\Delta=-n\omega_b+J$ no se manifiesta en la dinámica iniciada desde $\ket{0,vv}$ con bombeo simétrico.
+
+
+
+\end{appendix}

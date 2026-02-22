@@ -1,0 +1,168 @@
+\chapter{Marco Teórico}
+El presente capítulo desarrolla el marco teórico necesario para describir la emisión de paquetes de $n$ fonones en una molécula excitónica acoplada a una cavidad acústica. Los puntos cuánticos (QDs, del inglés: quantum dot) son nanoestructuras semiconductoras que confinan portadores de carga en las tres direcciones espaciales \cite{vargas2022}, produciendo un espectro discreto de niveles de energía que permite modelarlos como emisores cuánticos artificiales de dos niveles, casi independientes del material específico. Gracias a esta estructura, los QDs constituyen plataformas privilegiadas para estudiar fenómenos de interacción luz--materia y luz--vibración, desde el intercambio coherente de excitación hasta regímenes de acoplamiento fuerte con campos ópticos o mecánicos \cite{borri2001,aspelmeyer2014}. Cuando dos QDs se encuentran suficientemente próximos, su interacción dipolo--dipolo da lugar al acoplamiento de Förster \cite{forster1948}, mediante el cual la excitación puede transferirse coherentemente de un emisor al otro, hibridando los estados excitónicos individuales en modos colectivos simétrico y antisimétrico. Esta hibridación modifica sustancialmente las condiciones de resonancia del sistema y abre la posibilidad de fenómenos colectivos de emisión \cite{kagan1996,crooker2003}.
+
+En estas condiciones, un sistema de dos niveles acoplado a un modo fonónico confinado puede habilitar procesos multicuánticos; en particular, cuando se satisface una condición de resonancia de Stokes de orden $n$, es decir, una desintonía del láser igual a un múltiplo entero de la frecuencia del modo fonónico, se posibilita la emisión coherente de paquetes de $n$ fonones \cite{bin2020,devereaux2007}. La descripción completa de estas dinámicas requiere incluir los mecanismos de disipación del sistema, tales como las pérdidas de la cavidad, el decaimiento del QD y los procesos de decoherencia. Para ello, se emplea la ecuación maestra en forma de Lindblad, que en el marco de Born--Markov permite modelar la evolución de sistemas cuánticos abiertos y cuantificar la competencia entre procesos coherentes y disipativos \cite{lindblad1976,breuerpetruccione2002}.
+
+\section{Dinámica coherente de un sistema de dos niveles}
+\label{sec:dinamica_coherente_tls}
+
+\subsection{Sistema de dos niveles}
+Un sistema de dos niveles (TLS, del inglés: two-level system) es el modelo más fundamental en óptica cuántica para describir la interacción entre un emisor cuántico y un campo de luz \cite{gerry2005,fox2006}. En él, la estructura interna del emisor se reduce a dos estados relevantes: un estado base $|g\rangle$ y un estado excitado $|e\rangle$, los cuales pueden representarse en la base canónica de dos dimensiones como
+%
+\begin{equation}
+    |g\rangle = \begin{pmatrix} 0 \\ 1 \end{pmatrix}, \qquad 
+    |e\rangle = \begin{pmatrix} 1 \\ 0 \end{pmatrix}.
+\end{equation}
+%
+En este marco, cualquier operador hermítico que actúe sobre el TLS puede representarse mediante una matriz hermítica $2\times 2$. El conjunto completo de operadores que generan el álgebra correspondiente está dado por $\{\hat{I}, \hat{\sigma}_+, \hat{\sigma}_-, \hat{\sigma}_z\}$, definidos como
+%
+\begin{equation}
+    \hat{I} = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}, \quad
+    \hat{\sigma}_+ = \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix}, \quad
+    \hat{\sigma}_- = \begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix}, \quad
+    \hat{\sigma}_z = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix},
+\end{equation}
+%
+donde $\hat{\sigma}_+= |e\rangle\langle g|$ y $\hat{\sigma}_- = |g\rangle\langle e|$ son los operadores de subida y bajada que inducen transiciones entre los estados $|g\rangle$ y $|e\rangle$, y $\hat{\sigma}_z$ es la tercera componente del vector de Pauli, que describe la diferencia de población entre el estado excitado y el estado base \cite{gerry2005}.
+
+El Hamiltoniano que describe el sistema libre, tomando el estado base como origen de energías, es
+%
+\begin{equation}
+    \hat{H}_S = \hbar\omega_0\,|e\rangle\langle e| = 
+    \frac{\hbar\omega_0}{2}\left(\hat{\sigma}_z + \hat{I}\right),
+    \label{eq:HS}
+\end{equation}
+%
+donde $\omega_0$ es la frecuencia de transición entre los niveles del sistema. El término proporcional a $\hat{I}$ representa un desplazamiento global de energía sin consecuencias físicas observables, por lo que habitualmente se omite. Este formalismo permite describir de manera general una amplia clase de sistemas cuánticos que exhiben transiciones discretas entre dos estados bien definidos, como átomos, iones atrapados, cúbits superconductores y, en particular, excitones en puntos cuánticos semiconductores \cite{fox2006}.
+
+\subsection{Hamiltoniano de interacción y aproximación de onda rotante}
+
+La interacción entre el TLS y un campo electromagnético se describe considerando al primero como un dipolo eléctrico. Bajo esta consideración, el Hamiltoniano de interacción que representa la energía potencial eléctrica se expande a su primer término no nulo como
+%
+\begin{equation}
+    \hat{H}_\text{int} = -\hat{\mathbf{d}}\cdot\hat{\mathbf{E}},
+    \label{eq:Hint_dipolo}
+\end{equation}
+%
+donde $\hat{\mathbf{d}}$ es el operador de momento dipolar del TLS y $\hat{\mathbf{E}}$ es el operador del campo eléctrico. Dado que la paridad de los estados garantiza que los elementos diagonales de la matriz de momento dipolar son nulos, el operador $\hat{\mathbf{d}}$ puede descomponerse como
+%
+\begin{equation}
+    \hat{\mathbf{d}} = \mathbf{d}\,\hat{\sigma}_+ + \mathbf{d}^*\hat{\sigma}_-,
+\end{equation}
+%
+donde $\mathbf{d} = \langle e|\hat{\mathbf{d}}|g\rangle$ es el elemento matricial del momento dipolar entre los estados base y excitado. Para un campo clásico de amplitud $\mathcal{E}_0$ y frecuencia $\omega_L$, el campo eléctrico se expresa como una superposición de ondas de la forma $\mathcal{E}_0\,e^{\pm i\omega_L t}$. Incluyendo la dependencia temporal de los operadores $\hat{\sigma}_\pm$ en la imagen de interacción, dada por las ecuaciones de movimiento de Heisenberg,
+%
+\begin{equation}
+    \frac{d\hat{\sigma}_+}{dt} = i\omega_0\,\hat{\sigma}_+, \qquad 
+    \frac{d\hat{\sigma}_-}{dt} = -i\omega_0\,\hat{\sigma}_-,
+\end{equation}
+%
+y sustituyendo en~\eqref{eq:Hint_dipolo}, el Hamiltoniano de interacción adquiere cuatro términos:
+%
+\begin{equation}
+    \hat{H}_\text{int} = \hbar\left[
+    g\,\hat{\sigma}_+\,e^{i(\omega_0-\omega_L)t} + 
+    g^*\hat{\sigma}_-\,e^{-i(\omega_0-\omega_L)t} - 
+    g\,\hat{\sigma}_+\,e^{i(\omega_0+\omega_L)t} - 
+    g^*\hat{\sigma}_-\,e^{-i(\omega_0+\omega_L)t}
+    \right],
+\end{equation}
+%
+donde $g = -d\mathcal{E}_0/(2\hbar)$ es la constante de acoplamiento entre el TLS y el campo. Los dos primeros términos oscilan a la frecuencia de diferencia $|\omega_L - \omega_0| = |\Delta|$, mientras que los dos últimos oscilan a la frecuencia de suma $\omega_0 + \omega_L$. La aproximación de onda rotante (RWA, del inglés: Rotating Wave Approximation) consiste en despreciar los términos con frecuencia de suma, porque oscilan tan rápido que, en promedio, no tienen efecto apreciable en la dinámica del sistema promediada en tiempos significativos \cite{gerry2005,steck2007}. Esto se justifica cuando $|\Delta| = |\omega_0 - \omega_L|$ es mucho menor que $\omega_0 + \omega_L$, condición que se satisface cerca de resonancia. Al eliminar los términos no resonantes, que inducen procesos de intercambio de energía de dos fotones y rompen la conservación del número de excitaciones, el Hamiltoniano de interacción se simplifica a
+%
+\begin{equation}
+    \hat{H}_\text{int} = \frac{\hbar\Omega}{2}\left(
+    \hat{\sigma}_-\,e^{i\omega_L t} + \hat{\sigma}_+\,e^{-i\omega_L t}
+    \right),
+    \label{eq:Hint_RWA}
+\end{equation}
+%
+donde $\Omega$ es la frecuencia de Rabi, que cuantifica la intensidad del acoplamiento entre el campo y el emisor \cite{gerry2005}. El Hamiltoniano total del sistema en el marco rotante es entonces
+%
+\begin{equation}
+    \hat{H} = -\hbar\Delta\,|e\rangle\langle e| + 
+    \frac{\hbar\Omega}{2}\left(\hat{\sigma}_+ + \hat{\sigma}_-\right),
+    \label{eq:H_RWA}
+\end{equation}
+%
+donde $\Delta = \omega_L - \omega_0$ es la desintonía entre la frecuencia del láser y la frecuencia de transición del sistema.
+
+\subsection{Oscilaciones de Rabi}
+
+El sistema descrito por $\hat{H}_S + \hat{H}_\text{int}$ experimenta oscilaciones entre los estados $|g\rangle$ y $|e\rangle$, conocidas como oscilaciones de Rabi. Para un sistema que parte del estado base, la probabilidad de encontrarlo en el estado excitado en el tiempo $t$ es \cite{gerry2005,fox2006}
+%
+\begin{equation}
+    P_e(t) = \frac{\Omega^2}{\Omega_R^2}\,\sin^2\!\left(\frac{\Omega_R\,t}{2}\right),
+    \label{eq:Pe}
+\end{equation}
+%
+donde $\Omega_R = \sqrt{\Omega^2 + \Delta^2}$ es la frecuencia de Rabi generalizada. La amplitud de las oscilaciones depende directamente del valor de la desintonía $\Delta$ entre la frecuencia del láser $\omega_L$ y la frecuencia de transición $\omega_0$, como se ilustra en la figura~\ref{fig:rabi_oscilaciones}. Precisamente en resonancia ($\Delta = 0$), el estado excitado y el estado base son degenerados en el marco rotante, la transferencia de población entre $|g\rangle$ y $|e\rangle$ es completa y la frecuencia de oscilación es mínima. Este punto de resonancia es la clave para producir oscilaciones de Rabi en cualquier sistema \cite{fox2006}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Kap2/rabi.png}
+    \caption{Probabilidad de encontrar el sistema en el estado excitado $P_e(t)$ cuando inicialmente está en el estado base, para diferentes valores de desintonía $\Delta = \omega_L - \omega_0$. Tomado de \cite{steck2007}.}
+    \label{fig:rabi_oscilaciones}
+\end{figure}
+
+Es importante destacar que las oscilaciones de Rabi son un fenómeno puramente coherente que no involucra disipación. En sistemas reales, los mecanismos de decaimiento espontáneo y decoherencia amortiguan estas oscilaciones en escalas temporales características, cuyo tratamiento se aborda en la sección~\ref{sec:sistemas_abiertos}. En el contexto del presente trabajo, el resultado~\eqref{eq:Pe} constituye el punto de partida para comprender las oscilaciones super-Rabi que emergen en el sistema electrón-fonón bajo condiciones de resonancia de Stokes \cite{bin2020,vargas2022}, donde el intercambio coherente ocurre entre estados separados por $n$ cuantos de excitación a través de un mecanismo no lineal mediado por el acoplamiento con el modo fonónico de la cavidad acústica, como se desarrolla en la sección~\ref{sec:stokes}.
+
+\section{Interacción electrón--fonón}
+\label{sec:electron_fonon}
+
+\subsection{Acoplamiento electrón--fonón en puntos cuánticos}
+
+En la sección anterior se describió la dinámica coherente de un TLS bajo la acción de un campo óptico clásico. Sin embargo, en un punto cuántico embebido en una cavidad acústica, el excitón no solo interactúa con el campo de luz: también lo hace con los modos vibracionales del cristal a través del acoplamiento electrón--fonón. Este acoplamiento surge de la dependencia de la energía de banda del semiconductor con la deformación de la red, de manera que las vibraciones del cristal modulan la energía de los portadores confinados en el QD \cite{borri2001,stock2011}.
+
+En el contexto de este trabajo, el QD se modela como un TLS con un estado de valencia $|v\rangle$ y un estado de conducción $|c\rangle$, los cuales corresponden, respectivamente, al estado base $|g\rangle$ y al estado excitado $|e\rangle$ introducidos en la sección~\ref{sec:dinamica_coherente_tls}. El acoplamiento electrón--fonón relevante en este sistema es diagonal en el espacio electrónico: solo el estado de conducción $|c\rangle$ desplaza el potencial del oscilador fonónico, mientras que el estado de valencia $|v\rangle$ no lo hace. Físicamente, esto refleja el hecho de que la presencia del electrón en la banda de conducción deforma la red cristalina, induciendo la emisión o absorción de fonones. El acoplamiento queda entonces gobernado por el proyector sobre el estado excitado, $\hat{\sigma}^\dagger\hat{\sigma} = |c\rangle\langle c|$, y no por el operador de inversión de población $\hat{\sigma}_z$, cuya acción es simétrica respecto a ambos estados \cite{bin2020,soykal2011}. La intensidad de este proceso queda caracterizada por el parámetro adimensional $\lambda/\omega_b$, que cuantifica el desplazamiento del modo fonónico inducido por la ocupación del estado excitado \cite{bin2020,alkauskas2014}.
+
+\subsection{Molécula excitónica: acoplamiento de Förster e hibridación}
+
+La extensión natural del modelo anterior consiste en considerar dos puntos cuánticos idénticos acoplados a la misma cavidad acústica. Cuando dos QDs se encuentran suficientemente próximos, su interacción dipolo--dipolo da lugar al acoplamiento de Förster \cite{forster1948}, un mecanismo de transferencia resonante de energía de naturaleza coherente, cuya constante de acoplamiento $J$ depende de la distancia entre los emisores y del solapamiento de sus respectivos momentos dipolares de transición \cite{kagan1996,crooker2003,sirkina2025}. En el límite en que la separación entre los QDs es pequeña comparada con la longitud de onda del campo óptico, este acoplamiento puede describirse mediante el término
+%
+\begin{equation}
+    \hat{H}_J = J\left(\hat{\sigma}_1^\dagger\hat{\sigma}_2 + 
+    \hat{\sigma}_2^\dagger\hat{\sigma}_1\right),
+    \label{eq:Forster}
+\end{equation}
+%
+donde $\hat{\sigma}_i^\dagger$ ($\hat{\sigma}_i$) es el operador de creación (aniquilación) del excitón en el $i$-ésimo punto cuántico. El Hamiltoniano total de la molécula excitónica acoplada a la cavidad acústica es entonces
+%
+\begin{equation}
+    \hat{H}_\text{tot} = \omega_b\hat{b}^\dagger\hat{b} 
+    - \Delta\sum_{i=1}^{2}\hat{\sigma}_i^\dagger\hat{\sigma}_i 
+    + \lambda\sum_{i=1}^{2}\hat{\sigma}_i^\dagger\hat{\sigma}_i(\hat{b}^\dagger + \hat{b}) 
+    + \Omega\sum_{i=1}^{2}\left(\hat{\sigma}_i + \hat{\sigma}_i^\dagger\right)
+    + J\left(\hat{\sigma}_1^\dagger\hat{\sigma}_2 + \hat{\sigma}_2^\dagger\hat{\sigma}_1\right),
+    \label{eq:H_total}
+\end{equation}
+%
+donde se ha asumido que ambos QDs son idénticos, comparten la misma desintonía $\Delta$, y están acoplados al modo fonónico con la misma constante $\lambda$.
+
+La presencia del término de Förster \eqref{eq:Forster} tiene una consecuencia inmediata sobre la estructura de estados del sistema: los estados excitónicos individuales $|c\rangle_1|v\rangle_2$ y $|v\rangle_1|c\rangle_2$ dejan de ser eigenstados del Hamiltoniano. En su lugar, la diagonalización del sector de una excitación electrónica produce dos nuevos eigenstados colectivos
+%
+\begin{equation}
+    |+\rangle = \frac{1}{\sqrt{2}}\left(|c\rangle_1|v\rangle_2 
+    + |v\rangle_1|c\rangle_2\right), \qquad
+    |-\rangle = \frac{1}{\sqrt{2}}\left(|c\rangle_1|v\rangle_2 
+    - |v\rangle_1|c\rangle_2\right),
+    \label{eq:estados_hibridados}
+\end{equation}
+%
+conocidos como el estado \textit{simétrico} $|+\rangle$ y el estado 
+\textit{antisimétrico} $|-\rangle$, con energías $\omega_\sigma + J$ y $\omega_\sigma - J$, respectivamente. El primero acopla constructivamente al campo óptico externo y al modo fonónico, mientras que el segundo lo hace de forma destructiva: en el límite de QDs idénticos queda desacoplado del láser y se comporta como un estado oscuro desde el punto de vista óptico \cite{gonzaleztudela2013}. Esta hibridación modifica de manera fundamental el espectro de resonancias del sistema respecto al caso d un único emisor: el acoplamiento de Förster desdobla los niveles excitónicos en dos ramas separadas por $2J$, lo cual altera cualitativamente las condiciones bajo las que puede ocurrir la emisión coherente de fonones. El análisis detallado de cómo esta estructura de niveles determina las resonancias multifonónicas del sistema se desarrolla en la sección~\ref{sec:stokes}.
+
+\section{Sistemas cu\'anticos abiertos}
+\label{sec:sistemas_abiertos}
+\subsection{Aproximaci\'on de Born--Markov}
+\subsection{Ecuaci\'on maestra en forma de Lindblad}
+
+\section{Procesos de Stokes y emisi\'on multifon\'onica}
+\label{sec:stokes}
+\subsection{Resonancias de Stokes asistidas por fonones}
+\subsection{Oscilaciones super-Rabi y emisi\'on de paquetes de fonones}
+
+\section{Observables de emisi\'on multifon\'onica}
+\subsection{Teor\'ia de coherencia de Glauber}
+\subsection{Funciones de correlaci\'on de orden superior $g^{(n)}$}
+\subsection{Pureza de emisi\'on}

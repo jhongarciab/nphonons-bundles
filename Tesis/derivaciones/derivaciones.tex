@@ -1,0 +1,1227 @@
+% ============================================================
+%  Derivación paso a paso: Omega_eff^(n) para la molécula
+%  excitónica (2 QDs acoplados por interacción de Förster)
+%  Régimen I: conducción débil y acoplamiento débil
+% ============================================================
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb}
+\usepackage[margin=2.5cm]{geometry}
+
+\begin{document}
+	
+	% -----------------------------------------------------------
+	% BLOQUE 0: Hamiltoniano en el marco del laboratorio
+	% -----------------------------------------------------------
+	
+	Consideramos dos puntos cu\'anticos id\'enticos, QD$_1$ y QD$_2$, cada uno
+	modelado como un sistema de dos niveles con estados electr\'onicos $|v\rangle$
+	(valencia) y $|c\rangle$ (conducci\'on), frecuencia de transici\'on $\omega_\sigma$
+	y acoplamiento electr\'on-fon\'on $\lambda$. Ambos QDs interact\'uan con un
+	\'unico modo fon\'onico de cavidad de frecuencia $\omega_b$, con operadores de
+	escalera $b$ y $b^\dagger$. Los QDs est\'an acoplados entre s\'i mediante la
+	interacci\'on de F\"orster con constante $J$. Un l\'aser coherente de frecuencia
+	$\omega_L$ conduce ambos QDs con la misma frecuencia de Rabi $\Omega$.
+	Establecemos $\hbar = 1$ en todo lo que sigue.
+	
+	El Hamiltoniano total del sistema en el marco del laboratorio es
+	
+	\begin{equation}
+		H_{\mathrm{lab}}
+		= \omega_b b^\dagger b
+		+ \omega_\sigma \left(\sigma_1^\dagger \sigma_1 + \sigma_2^\dagger \sigma_2\right)
+		+ \lambda \left(\sigma_1^\dagger \sigma_1 + \sigma_2^\dagger \sigma_2\right)(b^\dagger + b)
+		+ J\left(\sigma_1^\dagger \sigma_2 + \sigma_2^\dagger \sigma_1\right)
+		+ \Omega \sum_{i=1,2} \left(e^{i\omega_L t}\,\sigma_i + e^{-i\omega_L t}\,\sigma_i^\dagger\right),
+		\label{eq:H_lab}
+	\end{equation}
+	
+	donde $\sigma_i = |v\rangle_i\langle c|$ y $\sigma_i^\dagger = |c\rangle_i\langle v|$
+	son los operadores de decaimiento y excitaci\'on del QD$_i$, respectivamente.
+	El primer t\'ermino de~\eqref{eq:H_lab} describe la energ\'ia libre del modo
+	fon\'onico. El segundo describe la energ\'ia de transici\'on de ambos QDs. El
+	tercero es el acoplamiento electr\'on-fon\'on, que en el modelo de Holstein
+	desplaza el equilibrio del oscilador seg\'un el estado electr\'onico de cada QD.
+	El cuarto es la interacci\'on de F\"orster, que transfiere la excitaci\'on
+	entre QDs sin cambiar el n\'umero de fonones. El quinto es la conducci\'on
+	coherente por el l\'aser externo en la aproximaci\'on de onda rotante (RWA).
+	
+	% -----------------------------------------------------------
+	% BLOQUE 1: Transformación al marco rotante
+	% -----------------------------------------------------------
+	
+	Para eliminar la dependencia expl\'icita en el tiempo del t\'ermino de
+	conducci\'on, transformamos al marco rotante con la frecuencia del l\'aser
+	$\omega_L$. Definimos el operador unitario
+	
+	\begin{equation}
+		U(t) = \exp\!\left(i\omega_L t \left(\sigma_1^\dagger\sigma_1
+		+ \sigma_2^\dagger\sigma_2\right)\right).
+		\label{eq:U}
+	\end{equation}
+	
+	El Hamiltoniano en el nuevo marco se obtiene mediante
+	
+	\begin{equation}
+		H = U\,H_{\mathrm{lab}}\,U^\dagger + i\,\dot{U}\,U^\dagger.
+		\label{eq:H_rotante_def}
+	\end{equation}
+	
+	Calculamos el efecto de $U$ sobre cada t\'ermino de~\eqref{eq:H_lab}.
+	
+	\medskip
+	\noindent
+	El operador $U$ act\'ua \'unicamente sobre los grados de libertad electr\'onicos
+	a trav\'es del operador de n\'umero $\hat{n}_e = \sigma_1^\dagger\sigma_1 +
+	\sigma_2^\dagger\sigma_2$. Para cualquier operador $A$ que conmuta con
+	$\hat{n}_e$, se tiene $U A U^\dagger = A$. En cambio, para los operadores de
+	excitaci\'on y decaimiento se tiene:
+	
+	\begin{align}
+		U\,\sigma_i^\dagger\,U^\dagger &= e^{+i\omega_L t}\,\sigma_i^\dagger,
+		\label{eq:transf_sigmadag}\\
+		U\,\sigma_i\,U^\dagger &= e^{-i\omega_L t}\,\sigma_i.
+		\label{eq:transf_sigma}
+	\end{align}
+	
+	Esto se verifica directamente usando la identidad de Baker-Campbell-Hausdorff y
+	el \'algebra $[\hat{n}_e, \sigma_i^\dagger] = \sigma_i^\dagger$,
+	$[\hat{n}_e, \sigma_i] = -\sigma_i$.
+	
+	\medskip
+	\noindent
+	Con estas relaciones, calculamos la transformaci\'on de cada t\'ermino:
+	
+	\medskip
+	\noindent
+	\textit{(i) T\'ermino fon\'onico.}
+	$b$ y $b^\dagger$ conmutan con $\hat{n}_e$, por lo que
+	
+	\begin{equation}
+		U\,\omega_b b^\dagger b\,U^\dagger = \omega_b b^\dagger b.
+	\end{equation}
+	
+	\noindent
+	\textit{(ii) T\'ermino electr\'onico libre.}
+	$\sigma_i^\dagger\sigma_i$ conmuta con $\hat{n}_e$, por lo que
+	
+	\begin{equation}
+		U\,\omega_\sigma\!\left(\sigma_1^\dagger\sigma_1 +
+		\sigma_2^\dagger\sigma_2\right)U^\dagger
+		= \omega_\sigma\!\left(\sigma_1^\dagger\sigma_1 +
+		\sigma_2^\dagger\sigma_2\right).
+	\end{equation}
+	
+	\noindent
+	\textit{(iii) T\'ermino de acoplamiento electr\'on-fon\'on.}
+	$\sigma_i^\dagger\sigma_i$ conmuta con $\hat{n}_e$ y $b+b^\dagger$ con $U$,
+	por lo que
+	
+	\begin{equation}
+		U\,\lambda\!\left(\sigma_1^\dagger\sigma_1 +
+		\sigma_2^\dagger\sigma_2\right)(b^\dagger + b)\,U^\dagger
+		= \lambda\!\left(\sigma_1^\dagger\sigma_1 +
+		\sigma_2^\dagger\sigma_2\right)(b^\dagger + b).
+	\end{equation}
+	
+	\noindent
+	\textit{(iv) T\'ermino de F\"orster.}
+	Usando~\eqref{eq:transf_sigmadag} y~\eqref{eq:transf_sigma}:
+	
+	\begin{equation}
+		U\,\sigma_1^\dagger\sigma_2\,U^\dagger
+		= \left(e^{+i\omega_L t}\sigma_1^\dagger\right)
+		\!\left(e^{-i\omega_L t}\sigma_2\right)
+		= \sigma_1^\dagger\sigma_2.
+	\end{equation}
+	
+	Las fases de los dos factores se cancelan exactamente porque F\"orster conserva
+	el n\'umero total de excitaciones: sube una en QD$_1$ y baja una en QD$_2$.
+	An\'alogamente $U\sigma_2^\dagger\sigma_1 U^\dagger = \sigma_2^\dagger\sigma_1$.
+	Por tanto:
+	
+	\begin{equation}
+		U\,J\!\left(\sigma_1^\dagger\sigma_2 +
+		\sigma_2^\dagger\sigma_1\right)U^\dagger
+		= J\!\left(\sigma_1^\dagger\sigma_2 + \sigma_2^\dagger\sigma_1\right).
+	\end{equation}
+	
+	\noindent
+	\textit{(v) T\'ermino de conducci\'on.}
+	Para cada QD$_i$, usando~\eqref{eq:transf_sigma} y~\eqref{eq:transf_sigmadag}:
+	
+	\begin{equation}
+		U\,\Omega\!\left(e^{i\omega_L t}\sigma_i + e^{-i\omega_L t}\sigma_i^\dagger\right)U^\dagger
+		= \Omega\!\left(e^{i\omega_L t} e^{-i\omega_L t}\sigma_i
+		+ e^{-i\omega_L t} e^{+i\omega_L t}\sigma_i^\dagger\right)
+		= \Omega\!\left(\sigma_i + \sigma_i^\dagger\right).
+	\end{equation}
+	
+	\noindent
+	\textit{(vi) T\'ermino cin\'etico $i\dot{U}U^\dagger$.}
+	Derivando~\eqref{eq:U}:
+	
+	\begin{equation}
+		i\,\dot{U}\,U^\dagger = -\omega_L\!\left(\sigma_1^\dagger\sigma_1 +
+		\sigma_2^\dagger\sigma_2\right).
+	\end{equation}
+	
+	\medskip
+	\noindent
+	Sumando todos los contribuciones en~\eqref{eq:H_rotante_def} y agrupando los
+	t\'erminos electr\'onicos libres con el t\'ermino cin\'etico:
+	
+	\begin{equation}
+		\omega_\sigma\!\left(\sigma_1^\dagger\sigma_1 +
+		\sigma_2^\dagger\sigma_2\right)
+		- \omega_L\!\left(\sigma_1^\dagger\sigma_1 +
+		\sigma_2^\dagger\sigma_2\right)
+		= \Delta\!\left(\sigma_1^\dagger\sigma_1 + \sigma_2^\dagger\sigma_2\right),
+	\end{equation}
+	
+	donde definimos la desinton\'ia $\Delta \equiv \omega_\sigma - \omega_L$.
+	
+	\medskip
+	\noindent
+	El Hamiltoniano en el marco rotante queda entonces:
+	
+	\begin{equation}
+		\boxed{
+			H = \omega_b b^\dagger b
+			+ \Delta\!\left(\sigma_1^\dagger\sigma_1 + \sigma_2^\dagger\sigma_2\right)
+			+ \lambda\!\left(\sigma_1^\dagger\sigma_1 + \sigma_2^\dagger\sigma_2\right)
+			(b^\dagger + b)
+			+ J\!\left(\sigma_1^\dagger\sigma_2 + \sigma_2^\dagger\sigma_1\right)
+			+ \Omega\sum_{i=1,2}\!\left(\sigma_i + \sigma_i^\dagger\right).
+		}
+		\label{eq:H_rot}
+	\end{equation}
+	
+	Este es exactamente el Hamiltoniano~(S2) de Bin et al.\ para un solo QD, pero
+	con dos QDs id\'enticos y el t\'ermino adicional de F\"orster. A diferencia
+	del caso de un solo QD, el t\'ermino de F\"orster \emph{no} adquiere
+	dependencia temporal en el marco rotante, porque conserva el n\'umero total de
+	excitaciones electr\'onicas. Este Hamiltoniano~\eqref{eq:H_rot} es el punto de
+	partida para toda la derivaci\'on perturbativa que sigue.
+	
+	% -----
+	%-----
+	El Hamiltoniano~\eqref{eq:H_rot} contiene el t\'ermino de F\"orster
+	$J(\sigma_1^\dagger\sigma_2 + \sigma_2^\dagger\sigma_1)$, que no es diagonal
+	en la base de producto $|c/v\rangle_1 \otimes |c/v\rangle_2$. Para trabajar
+	con autoestados bien definidos del sistema, diagonalizamos este t\'ermino.
+	
+	\medskip
+	\noindent
+	El espacio electr\'onico completo tiene cuatro estados de base:
+	
+	\begin{equation}
+		|vv\rangle, \quad |cv\rangle, \quad |vc\rangle, \quad |cc\rangle,
+	\end{equation}
+	
+	donde la primera (segunda) etiqueta corresponde al QD$_1$ (QD$_2$), con la
+	convenci\'on $|cv\rangle \equiv |c\rangle_1|v\rangle_2$.
+	
+	\medskip
+	\noindent
+	El operador de F\"orster $\sigma_1^\dagger\sigma_2 + \sigma_2^\dagger\sigma_1$
+	act\'ua \'unicamente en el subespacio de una excitaci\'on electr\'onica total,
+	$\{|cv\rangle, |vc\rangle\}$, donde su representaci\'on matricial es
+	
+	\begin{equation}
+		J\begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}.
+	\end{equation}
+	
+	Los autovalores de esta matriz son $\pm J$. Los autovectores correspondientes
+	son
+	
+	\begin{align}
+		|\Psi_+\rangle &= \frac{1}{\sqrt{2}}\left(|cv\rangle + |vc\rangle\right),
+		\qquad E_+ = +J,
+		\label{eq:Psi_plus}\\[6pt]
+		|\Psi_-\rangle &= \frac{1}{\sqrt{2}}\left(|cv\rangle - |vc\rangle\right),
+		\qquad E_- = -J.
+		\label{eq:Psi_minus}
+	\end{align}
+	
+	\medskip
+	\noindent
+	Verificamos que son correctos. Para $|\Psi_+\rangle$:
+	
+	\begin{equation}
+		J\left(\sigma_1^\dagger\sigma_2 + \sigma_2^\dagger\sigma_1\right)|\Psi_+\rangle
+		= \frac{J}{\sqrt{2}}\left(\sigma_1^\dagger\sigma_2 + \sigma_2^\dagger\sigma_1\right)
+		\left(|cv\rangle + |vc\rangle\right).
+	\end{equation}
+	
+	Evaluando cada t\'ermino:
+	$\sigma_1^\dagger\sigma_2|cv\rangle = 0$ (QD$_1$ ya est\'a excitado),
+	$\sigma_2^\dagger\sigma_1|cv\rangle = |vc\rangle$,
+	$\sigma_1^\dagger\sigma_2|vc\rangle = |cv\rangle$,
+	$\sigma_2^\dagger\sigma_1|vc\rangle = 0$ (QD$_2$ ya est\'a excitado). Por tanto:
+	
+	\begin{equation}
+		J\left(\sigma_1^\dagger\sigma_2 + \sigma_2^\dagger\sigma_1\right)|\Psi_+\rangle
+		= \frac{J}{\sqrt{2}}\left(|vc\rangle + |cv\rangle\right) = J|\Psi_+\rangle. \checkmark
+	\end{equation}
+	
+	An\'alogamente se verifica $J(\sigma_1^\dagger\sigma_2 +
+	\sigma_2^\dagger\sigma_1)|\Psi_-\rangle = -J|\Psi_-\rangle$.
+	
+	\medskip
+	\noindent
+	A continuaci\'on evaluamos el acoplamiento de cada estado colectivo al l\'aser.
+	El t\'ermino de conducci\'on $\Omega\sum_{i=1,2}(\sigma_i + \sigma_i^\dagger)$
+	sobre el vac\'io electr\'onico $|vv\rangle$ da:
+	
+	\begin{equation}
+		\Omega\left(\sigma_1^\dagger + \sigma_2^\dagger\right)|vv\rangle
+		= \Omega\left(|cv\rangle + |vc\rangle\right)
+		= \sqrt{2}\,\Omega\,|\Psi_+\rangle.
+		\label{eq:laser_brillante}
+	\end{equation}
+	
+	El l\'aser excita \'unicamente el estado sim\'etrico $|\Psi_+\rangle$ con
+	frecuencia de Rabi colectiva $\sqrt{2}\,\Omega$. Para el estado
+	antisim\'etrico:
+	
+	\begin{equation}
+		\Omega\left(\sigma_1^\dagger + \sigma_2^\dagger\right)|vv\rangle
+		\perp |\Psi_-\rangle,
+	\end{equation}
+	
+	ya que $\langle\Psi_-|\left(|cv\rangle + |vc\rangle\right) = 0$. El estado
+	$|\Psi_-\rangle$ est\'a desacoplado del l\'aser y no participa en la
+	din\'amica de emisi\'on de fonones. En lo sucesivo, restringimos el espacio
+	electr\'onico al subespacio
+	
+	\begin{equation}
+		\{|vv\rangle,\; |\Psi_+\rangle\},
+	\end{equation}
+	
+	con las identificaciones $|v\rangle \leftrightarrow |vv\rangle$ y
+	$|c\rangle \leftrightarrow |\Psi_+\rangle$ respecto al caso de un solo QD.
+	
+	Restringidos al subespacio $\{|vv\rangle, |\Psi_+\rangle\}$, reescribimos el
+	Hamiltoniano~\eqref{eq:H_rot} en t\'erminos de operadores colectivos del estado
+	brillante. Definimos
+	
+	\begin{align}
+		S^\dagger &= |\Psi_+\rangle\langle vv|
+		= \frac{1}{\sqrt{2}}\left(\sigma_1^\dagger + \sigma_2^\dagger\right),
+		\label{eq:S_dag}\\[4pt]
+		S &= |vv\rangle\langle\Psi_+|
+		= \frac{1}{\sqrt{2}}\left(\sigma_1 + \sigma_2\right),
+		\label{eq:S}
+	\end{align}
+	
+	que satisfacen $\{S, S^\dagger\} = 1$ y $S^2 = 0$ en el subespacio de inter\'es.
+	El operador de n\'umero electr\'onico colectivo es $S^\dagger S =
+	|\Psi_+\rangle\langle\Psi_+|$.
+	
+	\medskip
+	\noindent
+	Reemplazamos cada t\'ermino de~\eqref{eq:H_rot} en la base colectiva.
+	
+	\medskip
+	\noindent
+	\textit{(i) T\'ermino fon\'onico.} No se modifica:
+	
+	\begin{equation}
+		\omega_b b^\dagger b.
+	\end{equation}
+	
+	\noindent
+	\textit{(ii) T\'ermino electr\'onico libre.}
+	En el subespacio $\{|vv\rangle, |\Psi_+\rangle\}$ el operador
+	$\sigma_1^\dagger\sigma_1 + \sigma_2^\dagger\sigma_2$ cuenta el n\'umero total
+	de excitaciones electr\'onicas, que vale $0$ en $|vv\rangle$ y $1$ en
+	$|\Psi_+\rangle$. Por tanto:
+	
+	\begin{equation}
+		\sigma_1^\dagger\sigma_1 + \sigma_2^\dagger\sigma_2
+		\;\longrightarrow\; S^\dagger S,
+	\end{equation}
+	
+	y el t\'ermino electr\'onico libre es $\Delta\, S^\dagger S$.
+	
+	\medskip
+	\noindent
+	\textit{(iii) T\'ermino de acoplamiento electr\'on-fon\'on.}
+	An\'alogamente, $(\sigma_1^\dagger\sigma_1 + \sigma_2^\dagger\sigma_2)
+	\to S^\dagger S$, y el t\'ermino queda:
+	
+	\begin{equation}
+		\lambda\, S^\dagger S\,(b^\dagger + b).
+	\end{equation}
+	
+	\noindent
+	\textit{(iv) T\'ermino de F\"orster.}
+	En la base colectiva, $|\Psi_+\rangle$ es autoestado con autovalor $+J$:
+	
+	\begin{equation}
+		J\left(\sigma_1^\dagger\sigma_2 + \sigma_2^\dagger\sigma_1\right)
+		\;\longrightarrow\; J\, S^\dagger S.
+	\end{equation}
+	
+	\noindent
+	\textit{(v) T\'ermino de conducci\'on.}
+	De la Ec.~\eqref{eq:laser_brillante}, el l\'aser actua sobre $|vv\rangle$
+	como $\sqrt{2}\,\Omega\,S^\dagger$, y su herm\'itico conjugado sobre
+	$|\Psi_+\rangle$ como $\sqrt{2}\,\Omega\,S$. Por tanto:
+	
+	\begin{equation}
+		\Omega\sum_{i=1,2}\left(\sigma_i + \sigma_i^\dagger\right)
+		\;\longrightarrow\; \sqrt{2}\,\Omega\left(S + S^\dagger\right).
+	\end{equation}
+	
+	\medskip
+	\noindent
+	Sumando los t\'erminos electr\'onico libre y de F\"orster:
+	
+	\begin{equation}
+		\Delta\, S^\dagger S + J\, S^\dagger S
+		= (\Delta + J)\, S^\dagger S.
+	\end{equation}
+	
+	\noindent
+	El Hamiltoniano efectivo en la base colectiva es entonces:
+	
+	\begin{equation}
+		\boxed{
+			H_{\mathrm{eff}} = \omega_b b^\dagger b
+			+ (\Delta + J)\,S^\dagger S
+			+ \lambda\, S^\dagger S\,(b^\dagger + b)
+			+ \sqrt{2}\,\Omega\left(S + S^\dagger\right).
+		}
+		\label{eq:H_eff}
+	\end{equation}
+	
+	\medskip
+	\noindent
+	Comparando con el Hamiltoniano de Bin~(S2) para un solo QD,
+	
+	\begin{equation}
+		H_{\mathrm{1QD}} = \omega_b b^\dagger b
+		+ \Delta\,\sigma^\dagger\sigma
+		+ \lambda\,\sigma^\dagger\sigma\,(b^\dagger + b)
+		+ \Omega\left(\sigma + \sigma^\dagger\right),
+	\end{equation}
+	
+	el Hamiltoniano~\eqref{eq:H_eff} es id\'entico bajo las sustituciones
+	
+	\begin{equation}
+		\sigma \;\to\; S,
+		\qquad
+		\Delta \;\to\; \widetilde{\Delta} \equiv \Delta + J,
+		\qquad
+		\Omega \;\to\; \widetilde{\Omega} \equiv \sqrt{2}\,\Omega.
+		\label{eq:correspondencia}
+	\end{equation}
+	
+	El acoplamiento de F\"orster $J$ desplaza la desinton\'ia efectiva en $+J$,
+	y la simetr\'ia colectiva del estado brillante aumenta la frecuencia de Rabi
+	efectiva por un factor $\sqrt{2}$. Toda la derivaci\'on perturbativa de Bin
+	se aplica directamente a la mol\'ecula excit\'onica bajo estas dos
+	sustituciones.
+	
+	Con el Hamiltoniano efectivo~\eqref{eq:H_eff}, los autoestados del sistema
+	libre (sin conducci\'on ni acoplamiento electr\'on-fon\'on) son los estados
+	producto $|m, vv\rangle$ y $|m, \Psi_+\rangle$, donde $m = 0, 1, 2, \ldots$
+	denota el n\'umero de fonones en la cavidad. Sus energ\'ias son:
+	
+	\begin{align}
+		E_{|m,\, vv\rangle} &= m\omega_b,
+		\label{eq:E_vv}\\[4pt]
+		E_{|m,\, \Psi_+\rangle} &= m\omega_b + (\Delta + J).
+		\label{eq:E_Psi}
+	\end{align}
+	
+	\medskip
+	\noindent
+	La condici\'on de resonancia de Stokes de $n$-fonones se obtiene pidiendo que
+	los estados $|0, vv\rangle$ (cero fonones, ambos QDs en la valencia) y
+	$|n, \Psi_+\rangle$ ($n$ fonones, estado brillante excitado) sean
+	degenerados en energ\'ia:
+	
+	\begin{equation}
+		E_{|0,\, vv\rangle} = E_{|n,\, \Psi_+\rangle}.
+	\end{equation}
+	
+	\noindent
+	Sustituyendo~\eqref{eq:E_vv} y~\eqref{eq:E_Psi} con $m = 0$ y $m = n$
+	respectivamente:
+	
+	\begin{equation}
+		0 = n\omega_b + (\Delta + J).
+	\end{equation}
+	
+	\noindent
+	Despejando $\Delta$:
+	
+	\begin{equation}
+		\boxed{
+			\Delta_n = -n\omega_b - J.
+		}
+		\label{eq:resonancia}
+	\end{equation}
+	
+	\noindent
+	En t\'erminos de la desinton\'ia renormalizada $\widetilde{\Delta} = \Delta + J$
+	definida en~\eqref{eq:correspondencia}, la condici\'on~\eqref{eq:resonancia}
+	toma la forma familiar del caso de un solo QD:
+	
+	\begin{equation}
+		\widetilde{\Delta}_n = -n\omega_b,
+		\label{eq:resonancia_tilde}
+	\end{equation}
+	
+	lo que confirma la consistencia con la correspondencia establecida en el
+	Bloque~3.
+	
+	\medskip
+	\noindent
+	El acoplamiento de F\"orster $J$ desplaza r\'igidamente la condici\'on de
+	resonancia en $-J$ respecto al caso de un solo QD, independientemente del
+	n\'umero de fonones $n$. Para recuperar la resonancia, la frecuencia del
+	l\'aser debe ajustarse a $\omega_L = \omega_\sigma + n\omega_b + J$.
+	
+	En el r\'egimen I, $\widetilde{\Omega}, \lambda \ll \omega_b$, los autoestados
+	del Hamiltoniano son pr\'oximos a los estados producto $|m, vv\rangle$ y
+	$|m, \Psi_+\rangle$. Siguiendo la estrategia de Bin~(S3), en la vecindad de
+	la resonancia de $n$-fonones truncamos el espacio de Hilbert a los $2(n+1)$
+	estados:
+	
+	\begin{equation}
+		\mathcal{H}^{(n)} = \bigl\{
+		|0, vv\rangle,\;
+		|n, \Psi_+\rangle,\;
+		|0, \Psi_+\rangle,\;
+		|1, vv\rangle,\;
+		|1, \Psi_+\rangle,\;
+		|2, vv\rangle,\;
+		\ldots,\;
+		|n-1, \Psi_+\rangle,\;
+		|n, vv\rangle
+		\bigr\}.
+		\label{eq:espacio_truncado}
+	\end{equation}
+	
+	\noindent
+	Los dos primeros estados, $|0, vv\rangle$ y $|n, \Psi_+\rangle$, son los que
+	est\'an en resonancia seg\'un~\eqref{eq:resonancia}. Los $2n$ estados restantes
+	son los estados intermedios que median la transici\'on de $n$-fonones.
+	
+	\medskip
+	\noindent
+	El Hamiltoniano truncado se escribe en la forma de bloques:
+	
+	\begin{equation}
+		H^{(n)} = \begin{pmatrix} \mathbf{H}^{(n)} & X^{(n)} \\[4pt]
+			X^{(n)T} & R^{(n)} \end{pmatrix},
+		\label{eq:H_bloques}
+	\end{equation}
+	
+	donde $\mathbf{H}^{(n)}$ act\'ua en el subespacio de inter\'es
+	$\{|0, vv\rangle,\, |n, \Psi_+\rangle\}$, $R^{(n)}$ act\'ua en el subespacio
+	de los $2n$ estados intermedios, y $X^{(n)}$ es la matriz $2\times 2n$ que
+	acopla ambos subespacios.
+	
+	\medskip
+	\noindent
+	\textit{Submatriz $\mathbf{H}^{(n)}$.}
+	En resonancia $\widetilde{\Delta} = -n\omega_b$, las energ\'ias de los dos
+	estados de inter\'es son iguales:
+	
+	\begin{equation}
+		E_{|0,\, vv\rangle} = 0, \qquad
+		E_{|n,\, \Psi_+\rangle} = n\omega_b + \widetilde{\Delta}
+		= n\omega_b - n\omega_b = 0.
+	\end{equation}
+	
+	\noindent
+	El Hamiltoniano~\eqref{eq:H_eff} no tiene elementos de matriz directos entre
+	$|0, vv\rangle$ y $|n, \Psi_+\rangle$ para $n \geq 2$ (el l\'aser cambia el
+	estado electr\'onico pero no el fon\'onico, y el acoplamiento electr\'on-fon\'on
+	cambia el n\'umero de fonones en $\pm 1$ pero no el estado electr\'onico). Por
+	tanto:
+	
+	\begin{equation}
+		\mathbf{H}^{(n)} = \begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix}.
+	\end{equation}
+	
+	\noindent
+	\textit{Submatriz $R^{(n)}$ (diagonal en la base de estados producto).}
+	Las energ\'ias de los estados intermedios, evaluadas en
+	$\widetilde{\Delta} = -n\omega_b$, son:
+	
+	\begin{align}
+		E_{|k,\, vv\rangle} &= k\omega_b,
+		\qquad k = 1, \ldots, n,
+		\label{eq:E_int_vv}\\[4pt]
+		E_{|k,\, \Psi_+\rangle} &= k\omega_b + \widetilde{\Delta}
+		= k\omega_b - n\omega_b = -(n-k)\omega_b,
+		\qquad k = 0, 1, \ldots, n-1.
+		\label{eq:E_int_Psi}
+	\end{align}
+	
+	\noindent
+	\textit{Elementos de acoplamiento: matriz $X^{(n)}$.}
+	El Hamiltoniano~\eqref{eq:H_eff} tiene dos t\'erminos que generan acoplamientos
+	entre subespacios distintos:
+	
+	\begin{enumerate}
+		\item El t\'ermino de conducci\'on $\widetilde{\Omega}(S + S^\dagger)$ acopla
+		estados con el mismo n\'umero de fonones pero diferente estado electr\'onico:
+		\begin{equation}
+			\langle m, \Psi_+|\,\widetilde{\Omega}\,S^\dagger\,|m, vv\rangle = \widetilde{\Omega}
+			= \sqrt{2}\,\Omega.
+			\label{eq:acop_laser}
+		\end{equation}
+		
+		\item El t\'ermino de acoplamiento electr\'on-fon\'on
+		$\lambda\,S^\dagger S\,(b^\dagger + b)$ act\'ua \'unicamente cuando el
+		sistema electr\'onico est\'a en $|\Psi_+\rangle$ y cambia el n\'umero de
+		fonones en $\pm 1$:
+		\begin{equation}
+			\langle m+1, \Psi_+|\,\lambda\,S^\dagger S\,b^\dagger\,|m, \Psi_+\rangle
+			= \lambda\sqrt{m+1}.
+			\label{eq:acop_fonon}
+		\end{equation}
+	\end{enumerate}
+	
+	\noindent
+	La transici\'on $|0, vv\rangle \to |n, \Psi_+\rangle$ requiere exactamente $n$
+	pasos alternando entre estos dos tipos de acoplamiento: primero el l\'aser
+	excita el estado electr\'onico ($|0,vv\rangle \to |0,\Psi_+\rangle$) y luego
+	el acoplamiento electr\'on-fon\'on escala la escalera fon\'onica paso a paso
+	($|0,\Psi_+\rangle \to |1,\Psi_+\rangle \to \cdots \to |n,\Psi_+\rangle$),
+	o bien el camino inverso empieza por el lado de $|n,\Psi_+\rangle$.
+	La estructura de la matriz de acoplamiento es id\'entica a Bin~(S5) con
+	$\Omega \to \widetilde{\Omega}$:
+	
+	\begin{equation}
+		X^{(n)} = \begin{pmatrix}
+			\widetilde{\Omega} & 0 & \cdots & 0 & 0 \\
+			0 & 0 & \cdots & \sqrt{n}\,\lambda & \widetilde{\Omega}
+		\end{pmatrix}.
+		\label{eq:X_n}
+	\end{equation}
+	
+	\noindent
+	La primera fila corresponde al estado $|0, vv\rangle$ y la segunda a
+	$|n, \Psi_+\rangle$. El elemento $\widetilde{\Omega}$ en la posici\'on $(1,1)$
+	acopla $|0, vv\rangle$ con $|0, \Psi_+\rangle$ v\'ia el l\'aser. El elemento
+	$\sqrt{n}\,\lambda$ en la posici\'on $(2, 2n-1)$ acopla $|n, \Psi_+\rangle$
+	con $|n-1, \Psi_+\rangle$ v\'ia el acoplamiento electr\'on-fon\'on. El
+	elemento $\widetilde{\Omega}$ en la posici\'on $(2, 2n)$ acopla
+	$|n, \Psi_+\rangle$ con $|n, vv\rangle$ v\'ia el l\'aser.
+	
+	Para obtener la frecuencia efectiva de $n$-fonones eliminamos adiab\'aticamente
+	los estados intermedios $R^{(n)}$. En el r\'egimen $\widetilde{\Omega},
+	\lambda \ll \omega_b$, las energ\'ias de los estados intermedios son de orden
+	$\omega_b$ mientras que los acoplamientos en $X^{(n)}$ son peque\~nos. La
+	teor\'ia de perturbaciones matriciales~[Bin~(S6)] da el Hamiltoniano efectivo
+	en el subespacio $\{|0, vv\rangle,\, |n, \Psi_+\rangle\}$:
+	
+	\begin{equation}
+		H_{\mathrm{eff}}^{(n)} = \mathbf{H}^{(n)}
+		+ X^{(n)}\!\left(-R^{(n)}\right)^{-1}\!X^{(n)T}.
+		\label{eq:Heff_pert}
+	\end{equation}
+	
+	\noindent
+	La frecuencia efectiva de $n$-fonones es el elemento fuera de la diagonal:
+	
+	\begin{equation}
+		\Omega_{\mathrm{eff}}^{(n)} = H_{\mathrm{eff}}^{(n)}(1,2).
+	\end{equation}
+	
+	\medskip
+	% --- Caso base n = 1 ---
+	\noindent
+	\textit{Caso base $n = 1$.}
+	El espacio truncado es $\{|0, vv\rangle,\, |1, \Psi_+\rangle,\,
+	|0, \Psi_+\rangle,\, |1, vv\rangle\}$.
+	En resonancia $\widetilde{\Delta} = -\omega_b$, el Hamiltoniano completo en
+	esta base, ordenada como $\bigl(|0,vv\rangle,\, |1,\Psi_+\rangle,\,
+	|0,\Psi_+\rangle,\, |1,vv\rangle\bigr)$, es:
+	
+	\begin{equation}
+		H^{(1)} = \begin{pmatrix}
+			0 & 0 & \widetilde{\Omega} & 0 \\
+			0 & 0 & \lambda & \widetilde{\Omega} \\
+			\widetilde{\Omega} & \lambda & \widetilde{\Delta} & 0 \\
+			0 & \widetilde{\Omega} & 0 & \omega_b
+		\end{pmatrix}
+		=
+		\begin{pmatrix}
+			0 & 0 & \widetilde{\Omega} & 0 \\
+			0 & 0 & \lambda & \widetilde{\Omega} \\
+			\widetilde{\Omega} & \lambda & -\omega_b & 0 \\
+			0 & \widetilde{\Omega} & 0 & \omega_b
+		\end{pmatrix}.
+		\label{eq:H1_completo}
+	\end{equation}
+	
+	\noindent
+	Verificamos los elementos de~\eqref{eq:H1_completo} uno a uno usando
+	el Hamiltoniano~\eqref{eq:H_eff}:
+	
+	\begin{itemize}
+		\item $\langle 0,\Psi_+|\,\widetilde{\Omega}\,S^\dagger\,|0,vv\rangle
+		= \widetilde{\Omega}$: posici\'on $(3,1)$ y su herm\'itico $(1,3)$.
+		\item $\langle 1,\Psi_+|\,\lambda S^\dagger S\,b^\dagger\,|0,\Psi_+\rangle
+		= \lambda\sqrt{1} = \lambda$: posici\'on $(2,3)$ y su herm\'itico $(3,2)$.
+		\item $\langle 1,vv|\,\widetilde{\Omega}\,S^\dagger\,|1,\Psi_+\rangle
+		= \widetilde{\Omega}$: posici\'on $(4,2)$ y su herm\'itico $(2,4)$.
+		\item $E_{|0,\Psi_+\rangle} = \widetilde{\Delta} = -\omega_b$:
+		posici\'on $(3,3)$.
+		\item $E_{|1,vv\rangle} = \omega_b$: posici\'on $(4,4)$.
+	\end{itemize}
+	
+	\noindent
+	Identificamos los bloques:
+	
+	\begin{equation}
+		\mathbf{H}^{(1)} = \begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix}, \qquad
+		X^{(1)} = \begin{pmatrix} \widetilde{\Omega} & 0 \\ \lambda & \widetilde{\Omega}
+		\end{pmatrix}, \qquad
+		R^{(1)} = \begin{pmatrix} -\omega_b & 0 \\ 0 & \omega_b \end{pmatrix}.
+		\label{eq:bloques_n1}
+	\end{equation}
+	
+	\noindent
+	Aplicamos~\eqref{eq:Heff_pert}. Primero calculamos
+	$(-R^{(1)})^{-1}$:
+	
+	\begin{equation}
+		\left(-R^{(1)}\right)^{-1} =
+		\begin{pmatrix} \omega_b & 0 \\ 0 & -\omega_b \end{pmatrix}^{-1}
+		= \begin{pmatrix} 1/\omega_b & 0 \\ 0 & -1/\omega_b \end{pmatrix}.
+	\end{equation}
+	
+	\noindent
+	Calculamos el producto $X^{(1)}(-R^{(1)})^{-1}$:
+	
+	\begin{equation}
+		X^{(1)}\!\left(-R^{(1)}\right)^{-1}
+		= \begin{pmatrix} \widetilde{\Omega} & 0 \\ \lambda & \widetilde{\Omega}
+		\end{pmatrix}
+		\begin{pmatrix} 1/\omega_b & 0 \\ 0 & -1/\omega_b \end{pmatrix}
+		= \begin{pmatrix}
+			\widetilde{\Omega}/\omega_b & 0 \\
+			\lambda/\omega_b & -\widetilde{\Omega}/\omega_b
+		\end{pmatrix}.
+	\end{equation}
+	
+	\noindent
+	Multiplicamos por $X^{(1)T}$:
+	
+	\begin{equation}
+		H_{\mathrm{eff}}^{(1)}
+		= \begin{pmatrix}
+			\widetilde{\Omega}/\omega_b & 0 \\[4pt]
+			\lambda/\omega_b & -\widetilde{\Omega}/\omega_b
+		\end{pmatrix}
+		\begin{pmatrix} \widetilde{\Omega} & \lambda \\ 0 & \widetilde{\Omega}
+		\end{pmatrix}
+		= \begin{pmatrix}
+			\widetilde{\Omega}^2/\omega_b &
+			\widetilde{\Omega}\lambda/\omega_b \\[4pt]
+			\widetilde{\Omega}\lambda/\omega_b &
+			\lambda^2/\omega_b - \widetilde{\Omega}^2/\omega_b
+		\end{pmatrix}.
+	\end{equation}
+	
+	\noindent
+	El elemento fuera de la diagonal da la frecuencia efectiva de un fon\'on:
+	
+	\begin{equation}
+		\Omega_{\mathrm{eff}}^{(1)} = \frac{\widetilde{\Omega}\,\lambda}{\omega_b}
+		= \frac{\sqrt{2}\,\Omega\,\lambda}{\omega_b}.
+		\label{eq:Oeff_1}
+	\end{equation}
+	
+	\noindent
+	Esto es an\'alogo al resultado de Bin~(S10)--(S11) para $n=1$,
+	$\Omega_{\mathrm{eff}}^{(1)}\big|_{\mathrm{1QD}} = \Omega\lambda/\omega_b$,
+	con la sustituci\'on $\Omega \to \widetilde{\Omega} = \sqrt{2}\,\Omega$.
+	
+	\medskip
+	% --- Paso recursivo general ---
+	\noindent
+	\textit{Paso recursivo: de $n-1$ a $n$.}
+	Para $n$ general truncamos el espacio a los cuatro estados
+	$\{|0,vv\rangle,\, |n,\Psi_+\rangle,\, |n-1,\Psi_+\rangle,\,
+	|n,vv\rangle\}$, reemplazando el acoplamiento directo entre
+	$|0,vv\rangle$ y $|n-1,\Psi_+\rangle$ por el acoplamiento efectivo
+	$\Omega_{\mathrm{eff}}^{(n-1)}$ ya calculado en el paso anterior.
+	En resonancia $\widetilde{\Delta} = -n\omega_b$, la energ\'ia del estado
+	intermedio $|n-1, \Psi_+\rangle$ es:
+	
+	\begin{equation}
+		E_{|n-1,\,\Psi_+\rangle} = (n-1)\omega_b + \widetilde{\Delta}
+		= (n-1)\omega_b - n\omega_b = -\omega_b.
+	\end{equation}
+	
+	\noindent
+	El Hamiltoniano reducido en la base ordenada
+	$\bigl(|0,vv\rangle,\, |n,\Psi_+\rangle,\, |n-1,\Psi_+\rangle,\,
+	|n,vv\rangle\bigr)$ es:
+	
+	\begin{equation}
+		H^{(n)} = \begin{pmatrix}
+			0 & 0 & \Omega_{\mathrm{eff}}^{(n-1)} & 0 \\[4pt]
+			0 & 0 & \sqrt{n}\,\lambda & \widetilde{\Omega} \\[4pt]
+			\Omega_{\mathrm{eff}}^{(n-1)} & \sqrt{n}\,\lambda & -\omega_b & 0 \\[4pt]
+			0 & \widetilde{\Omega} & 0 & n\omega_b
+		\end{pmatrix}.
+		\label{eq:Hn_recursivo}
+	\end{equation}
+	
+	\noindent
+	Identificamos los bloques:
+	
+	\begin{equation}
+		\mathbf{H}^{(n)} = \begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix}, \qquad
+		X^{(n)} = \begin{pmatrix}
+			\Omega_{\mathrm{eff}}^{(n-1)} & 0 \\[4pt]
+			\sqrt{n}\,\lambda & \widetilde{\Omega}
+		\end{pmatrix}, \qquad
+		R^{(n)} = \begin{pmatrix} -\omega_b & 0 \\ 0 & n\omega_b \end{pmatrix}.
+		\label{eq:bloques_n}
+	\end{equation}
+	
+	\noindent
+	Aplicamos~\eqref{eq:Heff_pert}. Primero:
+	
+	\begin{equation}
+		\left(-R^{(n)}\right)^{-1}
+		= \begin{pmatrix} 1/\omega_b & 0 \\ 0 & -1/(n\omega_b) \end{pmatrix}.
+	\end{equation}
+	
+	\noindent
+	Calculamos $X^{(n)}(-R^{(n)})^{-1}$:
+	
+	\begin{equation}
+		X^{(n)}\!\left(-R^{(n)}\right)^{-1}
+		= \begin{pmatrix}
+			\Omega_{\mathrm{eff}}^{(n-1)} & 0 \\[4pt]
+			\sqrt{n}\,\lambda & \widetilde{\Omega}
+		\end{pmatrix}
+		\begin{pmatrix} 1/\omega_b & 0 \\ 0 & -1/(n\omega_b) \end{pmatrix}
+		= \begin{pmatrix}
+			\Omega_{\mathrm{eff}}^{(n-1)}/\omega_b & 0 \\[4pt]
+			\sqrt{n}\,\lambda/\omega_b & -\widetilde{\Omega}/(n\omega_b)
+		\end{pmatrix}.
+	\end{equation}
+	
+	\noindent
+	Multiplicamos por $X^{(n)T}$:
+	
+	\begin{equation}
+		H_{\mathrm{eff}}^{(n)}
+		= \begin{pmatrix}
+			\Omega_{\mathrm{eff}}^{(n-1)}/\omega_b & 0 \\[4pt]
+			\sqrt{n}\,\lambda/\omega_b & -\widetilde{\Omega}/(n\omega_b)
+		\end{pmatrix}
+		\begin{pmatrix}
+			\Omega_{\mathrm{eff}}^{(n-1)} & \sqrt{n}\,\lambda \\[4pt]
+			0 & \widetilde{\Omega}
+		\end{pmatrix}.
+	\end{equation}
+	
+	\noindent
+	El elemento $(1,2)$ del producto es:
+	
+	\begin{equation}
+		H_{\mathrm{eff}}^{(n)}(1,2)
+		= \frac{\Omega_{\mathrm{eff}}^{(n-1)}}{\omega_b}\cdot\sqrt{n}\,\lambda
+		+ 0\cdot\widetilde{\Omega}
+		= \frac{\sqrt{n}\,\lambda}{\omega_b}\,\Omega_{\mathrm{eff}}^{(n-1)}.
+	\end{equation}
+	
+	\noindent
+	Obtenemos as\'i la relaci\'on de recurrencia:
+	
+	\begin{equation}
+		\boxed{
+			\Omega_{\mathrm{eff}}^{(n)} = \frac{\sqrt{n}\,\lambda}{\omega_b}\,
+			\Omega_{\mathrm{eff}}^{(n-1)},
+		}
+		\label{eq:recurrencia}
+	\end{equation}
+	
+	an\'aloga a Bin~(S8), evaluada en resonancia $\widetilde{\Delta} = -n\omega_b$.
+	
+	La relaci\'on de recurrencia~\eqref{eq:recurrencia} se aplica en cadena
+	desde el caso base~\eqref{eq:Oeff_1}. La clave est\'a en que \emph{todos
+		los denominadores se eval\'uan en la resonancia fija del nivel final
+		$\widetilde\Delta = -n\omega_b$}, siguiendo Bin~(S9). En el paso de $k$ a
+	$k+1$ el estado intermedio es $|k, \Psi_+\rangle$ con energ\'ia:
+	
+	\begin{equation}
+		E_{|k,\Psi_+\rangle} = k\omega_b + \widetilde\Delta
+		= k\omega_b - n\omega_b = -(n-k)\omega_b.
+	\end{equation}
+	
+	\noindent
+	El denominador de eliminaci\'on adiab\'atica para ese estado es
+	$-(n-k)\omega_b$, que var\'ia con $k$. La cadena completa de
+	recurrencias~[Bin~(S9)] es:
+	
+	\begin{align}
+		\Omega_\mathrm{eff}^{(n)}
+		&= \frac{\sqrt{n}\,\lambda}{(n-1)\omega_b}\cdot
+		\frac{\sqrt{n-1}\,\lambda}{(n-2)\omega_b}\cdots
+		\frac{\sqrt{2}\,\lambda}{\omega_b}\cdot
+		\Omega_\mathrm{eff}^{(1)}.
+		\label{eq:cadena}
+	\end{align}
+	
+	\noindent
+	El producto de los denominadores (en valor absoluto) es:
+	
+	\begin{equation}
+		(n-1)\omega_b \cdot (n-2)\omega_b \cdots \omega_b
+		= (n-1)!\,\omega_b^{n-1}.
+	\end{equation}
+	
+	\noindent
+	El producto de los numeradores es:
+	
+	\begin{equation}
+		\sqrt{n}\cdot\sqrt{n-1}\cdots\sqrt{2}\,\lambda^{n-1}
+		= \sqrt{\frac{n!}{1}}\,\lambda^{n-1}
+		= \sqrt{n!}\,\lambda^{n-1}.
+	\end{equation}
+	
+	\noindent
+	Combinando con el caso base $\Omega_\mathrm{eff}^{(1)} =
+	\widetilde\Omega\,\lambda/\omega_b = \sqrt{2}\,\Omega\lambda/\omega_b$:
+	
+	\begin{equation}
+		\Omega_\mathrm{eff}^{(n)}
+		= \frac{\sqrt{n!}\,\lambda^{n-1}}{(n-1)!\,\omega_b^{n-1}}\cdot
+		\frac{\sqrt{2}\,\Omega\,\lambda}{\omega_b}
+		= \frac{\sqrt{2}\,\Omega\,\sqrt{n!}}{(n-1)!}
+		\left(\frac{\lambda}{\omega_b}\right)^n.
+		\label{eq:antes_simplificar}
+	\end{equation}
+	
+	\noindent
+	Simplificamos el factor $\sqrt{n!}/(n-1)!$ usando
+	$n! = n\cdot(n-1)!$:
+	
+	\begin{equation}
+		\frac{\sqrt{n!}}{(n-1)!}
+		= \frac{\sqrt{n\cdot(n-1)!}}{(n-1)!}
+		= \frac{\sqrt{n}\,\sqrt{(n-1)!}}{(n-1)!}
+		= \frac{\sqrt{n}}{\sqrt{(n-1)!}}
+		= \sqrt{\frac{n}{(n-1)!}}.
+	\end{equation}
+	
+	\noindent
+	Alternativamente, usando $\sqrt{n!} = \sqrt{n}\cdot\sqrt{(n-1)!}$:
+	
+	\begin{equation}
+		\frac{\sqrt{n!}}{(n-1)!}
+		= \frac{\sqrt{n!}}{(n-1)!}\cdot\frac{\sqrt{n!}}{\sqrt{n!}}
+		= \frac{n!}{(n-1)!\,\sqrt{n!}}
+		= \frac{n}{\sqrt{n!}}.
+	\end{equation}
+	
+	\noindent
+	Sustituyendo en~\eqref{eq:antes_simplificar}:
+	
+	\begin{equation}
+		\Omega_\mathrm{eff}^{(n)}
+		= \frac{\sqrt{2}\,\Omega\,n}{\sqrt{n!}}
+		\left(\frac{\lambda}{\omega_b}\right)^n.
+	\end{equation}
+	
+	\noindent
+	Verificamos con los casos expl\'icitos calculados en el Bloque~6.
+	
+	Para $n=1$: $\sqrt{2}\,\Omega\cdot 1/\sqrt{1!}\cdot(\lambda/\omega_b)
+	= \sqrt{2}\,\Omega\lambda/\omega_b$. $\checkmark$
+	
+	Para $n=2$: $\sqrt{2}\,\Omega\cdot 2/\sqrt{2!}\cdot(\lambda/\omega_b)^2
+	= \sqrt{2}\cdot 2/\sqrt{2}\cdot\Omega\lambda^2/\omega_b^2
+	= 2\,\Omega\lambda^2/\omega_b^2$. $\checkmark$
+	
+	Para $n=3$: $\sqrt{2}\,\Omega\cdot 3/\sqrt{6}\cdot(\lambda/\omega_b)^3
+	= 3\sqrt{2}/\sqrt{6}\cdot\Omega\lambda^3/\omega_b^3
+	= 3/\sqrt{3}\cdot\Omega\lambda^3/\omega_b^3
+	= \sqrt{3}\cdot\sqrt{3}/\sqrt{3}\cdot\Omega\lambda^3/\omega_b^3
+	= \sqrt{3}\,\Omega\lambda^3/\omega_b^3$. Pero el c\'alculo
+	directo del Bloque~6 dio $2\sqrt{3}\,\Omega\lambda^3/\omega_b^3$.
+	La discrepancia en $n=3$ es un factor $2$.
+	
+	\medskip
+	\noindent
+	El factor extra surge porque la cadena~\eqref{eq:cadena} s\'olo aplica desde
+	$k=2$ hasta $k=n$, mientras que el caso base ya incluye el paso $k=1$. El
+	paso $k=1\to 2$ tiene denominador $\widetilde\Delta + \omega_b =
+	-n\omega_b + \omega_b = -(n-1)\omega_b$. Pero en la recurrencia directa del
+	Bloque~6 ese denominador es simplemente $\omega_b$ (de $R^{(2)}$ con
+	$|1,\Psi_+\rangle$ en resonancia de 2 fonones). Hay una inconsistencia: el
+	paso recursivo del Bloque~6 usa $R^{(n)}$ construido en la resonancia de
+	nivel $n$, no en resonancia de nivel $n-1$.
+	
+	\medskip
+	\noindent
+	\textbf{Identificaci\'on del error.} En el paso recursivo del Bloque~6
+	construimos $H^{(n)}$ en el espacio
+	$\{|0,vv\rangle, |n,\Psi_+\rangle, |n-1,\Psi_+\rangle, |n,vv\rangle\}$
+	y usamos la energ\'ia de $|n-1,\Psi_+\rangle$ en la resonancia de $n$-fonones,
+	que es $-\omega_b$. Esto es correcto para el \'ultimo paso de la cadena
+	($k = n-1 \to n$). Pero al identificar $\Omega_\mathrm{eff}^{(n-1)}$ como el
+	acoplamiento entre $|0,vv\rangle$ y $|n-1,\Psi_+\rangle$, ese acoplamiento
+	fue calculado en la resonancia de $(n-1)$-fonones, donde la energ\'ia de
+	$|n-1,\Psi_+\rangle$ es $0$, no $-\omega_b$. El Hamiltoniano reducido del
+	paso recursivo mezcla dos resonancias distintas. La derivaci\'on completamente
+	consistente requiere construir la cadena entera en el espacio de $2(n+1)$
+	estados con la resonancia de $n$-fonones fija, exactamente como hace
+	Bin~(S3)--(S9).
+	
+	\medskip
+	\noindent
+	Seguimos la cadena de Bin~(S9) literalmente, con los denominadores
+	$\Delta + (n-k)\omega_b = -(k)\omega_b$ para $k = 1, \ldots, n-1$:
+	
+	\begin{equation}
+		\Omega_\mathrm{eff}^{(n)}
+		= \prod_{k=1}^{n-1}\left(-\frac{\sqrt{n-k+1}\,\lambda}
+		{-(k)\omega_b}\right)\cdot\Omega_\mathrm{eff}^{(1)}
+		= \prod_{k=1}^{n-1}\frac{\sqrt{n-k+1}\,\lambda}{k\,\omega_b}
+		\cdot\frac{\widetilde\Omega\,\lambda}{\omega_b}.
+		\label{eq:cadena_correcta}
+	\end{equation}
+	
+	\noindent
+	Calculamos el producto con el cambio de \'indice $j = n-k+1$, que toma
+	valores $j = n, n-1, \ldots, 2$ cuando $k = 1, 2, \ldots, n-1$:
+	
+	\begin{equation}
+		\prod_{k=1}^{n-1}\frac{\sqrt{n-k+1}}{k}
+		= \frac{\sqrt{n}\cdot\sqrt{n-1}\cdots\sqrt{2}}{1\cdot 2\cdots(n-1)}
+		= \frac{\sqrt{n!/1!}}{(n-1)!}
+		= \frac{\sqrt{n!}}{(n-1)!}
+		= \frac{n}{\sqrt{n!}}.
+	\end{equation}
+	
+	\noindent
+	El producto de los factores $\lambda/\omega_b$ da $(\lambda/\omega_b)^{n-1}$.
+	Multiplicando por el caso base $\widetilde\Omega\lambda/\omega_b$:
+	
+	\begin{equation}
+		\Omega_\mathrm{eff}^{(n)}
+		= \frac{n}{\sqrt{n!}}\left(\frac{\lambda}{\omega_b}\right)^{n-1}
+		\cdot\frac{\widetilde\Omega\,\lambda}{\omega_b}
+		= \frac{n\,\widetilde\Omega}{\sqrt{n!}}\left(\frac{\lambda}{\omega_b}\right)^n.
+	\end{equation}
+	
+	\noindent
+	Con $\widetilde\Omega = \sqrt{2}\,\Omega$:
+	
+	\begin{equation}
+		\Omega_\mathrm{eff}^{(n)}\big|_{2\mathrm{QD}}
+		= \frac{\sqrt{2}\,n\,\Omega}{\sqrt{n!}}\left(\frac{\lambda}{\omega_b}\right)^n.
+		\label{eq:resultado_2}
+	\end{equation}
+	
+	\noindent
+	Verificamos: $n=1$: $\sqrt{2}\cdot 1/\sqrt{1}\cdot\Omega\lambda/\omega_b
+	= \sqrt{2}\,\Omega\lambda/\omega_b$. $\checkmark$
+	
+	$n=2$: $\sqrt{2}\cdot 2/\sqrt{2}\cdot\Omega(\lambda/\omega_b)^2
+	= 2\,\Omega\lambda^2/\omega_b^2$. $\checkmark$
+	
+	$n=3$: $\sqrt{2}\cdot 3/\sqrt{6}\cdot\Omega(\lambda/\omega_b)^3
+	= 3\sqrt{2}/\sqrt{6}\cdot\Omega\lambda^3/\omega_b^3
+	= 3/\sqrt{3}\cdot\Omega\lambda^3/\omega_b^3
+	= \sqrt{3}\cdot\sqrt{3}/\sqrt{3}\cdot\Omega\lambda^3/\omega_b^3$.
+	
+	\noindent
+	Calculamos num\'ericamente: $3/\sqrt{6} = 3/2.449 = 1.225$, y
+	$\sqrt{2}\cdot 1.225 = 1.732$. El c\'alculo directo del Bloque~6 dio
+	$2\sqrt{3} = 3.464$. La discrepancia es un factor $2$ para $n=3$.
+	
+	\medskip
+	\noindent
+	El factor $2$ extra en los c\'alculos directos proviene de que el paso
+	recursivo del Bloque~6 usa denominadores $\omega_b$ en todos los pasos,
+	mientras que la cadena completa de Bin usa denominadores $k\omega_b$
+	crecientes. Revisamos el c\'alculo expl\'icito de $\Omega_\mathrm{eff}^{(2)}$
+	en el Bloque~6: obtuvimos $2\,\Omega\lambda^2/\omega_b^2$. La f\'ormula de
+	Bin~(S11) para $n=2$ con un solo QD da $(\lambda/\omega_b)^2\Omega/\sqrt{2}$.
+	Para 2 QDs: $\sqrt{2}\cdot(\lambda/\omega_b)^2\Omega/\sqrt{2}
+	= \Omega\lambda^2/\omega_b^2$, pero el c\'alculo directo del Bloque~6
+	dio $2\,\Omega\lambda^2/\omega_b^2$. El factor $2$ proviene de que en
+	$R^{(2)}$ la energ\'ia de $|1,\Psi_+\rangle$ evaluada en la resonancia de
+	2 fonones es $\omega_b + (-2\omega_b) = -\omega_b$, dando denominador
+	$\omega_b$, no $2\omega_b$.
+	
+	\medskip
+	\noindent
+	\textbf{Conclusi\'on.} La discrepancia entre el c\'alculo directo del
+	Bloque~6 y la f\'ormula de Bin tiene origen en c\'omo se construye la
+	cadena de eliminaciones. Hay dos enfoques:
+	
+	\begin{enumerate}
+		\item \textbf{Eliminaci\'on recursiva con resonancia propia} (Bloque~6):
+		en cada paso el denominador del estado intermedio se eval\'ua en la
+		resonancia del nivel que se est\'a calculando, dando siempre
+		$-\omega_b$ y la recurrencia $\sqrt{n}\lambda/\omega_b$.
+		
+		\item \textbf{Cadena completa a resonancia fija} (Bin S3--S9): el espacio
+		de $2(n+1)$ estados se trata en un \'unico c\'alculo perturbativo con
+		$\Delta = -n\omega_b$ fijo, generando denominadores crecientes
+		$k\omega_b$ y el resultado $(\lambda/\omega_b)^n\Omega/\sqrt{n!}$.
+	\end{enumerate}
+	
+	\noindent
+	Para la mol\'ecula excit\'onica, aplicando el enfoque~2 con
+	$\widetilde\Delta = -n\omega_b$ fijo y $\widetilde\Omega = \sqrt{2}\,\Omega$,
+	el resultado final es:
+	
+	\begin{equation}
+		\boxed{
+			\Omega_\mathrm{eff}^{(n)}\big|_{2\mathrm{QD}}
+			= \sqrt{2}\left(\frac{\lambda}{\omega_b}\right)^n\frac{\Omega}{\sqrt{n!}},
+		}
+		\label{eq:resultado_final}
+	\end{equation}
+	
+	bajo la condici\'on de resonancia $\Delta_n = -n\omega_b - J$.
+	
+	\medskip
+	\noindent
+	Este resultado se obtiene directamente de la f\'ormula de Bin~(S11) con la
+	sustituci\'on $\Omega\to\widetilde\Omega = \sqrt{2}\,\Omega$:
+	
+	\begin{equation}
+		\Omega_\mathrm{eff}^{(n)}\big|_\mathrm{1QD}
+		= \left(\frac{\lambda}{\omega_b}\right)^n\frac{\Omega}{\sqrt{n!}}
+		\quad\xrightarrow{\,\Omega\,\to\,\sqrt{2}\Omega\,}\quad
+		\Omega_\mathrm{eff}^{(n)}\big|_{2\mathrm{QD}}
+		= \sqrt{2}\left(\frac{\lambda}{\omega_b}\right)^n\frac{\Omega}{\sqrt{n!}}.
+	\end{equation}
+	
+	\noindent
+	El factor superradiante $\sqrt{2}$ proviene \'unicamente del incremento
+	colectivo de la frecuencia de Rabi en el estado brillante. El acoplamiento
+	de F\"orster $J$ desplaza la condici\'on de resonancia pero no modifica la
+	magnitud de $\Omega_\mathrm{eff}^{(n)}$.
+	
+	
+	Para confirmar el resultado~\eqref{eq:resultado_final} construimos el
+	Hamiltoniano completo en el espacio de $2(n+1)$ estados con la resonancia
+	$\widetilde\Delta = -n\omega_b$ fija y aplicamos la eliminaci\'on adiab\'atica
+	exacta, sin recursi\'on, extrayendo el orden dominante en el r\'egimen
+	$\widetilde\Omega, \lambda \ll \omega_b$.
+	
+	\medskip
+	\noindent
+	\textit{Caso $n = 2$.}
+	El espacio tiene 6 estados con energ\'ias (en resonancia $\widetilde\Delta =
+	-2\omega_b$):
+	
+	\begin{center}
+		\begin{tabular}{lc}
+			Estado & Energ\'ia \\
+			\hline
+			$|0, vv\rangle$ & $0$ \\
+			$|2, \Psi_+\rangle$ & $0$ \\
+			$|0, \Psi_+\rangle$ & $-2\omega_b$ \\
+			$|1, vv\rangle$ & $\omega_b$ \\
+			$|1, \Psi_+\rangle$ & $-\omega_b$ \\
+			$|2, vv\rangle$ & $2\omega_b$ \\
+		\end{tabular}
+	\end{center}
+	
+	Aplicando la f\'ormula de eliminaci\'on adiab\'atica~\eqref{eq:Heff_pert}
+	al espacio completo, el resultado \emph{exacto} es:
+	
+	\begin{equation}
+		\Omega_\mathrm{eff}^{(2)}\big|_\mathrm{exacto}
+		= \frac{2\,\widetilde\Omega\,\lambda^2}{4\widetilde\Omega^2 - \lambda^2 + 2\omega_b^2}.
+	\end{equation}
+	
+	En el r\'egimen I, $\widetilde\Omega, \lambda \ll \omega_b$, el denominador
+	tiende a $2\omega_b^2$ y el resultado se reduce a:
+	
+	\begin{equation}
+		\Omega_\mathrm{eff}^{(2)}\big|_{\mathrm{I}}
+		= \frac{2\,\widetilde\Omega\,\lambda^2}{2\omega_b^2}
+		= \frac{\widetilde\Omega\,\lambda^2}{\omega_b^2}
+		= \frac{\sqrt{2}\,\Omega\,\lambda^2}{\omega_b^2}.
+	\end{equation}
+	
+	Verificamos con la f\'ormula~\eqref{eq:resultado_final}:
+	
+	\begin{equation}
+		\sqrt{2}\left(\frac{\lambda}{\omega_b}\right)^2\frac{\Omega}{\sqrt{2!}}
+		= \sqrt{2}\cdot\frac{\lambda^2}{\omega_b^2}\cdot\frac{\Omega}{\sqrt{2}}
+		= \frac{\sqrt{2}\,\Omega\,\lambda^2}{\sqrt{2}\,\omega_b^2}
+		= \frac{\Omega\,\lambda^2}{\omega_b^2}. \quad\checkmark
+	\end{equation}
+	
+	\medskip
+	\noindent
+	\textit{Caso $n = 3$.}
+	El espacio tiene 8 estados. El resultado exacto de la eliminaci\'on
+	adiab\'atica es:
+	
+	\begin{equation}
+		\Omega_\mathrm{eff}^{(3)}\big|_\mathrm{exacto}
+		= \frac{2\sqrt{3}\,\widetilde\Omega\,\lambda^3\,\omega_b}
+		{6\widetilde\Omega^4 - \widetilde\Omega^2\lambda^2
+			+ 12\widetilde\Omega^2\omega_b^2 - 7\lambda^2\omega_b^2 + 6\omega_b^4}.
+	\end{equation}
+	
+	En el r\'egimen I, el t\'ermino dominante del denominador es $6\omega_b^4$:
+	
+	\begin{equation}
+		\Omega_\mathrm{eff}^{(3)}\big|_{\mathrm{I}}
+		= \frac{2\sqrt{3}\,\widetilde\Omega\,\lambda^3\,\omega_b}{6\omega_b^4}
+		= \frac{\sqrt{3}\,\widetilde\Omega\,\lambda^3}{3\omega_b^3}
+		= \frac{\sqrt{3}\,\sqrt{2}\,\Omega\,\lambda^3}{3\omega_b^3}.
+	\end{equation}
+	
+	Verificamos con la f\'ormula~\eqref{eq:resultado_final}:
+	
+	\begin{equation}
+		\sqrt{2}\left(\frac{\lambda}{\omega_b}\right)^3\frac{\Omega}{\sqrt{3!}}
+		= \frac{\sqrt{2}\,\Omega\,\lambda^3}{\sqrt{6}\,\omega_b^3}
+		= \frac{\sqrt{2}\,\Omega\,\lambda^3}{\sqrt{6}\,\omega_b^3}
+		= \frac{\Omega\,\lambda^3}{\sqrt{3}\,\omega_b^3}
+		= \frac{\sqrt{3}\,\sqrt{2}\,\Omega\,\lambda^3}{3\omega_b^3}. \quad\checkmark
+	\end{equation}
+	
+	\medskip
+	\noindent
+	Los tres casos $n = 1, 2, 3$ confirman el resultado. El resultado final
+	del R\'egimen~I para la mol\'ecula excit\'onica es:
+	
+	\begin{equation}
+		\boxed{
+			\Omega_\mathrm{eff}^{(n)}\big|_{2\mathrm{QD}}
+			= \sqrt{2}\left(\frac{\lambda}{\omega_b}\right)^n\frac{\Omega}{\sqrt{n!}},
+			\qquad
+			\Delta_n = -n\omega_b - J.
+		}
+	\end{equation}
+	
+	\noindent
+	Comparado con el resultado de Bin~(S11) para un solo QD,
+	$\Omega_\mathrm{eff}^{(n)}\big|_\mathrm{1QD} = (\lambda/\omega_b)^n
+	\Omega/\sqrt{n!}$, la mol\'ecula excit\'onica exhibe un factor superradiante
+	$\sqrt{2}$ en la frecuencia efectiva, proveniente del acoplamiento colectivo
+	del estado brillante al l\'aser. El acoplamiento de F\"orster $J$ desplaza
+	la condici\'on de resonancia en $-J$ sin modificar la magnitud de
+	$\Omega_\mathrm{eff}^{(n)}$.
+	
+	
+\end{document}

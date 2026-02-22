@@ -1,0 +1,105 @@
+\documentclass[12pt,spanish,openany,letterpaper,pagesize]{scrbook}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}%escribir con acentos sin necesidad de comandos \'{} .
+\usepackage[automark,headsepline]{scrlayer-scrpage}
+\usepackage{epsfig}
+\usepackage{epic}
+\usepackage{eepic}
+\usepackage{pgf}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{physics}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{mathrsfs}
+\usepackage{threeparttable}
+\usepackage{amscd}
+\usepackage{here}
+\usepackage{graphicx}
+\usepackage{lscape}
+\usepackage{tabularx}
+\usepackage{subfigure}
+\usepackage{longtable}
+
+% Comprimir citas numéricas consecutivas: [9-14] en lugar de [9,10,11,12,13,14]
+\usepackage[numbers,sort&compress]{natbib}
+
+% Hipervínculos (incluye entradas del índice/tabla de contenido)
+\usepackage[hidelinks]{hyperref}
+\hypersetup{linktoc=all}
+
+
+\usepackage{rotating} %Para rotar texto, objetos y tablas seite. No se ve en DVI solo en PS. Seite 328 Hundebuch
+                        %se usa junto con \rotate, \sidewidestable ....
+
+\usepackage{mathrsfs}
+
+\usepackage{mathrsfs}
+
+
+\renewcommand{\theequation}{\thechapter-\arabic{equation}}
+\renewcommand{\thefigure}{\textbf{\thechapter-\arabic{figure}}}
+\renewcommand{\thetable}{\textbf{\thechapter-\arabic{table}}}
+
+
+\textheight22.5cm \topmargin0cm \textwidth16.5cm
+\oddsidemargin0.5cm \evensidemargin-0.5cm%
+
+\clearpairofpagestyles
+\ihead{\headmark}
+\ohead{\pagemark}
+\cfoot{}
+\pagestyle{scrheadings}
+\unitlength1mm %Define la unidad LE para Figuras
+% Si quieres fórmulas alineadas a la izquierda, usa la opción fleqn en \documentclass o en amsmath.
+% (p.ej. \documentclass[fleqn]{...} o \usepackage[fleqn]{amsmath})
+% Eliminamos \mathindent porque no existe en este formato/clase.
+\marginparwidth0cm
+\parindent0cm %Define la distancia de la primera linea de un parrafo a la margen
+
+%Para tablas,  redefine el backschlash en tablas donde se define la posici\'{o}n del texto en las
+%casillas (con \centering \raggedright o \raggedleft)
+\newcommand{\PreserveBackslash}[1]{\let\temp=\\#1\let\\=\temp}
+\let\PBS=\PreserveBackslash
+
+%Espacio entre lineas
+\renewcommand{\baselinestretch}{1.1}
+
+%Neuer Befehl f\"{u}r die Tabelle Eigenschaften der Aktivkohlen
+\newcommand{\arr}[1]{\raisebox{1.5ex}[0cm][0cm]{#1}}
+
+%Neue Kommandos
+\usepackage{Befehle}
+%Inicio del documento. Tener en cuenta que hay archivos auxiliares
+
+\begin{document}
+\pagenumbering{roman}
+\include{HojaTitulo/HojaTitulo}
+
+\renewcommand{\tablename}{\textbf{Tabla}}
+\renewcommand{\figurename}{\textbf{Figura}}
+\renewcommand{\listtablename}{Lista de Tablas}
+\renewcommand{\listfigurename}{Lista de Figuras}
+\renewcommand{\contentsname}{Contenido}
+
+\tableofcontents
+\cleardoublepage
+
+%\include{Tab_Simbolos/TabSimbolosMSc}
+%\include{Resumen}%\newcommand{\clearemptydoublepage}{\newpage{\pagestyle{empty}\cleardoublepage}}
+\pagenumbering{arabic}
+\include{Kap1/introduccion}
+\include{Kap2/marco_teorico}
+\include{Kap3/Kap3}
+\include{Kap4/Kap4}
+\include{Anexos/Anexos}
+\addcontentsline{toc}{chapter}{\numberline{}Bibliograf\'{\i}a}
+\bibliographystyle{unsrt}
+\bibliography{Bibli}
+\end{document}
