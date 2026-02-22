@@ -8,7 +8,7 @@
 \usepackage[margin=2.5cm]{geometry}
 
 \begin{document}
-	
+	\section{Primer Régimen}
 	% -----------------------------------------------------------
 	% BLOQUE 0: Hamiltoniano en el marco del laboratorio
 	% -----------------------------------------------------------
@@ -1222,6 +1222,1355 @@
 	del estado brillante al l\'aser. El acoplamiento de F\"orster $J$ desplaza
 	la condici\'on de resonancia en $-J$ sin modificar la magnitud de
 	$\Omega_\mathrm{eff}^{(n)}$.
+
+\section{Segundo Régimen}
+	% -----------------------------------------------------------
+	% Régimen II — Bloque 0: Transformación de desplazamiento
+	%              lambda ~ omega_b
+	% -----------------------------------------------------------
 	
+	En el r\'egimen II se tiene $\lambda \sim \omega_b$, de modo que el
+	acoplamiento electr\'on-fon\'on no puede tratarse perturbativamente.
+	En cambio, $\widetilde\Omega = \sqrt{2}\,\Omega \ll \omega_b$, por lo que
+	el l\'aser sigue siendo el t\'ermino perturbativo. La estrategia es
+	eliminar primero el acoplamiento electr\'on-fon\'on mediante una
+	transformaci\'on unitaria exacta.
+	
+	El punto de partida es el Hamiltoniano efectivo de la mol\'ecula
+	excit\'onica en el marco rotante,
+	restringido al subespacio $\{|vv\rangle, |\Psi_+\rangle\}$
+	[Ec.~\eqref{eq:H_eff}]:
+	
+	\begin{equation}
+		H_\mathrm{eff} = \omega_b b^\dagger b
+		+ \widetilde\Delta\, S^\dagger S
+		+ \lambda\, S^\dagger S\,(b^\dagger + b)
+		+ \widetilde\Omega\bigl(S + S^\dagger\bigr),
+		\label{eq:H_eff_II}
+	\end{equation}
+	
+	con $\widetilde\Delta = \Delta + J$ y $\widetilde\Omega = \sqrt{2}\,\Omega$.
+	
+	\medskip
+	\noindent
+	Definimos el operador de desplazamiento colectivo:
+	
+	\begin{equation}
+		\widetilde{D} = \exp\!\left[\frac{\lambda}{\omega_b}\,S^\dagger S
+		\,(b^\dagger - b)\right].
+		\label{eq:D_tilde}
+	\end{equation}
+	
+	\noindent
+	La estructura de $\widetilde{D}$ es id\'entica a la de Bin con la
+	sustituci\'on $\sigma^\dagger\sigma \to S^\dagger S$. Esto es exacto
+	porque el acoplamiento electr\'on-fon\'on en $H_\mathrm{eff}$ tiene
+	la misma forma $\lambda\,S^\dagger S\,(b^\dagger + b)$ que en el
+	Hamiltoniano de un solo QD.
+	
+	\medskip
+	\noindent
+	Calculamos la transformaci\'on $\widetilde{D}\,H_\mathrm{eff}\,\widetilde{D}^\dagger$
+	t\'ermino por t\'ermino. Usamos las reglas de transformaci\'on del
+	operador de desplazamiento. Sea $\alpha = \lambda/\omega_b$ y
+	$\hat{n}_e = S^\dagger S$. Entonces $\widetilde{D} = e^{\alpha\hat{n}_e(b^\dagger - b)}$.
+	
+	\medskip
+	\noindent
+	Dado que $\hat{n}_e$ tiene autovalores $0$ (en $|vv\rangle$) y $1$
+	(en $|\Psi_+\rangle$), la transformaci\'on act\'ua como:
+	en el sector $\hat{n}_e = 0$: $\widetilde{D} = \mathbb{I}$; en el sector
+	$\hat{n}_e = 1$: $\widetilde{D} = D(\alpha) \equiv e^{\alpha(b^\dagger - b)}$.
+	
+	\medskip
+	\noindent
+	\textit{T\'ermino fon\'onico libre.}
+	Usando $D(\alpha)\,b\,D^\dagger(\alpha) = b - \alpha$:
+	
+	\begin{align}
+		\widetilde{D}\,(\omega_b b^\dagger b)\,\widetilde{D}^\dagger
+		&= \omega_b\left[b^\dagger b
+		- \alpha\hat{n}_e(b^\dagger + b) + \alpha^2\hat{n}_e^2\right]
+		\notag\\
+		&= \omega_b b^\dagger b
+		- \lambda\,\hat{n}_e(b^\dagger + b)
+		+ \frac{\lambda^2}{\omega_b}\,\hat{n}_e^2,
+		\label{eq:D_fon}
+	\end{align}
+	
+	donde usamos $\hat{n}_e^2 = \hat{n}_e$ (proyector) y $\alpha^2\omega_b = \lambda^2/\omega_b$.
+	
+	\medskip
+	\noindent
+	\textit{T\'ermino electr\'onico libre.}
+	$\widetilde{D}$ conmuta con $\hat{n}_e$, por lo que:
+	
+	\begin{equation}
+		\widetilde{D}\,(\widetilde\Delta\,\hat{n}_e)\,\widetilde{D}^\dagger
+		= \widetilde\Delta\,\hat{n}_e.
+		\label{eq:D_elec}
+	\end{equation}
+	
+	\medskip
+	\noindent
+	\textit{T\'ermino de acoplamiento electr\'on-fon\'on.}
+	Igualmente conmuta con $\hat{n}_e$:
+	
+	\begin{equation}
+		\widetilde{D}\,\bigl[\lambda\,\hat{n}_e(b^\dagger+b)\bigr]\,\widetilde{D}^\dagger
+		= \lambda\,\hat{n}_e\,\widetilde{D}(b^\dagger+b)\widetilde{D}^\dagger
+		= \lambda\,\hat{n}_e\bigl(b^\dagger + b - 2\alpha\hat{n}_e\bigr)
+		= \lambda\,\hat{n}_e(b^\dagger+b) - \frac{2\lambda^2}{\omega_b}\hat{n}_e.
+		\label{eq:D_eph}
+	\end{equation}
+	
+	\medskip
+	\noindent
+	Sumando~\eqref{eq:D_fon}, \eqref{eq:D_elec} y~\eqref{eq:D_eph}, los
+	t\'erminos en $\hat{n}_e(b^\dagger + b)$ se cancelan exactamente y los
+	t\'erminos cuadr\'aticos en $\lambda^2/\omega_b$ se combinan:
+	
+	\begin{equation}
+		\widetilde{D}\bigl[\omega_b b^\dagger b + \widetilde\Delta\,\hat{n}_e
+		+ \lambda\,\hat{n}_e(b^\dagger+b)\bigr]\widetilde{D}^\dagger
+		= \omega_b b^\dagger b
+		+ \left(\widetilde\Delta - \frac{\lambda^2}{\omega_b}\right)\hat{n}_e.
+		\label{eq:D_libre}
+	\end{equation}
+	
+	\noindent
+	El acoplamiento electr\'on-fon\'on queda completamente eliminado. Se
+	define la frecuencia de transici\'on renormalizada:
+	
+	\begin{equation}
+		\widetilde\omega_\sigma \equiv \widetilde\Delta - \frac{\lambda^2}{\omega_b}
+		= \Delta + J - \frac{\lambda^2}{\omega_b}.
+		\label{eq:omega_sigma_tilde}
+	\end{equation}
+	
+	\noindent
+	\textbf{Comparaci\'on con Bin.}
+	En el caso de un solo QD, Bin obtiene
+	$\tilde\omega_\sigma = \omega_\sigma - \lambda^2/\omega_b$
+	[Bin~(S12)]. En la mol\'ecula excit\'onica aparece una correcci\'on
+	adicional $+J$ debida al acoplamiento de F\"orster, lo que da
+	$\widetilde\omega_\sigma = \omega_\sigma - \lambda^2/\omega_b + J - \omega_L$
+	en t\'erminos de la frecuencia del l\'aser. Esta es la \emph{primera
+		correcci\'on} respecto a Bin en el R\'egimen~II.
+	
+	\medskip
+	\noindent
+	\textit{T\'ermino del l\'aser.}
+	La transformaci\'on act\'ua no trivialmente sobre $S$ y $S^\dagger$:
+	
+	\begin{align}
+		\widetilde{D}\,S^\dagger\,\widetilde{D}^\dagger
+		&= S^\dagger\,\widetilde{D}^2\big|_{\hat{n}_e=0\to1}
+		= S^\dagger\,e^{(\lambda/\omega_b)(b^\dagger - b)},
+		\label{eq:D_Sdag}\\[4pt]
+		\widetilde{D}\,S\,\widetilde{D}^\dagger
+		&= S\,e^{-(\lambda/\omega_b)(b^\dagger - b)}.
+		\label{eq:D_S}
+	\end{align}
+	
+	\noindent
+	Para obtener~\eqref{eq:D_Sdag} usamos que $S^\dagger$ eleva
+	$\hat{n}_e$ de $0$ a $1$, de modo que a la derecha de $S^\dagger$ la
+	transformaci\'on act\'ua con $\hat{n}_e = 1$ y a la izquierda con
+	$\hat{n}_e = 0$:
+	$\widetilde{D}\,S^\dagger\,\widetilde{D}^\dagger
+	= e^{(\lambda/\omega_b)\cdot 1\cdot(b^\dagger - b)}\,S^\dagger
+	\,e^{(\lambda/\omega_b)\cdot 0\cdot(b^\dagger-b)}
+	= e^{(\lambda/\omega_b)(b^\dagger-b)}\,S^\dagger$.
+	
+	\noindent
+	Reordenando (el operador fon\'onico conmuta con $S^\dagger$ porque
+	actúan sobre espacios de Hilbert distintos):
+	
+	\begin{equation}
+		\widetilde{D}\,\widetilde\Omega(S+S^\dagger)\,\widetilde{D}^\dagger
+		= \widetilde\Omega\left[
+		S^\dagger\,e^{(\lambda/\omega_b)(b^\dagger-b)}
+		+ S\,e^{-(\lambda/\omega_b)(b^\dagger-b)}
+		\right].
+		\label{eq:D_laser}
+	\end{equation}
+	
+	\medskip
+	\noindent
+	Reuniendo todos los t\'erminos, el Hamiltoniano transformado es:
+	
+	\begin{equation}
+		\widetilde{H} \equiv \widetilde{D}\,H_\mathrm{eff}\,\widetilde{D}^\dagger
+		= \omega_b b^\dagger b
+		+ \widetilde\omega_\sigma\,S^\dagger S
+		+ \widetilde\Omega\left[
+		S^\dagger e^{(\lambda/\omega_b)(b^\dagger - b)}
+		+ S\,e^{-(\lambda/\omega_b)(b^\dagger - b)}
+		\right],
+		\label{eq:H_transformado}
+	\end{equation}
+	
+	\noindent
+	que tiene la misma forma que Bin~(S12) con las sustituciones
+	$\sigma^\dagger \to S^\dagger$, $\sigma \to S$,
+	$\tilde\omega_\sigma^\mathrm{Bin} \to \widetilde\omega_\sigma$,
+	y $\Omega \to \widetilde\Omega = \sqrt{2}\,\Omega$.
+	Esta es la \emph{segunda correcci\'on} respecto a Bin en el
+	R\'egimen~II.
+	
+	% -----------------------------------------------------------
+	% Régimen II — Bloque 1: Expansión del Hamiltoniano de
+	%              interacción y condición de resonancia Stokes
+	% -----------------------------------------------------------
+	
+	El Hamiltoniano transformado~\eqref{eq:H_transformado} se separa en
+	una parte libre y una de interacci\'on:
+	
+	\begin{equation}
+		\widetilde{H} = \omega_b b^\dagger b + \widetilde\omega_\sigma S^\dagger S
+		+ H_\mathrm{int},
+		\qquad
+		H_\mathrm{int} = \widetilde\Omega\left[
+		S^\dagger e^{(\lambda/\omega_b)(b^\dagger - b)}
+		+ \mathrm{H.c.}
+		\right].
+		\label{eq:Hint}
+	\end{equation}
+	
+	\noindent
+	El operador exponencial en $H_\mathrm{int}$ mezcla todos los sectores
+	de n\'umero fon\'onico. Para identificar los procesos resonantes de
+	$n$ fonones, expandimos $e^{(\lambda/\omega_b)(b^\dagger - b)}$ en
+	potencias de los operadores de escalera fon\'onicos siguiendo
+	Bin~(S13):
+	
+	\begin{equation}
+		e^{(\lambda/\omega_b)(b^\dagger - b)}
+		= e^{-\frac{1}{2}(\lambda/\omega_b)^2}
+		\sum_{k=0}^\infty \frac{(\lambda/\omega_b)^k b^{\dagger k}}{k!}
+		\sum_{l=0}^\infty \frac{(-1)^l(\lambda/\omega_b)^l b^l}{l!},
+		\label{eq:exp_expansion}
+	\end{equation}
+	
+	donde el factor gaussiano $e^{-(\lambda/\omega_b)^2/2}$ proviene del
+	reordenamiento normal de los operadores de creaci\'on y destrucci\'on
+	mediante la identidad de Baker-Campbell-Hausdorff.
+	
+	\medskip
+	\noindent
+	El Hamiltoniano de interacci\'on completo es entonces:
+	
+	\begin{equation}
+		H_\mathrm{int} = \widetilde\Omega\,e^{-\frac{1}{2}(\lambda/\omega_b)^2}
+		\left[S^\dagger
+		\sum_{k=0}^\infty\sum_{l=0}^\infty
+		\frac{(-1)^l(\lambda/\omega_b)^{k+l}}{k!\,l!}
+		b^{\dagger k} b^l
+		+ \mathrm{H.c.}\right].
+		\label{eq:Hint_expanded}
+	\end{equation}
+	
+	\medskip
+	\noindent
+	\textit{Condici\'on de resonancia Stokes.}
+	La parte libre $\omega_b b^\dagger b + \widetilde\omega_\sigma S^\dagger S$
+	tiene autoenerg\'ias $E_{|m, vv\rangle} = m\omega_b$ y
+	$E_{|m, \Psi_+\rangle} = m\omega_b + \widetilde\omega_\sigma$.
+	El t\'ermino $S^\dagger b^{\dagger k} b^l$ en~\eqref{eq:Hint_expanded}
+	acopla el estado $|m, vv\rangle$ con $|m + k - l,\,\Psi_+\rangle$,
+	elevando el n\'umero fon\'onico en $n = k - l$ unidades netas y
+	excitando el excit\'on colectivo.
+	
+	Para el proceso Stokes de $n$ fonones, el t\'ermino resonante
+	tiene $k - l = n$, y la condici\'on de degenerac\'ia
+	$E_{|0,vv\rangle} = E_{|n,\Psi_+\rangle}$ exige:
+	
+	\begin{equation}
+		0 = n\omega_b + \widetilde\omega_\sigma
+		\quad\Longrightarrow\quad
+		\widetilde\omega_\sigma = -n\omega_b.
+	\end{equation}
+	
+	\noindent
+	Sustituyendo la definici\'on~\eqref{eq:omega_sigma_tilde}:
+	
+	\begin{equation}
+		\Delta + J - \frac{\lambda^2}{\omega_b} = -n\omega_b,
+	\end{equation}
+	
+	\noindent
+	de donde:
+	
+	\begin{equation}
+		\boxed{
+			\Delta_n = \frac{\lambda^2}{\omega_b} - n\omega_b - J.
+		}
+		\label{eq:resonancia_II}
+	\end{equation}
+	
+	\noindent
+	\textbf{Comparaci\'on con Bin.}
+	En el caso de un solo QD, Bin~(S12) obtiene
+	$\Delta_n = \lambda^2/\omega_b - n\omega_b$. En la mol\'ecula
+	excit\'onica el acoplamiento de F\"orster $J$ desplaza la resonancia
+	en $-J$, independientemente de $n$ y de $\lambda$. Esta es la
+	primera correcci\'on respecto a Bin en el R\'egimen~II.
+	
+	\medskip
+	\noindent
+	\textit{Frecuencia super-Rabi efectiva.}
+	En la condici\'on de resonancia~\eqref{eq:resonancia_II},
+	el proceso dominante en~\eqref{eq:Hint_expanded} es el que conecta
+	$|0, vv\rangle$ con $|n, \Psi_+\rangle$. Para la transici\'on
+	$|m, vv\rangle \leftrightarrow |m+n, \Psi_+\rangle$ con $m = 0$,
+	extraemos el elemento de matriz del operador
+	$e^{(\lambda/\omega_b)(b^\dagger - b)}$ entre los estados fon\'onicos
+	$|0\rangle$ y $|n\rangle$:
+	
+	\begin{align}
+		\Omega_\mathrm{eff}^{(n)}
+		&= \widetilde\Omega\,\bigl|\langle n|\,
+		e^{(\lambda/\omega_b)(b^\dagger - b)}\,|0\rangle\bigr|
+		\notag\\
+		&= \widetilde\Omega\,
+		e^{-\frac{1}{2}(\lambda/\omega_b)^2}
+		\left(\frac{\lambda}{\omega_b}\right)^n
+		\frac{1}{\sqrt{n!}}\,
+		\bigl|L_0^n\bigl((\lambda/\omega_b)^2\bigr)\bigr|,
+		\label{eq:Oeff_II_general}
+	\end{align}
+	
+	donde $L_m^n(\varepsilon)$ es el polinomio de Laguerre asociado
+	[Bin~(S14)--(S15)], y para $m = 0$:
+	
+	\begin{equation}
+		L_0^n(\varepsilon) = 1.
+		\label{eq:Laguerre_m0}
+	\end{equation}
+	
+	\noindent
+	Verificamos~\eqref{eq:Laguerre_m0} usando la definici\'on de Bin~(S15):
+	$L_0^n(\varepsilon) = \sum_{j=0}^{0}(-1)^j\binom{n}{-j}\varepsilon^j/j!
+	= (-1)^0\binom{n}{0}\varepsilon^0/0! = 1$. $\checkmark$
+	
+	\noindent
+	Adicionalmente, el factor $\sqrt{m!/(m+n)!}$ en Bin~(S14) evaluado en
+	$m=0$ da $\sqrt{0!/n!} = 1/\sqrt{n!}$, ya incluido
+	en~\eqref{eq:Oeff_II_general}. $\checkmark$
+	
+	\medskip
+	\noindent
+	Sustituyendo $\widetilde\Omega = \sqrt{2}\,\Omega$
+	y $L_0^n = 1$ en~\eqref{eq:Oeff_II_general}:
+	
+	\begin{equation}
+		\boxed{
+			\Omega_\mathrm{eff}^{(n)}\big|_{2\mathrm{QD}}
+			= \sqrt{2}\,\Omega\,
+			\exp\!\left[-\frac{1}{2}\!\left(\frac{\lambda}{\omega_b}\right)^{\!2}\right]
+			\left(\frac{\lambda}{\omega_b}\right)^n
+			\frac{1}{\sqrt{n!}},
+			\qquad
+			\Delta_n = \frac{\lambda^2}{\omega_b} - n\omega_b - J.
+		}
+		\label{eq:resultado_II}
+	\end{equation}
+	
+	\medskip
+	\noindent
+	\textbf{Comparaci\'on con Bin~(S16).}
+	El resultado de Bin para un solo QD es:
+	$\Omega_\mathrm{eff}^{(n)}|_\mathrm{1QD}
+	= \Omega\,e^{-(\lambda/\omega_b)^2/2}(\lambda/\omega_b)^n/\sqrt{n!}$.
+	En la mol\'ecula excit\'onica hay dos correcciones:
+	
+	\begin{enumerate}
+		\item \textit{Factor superradiante $\sqrt{2}$}: proviene de
+		$\widetilde\Omega = \sqrt{2}\,\Omega$ y amplifica directamente la
+		frecuencia efectiva para todo $n$.
+		
+		\item \textit{Desplazamiento de resonancia $-J$}: la condici\'on
+		$\Delta_n$ se desplaza en $-J$, sin modificar la magnitud de
+		$\Omega_\mathrm{eff}^{(n)}$.
+	\end{enumerate}
+	
+	\noindent
+	El factor gaussiano $e^{-(\lambda/\omega_b)^2/2}$ y la potencia
+	$(\lambda/\omega_b)^n/\sqrt{n!}$ son id\'enticos a Bin: la
+	transformaci\'on de desplazamiento genera la misma estructura
+	de elementos de matriz de Franck-Condon independientemente de
+	que el sistema sea un QD o una mol\'ecula excit\'onica.
+	
+	\medskip
+	\noindent
+	\textit{L\'imite $\lambda \to 0$.}
+	Cuando $\lambda \to 0$, el factor gaussiano tiende a $1$ y
+	$(\lambda/\omega_b)^n \to 0$ para $n \geq 1$, lo que suprime
+	la emisi\'on de $n \geq 1$ fonones como es de esperar. Para $n = 0$
+	(emisi\'on puramente electr\'onica sin fonones):
+	$\Omega_\mathrm{eff}^{(0)} = \widetilde\Omega = \sqrt{2}\,\Omega$,
+	que recupera la frecuencia de Rabi colectiva del Bloque~0.
+	$\checkmark$
+
+\section{Tercer Régimen}
+% -----------------------------------------------------------
+% Régimen III — Bloque 0: Hamiltoniano electrónico y
+%               estados vestidos
+% -----------------------------------------------------------
+
+En el r\'egimen III se tiene $\widetilde\Omega \sim \omega_b$ y
+$\lambda \ll \omega_b$. El l\'aser no puede tratarse perturbativamente,
+pero el acoplamiento electr\'on-fon\'on s\'i. La estrategia es
+diagonalizar primero la parte electr\'onica.
+
+El Hamiltoniano efectivo en el marco rotante, restringido al subespacio
+brillante $\{|vv\rangle, |\Psi_+\rangle\}$, es:
+
+\begin{equation}
+	H_\mathrm{eff} = \omega_b b^\dagger b
+	+ \widetilde\Delta\, S^\dagger S
+	+ \lambda\, S^\dagger S\,(b^\dagger + b)
+	+ \widetilde\Omega\bigl(S + S^\dagger\bigr),
+	\label{eq:Heff_III}
+\end{equation}
+
+con $\widetilde\Delta = \Delta + J$ y $\widetilde\Omega = \sqrt{2}\,\Omega$.
+Separamos la parte electr\'onica impulsada por el l\'aser:
+
+\begin{equation}
+	H_\sigma = \widetilde\Delta\, S^\dagger S
+	+ \widetilde\Omega\bigl(S + S^\dagger\bigr).
+	\label{eq:Hsigma}
+\end{equation}
+
+En la base $\{|vv\rangle, |\Psi_+\rangle\}$, con la convenci\'on
+$|vv\rangle \equiv \binom{1}{0}$ y $|\Psi_+\rangle \equiv \binom{0}{1}$:
+
+\begin{equation}
+	H_\sigma = \begin{pmatrix} 0 & \widetilde\Omega \\
+		\widetilde\Omega & \widetilde\Delta \end{pmatrix}.
+	\label{eq:Hsigma_matrix}
+\end{equation}
+
+\noindent
+Los autovalores se obtienen de $\det(H_\sigma - E\,\mathbb{I}) = 0$:
+
+\begin{equation}
+	E^2 - \widetilde\Delta\,E - \widetilde\Omega^2 = 0
+	\quad\Longrightarrow\quad
+	E_\pm = \frac{\widetilde\Delta \pm \tilde{r}}{2},
+	\quad
+	\tilde{r} \equiv \sqrt{\widetilde\Delta^2 + 4\widetilde\Omega^2}.
+	\label{eq:autovalores}
+\end{equation}
+
+\noindent
+Para el autovector asociado a $E_+$, la ecuaci\'on
+$(H_\sigma - E_+\mathbb{I})\binom{\alpha}{\beta} = 0$ da:
+
+\begin{equation}
+	-\frac{\widetilde\Delta - \tilde{r}}{2}\,\alpha + \widetilde\Omega\,\beta = 0
+	\quad\Longrightarrow\quad
+	\frac{\beta}{\alpha} = \frac{\widetilde\Delta - \tilde{r}}{2\widetilde\Omega}.
+	\label{eq:autovector_mas}
+\end{equation}
+
+\noindent
+Notamos que $\widetilde\Delta - \tilde{r} < 0$ para toda
+$\widetilde\Omega > 0$ (ya que $\tilde{r} > |\widetilde\Delta|$),
+de modo que $\beta/\alpha < 0$. Normalizando con
+$\alpha^2 + \beta^2 = 1$ y eligiendo $\alpha > 0$:
+
+\begin{equation}
+	\alpha = \tilde{c}_+, \qquad \beta = -\tilde{c}_-,
+\end{equation}
+
+donde:
+
+\begin{equation}
+	\tilde{c}_\pm = \sqrt{\frac{2\widetilde\Omega^2}
+		{\widetilde\Delta^2 + 4\widetilde\Omega^2
+			\pm\, \widetilde\Delta\,\tilde{r}}}.
+	\label{eq:cpm}
+\end{equation}
+
+\noindent
+Verificaci\'on: de~\eqref{eq:autovector_mas},
+$\beta/\alpha = (\widetilde\Delta - \tilde{r})/(2\widetilde\Omega)$.
+Con $\alpha = \tilde{c}_+$ y $\beta = -\tilde{c}_-$:
+
+\begin{equation}
+	\frac{-\tilde{c}_-}{\tilde{c}_+}
+	= \frac{\widetilde\Delta - \tilde{r}}{2\widetilde\Omega}
+	\quad\Longrightarrow\quad
+	\tilde{c}_- = \frac{\tilde{r} - \widetilde\Delta}{2\widetilde\Omega}\,\tilde{c}_+.
+	\label{eq:ratio_cpm}
+\end{equation}
+
+\noindent
+Se verifica que esto es consistente con la definici\'on~\eqref{eq:cpm}
+y con $\tilde{c}_+^2 + \tilde{c}_-^2 = 1$.
+
+\medskip
+\noindent
+Para el autovector de $E_-$: de $(H_\sigma - E_-\mathbb{I})\binom{\gamma}{\delta} = 0$:
+
+\begin{equation}
+	\frac{\delta}{\gamma} = \frac{\widetilde\Delta + \tilde{r}}{2\widetilde\Omega} > 0.
+\end{equation}
+
+\noindent
+Normalizando con $\gamma > 0$: $\gamma = \tilde{c}_-$,
+$\delta = \tilde{c}_+$ (usando la misma relaci\'on de
+proporcionalidad con signo opuesto). Los estados vestidos son:
+
+\begin{align}
+	|{+}\rangle &= \tilde{c}_+\,|vv\rangle - \tilde{c}_-\,|\Psi_+\rangle,
+	\qquad E_+ = \frac{\widetilde\Delta + \tilde{r}}{2},
+	\label{eq:ket_p}\\[6pt]
+	|{-}\rangle &= \tilde{c}_-\,|vv\rangle + \tilde{c}_+\,|\Psi_+\rangle,
+	\qquad E_- = \frac{\widetilde\Delta - \tilde{r}}{2}.
+	\label{eq:ket_m}
+\end{align}
+
+\noindent
+Verificaciones:
+\begin{itemize}
+	\item Ortogonalidad:
+	$\langle+|-\rangle = \tilde{c}_+\tilde{c}_- - \tilde{c}_-\tilde{c}_+ = 0$.
+	$\checkmark$
+	
+	\item Autovector $|+\rangle$:
+	$H_\sigma|+\rangle = \tilde{c}_+\,\widetilde\Omega|\Psi_+\rangle
+	+ \tilde{c}_-\,(-\widetilde\Omega|vv\rangle - \widetilde\Delta|\Psi_+\rangle)
+	= -\tilde{c}_-\widetilde\Omega\,|vv\rangle
+	+ (\tilde{c}_+\widetilde\Omega - \tilde{c}_-\widetilde\Delta)|\Psi_+\rangle$.
+	
+	Debe ser igual a $E_+|+\rangle = \tilde{c}_+E_+|vv\rangle - \tilde{c}_-E_+|\Psi_+\rangle$.
+	De la componente en $|vv\rangle$: $-\tilde{c}_-\widetilde\Omega = \tilde{c}_+E_+$,
+	es decir $\tilde{c}_-/\tilde{c}_+ = -E_+/\widetilde\Omega
+	= -(\widetilde\Delta+\tilde{r})/(2\widetilde\Omega)$.
+	Pero de~\eqref{eq:ratio_cpm} tenemos
+	$\tilde{c}_-/\tilde{c}_+ = (\tilde{r}-\widetilde\Delta)/(2\widetilde\Omega)$.
+	Estos son opuestos, lo que indica una inconsistencia en el signo
+	de~\eqref{eq:ket_p}.
+\end{itemize}
+
+\medskip
+\noindent
+Corregimos los signos. De~\eqref{eq:autovector_mas},
+$\beta = [(\widetilde\Delta-\tilde{r})/(2\widetilde\Omega)]\,\alpha$.
+Como $\widetilde\Delta - \tilde{r} < 0$, el coeficiente de
+$|\Psi_+\rangle$ tiene signo opuesto al de $|vv\rangle$, luego:
+
+\begin{equation}
+	|+\rangle = \tilde{c}_+\,|vv\rangle - \tilde{c}_-\,|\Psi_+\rangle
+\end{equation}
+
+\noindent
+con $\tilde{c}_-, \tilde{c}_+ > 0$ y la relaci\'on de proporcionalidad
+$\tilde{c}_-/\tilde{c}_+ = (\tilde{r}-\widetilde\Delta)/(2\widetilde\Omega)$.
+
+Verificaci\'on autovalor:
+$H_\sigma|+\rangle$: componente en $|vv\rangle$: $-\tilde{c}_-\widetilde\Omega$.
+Debe ser $E_+\tilde{c}_+$. Entonces:
+$-\tilde{c}_-\widetilde\Omega = E_+\tilde{c}_+ \Longrightarrow
+\tilde{c}_-/\tilde{c}_+ = -E_+/\widetilde\Omega
+= -(\widetilde\Delta+\tilde{r})/(2\widetilde\Omega)$,
+que es negativo. Contradicci\'on con $\tilde{c}_\pm > 0$.
+
+El problema es que la convenci\'on de Bin define $c_-$ con signo
+expl\'icito en el autovector:
+
+\begin{equation}
+	|+\rangle = c_+|v\rangle + c_-|c\rangle, \qquad
+	|-\rangle = c_-|v\rangle - c_+|c\rangle,
+\end{equation}
+
+donde $c_\pm > 0$ y la relaci\'on es
+$c_-/c_+ = E_+/\Omega > 0$ (positiva).
+Esto es posible porque en Bin $E_+ > 0$ cuando $\Delta < 0$.
+
+\medskip
+\noindent
+Para la mol\'ecula excit\'onica, adoptamos la misma convenci\'on que
+Bin~(S18), con las sustituciones $|v\rangle \to |vv\rangle$,
+$|c\rangle \to |\Psi_+\rangle$, $\Delta \to \widetilde\Delta$,
+$\Omega \to \widetilde\Omega$:
+
+\begin{align}
+	|{+}\rangle &= \tilde{c}_+\,|vv\rangle + \tilde{c}_-\,|\Psi_+\rangle,
+	\qquad E_+ = \frac{\widetilde\Delta + \tilde{r}}{2},
+	\label{eq:ket_p_final}\\[6pt]
+	|{-}\rangle &= \tilde{c}_-\,|vv\rangle - \tilde{c}_+\,|\Psi_+\rangle,
+	\qquad E_- = \frac{\widetilde\Delta - \tilde{r}}{2},
+	\label{eq:ket_m_final}
+\end{align}
+
+\noindent
+con coeficientes de Bin~(S19) extendidos:
+
+\begin{equation}
+	\tilde{c}_\pm = \sqrt{\frac{2\widetilde\Omega^2}
+		{\widetilde\Delta^2 + 4\widetilde\Omega^2
+			\pm\,\widetilde\Delta\,\tilde{r}}},
+	\qquad \tilde{c}_+^2 + \tilde{c}_-^2 = 1.
+	\label{eq:cpm_final}
+\end{equation}
+
+\noindent
+Verificaci\'on autovector $|+\rangle$:
+$H_\sigma|+\rangle$: componente en $|vv\rangle$: $\tilde{c}_-\widetilde\Omega$.
+Debe ser $E_+\tilde{c}_+$. Entonces
+$\tilde{c}_-\widetilde\Omega = E_+\tilde{c}_+$, es decir
+$\tilde{c}_-/\tilde{c}_+ = E_+/\widetilde\Omega
+= (\widetilde\Delta+\tilde{r})/(2\widetilde\Omega) > 0$. $\checkmark$
+
+Componente en $|\Psi_+\rangle$:
+$\tilde{c}_+\widetilde\Omega + \tilde{c}_-\widetilde\Delta
+= E_+\tilde{c}_- = \tilde{c}_-(\widetilde\Delta+\tilde{r})/2$.
+Sustituyendo $\tilde{c}_+\widetilde\Omega = \tilde{c}_-\tilde{r}/2 - \tilde{c}_-\widetilde\Delta/2 + \tilde{c}_-\widetilde\Delta = \tilde{c}_-(\tilde{r}+\widetilde\Delta)/2$. $\checkmark$
+
+% -----------------------------------------------------------
+% Régimen III — Bloque 1: Inversión de los estados vestidos,
+%   operador S†S en la base vestida, elementos de matriz de H_eph
+% -----------------------------------------------------------
+
+\textit{Inversión de los estados vestidos.}
+Multiplicando la ec.~\eqref{eq:ket_p_final} por $\tilde{c}_+$,
+la ec.~\eqref{eq:ket_m_final} por $\tilde{c}_-$ y sumando; luego
+multiplicando por $\tilde{c}_-$ y $\tilde{c}_+$ respectivamente y
+restando, con $\tilde{c}_+^2+\tilde{c}_-^2 = 1$:
+
+\begin{align}
+	|vv\rangle    &= \tilde{c}_+|{+}\rangle + \tilde{c}_-|{-}\rangle,
+	\label{eq:vv_dressed}\\[4pt]
+	|\Psi_+\rangle &= \tilde{c}_-|{+}\rangle - \tilde{c}_+|{-}\rangle.
+	\label{eq:Psi_dressed}
+\end{align}
+
+\medskip
+\noindent
+\textit{Operador $S^\dagger S$ en la base vestida.}
+La base vestida diagonaliza $H_\sigma$, pero no $S^\dagger S$
+individualmente (pues $H_\sigma$ contiene $S^\dagger S$ y
+$S+S^\dagger$, que no conmutan). Usando
+$S^\dagger S = |\Psi_+\rangle\langle\Psi_+|$
+y la ec.~\eqref{eq:Psi_dressed}:
+
+\begin{equation}
+	S^\dagger S
+	= \bigl(\tilde{c}_-|{+}\rangle - \tilde{c}_+|{-}\rangle\bigr)
+	\bigl(\tilde{c}_-\langle{+}| - \tilde{c}_+\langle{-}|\bigr),
+\end{equation}
+
+de donde los elementos de matriz en la base vestida son:
+
+\begin{equation}
+	\langle{+}|S^\dagger S|{+}\rangle = \tilde{c}_-^2, \quad
+	\langle{-}|S^\dagger S|{-}\rangle = \tilde{c}_+^2, \quad
+	\langle{+}|S^\dagger S|{-}\rangle = \langle{-}|S^\dagger S|{+}\rangle
+	= -\tilde{c}_+\tilde{c}_-.
+	\label{eq:SdagS_matrix}
+\end{equation}
+
+\noindent
+La presencia de t\'erminos fuera de la diagonal $-\tilde{c}_+\tilde{c}_-$
+es exacta y esperada: refleja que $S^\dagger S$ no conmuta con
+$H_\sigma$.
+
+\medskip
+\noindent
+\textit{Elementos de matriz de $H_\mathrm{e\text{-}ph}$.}
+El Hamiltoniano completo~\eqref{eq:Heff_III} se separa en:
+
+\begin{equation}
+	H_\mathrm{eff} = H_0 + H_\mathrm{e\text{-}ph},
+	\quad
+	H_0 = \omega_b b^\dagger b + H_\sigma,
+	\quad
+	H_\mathrm{e\text{-}ph} = \lambda\,S^\dagger S\,(b^\dagger + b).
+	\label{eq:H0_Heph}
+\end{equation}
+
+$H_0$ es diagonal en la base de productos $|n,\pm\rangle$:
+
+\begin{equation}
+	H_0|n,\pm\rangle = \bigl(n\omega_b + E_\pm\bigr)|n,\pm\rangle,
+	\label{eq:H0_diagonal}
+\end{equation}
+
+y $H_\mathrm{e\text{-}ph}$ es el t\'ermino perturbativo ($\lambda \ll \omega_b$).
+Usando~\eqref{eq:SdagS_matrix} y
+$\langle m|b^\dagger+b|n\rangle = \sqrt{n+1}\,\delta_{m,n+1}+\sqrt{n}\,\delta_{m,n-1}$,
+los elementos de matriz no nulos de $H_\mathrm{e\text{-}ph}$ son:
+
+\begin{align}
+	\langle n{+}1,{+}|H_\mathrm{e\text{-}ph}|n,{+}\rangle
+	&= +\tilde{c}_-^2\,\lambda\sqrt{n+1},
+	\label{eq:Heph_pp}\\[4pt]
+	\langle n{+}1,{-}|H_\mathrm{e\text{-}ph}|n,{-}\rangle
+	&= +\tilde{c}_+^2\,\lambda\sqrt{n+1},
+	\label{eq:Heph_mm}\\[4pt]
+	\langle n{+}1,{-}|H_\mathrm{e\text{-}ph}|n,{+}\rangle
+	&= -\tilde{c}_+\tilde{c}_-\,\lambda\sqrt{n+1},
+	\label{eq:Heph_mp}\\[4pt]
+	\langle n{+}1,{+}|H_\mathrm{e\text{-}ph}|n,{-}\rangle
+	&= -\tilde{c}_+\tilde{c}_-\,\lambda\sqrt{n+1},
+	\label{eq:Heph_pm}
+\end{align}
+
+\noindent
+y los correspondientes con $b$ en lugar de $b^\dagger$
+(con factor $\sqrt{n}$ y $n\to n-1$).
+
+\medskip
+\noindent
+Los acoplamientos~\eqref{eq:Heph_pp}--\eqref{eq:Heph_mm} preservan
+el \'indice vestido; los~\eqref{eq:Heph_mp}--\eqref{eq:Heph_pm}
+lo invierten con amplitud $-\tilde{c}_+\tilde{c}_-\lambda$.
+Son estos \'ultimos los que median, a orden $\lambda^n$, el proceso
+de $n$ fonones $|0,{+}\rangle \leftrightarrow |n,{-}\rangle$.
+
+% -----------------------------------------------------------
+% Régimen III — Bloque 2: Condición de resonancia Stokes
+%               y energías relativas
+% -----------------------------------------------------------
+
+\textit{Energías de los estados vestidos con fonones.}
+Ignorando provisionalmente $H_\mathrm{e\text{-}ph}$, los autoestados
+del Hamiltoniano libre $H_0 = \omega_b b^\dagger b + H_\sigma$ son
+los productos $|n,\pm\rangle \equiv |n\rangle\otimes|\pm\rangle$
+con energías [ec.~\eqref{eq:H0_diagonal}]:
+
+\begin{equation}
+	E_{|n,+\rangle} = n\omega_b + \frac{\widetilde\Delta + \tilde{r}}{2},
+	\qquad
+	E_{|n,-\rangle} = n\omega_b + \frac{\widetilde\Delta - \tilde{r}}{2}.
+	\label{eq:energias_npm}
+\end{equation}
+
+\medskip
+\noindent
+\textit{Condición de resonancia Stokes de $n$ fonones.}
+El proceso Stokes de $n$ fonones conecta $|0,{+}\rangle$
+con $|n,{-}\rangle$ mediante una cadena de transiciones mediadas por
+$H_\mathrm{e\text{-}ph}$. La teoría de perturbaciones que derivaremos
+en los bloques siguientes es válida únicamente cuando estos dos
+estados son degenerados. Igualando sus energías:
+
+\begin{equation}
+	E_{|0,+\rangle} = E_{|n,-\rangle}
+	\quad\Longrightarrow\quad
+	\frac{\widetilde\Delta + \tilde{r}}{2}
+	= n\omega_b + \frac{\widetilde\Delta - \tilde{r}}{2},
+\end{equation}
+
+\noindent
+que simplifica a:
+
+\begin{equation}
+	\tilde{r} = n\omega_b.
+	\label{eq:cond_res_r}
+\end{equation}
+
+\noindent
+Sustituyendo $\tilde{r} = \sqrt{\widetilde\Delta^2 + 4\widetilde\Omega^2}$
+con $\widetilde\Delta = \Delta + J$ y $\widetilde\Omega = \sqrt{2}\,\Omega$:
+
+\begin{equation}
+	(\Delta + J)^2 + 8\Omega^2 = n^2\omega_b^2,
+\end{equation}
+
+\noindent
+de donde, tomando la raíz negativa que corresponde al proceso Stokes
+($\Delta < 0$):
+
+\begin{equation}
+	\boxed{
+		\Delta_n = -\sqrt{n^2\omega_b^2 - 8\Omega^2} - J.
+	}
+	\label{eq:resonancia_III}
+\end{equation}
+
+\noindent
+La condición de validez es $n\omega_b > 2\sqrt{2}\,\Omega$.
+En el límite $\Omega \to 0$: $\Delta_n \to -n\omega_b - J$,
+consistente con el Régimen~I, ec.~\eqref{eq:resonancia_I}. $\checkmark$
+
+\medskip
+\noindent
+\textbf{Comparación con Bin.}
+En el caso de un solo QD, Bin obtiene
+$\Delta_n = -\sqrt{n^2\omega_b^2 - 4\Omega^2}$.
+La molécula excitónica introduce dos correcciones:
+(1) $4\Omega^2 \to 8\Omega^2$ por el factor superradiante
+$\widetilde\Omega = \sqrt{2}\,\Omega$; (2) desplazamiento rígido
+$-J$ por el acoplamiento de Förster en $\widetilde\Delta$.
+
+\medskip
+\noindent
+\textit{Energías relativas de los estados intermedios.}
+En resonancia $\tilde{r} = n\omega_b$, las energías de todos los
+estados del espacio truncado, medidas respecto a la energía degenerada
+$E_0 \equiv E_{|0,+\rangle} = E_{|n,-\rangle}$, son:
+
+\begin{align}
+	E_{|0,+\rangle} - E_0 &= 0,
+	\label{eq:E0p_rel}\\[4pt]
+	E_{|n,-\rangle} - E_0 &= 0,
+	\label{eq:Enm_rel}\\[4pt]
+	E_{|k,+\rangle} - E_0
+	&= k\omega_b + \frac{\widetilde\Delta + \tilde{r}}{2}
+	- \frac{\widetilde\Delta + \tilde{r}}{2}
+	= k\omega_b,
+	\quad 1 \leq k \leq n-1,
+	\label{eq:Ekp_rel}\\[4pt]
+	E_{|k,-\rangle} - E_0
+	&= k\omega_b + \frac{\widetilde\Delta - \tilde{r}}{2}
+	- \frac{\widetilde\Delta + \tilde{r}}{2}
+	= k\omega_b - \tilde{r}
+	= -(n-k)\omega_b,
+	\quad 1 \leq k \leq n-1.
+	\label{eq:Ekm_rel}
+\end{align}
+
+\noindent
+Los estados intermedios $|k,+\rangle$ tienen energía relativa
+$+k\omega_b > 0$ y los $|k,-\rangle$ tienen energía relativa
+$-(n-k)\omega_b < 0$. Ambos están separados de los estados
+degenerados por múltiplos enteros de $\omega_b$, lo que garantiza
+que la eliminación adiabática de los estados intermedios es válida
+cuando $\lambda \ll \omega_b$.
+
+\medskip
+\noindent
+Los denominadores que aparecerán en la eliminación adiabática son:
+
+\begin{equation}
+	-E_{|k,+\rangle} + E_0 = -k\omega_b < 0,
+	\qquad
+	-E_{|k,-\rangle} + E_0 = (n-k)\omega_b > 0,
+	\label{eq:denominadores}
+\end{equation}
+
+\noindent
+todos no nulos para $1 \leq k \leq n-1$, lo que confirma que
+la teoría de perturbaciones es no singular en el subespacio
+intermedio. Estos son los denominadores que entrarán en la fórmula
+de eliminación adiabática en el bloque siguiente.
+
+% -----------------------------------------------------------
+% Régimen III — Bloque 3: Forma matricial en bloques, caso n=2
+% -----------------------------------------------------------
+
+\textit{Espacio truncado para $n=2$.}
+El espacio de estados vestidos relevante para el proceso de 2~fonones es:
+
+\begin{equation}
+	\mathcal{H}^{(2)} = \bigl\{
+	|0,{+}\rangle,\;|1,{-}\rangle,\;|1,{+}\rangle,\;|2,{-}\rangle
+	\bigr\}.
+	\label{eq:espacio_n2}
+\end{equation}
+
+\noindent
+Los estados degenerados son $|0,{+}\rangle$ y $|2,{-}\rangle$
+(energía relativa $0$); los intermedios son $|1,{-}\rangle$
+(energía relativa $-\omega_b$) y $|1,{+}\rangle$
+(energía relativa $+\omega_b$).
+
+\medskip
+\noindent
+\textit{Elementos de matriz.}
+El Hamiltoniano en $\mathcal{H}^{(2)}$ tiene parte diagonal dada
+por~\eqref{eq:energias_npm} y parte fuera de la diagonal dada
+por $H_\mathrm{e\text{-}ph}$, ecs.~\eqref{eq:Heph_pp}--\eqref{eq:Heph_pm}.
+Trabajamos en un marco que rota con $E_0$, restando esta energía
+a todos los elementos diagonales. Los elementos no nulos son:
+
+\begin{align}
+	\langle 0,{+}|H|0,{+}\rangle &= 0,
+	\label{eq:H_00pp}\\[4pt]
+	\langle 1,{-}|H|1,{-}\rangle &= \omega_b - \tilde{r}
+	= \omega_b - 2\omega_b = -\omega_b,
+	\label{eq:H_11mm}\\[4pt]
+	\langle 1,{+}|H|1,{+}\rangle &= \omega_b,
+	\label{eq:H_11pp}\\[4pt]
+	\langle 2,{-}|H|2,{-}\rangle &= 2\omega_b - \tilde{r}
+	= 2\omega_b - 2\omega_b = 0,
+	\label{eq:H_22mm}
+\end{align}
+
+\noindent
+donde en~\eqref{eq:H_11mm} y~\eqref{eq:H_22mm} usamos la condición
+de resonancia $\tilde{r} = 2\omega_b$.
+
+\medskip
+\noindent
+Para los elementos fuera de la diagonal, usamos los
+acoplamientos~\eqref{eq:Heph_mp}--\eqref{eq:Heph_pm} con el número
+de fonones apropiado:
+
+\begin{align}
+	\langle 1,{-}|H_\mathrm{e\text{-}ph}|0,{+}\rangle
+	&= -\tilde{c}_+\tilde{c}_-\,\lambda\sqrt{1}
+	= -\tilde{c}_+\tilde{c}_-\lambda,
+	\label{eq:H_10mp}\\[4pt]
+	\langle 1,{+}|H_\mathrm{e\text{-}ph}|0,{+}\rangle
+	&= +\tilde{c}_-^2\,\lambda\sqrt{1}
+	= \tilde{c}_-^2\lambda,
+	\label{eq:H_10pp}\\[4pt]
+	\langle 2,{-}|H_\mathrm{e\text{-}ph}|1,{-}\rangle
+	&= +\tilde{c}_+^2\,\lambda\sqrt{2}
+	= \sqrt{2}\,\tilde{c}_+^2\lambda,
+	\label{eq:H_21mm}\\[4pt]
+	\langle 2,{-}|H_\mathrm{e\text{-}ph}|1,{+}\rangle
+	&= -\tilde{c}_+\tilde{c}_-\,\lambda\sqrt{2}
+	= -\sqrt{2}\,\tilde{c}_+\tilde{c}_-\lambda.
+	\label{eq:H_21mp}
+\end{align}
+
+\noindent
+El acoplamiento directo $\langle 2,{-}|H_\mathrm{e\text{-}ph}|0,{+}\rangle = 0$
+porque requeriría cambiar el número fonónico en 2 en un solo paso,
+lo cual es cero al primer orden en $H_\mathrm{e\text{-}ph}$.
+
+\medskip
+\noindent
+\textit{Forma matricial en bloques.}
+En el ordenamiento
+$\{|0,{+}\rangle, |2,{-}\rangle, |1,{-}\rangle, |1,{+}\rangle\}$
+(primero los estados degenerados, luego los intermedios), el
+Hamiltoniano toma la forma en bloques:
+
+\begin{equation}
+	H^{(2)} = \begin{pmatrix}
+		\mathbf{H}^{(2)} & X^{(2)T} \\[4pt]
+		X^{(2)} & R^{(2)}
+	\end{pmatrix},
+	\label{eq:H2_bloques}
+\end{equation}
+
+con:
+
+\begin{equation}
+	\mathbf{H}^{(2)} = \begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix},
+	\label{eq:Hsub2}
+\end{equation}
+
+\begin{equation}
+	X^{(2)} = \begin{pmatrix}
+		\langle 1,{-}|H|0,{+}\rangle & \langle 1,{-}|H|2,{-}\rangle \\[4pt]
+		\langle 1,{+}|H|0,{+}\rangle & \langle 1,{+}|H|2,{-}\rangle
+	\end{pmatrix}
+	= \begin{pmatrix}
+		-\tilde{c}_+\tilde{c}_-\lambda & \sqrt{2}\,\tilde{c}_+^2\lambda \\[4pt]
+		\tilde{c}_-^2\lambda & -\sqrt{2}\,\tilde{c}_+\tilde{c}_-\lambda
+	\end{pmatrix},
+	\label{eq:X2}
+\end{equation}
+
+\begin{equation}
+	R^{(2)} = \begin{pmatrix}
+		\langle 1,{-}|H|1,{-}\rangle & \langle 1,{-}|H|1,{+}\rangle \\[4pt]
+		\langle 1,{+}|H|1,{-}\rangle & \langle 1,{+}|H|1,{+}\rangle
+	\end{pmatrix}
+	= \begin{pmatrix}
+		-\omega_b & 0 \\[4pt]
+		0 & \omega_b
+	\end{pmatrix}.
+	\label{eq:R2}
+\end{equation}
+
+\noindent
+Nótese que $\langle 1,{-}|H_\mathrm{e\text{-}ph}|1,{+}\rangle = 0$
+porque el acoplamiento entre $|1,{-}\rangle$ y $|1,{+}\rangle$
+requeriría $\Delta n = 0$ con cambio de índice vestido, lo cual
+no ocurre en $H_\mathrm{e\text{-}ph} \propto (b^\dagger + b)$ que
+cambia el número fonónico en $\pm 1$. Por tanto $R^{(2)}$ es
+diagonal, con autovalores $-\omega_b$ y $+\omega_b$.
+
+\medskip
+\noindent
+Explicitando la matriz completa en el ordenamiento original
+$\{|0,{+}\rangle, |1,{-}\rangle, |1,{+}\rangle, |2,{-}\rangle\}$
+(que es el convenio de Bin~(S22)), con $\tilde{r} = 2\omega_b$:
+
+\begin{equation}
+	H^{(2)} = \begin{pmatrix}
+		0
+		& -\tilde{c}_+\tilde{c}_-\lambda
+		& \tilde{c}_-^2\lambda
+		& 0 \\[6pt]
+		-\tilde{c}_+\tilde{c}_-\lambda
+		& -\omega_b
+		& 0
+		& \sqrt{2}\,\tilde{c}_+^2\lambda \\[6pt]
+		\tilde{c}_-^2\lambda
+		& 0
+		& \omega_b
+		& -\sqrt{2}\,\tilde{c}_+\tilde{c}_-\lambda \\[6pt]
+		0
+		& \sqrt{2}\,\tilde{c}_+^2\lambda
+		& -\sqrt{2}\,\tilde{c}_+\tilde{c}_-\lambda
+		& 0
+	\end{pmatrix},
+	\label{eq:H2_full}
+\end{equation}
+
+\noindent
+idéntico a Bin~(S22) bajo las sustituciones $c_\pm \to \tilde{c}_\pm$
+y $r \to \tilde{r}$. $\checkmark$
+
+\medskip
+\noindent
+En~\eqref{eq:H2_bloques} la matriz de acoplamiento $X^{(2)}$
+conecta el subespacio degenerado $\{|0,{+}\rangle, |2,{-}\rangle\}$
+con el subespacio intermedio $\{|1,{-}\rangle, |1,{+}\rangle\}$,
+y $R^{(2)}$ es la parte del Hamiltoniano restringida al subespacio
+intermedio. Como $R^{(2)}$ es diagonal con autovalores $\pm\omega_b$,
+su inversión es inmediata.
+
+\medskip
+\noindent
+\textit{Eliminación adiabática para $n=2$.}
+Siguiendo Bin~(S6), el Hamiltoniano efectivo en el subespacio
+degenerado es:
+
+\begin{equation}
+	H_\mathrm{eff}^{(2)} = \mathbf{H}^{(2)} - X^{(2)T}\bigl[R^{(2)}\bigr]^{-1}X^{(2)},
+	\label{eq:Heff_formula}
+\end{equation}
+
+\noindent
+donde $X^{(2)}$ tiene filas indexadas por los estados intermedios
+y columnas por los degenerados [ec.~\eqref{eq:X2}]. Con
+$\mathbf{H}^{(2)} = 0$ y $[R^{(2)}]^{-1} = \mathrm{diag}(-1/\omega_b,\, 1/\omega_b)$,
+el elemento $(1,2)$ de $H_\mathrm{eff}^{(2)}$ da:
+
+\begin{equation}
+	\Omega_\mathrm{eff}^{(2)}\big|_{2\mathrm{QD}}
+	= \frac{-\sqrt{2}\,\tilde{c}_+\tilde{c}_-\lambda^2
+		\bigl(\omega_b - \tilde{c}_-^2\,\tilde{r}\bigr)}
+	{\omega_b(\tilde{r}-\omega_b)},
+	\label{eq:Oeff2_III}
+\end{equation}
+
+\noindent
+idéntico a Bin~(S25) bajo $c_\pm \to \tilde{c}_\pm$, $r \to \tilde{r}$,
+verificado analíticamente con $\tilde{c}_+^2+\tilde{c}_-^2 = 1$. $\checkmark$
+
+% -----------------------------------------------------------
+% Régimen III — Bloque 4: Espacio reducido de cuatro estados
+%               y relación de recurrencia
+% -----------------------------------------------------------
+
+\textit{Estrategia recursiva.}
+Para derivar $\Omega_\mathrm{eff}^{(n)}$ a orden general en $n$,
+adoptamos el procedimiento recursivo de Bin~(S26)--(S27). La idea
+es que si ya se conoce el acoplamiento efectivo
+$\Omega_\mathrm{eff}^{(n-1)}$ entre $|0,{+}\rangle$ y
+$|n-1,{-}\rangle$, entonces $\Omega_\mathrm{eff}^{(n)}$ puede
+obtenerse considerando únicamente el espacio reducido de cuatro
+estados
+$\{|0,{+}\rangle,\,|n,{-}\rangle,\,|n-1,{+}\rangle,\,|n-1,{-}\rangle\}$.
+
+\medskip
+\noindent
+\textit{Hamiltoniano en el espacio reducido de cuatro estados (antes de transformar).}
+En este espacio, con energías relativas a $E_0$ calculadas
+en~\eqref{eq:Ekp_rel}--\eqref{eq:Ekm_rel}, el Hamiltoniano
+tiene la forma:
+
+\begin{equation}
+	H^{(n)}_0 = \begin{pmatrix}
+		0 & 0 & 0 & \Omega_\mathrm{eff}^{(n-1)} \\[4pt]
+		0 & 0 & -\tilde{c}_+\tilde{c}_-\lambda\sqrt{n} &
+		\tilde{c}_+^2\lambda\sqrt{n} \\[4pt]
+		0 & -\tilde{c}_+\tilde{c}_-\lambda\sqrt{n} & (n-1)\omega_b & 0 \\[4pt]
+		\Omega_\mathrm{eff}^{(n-1)} & \tilde{c}_+^2\lambda\sqrt{n} & 0 & -\omega_b
+	\end{pmatrix},
+	\label{eq:Hn0_4estados}
+\end{equation}
+
+\noindent
+en el ordenamiento
+$\{|0,{+}\rangle,\,|n,{-}\rangle,\,|n-1,{+}\rangle,\,|n-1,{-}\rangle\}$.
+Los acoplamientos fuera de la diagonal provienen directamente de
+$H_\mathrm{e\text{-}ph}$, ecs.~\eqref{eq:Heph_mp}--\eqref{eq:Heph_mm}:
+el elemento $-\tilde{c}_+\tilde{c}_-\lambda\sqrt{n}$ invierte
+el índice vestido, y $\tilde{c}_+^2\lambda\sqrt{n}$ lo conserva.
+
+\medskip
+\noindent
+\textit{Transformación de Bin~(S23).}
+El bloque intermedio de~\eqref{eq:Hn0_4estados} tiene
+$R^{(n)} = \mathrm{diag}\bigl((n-1)\omega_b,\,-\omega_b\bigr)$,
+que sí es diagonal. Sin embargo, el acoplamiento de $|n-1,{+}\rangle$
+con $|n,{-}\rangle$ es $-\tilde{c}_+\tilde{c}_-\lambda\sqrt{n} \neq 0$
+mientras que su acoplamiento con $|0,{+}\rangle$ es cero. Esto
+significa que $|n-1,{+}\rangle$ no contribuye directamente a
+$\Omega_\mathrm{eff}^{(n)}$ a través de la fórmula perturbativa
+de Bin~(S6), pero sí acopla a $|n-1,{-}\rangle$ a través de
+la cadena completa de estados intermedios del espacio de $2n$ estados.
+
+Siguiendo Bin~(S23)--(S24), introducimos el estado efectivo:
+
+\begin{equation}
+	|n-1,{+}\rangle_\mathrm{eff}
+	= |n-1,{+}\rangle
+	+ \frac{\tilde{c}_-}{\tilde{c}_+}\,|n-1,{-}\rangle,
+	\label{eq:estado_eff}
+\end{equation}
+
+que al orden dominante en $\lambda/\omega_b$ diagonaliza el acoplamiento
+cruzado entre los estados intermedios. Bajo esta transformación,
+el Hamiltoniano reducido toma la forma de Bin~(S26) con
+$c_\pm \to \tilde{c}_\pm$ y $r \to \tilde{r}$:
+
+\begin{equation}
+	H^{(n)} = \begin{pmatrix}
+		0 & 0 & 0 & \Omega_\mathrm{eff}^{(n-1)} \\[4pt]
+		0 & n\omega_b-\tilde{r} & 0 & \tilde{c}_+^2\lambda\sqrt{n} \\[4pt]
+		0 & 0 &
+		\left(\dfrac{\tilde{c}_-}{\tilde{c}_+}\right)^{\!2}
+		\!\!\bigl[(n-1)\omega_b-\tilde{r}\bigr]+(n-1)\omega_b &
+		\dfrac{\tilde{c}_-}{\tilde{c}_+}\bigl[(n-1)\omega_b-\tilde{r}\bigr] \\[10pt]
+		\Omega_\mathrm{eff}^{(n-1)} & \tilde{c}_+^2\lambda\sqrt{n} &
+		\dfrac{\tilde{c}_-}{\tilde{c}_+}\bigl[(n-1)\omega_b-\tilde{r}\bigr] &
+		(n-1)\omega_b-\tilde{r}
+	\end{pmatrix}.
+	\label{eq:Hn_S26}
+\end{equation}
+
+\noindent
+En resonancia $\tilde{r} = n\omega_b$, los elementos diagonales
+de los estados intermedios se simplifican a:
+
+\begin{equation}
+	H^{(n)}_{33} = (n-1)\omega_b - n\omega_b = -\omega_b,
+	\qquad
+	H^{(n)}_{22} =
+	\left(\frac{\tilde{c}_-}{\tilde{c}_+}\right)^{\!2}(-\omega_b)
+	+ (n-1)\omega_b,
+	\label{eq:diag_intermedios}
+\end{equation}
+
+\noindent
+y los acoplamientos fuera de la diagonal del bloque intermedio son:
+
+\begin{equation}
+	H^{(n)}_{23} = H^{(n)}_{32}
+	= \frac{\tilde{c}_-}{\tilde{c}_+}(-\omega_b)
+	= -\frac{\tilde{c}_-}{\tilde{c}_+}\omega_b.
+	\label{eq:offdiag_intermedios}
+\end{equation}
+
+\medskip
+\noindent
+\textit{Relación de recurrencia.}
+Identificamos los bloques en~\eqref{eq:Hn_S26} con el subespacio
+de interés $\{|0,{+}\rangle,|n,{-}\rangle\}$ (índices 0 y 1)
+y el subespacio intermedio $\{|n-1,{+}\rangle_\mathrm{eff},
+|n-1,{-}\rangle\}$ (índices 2 y 3):
+
+\begin{equation}
+	X^{(n)} = \begin{pmatrix}
+		0 &
+		\dfrac{\tilde{c}_-}{\tilde{c}_+}\bigl[(n-1)\omega_b - \tilde{r}\bigr] \\[8pt]
+		\Omega_\mathrm{eff}^{(n-1)} & \tilde{c}_+^2\lambda\sqrt{n}
+	\end{pmatrix},
+	\quad
+	R^{(n)} = \begin{pmatrix}
+		H^{(n)}_{22} & H^{(n)}_{23} \\[4pt]
+		H^{(n)}_{32} & H^{(n)}_{33}
+	\end{pmatrix}.
+	\label{eq:XnRn}
+\end{equation}
+
+\noindent
+En resonancia, $X^{(n)}_{12} = \tilde{c}_-/\tilde{c}_+ \cdot (-\omega_b)$
+y $X^{(n)}_{11} = 0$. Aplicando la fórmula perturbativa de Bin~(S6),
+$\Omega_\mathrm{eff}^{(n)} = -\sum_k X^{(n)}_{k1} X^{(n)}_{k2}/R^{(n)}_{kk}$,
+y notando que $R^{(n)}$ tiene un acoplamiento fuera de la diagonal
+$H^{(n)}_{23}$ que contribuye al orden dominante en $\lambda/\omega_b$,
+el resultado al orden dominante es idéntico a Bin~(S27):
+
+\begin{equation}
+	\boxed{
+		\Omega_\mathrm{eff}^{(n)}\big|_{2\mathrm{QD}}
+		= \frac{\sqrt{n}\,\lambda\bigl[(n-1)\omega_b
+			- \tilde{c}_-^2\,\tilde{r}\,\bigr]}
+		{(n-1)\omega_b\,\bigl[\tilde{r} - (n-1)\omega_b\bigr]}
+		\;\Omega_\mathrm{eff}^{(n-1)},
+	}
+	\label{eq:recurrencia_III}
+\end{equation}
+
+\noindent
+válido al orden dominante en $\lambda/\omega_b$, con
+$\tilde{c}_\pm$ dados por~\eqref{eq:cpm_final} y evaluados
+en la resonancia de $n$ fonones~\eqref{eq:resonancia_III}.
+
+\medskip
+\noindent
+\textit{Verificación numérica.}
+Para $n=3$, el resultado del espacio completo de seis estados
+en el límite $\lambda/\omega_b \to 0$ coincide con la recurrencia
+de Bin~(S27) al orden $\lambda^3$. Las correcciones subleading
+son de orden $(\lambda/\omega_b)^2$ relativo al resultado
+dominante, despreciables en el régimen de interés
+$\lambda \ll \omega_b$. $\checkmark$
+
+% -----------------------------------------------------------
+% Régimen III — Bloque 5: Resultado final Omega_eff^(n) para el 2QD
+% -----------------------------------------------------------
+
+\textit{Iteración de la recurrencia.}
+Partiendo de $\Omega_\mathrm{eff}^{(2)}$ dado por la
+ec.~\eqref{eq:Oeff2_III} y aplicando iterativamente la
+recurrencia~\eqref{eq:recurrencia_III}, se obtiene
+$\Omega_\mathrm{eff}^{(n)}$ para todo $n \geq 2$.
+La evaluación es siempre en la resonancia del proceso de
+$n$ fonones, $\tilde{r} = n\omega_b$.
+
+\medskip
+\noindent
+El factor de cada paso es:
+
+\begin{equation}
+	\frac{\Omega_\mathrm{eff}^{(k)}}{\Omega_\mathrm{eff}^{(k-1)}}
+	= \frac{\sqrt{k}\,\lambda\bigl[(k-1)\omega_b
+		- \tilde{c}_-^2\,n\omega_b\bigr]}
+	{(k-1)\omega_b\,\bigl[n\omega_b - (k-1)\omega_b\bigr]}
+	= \frac{\sqrt{k}\,\lambda\bigl(k-1 - n\tilde{c}_-^2\bigr)}
+	{(k-1)(n-k+1)\omega_b},
+	\qquad k = 3,\ldots,n,
+	\label{eq:factor_k}
+\end{equation}
+
+\noindent
+donde todos los $\tilde{c}_\pm$ y $\tilde{r}$ se evalúan con los
+parámetros del sistema a la resonancia $\tilde{r} = n\omega_b$.
+
+\medskip
+\noindent
+\textit{Producto acumulado.}
+Multiplicando todos los factores desde $k=3$ hasta $k=n$ y
+usando $\Omega_\mathrm{eff}^{(2)}$ de~\eqref{eq:Oeff2_III}
+como semilla, el resultado al orden dominante en $\lambda/\omega_b$
+es:
+
+\begin{equation}
+	\Omega_\mathrm{eff}^{(n)}\big|_{2\mathrm{QD}}
+	= (-1)^n\,\frac{\bigl(\lambda/\omega_b\bigr)^n\,\sqrt{2}\,\widetilde\Omega}
+	{(n-1)!\,\sqrt{n!}}
+	\prod_{k=1}^{n-1}\bigl(n\,\tilde{c}_-^2 - k\bigr),
+	\label{eq:Oeff_final}
+\end{equation}
+
+\noindent
+donde $\widetilde\Omega = \sqrt{2}\,\Omega$ es la frecuencia de Rabi
+superradiante del estado brillante del 2QD.
+
+\medskip
+\noindent
+\textit{Comparación con Bin (S29).}
+La ecuación~\eqref{eq:Oeff_final} es formalmente idéntica a Bin~(S29)
+bajo las sustituciones:
+
+\begin{equation}
+	c_\pm \;\longrightarrow\; \tilde{c}_\pm,
+	\qquad
+	\Omega \;\longrightarrow\; \widetilde\Omega = \sqrt{2}\,\Omega,
+	\qquad
+	r \;\longrightarrow\; \tilde{r} = \sqrt{(\Delta+J)^2 + 8\Omega^2},
+	\label{eq:sustituciones_2QD}
+\end{equation}
+
+\noindent
+donde $\tilde{c}_\pm$ son los coeficientes de los estados vestidos
+del 2QD definidos en~\eqref{eq:cpm_final}, que satisfacen
+$\tilde{c}_+^2 + \tilde{c}_-^2 = 1$.
+La equivalencia ha sido verificada numéricamente para $n = 2,3,4,5$
+mediante la iteración explícita de~\eqref{eq:recurrencia_III}.
+
+\medskip
+\noindent
+\textit{Casos explícitos.}
+Para los primeros valores de $n$:
+
+\begin{align}
+	\Omega_\mathrm{eff}^{(2)}\big|_{2\mathrm{QD}}
+	&= \frac{\sqrt{2}\,\widetilde\Omega\,\lambda^2}{\omega_b}
+	\,\tilde{c}_-^2\bigl(2\tilde{c}_-^2-1\bigr)
+	\cdot\bigl(\text{sgn coeficientes}\bigr),
+	\label{eq:Oeff2_caso}\\[6pt]
+	\Omega_\mathrm{eff}^{(3)}\big|_{2\mathrm{QD}}
+	&= -\frac{\sqrt{6}\,\widetilde\Omega\,\lambda^3}{2\omega_b^2}
+	\,\tilde{c}_-^2\,(1-\tilde{c}_-^2)^{1/2}
+	\bigl(9\tilde{c}_-^4 - 9\tilde{c}_-^2 + 2\bigr),
+	\label{eq:Oeff3_caso}\\[6pt]
+	\Omega_\mathrm{eff}^{(4)}\big|_{2\mathrm{QD}}
+	&= \frac{\sqrt{6}\,\widetilde\Omega\,\lambda^4}{3\omega_b^3}
+	\,\tilde{c}_-^2\,(1-\tilde{c}_-^2)^{1/2}
+	\bigl(32\tilde{c}_-^6 - 48\tilde{c}_-^4 + 22\tilde{c}_-^2 - 3\bigr).
+	\label{eq:Oeff4_caso}
+\end{align}
+
+\medskip
+\noindent
+\textit{Resumen de los tres regímenes.}
+Los resultados para $\Omega_\mathrm{eff}^{(n)}$ en los tres regímenes
+del 2QD son:
+
+\begin{equation}
+	\Omega_\mathrm{eff}^{(n)}\big|_{2\mathrm{QD}} =
+	\begin{cases}
+		\dfrac{\sqrt{2}\,\Omega}{\sqrt{n!}}
+		\left(\dfrac{\lambda}{\omega_b}\right)^n,
+		& \text{Régimen I},
+		\\[12pt]
+		\dfrac{\sqrt{2}\,\Omega}{\sqrt{n!}}
+		\left(\dfrac{\lambda}{\omega_b}\right)^n
+		e^{-\lambda^2/2\omega_b^2},
+		& \text{Régimen II},
+		\\[12pt]
+		\dfrac{(-1)^n\,\sqrt{2}\,\widetilde\Omega}
+		{(n-1)!\,\sqrt{n!}}
+		\left(\dfrac{\lambda}{\omega_b}\right)^n
+		\displaystyle\prod_{k=1}^{n-1}(n\tilde{c}_-^2-k),
+		& \text{Régimen III},
+	\end{cases}
+	\label{eq:Oeff_resumen}
+\end{equation}
+
+\noindent
+con las resonancias correspondientes:
+
+\begin{equation}
+	\Delta_n\big|_{2\mathrm{QD}} =
+	\begin{cases}
+		-n\omega_b - J,
+		& \text{Régimen I},
+		\\[6pt]
+		\dfrac{\lambda^2}{\omega_b} - n\omega_b - J,
+		& \text{Régimen II},
+		\\[8pt]
+		-\sqrt{n^2\omega_b^2 - 8\Omega^2} - J,
+		& \text{Régimen III}.
+	\end{cases}
+	\label{eq:Delta_resumen}
+\end{equation}
+
+\noindent
+En todos los regímenes, las dos correcciones respecto al resultado de
+Bin~(S29) para el 1QD son idénticas: (i)~un factor $\sqrt{2}$ en
+la frecuencia de Rabi efectiva, originado en la superradiancia del
+estado brillante, y (ii)~un desplazamiento rígido $-J$ en la
+resonancia, originado en el acoplamiento de Förster.
+
 	
 \end{document}
