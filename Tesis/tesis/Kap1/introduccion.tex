@@ -6,15 +6,16 @@ más popular es la física multifotónica
 \cite{kubanek2008,ota2011,gonzaleztudela2013,munoz2014,chang2016,kockum2017}, con 
 aplicaciones potenciales para láseres multifotónicos \cite{gauthier1992}, 
 superación del límite de difracción \cite{dangelo2001}, y metrología 
-\cite{afek2010}. En particular, Muñoz et al. propusieron un esquema para la generación directa 
-de estados de $n$ fotones en el mismo modo (paquetes de $n$ fotones) bajo la 
-plataforma de electrodinámica cuántica de cavidades (cQED) \cite{munoz2014}.
+\cite{afek2010}. En particular, Muñoz et al. propusieron un esquema para la 
+generación directa de estados de $n$ fotones en el mismo modo (paquetes de 
+$n$ fotones) bajo la plataforma de electrodinámica cuántica de cavidades 
+(cQED) \cite{munoz2014}.
 
 Además de los fotones, los fonones (los cuantos de ondas mecánicas) han emergido 
 como candidatos fuertes para la ingeniería de dispositivos cuánticos de estado 
 sólido y comunicaciones cuánticas en chip 
 \cite{balandin2005,manenti2017,noguchi2017,schuetz2015,arrangoiz2018}, con 
-diversas ventajas distintivas. Primero, la velocidad de las ondas acústicas es 
+diversas ventajas distintivas: primero, la velocidad de las ondas acústicas es 
 significativamente más lenta que la velocidad de la luz, y por lo tanto es más 
 adecuada para comunicaciones sobre distancias cortas, tales como unos pocos 
 cientos de micrómetros o menos (es decir, comunicación en chip) 
@@ -34,37 +35,108 @@ cuánticas fonónicas \cite{lemonde2018,calajo2019}, la detección de la interac
 electrón-fonón en puntos cuánticos dobles \cite{hartke2018,gullans2018}, y 
 dispositivos acústicos cuánticos \cite{chu2017,manenti2017}.
 
-La generación de estados cuánticos multifonónicos se convierte en una tarea 
-importante de la fonónica, siendo requeridos para fuentes altamente no clásicas 
+La generación de estados cuánticos multifonónicos se convierte entonces en una 
+tarea central de la fonónica, siendo requeridos para fuentes altamente no clásicas 
 útiles en sensado y metrología cuántica \cite{zhang2018,chu2018,satzinger2018}, 
 tecnologías cuánticas tales como memorias y transductores cuánticos 
 \cite{schuetz2015,noguchi2017,arrangoiz2018}, y mediciones de precisión cuántica 
 acústica mediante paquetes antibunched y estados NOON de fonones 
-\cite{toyoda2015,zhang2018}.\\
+\cite{toyoda2015,zhang2018}. En este contexto, Bin et al. demostraron 
+teóricamente que un punto cuántico (QD) acoplado a una nanocavidad acústica puede 
+generar paquetes de $n$ fonones mediante un proceso de Stokes ópticamente 
+bombeado \cite{bin2020}. El mecanismo se basa en oscilaciones 
+super-Rabi \cite{strekalov2014} entre estados con grandes diferencias en su número de excitaciones: la 
+emisión pura de paquetes se obtiene al abrir un canal disipativo que convierte 
+dichas oscilaciones en emisión hacia el exterior, siempre que el bombeo óptico 
+satisfaga la condición de resonancia entre la frecuencia del láser y las 
+transiciones asistidas por fonones del sistema. Este esquema difiere 
+cualitativamente del mecanismo fotónico propuesto por Muñoz et al. 
+\cite{munoz2014}, que emplea transiciones \textit{leapfrog} mediante interacción 
+de Jaynes-Cummings: en el caso fonónico, el flip del QD está acompañado por una 
+generación de $n$ fonones inducida por la interacción electrón-fonón, lo que 
+abre una ruta distinta hacia la emisión de paquetes multimodales altamente puros. 
+Extendiendo este marco al considerar la estructura interna del excitón, se han 
+reportado además oscilaciones de super-Rabi entre estados excitónicos oscuros 
+y brillantes en puntos cuánticos sin campo magnético externo \cite{vargas2022}, 
+lo que ilustra la riqueza del espacio de control coherente disponible en estas 
+plataformas incluso a nivel de un único emisor.
 
-Recientemente, se ha demostrado teóricamente que un punto cuántico acoplado a una nanocavidad acústica puede generar paquetes de $n$ fonones mediante un proceso de Stokes ópticamente bombeado, el cual realiza oscilaciones super-Rabi entre estados con grandes diferencias en su número de excitaciones \cite{bin2020,strekalov2014}. La emisión pura de paquetes se obtiene al abrir un canal disipativo que convierte las oscilaciones super-Rabi en emisión hacia el exterior, siempre que el bombeo óptico satisfaga la condición de resonancia entre la frecuencia del láser y las transiciones asistidas por fonones del sistema. El mecanismo fonónico difiere del esquema fotónico previo \cite{munoz2014}, que se basa en transiciones leapfrog mediante interacción de Jaynes-Cummings: aquí, el flip del QD está acompañado por una generación de $n$ fonones inducida por la interacción electrón-fonón. Este resultado enriquece la ingeniería cuántica de procesos de Stokes no lineales, más allá de las manipulaciones de fotones y fonones ampliamente aplicadas, tales como la generación de fotones pareados con formas de onda controlables \cite{balic2005}, la transparencia electromagnéticamente inducida con pulsos de fotón único sintonizables \cite{eisaman2005}, el enfriamiento por bandas laterales de osciladores mecánicos \cite{aspelmeyer2014}, y la emisión fonónica colectiva en sistemas de múltiples emisores \cite{droenner2017,devereaux2007}. Extendiendo este marco al considerar la estructura interna del excitón, se han reportado oscilaciones de Rabi gigantes entre estados excitónicos oscuros y brillantes en puntos cuánticos sin campo magnético externo \cite{vargas2022}, lo que enriquece el espacio de control coherente disponible en estas plataformas. Sin embargo, el esquema basado en un único punto cuántico presenta limitaciones inherentes relacionadas con la ausencia de efectos colectivos y modos híbridos que podrían emerger de la interacción coherente entre múltiples emisores, sugiriendo que el acoplamiento entre múltiples puntos cuánticos podría ofrecer ventajas significativas en términos de control, estabilidad paramétrica y escalabilidad.
+Sin embargo, el esquema de un único QD presenta limitaciones inherentes: la 
+ausencia de efectos colectivos y de modos híbridos que solo pueden emerger de la 
+interacción coherente entre múltiples emisores restringe el control sobre la 
+resonancia de Stokes y la estabilidad paramétrica de los paquetes generados. Una 
+extensión natural consiste entonces en considerar una molécula excitónica, formada 
+por dos puntos cuánticos acoplados coherentemente mediante interacción tipo Förster 
+\cite{forster1948}, interactuando con un modo fonónico confinado. La transferencia 
+resonante de energía de Förster entre puntos cuánticos ha sido ampliamente 
+estudiada en sistemas semiconductores \cite{kagan1996,crooker2002}, y recientemente 
+se ha desarrollado un tratamiento microscópico exacto que incluye el acoplamiento 
+dipolo-dipolo y el entorno fonónico compartido \cite{hall2025}. La presencia de dos 
+emisores acoplados introduce nuevos grados de libertad físicos: la hibridación de los estados excitónicos en modos colectivos 
+brillantes y oscuros, la interferencia cuántica entre trayectorias 
+de emisión, y la posibilidad de emisión superradiante colectiva 
+no presente en el esquema de emisor único. Fenómenos colectivos 
+análogos han sido observados en sistemas fotónicos acoplados, incluyendo estados 
+subradiantes y superradiantes en emisores cuánticos en guías de onda 
+\cite{gonzaleztudela2013}, modificaciones de las tasas de decaimiento espontáneo 
+y corrimientos de Lamb en átomos artificiales gigantes \cite{kockum2014}, y 
+control acusto-óptico cuántico mediante estados ligados átomo-fotón en QED de 
+guías de onda \cite{calajo2019}. De manera análoga a las moléculas fotónicas en 
+microcavidades ópticas \cite{vahala2003,boriskina2006}, cuyo acoplamiento entre 
+resonadores permite controlar espectralmente la emisión, la molécula excitónica 
+podría ofrecer control adicional sobre las condiciones de resonancia de Stokes 
+mediante la sintonización del acoplamiento de Förster, así como acceso a regímenes 
+de emisión colectiva de paquetes de fonones correlacionados que no tienen 
+contraparte en el sistema de emisor único.
 
-Una extensión natural de este esquema consiste en considerar una molécula excitónica, formada por dos puntos cuánticos acoplados coherentemente mediante interacción tipo Förster \cite{forster1948}, en interacción con un modo fonónico confinado. > La transferencia resonante de energía de Förster entre puntos cuánticos ha sido ampliamente estudiada en sistemas semiconductores \cite{kagan1996,crooker2002} y recientemente se ha desarrollado un tratamiento microscópico exacto que considera el acoplamiento dipolo-dipolo y el entorno fonónico compartido \cite{hall2025}. La presencia de dos emisores acoplados introduce nuevos grados de libertad físicos: la hibridación de los estados excitónicos, la interferencia cuántica entre trayectorias de emisión y la posibilidad de modos colectivos de emisión. Estos elementos pueden modificar sustancialmente las condiciones de resonancia de Stokes y la dinámica de emisión multifonónica.\\
-
-En sistemas fotónicos, el acoplamiento resonante entre emisores cuánticos ha permitido observar fenómenos colectivos como estados subradiantes y superradiantes \cite{gonzaleztudela2013}, modificaciones sustanciales en las tasas de decaimiento espontáneo y corrimientos de Lamb mediante diseño de dependencias frecuenciales en átomos artificiales gigantes \cite{kockum2017}, y control acusto-óptico cuántico mediante estados ligados átomo-fotón en QED de guías de onda de baja velocidad \cite{calajo2019}. De manera análoga a las moléculas fotónicas en microcavidades ópticas \cite{vahala2003,boriskina2006}, que han demostrado capacidad de control espectral y espacial de la emisión mediante el acoplamiento entre resonadores, las moléculas excitónicas podrían ofrecer ventajas significativas en el contexto de emisión multifonónica: mayor control sobre las condiciones de resonancia de Stokes mediante la sintonización del acoplamiento tipo Förster, estabilidad paramétrica mejorada frente a fluctuaciones del sistema, y potencial acceso a regímenes de emisión colectiva de paquetes de fonones correlacionados.\\
-
-Motivado por este panorama, el presente trabajo tiene como objetivo extender el esquema de emisión multifonónica de Bin et al. \cite{bin2020} al caso de una molécula excitónica formada por dos puntos cuánticos acoplados mediante interacción de Förster, en interacción con un modo fonónico confinado bajo condiciones de resonancia de Stokes. Este régimen ampliado, junto con la estructura de niveles más compleja, permite explorar si la emisión de paquetes de $n$ cuantos puede ser mejorada mediante efectos colectivos, y si la resonancia de Stokes ideal puede mantenerse sobre un amplio rango de parámetros en configuraciones de múltiples emisores. Se emplea el formalismo de sistemas cuánticos abiertos mediante la ecuación maestra de Lindblad \cite{lindblad1976} implementada en QuTiP \cite{johansson2011} para determinar cómo el acoplamiento de Förster afecta las funciones de correlación de orden superior $g^{(n)}$ calculadas según la teoría de coherencia de Glauber \cite{glauber1963}, las purezas de emisión \cite{munoz2018} y la estabilidad paramétrica de los paquetes generados, en comparación con el esquema de referencia de un único punto cuántico. Este estudio busca contribuir al diseño de fuentes acústicas cuánticas más estables y escalables para redes fonónicas \cite{habraken2012}, transferencia de estados mediada por fonones \cite{bienfait2019} y procesamiento de información cuántica, ampliando el ámbito de la fonónica cuántica con aplicaciones potenciales en metrología cuántica e ingeniería de dispositivos cuánticos tales como pistolas de $n$ fonones heraldadas ópticamente, dentro del marco teórico de la optomecánica de cavidades \cite{aspelmeyer2014} y sistemas híbridos luz-materia-fonón \cite{devereaux2007}.
+Motivado por este panorama, el presente trabajo tiene como objetivo extender el 
+esquema de Bin et al. \cite{bin2020} al caso de una molécula excitónica de dos 
+QDs acoplados por interacción de Förster, en interacción con un modo fonónico 
+confinado bajo condiciones de resonancia de Stokes. Para ello se emplea el 
+formalismo de sistemas cuánticos abiertos mediante la ecuación maestra de Lindblad 
+\cite{lindblad1976} implementada numéricamente en QuTiP \cite{johansson2011}, con 
+el que se determinan las funciones de correlación de orden superior $g^{(n)}$ 
+según la teoría de coherencia de Glauber \cite{glauber1963} y las purezas de 
+emisión $\Pi_n$ \cite{munoz2018}, cuantificando cómo el acoplamiento de Förster 
+modifica la calidad estadística y la estabilidad paramétrica de los paquetes 
+generados respecto al caso de referencia de un único punto cuántico. Los 
+resultados buscan contribuir al diseño de fuentes acústicas cuánticas más estables 
+y escalables, con aplicaciones en redes fonónicas \cite{habraken2012}, 
+transferencia de estados cuánticos mediada por fonones \cite{bienfait2019} y 
+procesamiento de información cuántica en el marco de la optomecánica de cavidades 
+\cite{aspelmeyer2014} y los sistemas híbridos luz-materia-fonón 
+\cite{devereaux2007}.\\
 
 
 \section{Objetivos}
 
 \subsection*{Objetivo General}
 
-Analizar la dinámica de emisión multifonónica en un sistema compuesto por una molécula excitónica acoplada a una cavidad acústica bajo condiciones de resonancia de Stokes, determinando cómo el acoplamiento de Förster y la hibridación excitónica modifican las propiedades estadísticas, la pureza y la estabilidad paramétrica de los paquetes de fonones generados.
+Analizar la dinámica de emisión multifonónica en un sistema compuesto por una 
+molécula excitónica acoplada a una cavidad acústica bajo condiciones de resonancia 
+de Stokes, determinando cómo el acoplamiento de Förster y la hibridación 
+excitónica modifican las propiedades estadísticas, la pureza y la estabilidad 
+paramétrica de los paquetes de fonones generados.
 
 \subsection*{Objetivos Específicos}
 
 \begin{itemize}
-  \item Formular el modelo teórico del sistema de dos puntos cuánticos acoplados mediante interacción de Förster que interactúan con un modo fonónico confinado, considerando excitación óptica coherente en condiciones de resonancia de Stokes de orden $n$.
-  
-  \item Implementar computacionalmente la ecuación maestra de Lindblad del sistema propuesto utilizando QuTiP, obteniendo la matriz densidad en el estado estacionario y verificando la convergencia numérica de las soluciones.
-
-  \item Calcular las funciones de correlación de orden superior $g^{(n)}$ para $n=2,3,4,5$ y las purezas de emisión asociadas, caracterizando cuantitativamente la calidad de los paquetes de fonones emitidos y su dependencia con los parámetros del sistema.
-  
-  \item Comparar sistemáticamente los resultados obtenidos con el esquema de un único punto cuántico reportado en la literatura \cite{bin2020}, identificando ventajas, limitaciones y nuevos fenómenos físicos emergentes del acoplamiento excitónico coherente en la emisión multifonónica.
+	\item Formular el modelo teórico del sistema de dos puntos cuánticos acoplados 
+	mediante interacción de Förster que interactúan con un modo fonónico confinado, 
+	considerando excitación óptica coherente en condiciones de resonancia de Stokes 
+	de orden $n$.
+	
+	\item Implementar computacionalmente la ecuación maestra de Lindblad del sistema 
+	propuesto utilizando QuTiP, obteniendo la matriz densidad en el estado 
+	estacionario y verificando la convergencia numérica de las soluciones.
+	
+	\item Calcular las funciones de correlación de orden superior $g^{(n)}$ para 
+	$n=2,3,4,5$ y las purezas de emisión $\Pi_n$ asociadas, caracterizando 
+	cuantitativamente la calidad de los paquetes de fonones emitidos y su 
+	dependencia con los parámetros del sistema.
+	
+	\item Comparar sistemáticamente los resultados obtenidos con el esquema de un 
+	único punto cuántico reportado en la literatura \cite{bin2020}, identificando 
+	ventajas, limitaciones y nuevos fenómenos físicos emergentes del acoplamiento 
+	excitónico coherente en la emisión multifonónica.
 \end{itemize}
