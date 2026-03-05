@@ -14,26 +14,26 @@ rcParams.update({
 })
 
 # =============================================================================
-# PARÁMETROS FIJOS — 2QD, régimen I, barrido en lambda
+# PARÁMETROS FIJOS — 2QD, régimen III, barrido en Omega
 # =============================================================================
-omega_b  = 1.0
-Omega_ob = 0.01
-kappa_ob = 0.003
-gamma_ob = 0.0004
-gphi_ob  = 0.0004
-J_ob     = 0.5
+omega_b   = 1.0
+lambda_ob = 0.08   # fijo — parámetro de trabajo 2QD
+kappa_ob  = 0.003
+gamma_ob  = 0.0004
+gphi_ob   = 0.0004
+J_ob      = 0.5
 
-Ncut = 8  # igual que en funciones de correlación 2QD
+Ncut = 8
 
 # =============================================================================
 # GRILLA 2D
 # =============================================================================
-n_Delta  = 30
-n_lambda = 10
-Delta_arr  = np.linspace(0.0, -7.0, n_Delta)
-lambda_arr = np.logspace(-2.2, 0, n_lambda)
+n_Delta = 30
+n_Omega = 10
+Delta_arr = np.linspace(0.0, -7.0, n_Delta)
+Omega_arr = np.logspace(-2.2, 0, n_Omega)
 
-g2_map = np.full((n_lambda, n_Delta), np.nan)
+g2_map = np.full((n_Omega, n_Delta), np.nan)
 
 # =============================================================================
 # OPERADORES — QD1 ⊗ QD2 ⊗ Fock
@@ -89,19 +89,19 @@ def solve_ss(H, c_ops):
     return None
 
 # =============================================================================
-# HAMILTONIANOS FIJOS
+# HAMILTONIANOS FIJOS — lambda fijo
 # =============================================================================
 H_phonon  = omega_b * num_sys
-H_drive   = Omega_ob * (sm1 + sp1 + sm2 + sp2)
+H_eph     = lambda_ob * (proj_e1 + proj_e2) * (b_sys + b_sys.dag())
 H_Forster = J_ob * (sp1 * sm2 + sp2 * sm1)
 
 # =============================================================================
 # BARRIDO 2D
 # =============================================================================
-total = n_lambda * n_Delta
+total = n_Omega * n_Delta
 count = 0
 
-for i, lam in enumerate(lambda_arr):
+for i, Omega in enumerate(Omega_arr):
     c_ops = [
         np.sqrt(kappa_ob) * b_sys,
         np.sqrt(gamma_ob) * sm1,
@@ -110,7 +110,7 @@ for i, lam in enumerate(lambda_arr):
         np.sqrt(gphi_ob)  * proj_e2,
     ]
 
-    H_eph = lam * (proj_e1 + proj_e2) * (b_sys + b_sys.dag())
+    H_drive = Omega * (sm1 + sp1 + sm2 + sp2)  # Omega varía
 
     for j, Delta in enumerate(Delta_arr):
         H_det = Delta * (proj_e1 + proj_e2)
@@ -125,39 +125,17 @@ for i, lam in enumerate(lambda_arr):
         nbar = qt.expect(num_sys, rho_ss)
         if nbar > 1e-8:
             num = qt.expect(bdagb3, rho_ss)
-            g2_map[i, j] = np.real(num) / nbar ** 3  # exponente 3
+            g2_map[i, j] = np.real(num) / nbar ** 3
 
         if count % 50 == 0:
-            print(f"  {count}/{total}  λ={lam:.3f}  Δ={Delta:.2f}  "
+            print(f"  {count}/{total}  Ω={Omega:.3f}  Δ={Delta:.2f}  "
                   f"g2={g2_map[i,j]:.2e}" if not np.isnan(g2_map[i,j])
-                  else f"  {count}/{total}  λ={lam:.3f}  Δ={Delta:.2f}  nan")
+                  else f"  {count}/{total}  Ω={Omega:.3f}  Δ={Delta:.2f}  nan")
 
 print("\n✓ Barrido completado")
 
 # =============================================================================
-# INTERPOLACIÓN — corregir puntos problemáticos
-# =============================================================================
-# Interpolación restringida a zona problemática: lambda < 0.05 y Delta < -3
-from scipy.interpolate import NearestNDInterpolator
-
-mask_valid = ~np.isnan(g2_map) & (g2_map > 1e1)
-mask_bad   = ~mask_valid
-
-# Restringir solo a la zona inferior izquierda
-for i, lam in enumerate(lambda_arr):
-    for j, Delta in enumerate(Delta_arr):
-        if lam > 0.05 or Delta > -2.0:
-            mask_bad[i, j] = False  # no tocar esta zona
-
-if mask_valid.any() and mask_bad.any():
-    coords     = np.array(np.where(mask_valid)).T
-    values     = g2_map[mask_valid]
-    interp     = NearestNDInterpolator(coords, values)
-    bad_coords = np.array(np.where(mask_bad)).T
-    g2_map[mask_bad] = interp(bad_coords)
-
-# =============================================================================
-# HEATMAP — 2QD régimen I, barrido en lambda, g^(3)
+# HEATMAP — 2QD régimen III, barrido en Omega, g^(3)
 # =============================================================================
 n_res = [1, 2, 3, 4, 5, 6]
 
@@ -176,7 +154,7 @@ g3_plot = np.where(np.isnan(g2_map), 1e0, g2_map)
 g3_plot = np.clip(g3_plot, 1e0, 1e15)
 
 im = ax.pcolormesh(
-    Delta_arr, lambda_arr, g3_plot,
+    Delta_arr, Omega_arr, g3_plot,
     norm=LogNorm(vmin=1e0, vmax=1e15),
     cmap=cmap_bin,
     shading='auto'
@@ -196,17 +174,18 @@ cbar.set_ticklabels(['0', '3', '6', '9', '12', '15'])
 cbar.ax.tick_params(labelsize=12)
 
 # ------------------------------------------------------------------
-# Líneas de resonancia — régimen I 2QD
+# Líneas de resonancia — régimen III 2QD
 # ------------------------------------------------------------------
 Delta_fine = np.linspace(-9.0, 0.0, 1000)
 
 for n in n_res:
-    lam_curve = np.sqrt(np.maximum((Delta_fine + n * omega_b + J_ob) * omega_b, 0))
+    arg = (n * omega_b)**2 - (Delta_fine + J_ob)**2
+    Omega_curve = np.sqrt(np.maximum(arg / 8, 0))
 
-    ax.plot(Delta_fine, lam_curve,
+    ax.plot(Delta_fine, Omega_curve,
             color='black', ls='--', lw=0.9, alpha=0.85)
 
-# Labels manuales
+# Labels manuales — misma posición relativa que panel (b)
 labels_manual = {
     1: (-1.4, 0.02),
     2: (-2.4, 0.02),
@@ -218,7 +197,7 @@ labels_manual = {
 
 for n, (x_lab, y_lab) in labels_manual.items():
     ax.text(x_lab, y_lab,
-            rf'$\Delta_{n}(\lambda)$',
+            rf'$\Delta_{n}(\Omega)$',
             fontsize=16,
             ha='left', va='bottom',
             rotation=90, color='black')
@@ -228,7 +207,7 @@ for n, (x_lab, y_lab) in labels_manual.items():
 # ------------------------------------------------------------------
 ax.set_yscale('log')
 ax.set_xlim(-6.5, -1.0)
-ax.set_ylim(lambda_arr.min(), lambda_arr.max())
+ax.set_ylim(Omega_arr.min(), Omega_arr.max())
 
 ax.set_xticks([-6, -5, -4, -3, -2, -1])
 ax.set_xticklabels([r'$-6$', r'$-5$', r'$-4$', r'$-3$', r'$-2$', r'$-1$'])
@@ -237,11 +216,11 @@ ax.set_yticks([1e-2, 1e-1, 1e0])
 ax.set_yticklabels([r'$10^{-2}$', r'$10^{-1}$', r'$10^{0}$'])
 
 ax.set_xlabel(r'$\Delta/\omega_b$', fontsize=15)
-ax.set_ylabel(r'$\lambda/\omega_b$', fontsize=15)
+ax.set_ylabel(r'$\Omega/\omega_b$', fontsize=15)
 ax.tick_params(labelsize=13)
 ax.set_facecolor('white')
 
-ax.text(0.03, 0.04, r'$(b)$',
+ax.text(0.03, 0.04, r'$(c)$',
         transform=ax.transAxes,
         ha='left', va='bottom', fontsize=16)
 

@@ -111,7 +111,7 @@ for i, lam in enumerate(lambda_arr):
         nbar = qt.expect(num_sys, rho_ss)
         if nbar > 1e-12:
             num = qt.expect(bdagb2, rho_ss)
-            g2_map[i, j] = np.real(num) / nbar**2
+            g2_map[i, j] = np.real(num) / nbar ** 2
 
         if count % 50 == 0:
             print(f"  {count}/{total}  λ={lam:.3f}  Δ={Delta:.2f}  "

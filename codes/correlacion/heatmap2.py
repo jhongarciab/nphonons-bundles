@@ -20,7 +20,7 @@ Ncut = 30
 n_Delta = 30
 n_Omega = 10
 Delta_arr = np.linspace(0.0, -6.0, n_Delta)
-Omega_arr = np.logspace(-2, 0, n_Omega)
+Omega_arr = np.logspace(-2.5, 0, n_Omega)
 
 g2_map = np.full((n_Omega, n_Delta), np.nan)
 
@@ -164,21 +164,24 @@ cbar.ax.tick_params(labelsize=12)
 # ------------------------------------------------------------------
 # Líneas de resonancia — régimen III: Delta_n(Omega) = -sqrt(n²ωb² - 4Ω²)
 # ------------------------------------------------------------------
-Omega_fine = np.logspace(-2, 0, 1000)
+Delta_fine = np.linspace(-8.0, 0.0, 1000)
 
 for n in n_res:
-    arg = (n * omega_b)**2 - 4 * Omega_fine**2
-    mask = arg > 0
-    Delta_curve = -np.sqrt(arg[mask])
+    # Omega como función de Delta — análogo a lam_curve
+    # Delta_n(Omega) = -sqrt(n²ωb² - 8Ω²) → Omega = sqrt((n²ωb² - Delta²) / 8)
+    arg = (n * omega_b)**2 - Delta_fine**2
+    Omega_curve = np.sqrt(np.maximum(arg / 8, 0))
 
-    ax.plot(Delta_curve, Omega_fine[mask],
+    # Sin mask — matplotlib corta en ylim automáticamente
+    ax.plot(Delta_fine, Omega_curve,
             color='black', ls='--', lw=0.9, alpha=0.85)
 
     # Etiquetas
     target_Omega = 0.45
-    idx_label = np.argmin(np.abs(Omega_fine[mask] - target_Omega))
-    x_lab = Delta_curve[idx_label]
-    y_lab = Omega_fine[mask][idx_label]
+    mask_label = Omega_curve > 0
+    idx_label = np.argmin(np.abs(Omega_curve[mask_label] - target_Omega))
+    x_lab = Delta_fine[mask_label][idx_label]
+    y_lab = Omega_curve[mask_label][idx_label]
     if Omega_arr.min() < y_lab < Omega_arr.max():
         ax.text(x_lab, y_lab * 1e-1,
                 rf'$\Delta_{n}(\Omega)$',
@@ -186,6 +189,9 @@ for n in n_res:
                 ha='left', va='bottom',
                 rotation=90, color='black')
 
+# ylim ANTES de mostrar
+ax.set_ylim(Omega_arr.min(), Omega_arr.max())
+ax.set_xlim(-6.0, 0.0)
 # ------------------------------------------------------------------
 # Ejes
 # ------------------------------------------------------------------
