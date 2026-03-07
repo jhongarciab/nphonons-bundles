@@ -139,5 +139,3 @@ fig.suptitle(f"Trayectoria corregida (k={k_show}, jumps={int(nj[k_show])})", y=0
 plt.tight_layout()
 #plt.savefig("trayectorias_solo_fix.png", dpi=180)
 plt.show()
-
-
