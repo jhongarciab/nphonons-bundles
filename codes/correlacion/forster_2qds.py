@@ -1,5 +1,5 @@
-import matplotlib
-matplotlib.use("pgf")
+#import matplotlib
+#matplotlib.use("pgf")
 import numpy as np
 import qutip as qt
 import matplotlib.pyplot as plt
@@ -23,7 +23,7 @@ omega_b = 1.0
 lam_over_ob = 0.08
 Omega_over_ob = 0.01
 kappa_over_ob = 0.003
-gamma_over_ob = 0.0004
+gamma_over_ob = 0.0002
 gphi_over_ob = 0.0004
 
 J_over_ob = 0.5
@@ -287,6 +287,6 @@ for idx, n_order in enumerate(n_orders):
 axes[-1].set_xlabel(r'$\Delta/\omega_b$', fontsize=24)
 
 plt.tight_layout()
-#plt.show()
-plt.savefig("../figs/g_n_orders_stacked.pgf", bbox_inches="tight")
-plt.close()
+plt.show()
+#plt.savefig("../figs/g_n_orders_stacked.pgf", bbox_inches="tight")
+#plt.close()
