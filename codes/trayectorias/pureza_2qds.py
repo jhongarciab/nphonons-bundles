@@ -57,8 +57,8 @@ Ncut_full = 14        # dim = 4·14 = 56
 n_lam   = 30          # Producción: 50-60
 n_kappa = 30
 
-lambda_arr = np.linspace(0.02, 0.20, n_lam)
-kappa_arr  = np.logspace(-5, -1, n_kappa)   # κ_min=1e-4 > γ=2e-4 aprox.
+lambda_arr = np.linspace(0.08, 0.26, n_lam)
+kappa_arr  = np.logspace(-5, -1, n_kappa)
 
 n_bundle_list = [3, 4]
 
@@ -405,15 +405,6 @@ for n_b in n_bundle_list:
     elapsed_total = time.time() - t0
     print(f"\n  ✓ Π_{n_b} completado en {elapsed_total:.1f}s")
 
-    # Guardar datos antes de visualizar
-    prefix = f"purity_2qd_n{n_b}"
-    np.save(f"{prefix}_munoz.npy",  pm_map)
-    np.save(f"{prefix}_fock.npy",   pf_map)
-    np.save(f"{prefix}_Tn.npy",     tn_map)
-    np.save(f"{prefix}_nbar.npy",   nb_map)
-    np.save(f"{prefix}_delta.npy",  delta_map)
-    print(f"  Datos guardados: {prefix}_*.npy")
-
     all_results[n_b] = {
         'munoz': pm_map,
         'fock':  pf_map,
@@ -422,24 +413,17 @@ for n_b in n_bundle_list:
         'delta': delta_map,
     }
 
-np.save("purity_2qd_lambda.npy", lambda_arr)
-np.save("purity_2qd_kappa.npy",  kappa_arr)
-print("\n✓ Ejes guardados.")
-
-
 # =============================================================================
 # VISUALIZACIÓN — Heatmaps 2D
 # =============================================================================
-import matplotlib
-matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.colors import Normalize
 
 n_cols = len(n_bundle_list)
-fig, axes = plt.subplots(2, n_cols, figsize=(6 * n_cols, 10))
+fig, axes = plt.subplots(1, n_cols, figsize=(6*n_cols, 5))
+axes = axes.reshape(1, n_cols)
 
 cmap_pur   = plt.cm.RdYlBu_r
-cmap_delta = plt.cm.coolwarm
 
 for col, n_b in enumerate(n_bundle_list):
 
@@ -462,51 +446,10 @@ for col, n_b in enumerate(n_bundle_list):
     cbar1 = fig.colorbar(im1, ax=ax, fraction=0.045, pad=0.02)
     cbar1.set_label(rf'$\pi_{n_b}$', fontsize=12)
 
-    try:
-        cs = ax.contour(lambda_arr, kappa_arr, Z,
-                        levels=[0.5, 0.8, 0.9, 0.95, 0.99],
-                        colors='black', linewidths=0.8, linestyles='--')
-        ax.clabel(cs, fmt='%.2f', fontsize=9)
-    except Exception:
-        pass
-
     label = chr(ord('a') + col)
     ax.text(0.03, 0.95, f'({label})', transform=ax.transAxes,
             fontsize=13, va='top', ha='left',
             bbox=dict(facecolor='white', edgecolor='none', alpha=0.7))
-
-    # ── Fila 1: Δ_opt ─────────────────────────────────────────────────
-    ax2        = axes[1, col]
-    dmap       = all_results[n_b]['delta']
-    Delta_I    = -n_b * omega_b - J   # Régimen I como referencia
-    Z_d        = np.nan_to_num(dmap, nan=Delta_I).T
-
-    im2 = ax2.pcolormesh(
-        lambda_arr, kappa_arr, Z_d,
-        shading='auto', cmap=cmap_delta,
-        norm=Normalize(vmin=Delta_I - 0.25, vmax=Delta_I + 0.25)
-    )
-    ax2.set_yscale('log')
-    ax2.set_xlabel(r'$\lambda/\omega_b$', fontsize=13)
-    ax2.set_ylabel(r'$\kappa/\omega_b$', fontsize=13)
-    ax2.set_title(rf'$\Delta_{n_b}^{{\mathrm{{opt}}}}$ — 2QD', fontsize=13)
-    ax2.tick_params(labelsize=11)
-
-    cbar2 = fig.colorbar(im2, ax=ax2, fraction=0.045, pad=0.02)
-    cbar2.set_label(rf'$\Delta_{n_b}^{{\mathrm{{opt}}}}/\omega_b$', fontsize=12)
-
-    try:
-        cs2 = ax2.contour(lambda_arr, kappa_arr, Z_d,
-                          levels=[Delta_I],
-                          colors='black', linewidths=1.0)
-        ax2.clabel(cs2, fmt=f'{Delta_I:.1f}', fontsize=9)
-    except Exception:
-        pass
-
-    label2 = chr(ord('c') + col)
-    ax2.text(0.03, 0.95, f'({label2})', transform=ax2.transAxes,
-             fontsize=13, va='top', ha='left',
-             bbox=dict(facecolor='white', edgecolor='none', alpha=0.7))
 
 plt.tight_layout()
 plt.savefig("purity_2qd.png", dpi=300, bbox_inches='tight')

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+ #!/usr/bin/env python3
 """
 Pureza Π_n — 1 QD (Bin et al.) — v3: Resonancia optimizada
 =============================================================
@@ -33,8 +33,7 @@ Omega     = 0.2       # Ω/ω_b
 gamma     = 0.0002    # γ/ω_b
 gamma_phi = 0.0004    # γ_φ/ω_b
 
-Ncut_full  = 25
-Ncut_trunc = 2
+Ncut_full  = 20
 
 # =============================================================================
 # GRILLA 2D: λ/ω_b × κ/ω_b
@@ -43,9 +42,9 @@ n_lam   = 30          # Producción: 60-80
 n_kappa = 30
 
 lambda_arr = np.linspace(0.02, 0.14, n_lam)
-kappa_arr  = np.logspace(-3, 0, n_kappa)
+kappa_arr  = np.logspace(-4, 0, n_kappa)
 
-n_bundle_list = [2, 3]
+n_bundle_list = [4, 5]
 
 # Número de puntos en el barrido fino de Δ para encontrar el máximo
 n_Delta_opt = 15      # Producción: 25-30
@@ -77,7 +76,7 @@ def build_operators(Nc):
 
 
 ops_full  = build_operators(Ncut_full)
-ops_trunc = build_operators(Ncut_trunc)
+ops_trunc = ops_trunc = {n: build_operators(n) for n in n_bundle_list}
 
 # Proyectores de Fock
 fock_projs = [
@@ -203,7 +202,7 @@ def compute_optimized(lam, kappa, n_bundle):
 
     for Delta in Delta_scan:
         purity, n_a, na1, rho_f = compute_purity_at_Delta(
-            ops_full, ops_trunc, lam, kappa, Delta)
+            ops_full, ops_trunc[n_bundle], lam, kappa, Delta)
 
         if np.isnan(purity):
             continue
@@ -265,7 +264,7 @@ for n_b in n_bundle_list:
     print(f"  Grilla: {n_lam}×{n_kappa} = {n_lam*n_kappa} puntos")
     print(f"  Δ scan: {n_Delta_opt} puntos por (λ,κ)")
     print(f"  Total steadystate: ~{n_lam*n_kappa*n_Delta_opt*2}")
-    print(f"  Ncut_full={Ncut_full}, Ncut_trunc={Ncut_trunc}")
+    print(f"  Ncut_full={Ncut_full}, Ncut_trunc={n_b} (Fock({n_b}), dim={2*n_b})")
     print(f"{'='*65}")
 
     pm_map    = np.full((n_lam, n_kappa), np.nan)
@@ -303,15 +302,6 @@ for n_b in n_bundle_list:
     elapsed_total = time.time() - t0
     print(f"\n  ✓ Π_{n_b} completado en {elapsed_total:.1f}s")
 
-    # Guardar datos
-    prefix = f"purity_1qd_n{n_b}_v3"
-    np.save(f"{prefix}_munoz.npy",  pm_map)
-    np.save(f"{prefix}_fock.npy",   pf_map)
-    np.save(f"{prefix}_Tn.npy",     tn_map)
-    np.save(f"{prefix}_nbar.npy",   nb_map)
-    np.save(f"{prefix}_delta.npy",  delta_map)
-    print(f"  Datos: {prefix}_*.npy")
-
     all_results[n_b] = {
         'munoz': pm_map,
         'fock':  pf_map,
@@ -320,11 +310,6 @@ for n_b in n_bundle_list:
         'delta': delta_map,
     }
 
-np.save("purity_1qd_lambda_v3.npy", lambda_arr)
-np.save("purity_1qd_kappa_v3.npy",  kappa_arr)
-print("\n✓ Ejes guardados.")
-
-
 # =============================================================================
 # VISUALIZACIÓN — 2 filas × 2 columnas
 # =============================================================================
@@ -332,11 +317,10 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import Normalize
 
 n_cols = len(n_bundle_list)
-
-fig, axes = plt.subplots(2, n_cols, figsize=(6*n_cols, 10))
+fig, axes = plt.subplots(1, n_cols, figsize=(6*n_cols, 5))
+axes = axes.reshape(1, n_cols)
 
 cmap_pur   = plt.cm.RdYlBu_r
-cmap_delta = plt.cm.coolwarm
 
 for col, n_b in enumerate(n_bundle_list):
 
@@ -361,7 +345,7 @@ for col, n_b in enumerate(n_bundle_list):
     ax.set_yscale('log')
 
     ax.set_xlim(0.02,0.14)
-    ax.set_ylim(1e-3,1e0)
+    ax.set_ylim(1e-4,1e0)
 
     ax.set_xlabel(r'$\lambda/\omega_b$',fontsize=13)
     ax.set_ylabel(r'$\kappa/\omega_b$',fontsize=13)
@@ -372,20 +356,6 @@ for col, n_b in enumerate(n_bundle_list):
 
     cbar1 = fig.colorbar(im1,ax=ax,fraction=0.045,pad=0.02)
     cbar1.set_label(rf'$\pi_{n_b}$',fontsize=12)
-
-    try:
-        cs = ax.contour(
-            lambda_arr,
-            kappa_arr,
-            Z,
-            levels=[0.5,0.8,0.9,0.95,0.99],
-            colors='black',
-            linewidths=0.8,
-            linestyles='--'
-        )
-        ax.clabel(cs,fmt='%.2f',fontsize=9)
-    except:
-        pass
 
     label = chr(ord('a')+col)
 
@@ -400,85 +370,22 @@ for col, n_b in enumerate(n_bundle_list):
         bbox=dict(facecolor='white',edgecolor='none',alpha=0.7)
     )
 
-
-    # ─────────────────────────────
-    # Fila 2 — Δ óptimo
-    # ─────────────────────────────
-    ax2 = axes[1, col]
-
-    dmap = all_results[n_b]['delta']
-
-    Z_d = np.nan_to_num(dmap,nan=-n_b*omega_b).T
-
-    Delta_naive = -n_b * omega_b
-
-    im2 = ax2.pcolormesh(
-        lambda_arr,
-        kappa_arr,
-        Z_d,
-        shading='auto',
-        cmap=cmap_delta,
-        norm=Normalize(vmin=Delta_naive-0.1, vmax=Delta_naive+0.1)
-    )
-
-    ax2.set_yscale('log')
-
-    ax2.set_xlim(0.02,0.14)
-    ax2.set_ylim(1e-3,1e0)
-
-    ax2.set_xlabel(r'$\lambda/\omega_b$',fontsize=13)
-    ax2.set_ylabel(r'$\kappa/\omega_b$',fontsize=13)
-
-    ax2.set_title(rf'$\Delta_{{{n_b}}}^{{opt}}$',fontsize=13)
-
-    ax2.tick_params(labelsize=11)
-
-    cbar2 = fig.colorbar(im2,ax=ax2,fraction=0.045,pad=0.02)
-    cbar2.set_label(rf'$\Delta_{{{n_b}}}/\omega_b$',fontsize=12)
-
-    try:
-        cs2 = ax2.contour(
-            lambda_arr,
-            kappa_arr,
-            Z_d,
-            levels=[Delta_naive],
-            colors='black',
-            linewidths=1.0
-        )
-        ax2.clabel(cs2,fmt=f'{Delta_naive:.1f}',fontsize=9)
-    except:
-        pass
-
-    label2 = chr(ord('c')+col)
-
-    ax2.text(
-        0.03,
-        0.95,
-        f'({label2})',
-        transform=ax2.transAxes,
-        fontsize=13,
-        va='top',
-        ha='left',
-        bbox=dict(facecolor='white',edgecolor='none',alpha=0.7)
-    )
-
 plt.tight_layout()
 
 plt.savefig(
-    "purity_1qd_v3.png",
+    "purity_1qd_pi4.png",
     dpi=300,
     bbox_inches='tight'
 )
 
 plt.savefig(
-    "purity_1qd_v3.pdf",
+    "purity_1qd_pi5.pdf",
     bbox_inches='tight'
 )
 
 print("\n✓ Heatmaps guardados: purity_1qd_v3.png / .pdf")
 
 plt.show()
-
 
 # =============================================================================
 # DIAGNÓSTICO
