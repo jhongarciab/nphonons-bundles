@@ -1,22 +1,8 @@
 """
-3rabis_pilot.py
-================
+Paneles Super-Rabi
+
 Figura compuesta con tres paneles (a,b,c) para los tres regímenes de oscilaciones tipo Rabi
 (incluyendo inset n=3 en cada panel) del modelo 2QD.
-
-Objetivo de este archivo piloto
--------------------------------
-- Dejar el código completamente documentado y con estructura uniforme.
-- Mantener el comportamiento físico/numérico del script original.
-- Centralizar decisiones de estilo y exportación.
-
-Nota práctica sobre visualización/exportación
----------------------------------------------
-Este script está configurado para exportar en PGF (vía backend "pgf").
-Si quieres abrir una ventana interactiva con `plot()`/`show()`:
-1) comenta `matplotlib.use("pgf")`
-2) descomenta `plt.show()`
-3) opcionalmente comenta `plt.savefig(...)` si solo quieres inspección visual.
 """
 
 import matplotlib
