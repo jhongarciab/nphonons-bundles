@@ -3,21 +3,14 @@ import qutip as qt
 import matplotlib.pyplot as plt
 from matplotlib.colors import LogNorm
 
-# =============================================================================
-# PARÁMETROS FIJOS — Bin Fig. 3(a)
-# =============================================================================
 omega_b     = 1.0
-Omega_ob    = 0.003   # Régimen I: Ω ≪ ωb
+Omega_ob    = 0.003
 kappa_ob    = 0.002
 gamma_ob    = 0.0002
 gphi_ob     = 0.0004
 
-Ncut = 30  # truncamiento Fock
+Ncut = 30
 
-# =============================================================================
-# GRILLA 2D: Delta x lambda
-# =============================================================================
-# 30 y 10 para revisar cambios de plot. Mejor resolución 200 y 100
 n_Delta  = 30
 n_lambda = 10
 Delta_arr  = np.linspace(0.0, -6.0, n_Delta)
@@ -25,9 +18,6 @@ lambda_arr = np.logspace(-2, 0, n_lambda)
 
 g2_map = np.full((n_lambda, n_Delta), np.nan)
 
-# =============================================================================
-# OPERADORES BÁSICOS 1QD — C² ⊗ Fock(Ncut)
-# =============================================================================
 b    = qt.destroy(Ncut)
 numb = b.dag() * b
 I_b  = qt.qeye(Ncut)
@@ -42,9 +32,6 @@ sp_sys  = sm_sys.dag()
 proj_e  = sp_sys * sm_sys
 I_sys   = qt.tensor(I_q, I_b)
 
-# =============================================================================
-# OPERADOR FACTORIAL b†^n b^n para n=2
-# =============================================================================
 def factorial_op(num_op, n, I_op):
     op = I_op
     for k in range(n):
@@ -53,9 +40,6 @@ def factorial_op(num_op, n, I_op):
 
 bdagb2 = factorial_op(num_sys, 2, I_sys)
 
-# =============================================================================
-# SOLVER ROBUSTO
-# =============================================================================
 def validate_rho(rho, tol=1e-8):
     if abs(rho.tr() - 1.0) > 1e-6:
         return False
@@ -75,27 +59,19 @@ def solve_ss(H, c_ops):
             pass
     return None
 
-# =============================================================================
-# HAMILTONIANOS FIJOS (no dependen de lambda ni Delta)
-# =============================================================================
 H_phonon = omega_b * num_sys
 H_drive  = Omega_ob * (sm_sys + sp_sys)
 
-# =============================================================================
-# BARRIDO 2D
-# =============================================================================
 total = n_lambda * n_Delta
 count = 0
 
 for i, lam in enumerate(lambda_arr):
-    # Operadores de colapso — fijos para este lambda
     c_ops = [
         np.sqrt(kappa_ob)  * b_sys,
         np.sqrt(gamma_ob)  * sm_sys,
         np.sqrt(gphi_ob)   * proj_e,
     ]
 
-    # Interacción e-ph — depende de lambda
     H_eph = lam * proj_e * (b_sys + b_sys.dag())
 
     for j, Delta in enumerate(Delta_arr):
@@ -129,26 +105,23 @@ rcParams.update({
     "pgf.rcfonts": False,
     "font.size": 13,
 })
-# =============================================================================
-# HEATMAP — réplica Bin Fig. 3(b)
-# =============================================================================
 from matplotlib.colors import LogNorm
 import matplotlib.colors as mcolors
 
 n_res = [1, 2, 3, 4, 5, 6]
 
 colors_list = [
-    '#1a6b3c',
-    '#6abf7b',
-    '#ffffff',
-    '#e8d5a3',
-    '#c4942a',
+    '
+    '
+    '
+    '
+    '
 ]
 cmap_bin = mcolors.LinearSegmentedColormap.from_list('bin_cmap', colors_list)
 
-fig, ax = plt.subplots(figsize=(7, 6))  # más ancho horizontalmente
+fig, ax = plt.subplots(figsize=(7, 6))
 
-g2_plot = np.where(np.isnan(g2_map), 1e0, g2_map)  # nan → valor mínimo
+g2_plot = np.where(np.isnan(g2_map), 1e0, g2_map)
 g2_plot = np.clip(g2_plot, 1e0, 1e9)
 
 im = ax.pcolormesh(
@@ -158,9 +131,6 @@ im = ax.pcolormesh(
     shading='auto'
 )
 
-# ------------------------------------------------------------------
-# Colorbar — label dentro del borde superior
-# ------------------------------------------------------------------
 cbar = fig.colorbar(im, ax=ax, fraction=0.04, pad=0.02, shrink=1.0, anchor=(0.0, 0.0))
 
 cbar.ax.text(1, 1.08, r'$\log_{10} g^{(2)}$',
@@ -171,19 +141,14 @@ cbar.set_ticks([1e0, 1e2, 1e4, 1e6, 1e8])
 cbar.set_ticklabels(['0', '2', '4', '6', '8'])
 cbar.ax.tick_params(labelsize=12)
 
-# ------------------------------------------------------------------
-# Líneas de resonancia — solo curvas régimen II
-# ------------------------------------------------------------------
 Delta_fine = np.linspace(-8.0, 0.0, 1000)
 
 for n in n_res:
     lam_curve = np.sqrt(np.maximum((Delta_fine + n * omega_b) * omega_b, 0))
 
-    # Sin mask — curva completa, matplotlib corta en ylim automáticamente
     ax.plot(Delta_fine, lam_curve,
             color='black', ls='--', lw=0.9, alpha=0.85)
 
-    # Etiquetas
     target_lam = 0.45
     mask_label = lam_curve > 0
     idx_label = np.argmin(np.abs(lam_curve[mask_label] - target_lam))
@@ -196,12 +161,8 @@ for n in n_res:
                 ha='left', va='bottom',
                 rotation=90, color='black')
 
-# ylim ANTES de mostrar — matplotlib ya tiene las curvas dibujadas
 ax.set_ylim(lambda_arr.min(), lambda_arr.max())
 ax.set_xlim(-6.0, 0.0)
-# ------------------------------------------------------------------
-# Ejes
-# ------------------------------------------------------------------
 ax.set_yscale('log')
 ax.set_xlim(-6.0, 0.0)
 ax.set_ylim(lambda_arr.min(), lambda_arr.max())

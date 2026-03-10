@@ -3,20 +3,14 @@ import qutip as qt
 import matplotlib.pyplot as plt
 from matplotlib.colors import LogNorm
 
-# =============================================================================
-# PARÁMETROS FIJOS — Bin Fig. 3(c)
-# =============================================================================
 omega_b   = 1.0
-lambda_ob = 0.03    # fijo, régimen III: λ ≪ ωb
+lambda_ob = 0.03
 kappa_ob  = 0.002
 gamma_ob  = 0.0002
 gphi_ob   = 0.0004
 
 Ncut = 30
 
-# =============================================================================
-# GRILLA 2D: Delta x Omega
-# =============================================================================
 n_Delta = 30
 n_Omega = 10
 Delta_arr = np.linspace(0.0, -6.0, n_Delta)
@@ -24,9 +18,6 @@ Omega_arr = np.logspace(-2.5, 0, n_Omega)
 
 g2_map = np.full((n_Omega, n_Delta), np.nan)
 
-# =============================================================================
-# OPERADORES BÁSICOS 1QD
-# =============================================================================
 b    = qt.destroy(Ncut)
 numb = b.dag() * b
 I_b  = qt.qeye(Ncut)
@@ -68,15 +59,9 @@ def solve_ss(H, c_ops):
             pass
     return None
 
-# =============================================================================
-# HAMILTONIANOS FIJOS
-# =============================================================================
 H_phonon = omega_b * num_sys
-H_eph    = lambda_ob * proj_e * (b_sys + b_sys.dag())  # lambda fijo
+H_eph    = lambda_ob * proj_e * (b_sys + b_sys.dag())
 
-# =============================================================================
-# BARRIDO 2D
-# =============================================================================
 total = n_Omega * n_Delta
 count = 0
 
@@ -87,7 +72,7 @@ for i, Omega in enumerate(Omega_arr):
         np.sqrt(gphi_ob)  * proj_e,
     ]
 
-    H_drive = Omega * (sm_sys + sp_sys)  # Omega varía
+    H_drive = Omega * (sm_sys + sp_sys)
 
     for j, Delta in enumerate(Delta_arr):
         H_det = Delta * proj_e
@@ -111,9 +96,6 @@ for i, Omega in enumerate(Omega_arr):
 
 print("\n✓ Barrido completado")
 
-# =============================================================================
-# PLOT
-# =============================================================================
 from matplotlib import rcParams
 import matplotlib.colors as mcolors
 
@@ -128,11 +110,11 @@ rcParams.update({
 n_res = [1, 2, 3, 4, 5]
 
 colors_list = [
-    '#1a6b3c',
-    '#6abf7b',
-    '#ffffff',
-    '#e8d5a3',
-    '#c4942a',
+    '
+    '
+    '
+    '
+    '
 ]
 cmap_bin = mcolors.LinearSegmentedColormap.from_list('bin_cmap', colors_list)
 
@@ -148,9 +130,6 @@ im = ax.pcolormesh(
     shading='auto'
 )
 
-# ------------------------------------------------------------------
-# Colorbar
-# ------------------------------------------------------------------
 cbar = fig.colorbar(im, ax=ax, fraction=0.04, pad=0.02, shrink=1.0, anchor=(0.0, 0.0))
 
 cbar.ax.text(1, 1.08, r'$\log_{10} g^{(2)}$',
@@ -161,22 +140,15 @@ cbar.set_ticks([1e0, 1e2, 1e4, 1e6, 1e8])
 cbar.set_ticklabels(['0', '2', '4', '6', '8'])
 cbar.ax.tick_params(labelsize=12)
 
-# ------------------------------------------------------------------
-# Líneas de resonancia — régimen III: Delta_n(Omega) = -sqrt(n²ωb² - 4Ω²)
-# ------------------------------------------------------------------
 Delta_fine = np.linspace(-8.0, 0.0, 1000)
 
 for n in n_res:
-    # Omega como función de Delta — análogo a lam_curve
-    # Delta_n(Omega) = -sqrt(n²ωb² - 8Ω²) → Omega = sqrt((n²ωb² - Delta²) / 8)
     arg = (n * omega_b)**2 - Delta_fine**2
     Omega_curve = np.sqrt(np.maximum(arg / 8, 0))
 
-    # Sin mask — matplotlib corta en ylim automáticamente
     ax.plot(Delta_fine, Omega_curve,
             color='black', ls='--', lw=0.9, alpha=0.85)
 
-    # Etiquetas
     target_Omega = 0.45
     mask_label = Omega_curve > 0
     idx_label = np.argmin(np.abs(Omega_curve[mask_label] - target_Omega))
@@ -189,12 +161,8 @@ for n in n_res:
                 ha='left', va='bottom',
                 rotation=90, color='black')
 
-# ylim ANTES de mostrar
 ax.set_ylim(Omega_arr.min(), Omega_arr.max())
 ax.set_xlim(-6.0, 0.0)
-# ------------------------------------------------------------------
-# Ejes
-# ------------------------------------------------------------------
 ax.set_yscale('log')
 ax.set_xlim(-6.0, 0.0)
 ax.set_ylim(Omega_arr.min(), Omega_arr.max())

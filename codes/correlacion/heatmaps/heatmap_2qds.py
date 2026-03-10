@@ -1,3 +1,10 @@
+"""
+Heatmap 2QDs
+
+Genera mapa de calor de correlación de tercer orden g^(3) para el sistema de
+dos QDs acoplados por Förster.
+"""
+
 import numpy as np
 import qutip as qt
 import matplotlib.pyplot as plt
@@ -7,15 +14,14 @@ import matplotlib.colors as mcolors
 
 rcParams.update({
     "pgf.texsystem": "pdflatex",
-    "font.family": "serif",
-    "text.usetex": True,
     "pgf.rcfonts": False,
-    "font.size": 13,
+    "font.family": "serif",
+    "font.size": 12,
 })
 
-# =============================================================================
+# -----------------------------------------------------------------------------
 # PARÁMETROS FIJOS — 2QD, régimen I, barrido en lambda
-# =============================================================================
+# -----------------------------------------------------------------------------
 omega_b  = 1.0
 Omega_ob = 0.01
 kappa_ob = 0.003
@@ -25,19 +31,19 @@ J_ob     = 0.5
 
 Ncut = 8  # igual que en funciones de correlación 2QD
 
-# =============================================================================
+# -----------------------------------------------------------------------------
 # GRILLA 2D
-# =============================================================================
-n_Delta  = 30
-n_lambda = 10
+# -----------------------------------------------------------------------------
+n_Delta  = 60
+n_lambda = 20
 Delta_arr  = np.linspace(0.0, -7.0, n_Delta)
 lambda_arr = np.logspace(-2.2, 0, n_lambda)
 
 g2_map = np.full((n_lambda, n_Delta), np.nan)
 
-# =============================================================================
+# -----------------------------------------------------------------------------
 # OPERADORES — QD1 ⊗ QD2 ⊗ Fock
-# =============================================================================
+# -----------------------------------------------------------------------------
 b    = qt.destroy(Ncut)
 numb = b.dag() * b
 I_b  = qt.qeye(Ncut)
@@ -55,9 +61,9 @@ proj_e1 = sp1 * sm1
 proj_e2 = sp2 * sm2
 I_sys   = qt.tensor(I_q, I_q, I_b)
 
-# =============================================================================
+# -----------------------------------------------------------------------------
 # OPERADOR FACTORIAL
-# =============================================================================
+# -----------------------------------------------------------------------------
 def factorial_op(num_op, n, I_op):
     op = I_op
     for k in range(n):
@@ -66,9 +72,9 @@ def factorial_op(num_op, n, I_op):
 
 bdagb3 = factorial_op(num_sys, 3, I_sys)
 
-# =============================================================================
+# -----------------------------------------------------------------------------
 # SOLVER ROBUSTO
-# =============================================================================
+# -----------------------------------------------------------------------------
 def validate_rho(rho, tol=1e-8):
     if abs(rho.tr() - 1.0) > 1e-6:
         return False
@@ -88,16 +94,16 @@ def solve_ss(H, c_ops):
             pass
     return None
 
-# =============================================================================
+# -----------------------------------------------------------------------------
 # HAMILTONIANOS FIJOS
-# =============================================================================
+# -----------------------------------------------------------------------------
 H_phonon  = omega_b * num_sys
 H_drive   = Omega_ob * (sm1 + sp1 + sm2 + sp2)
 H_Forster = J_ob * (sp1 * sm2 + sp2 * sm1)
 
-# =============================================================================
+# -----------------------------------------------------------------------------
 # BARRIDO 2D
-# =============================================================================
+# -----------------------------------------------------------------------------
 total = n_lambda * n_Delta
 count = 0
 
@@ -134,9 +140,9 @@ for i, lam in enumerate(lambda_arr):
 
 print("\n✓ Barrido completado")
 
-# =============================================================================
+# -----------------------------------------------------------------------------
 # INTERPOLACIÓN — corregir puntos problemáticos
-# =============================================================================
+# -----------------------------------------------------------------------------
 # Interpolación restringida a zona problemática: lambda < 0.05 y Delta < -3
 from scipy.interpolate import NearestNDInterpolator
 
@@ -156,9 +162,9 @@ if mask_valid.any() and mask_bad.any():
     bad_coords = np.array(np.where(mask_bad)).T
     g2_map[mask_bad] = interp(bad_coords)
 
-# =============================================================================
+# -----------------------------------------------------------------------------
 # HEATMAP — 2QD régimen I, barrido en lambda, g^(3)
-# =============================================================================
+# -----------------------------------------------------------------------------
 n_res = [1, 2, 3, 4, 5, 6]
 
 colors_list = [
@@ -175,11 +181,12 @@ fig, ax = plt.subplots(figsize=(7, 6))
 g3_plot = np.where(np.isnan(g2_map), 1e0, g2_map)
 g3_plot = np.clip(g3_plot, 1e0, 1e15)
 
-im = ax.pcolormesh(
+im = ax.contourf(
     Delta_arr, lambda_arr, g3_plot,
+    levels=np.logspace(0, 15, 220),
     norm=LogNorm(vmin=1e0, vmax=1e15),
     cmap=cmap_bin,
-    shading='auto'
+    antialiased=False
 )
 
 # ------------------------------------------------------------------
@@ -187,7 +194,7 @@ im = ax.pcolormesh(
 # ------------------------------------------------------------------
 cbar = fig.colorbar(im, ax=ax, fraction=0.04, pad=0.02, shrink=1.0, anchor=(0.0, 0.0))
 
-cbar.ax.text(1, 1.08, r'$\log_{10} g^{(3)}$',
+cbar.ax.text(1.04, 1.08, r'$\log_{10} g^{(3)}$',
              transform=cbar.ax.transAxes,
              ha='center', va='top', fontsize=12)
 
@@ -245,5 +252,11 @@ ax.text(0.03, 0.04, r'$(b)$',
         transform=ax.transAxes,
         ha='left', va='bottom', fontsize=16)
 
+# -----------------------------------------------------------------------------
+# Salida
+# -----------------------------------------------------------------------------
 plt.tight_layout()
-plt.show()
+#plt.show()
+plt.savefig("./figs/oficial/corr_2qds_lambda_heatmap.pdf", bbox_inches="tight")
+plt.savefig("./figs/oficial/pgf/corr_2qds_lambda_heatmap.pgf")
+plt.close()
