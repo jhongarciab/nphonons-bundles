@@ -3,44 +3,30 @@ import qutip as qt
 import matplotlib.pyplot as plt
 import math
 
-# =============================================================================
-# PARÁMETROS
-# =============================================================================
 omega_b = 1.0
 
-lam_over_ob = 0.08      # 0.03   | 2.3×
-Omega_over_ob = 0.01    # 0.003  | 3.3×
-kappa_over_ob = 0.003   # 0.002  | 1.5×
-gamma_over_ob = 0.0004  # 0.0002 | 2×
-gphi_over_ob = 0.0004   # 0.0004 | Sin cambios
+lam_over_ob = 0.08
+Omega_over_ob = 0.01
+kappa_over_ob = 0.003
+gamma_over_ob = 0.0004
+gphi_over_ob = 0.0004
 
-J_over_ob     = 0.5   # Förster
+J_over_ob     = 0.5
 
 Delta_list = np.linspace(0.0, -6.0, 501)
 n_order = 3
 
-# =============================================================================
-# TRUNCAMIENTO
-# =============================================================================
 Ncut = 5
 print(f"Usando Ncut = {Ncut}")
 
-# =============================================================================
-# OPERADORES BÁSICOS
-# =============================================================================
-# Fonón
 b = qt.destroy(Ncut)
 num_b = b.dag() * b
 I_b = qt.qeye(Ncut)
 
-# QDs
 sm = qt.sigmam()
 sp = sm.dag()
 I_q = qt.qeye(2)
 
-# =============================================================================
-# OPERADORES DEL SISTEMA COMPUESTO (QD1 ⊗ QD2 ⊗ b)
-# =============================================================================
 b_sys   = qt.tensor(I_q, I_q, b)
 num_sys = qt.tensor(I_q, I_q, num_b)
 
@@ -55,9 +41,6 @@ proj_e2 = sp2 * sm2
 
 I_sys = qt.tensor(I_q, I_q, I_b)
 
-# =============================================================================
-# OPERADOR ESTABLE b†^n b^n (FACTORIAL)
-# =============================================================================
 def factorial_number_operator(num_op, n, I_op):
     op = I_op
     for k in range(n):
@@ -66,9 +49,6 @@ def factorial_number_operator(num_op, n, I_op):
 
 bdagb_n = factorial_number_operator(num_sys, n_order, I_sys)
 
-# =============================================================================
-# OPERADORES DE COLAPSO (LINDBLAD)
-# =============================================================================
 c_ops = [
     np.sqrt(kappa_over_ob) * b_sys,
     np.sqrt(gamma_over_ob) * sm1,
@@ -77,9 +57,6 @@ c_ops = [
     np.sqrt(gphi_over_ob)  * proj_e2
 ]
 
-# =============================================================================
-# HAMILTONIANO
-# =============================================================================
 H_phonon = omega_b * num_sys
 
 H_interaction = lam_over_ob * (
@@ -96,9 +73,6 @@ H_Forster = J_over_ob * (
     sp2 * sm1
 )
 
-# =============================================================================
-# SOLVER ROBUSTO DE ESTADO ESTACIONARIO
-# =============================================================================
 def validate_steady_state(rho, tol=1e-8):
     if abs(rho.tr() - 1.0) > 1e-6:
         return False
@@ -119,9 +93,6 @@ def solve_steady_state_robust(H, c_ops, methods=('direct', 'eigen', 'svd')):
             pass
     return None
 
-# =============================================================================
-# BARRIDO EN Δ
-# =============================================================================
 g_vals = np.full_like(Delta_list, np.nan, dtype=float)
 nbar_vals = np.full_like(Delta_list, np.nan, dtype=float)
 
@@ -157,9 +128,6 @@ for i, Delta in enumerate(Delta_list):
 
 print("Cálculo completado.")
 
-# =============================================================================
-# GRÁFICA
-# =============================================================================
 fig, ax = plt.subplots(figsize=(7.5, 4.2))
 ax.plot(Delta_list, g_vals, lw=1.5)
 
@@ -179,8 +147,4 @@ elif n_order == 5:
     ax.set_ylim(0, 1e40)
 
 plt.tight_layout()
-#plt.savefig(
-#    f"../figs/g{n_order}.png",
-#    bbox_inches="tight"
-#)
 plt.show()

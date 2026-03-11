@@ -3,9 +3,6 @@ import qutip as qt
 import matplotlib.pyplot as plt
 import math
 
-# =============================================================================
-# PARÁMETROS
-# =============================================================================
 omega_b = 1.0
 lam_over_ob   = 0.03
 Omega_over_ob = 0.003
@@ -16,15 +13,9 @@ gphi_over_ob  = 0.0004
 Delta_list = np.linspace(0.0, -6.0, 501)
 n_order = 2
 
-# =============================================================================
-# TRUNCAMIENTO
-# =============================================================================
 Ncut = 5
 print(f"Usando Ncut = {Ncut}")
 
-# =============================================================================
-# OPERADORES
-# =============================================================================
 b = qt.destroy(Ncut)
 num_b = b.dag() * b
 I_b = qt.qeye(Ncut)
@@ -39,9 +30,6 @@ sm_sys = qt.tensor(sm, I_b)
 sp_sys = qt.tensor(sp, I_b)
 proj_e = qt.tensor(sp * sm, I_b)
 
-# =============================================================================
-# OPERADOR ESTABLE b†^n b^n
-# =============================================================================
 I_sys = qt.tensor(I_q, I_b)
 
 def factorial_number_operator(num_op, n, I_op):
@@ -52,31 +40,22 @@ def factorial_number_operator(num_op, n, I_op):
 
 bdagb_n = factorial_number_operator(num_sys, n_order, I_sys)
 
-# =============================================================================
-# OPERADORES DE COLAPSO
-# =============================================================================
 c_ops = [
     np.sqrt(kappa_over_ob) * b_sys,
     np.sqrt(gamma_over_ob) * sm_sys,
     np.sqrt(gphi_over_ob)  * proj_e
 ]
 
-# =============================================================================
-# HAMILTONIANO
-# =============================================================================
 H_phonon = omega_b * num_sys
 H_interaction = lam_over_ob * qt.tensor(sp * sm, b + b.dag())
 H_drive = Omega_over_ob * (sm_sys + sp_sys)
 
-# =============================================================================
-# SOLVER ROBUSTO
-# =============================================================================
 def validate_steady_state(rho, tol=1e-8):
     if abs(rho.tr() - 1.0) > 1e-6:
         return False
     if not rho.isherm:
         return False
-    evals = rho.eigenstates()[0]  # eigenvalues reales
+    evals = rho.eigenstates()[0]
     if np.min(np.real(evals)) < -tol:
         return False
     return True
@@ -91,9 +70,6 @@ def solve_steady_state_robust(H, c_ops, methods=('direct', 'eigen', 'svd')):
             pass
     return None
 
-# =============================================================================
-# BARRIDO EN Δ
-# =============================================================================
 g_vals = np.full_like(Delta_list, np.nan, dtype=float)
 nbar_vals = np.full_like(Delta_list, np.nan, dtype=float)
 
@@ -120,9 +96,6 @@ for i, Delta in enumerate(Delta_list):
 
 print("Cálculo completado.")
 
-# =============================================================================
-# GRÁFICA
-# =============================================================================
 fig, ax = plt.subplots(figsize=(7.5, 4.2))
 ax.plot(Delta_list, g_vals, lw=1.5)
 ax.set_yscale('log')

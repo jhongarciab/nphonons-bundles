@@ -18,6 +18,21 @@ Método de pureza: Muñoz (Optica 2018) — dos steadystate:
   π_n = (n_a - n_a^(1)) / n_a
 
 Autor: Jhon S. García B. — Tesis UQ 2025
+
+DOCUMENTACIÓN OPERATIVA
+-----------------------
+Qué hace
+- Calcula mapas de pureza π_n para 1QD en grilla (λ, κ), optimizando Δ por barrido local.
+
+Entradas
+- Parámetros físicos y numéricos definidos en la cabecera del script.
+
+Salidas
+- Figura principal (solo PDF) en carpeta de pruebas:
+  codes/figs/pruebas/purity_1qd_maps.pdf
+
+Convención
+- Este script NO exporta PNG.
 """
 
 import numpy as np
@@ -38,13 +53,13 @@ Ncut_full  = 20
 # =============================================================================
 # GRILLA 2D: λ/ω_b × κ/ω_b
 # =============================================================================
-n_lam   = 30          # Producción: 60-80
-n_kappa = 30
+n_lam   = 15          # Producción: 60-80
+n_kappa = 15
 
 lambda_arr = np.linspace(0.02, 0.14, n_lam)
-kappa_arr  = np.logspace(-4, 0, n_kappa)
+kappa_arr  = np.logspace(-3, 0, n_kappa)
 
-n_bundle_list = [4, 5]
+n_bundle_list = [2, 3]
 
 # Número de puntos en el barrido fino de Δ para encontrar el máximo
 n_Delta_opt = 15      # Producción: 25-30
@@ -372,18 +387,9 @@ for col, n_b in enumerate(n_bundle_list):
 
 plt.tight_layout()
 
-plt.savefig(
-    "purity_1qd_pi4.png",
-    dpi=300,
-    bbox_inches='tight'
-)
+plt.savefig("./figs/pruebas/purity_1qd_maps.pdf", bbox_inches='tight')
 
-plt.savefig(
-    "purity_1qd_pi5.pdf",
-    bbox_inches='tight'
-)
-
-print("\n✓ Heatmaps guardados: purity_1qd_v3.png / .pdf")
+print("\n✓ Heatmap guardado: ./figs/pruebas/purity_1qd_maps.pdf")
 
 plt.show()
 

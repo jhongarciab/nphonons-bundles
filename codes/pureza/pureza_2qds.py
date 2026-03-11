@@ -32,12 +32,41 @@ Resonancias (derivaciones.tex):
   Régimen III: Δ_n = -√(n²ω_b² - 8Ω²) - J   [factor 8 por √2-enhancement 2QD]
 
 Autor: Jhon S. García B. — Tesis UQ 2025
-"""
 
+DOCUMENTACIÓN OPERATIVA
+-----------------------
+Qué hace
+- Calcula mapas de pureza π_n para 2QDs acoplados por Förster en grilla (λ, κ),
+  optimizando Δ por barrido local.
+
+Entradas
+- Parámetros físicos y numéricos definidos en la cabecera del script.
+
+Salidas
+- Figura heatmap (PDF + PGF) en carpeta oficial:
+  codes/figs/oficial/purity_2qd_heatmap.pdf
+  codes/figs/oficial/purity_2qd_heatmap.pgf
+- Figura de cortes 1D (PDF + PGF) en carpeta oficial:
+  codes/figs/oficial/purity_2qd_cuts.pdf
+  codes/figs/oficial/purity_2qd_cuts.pgf
+
+Convención
+- Este script exporta solo PDF/PGF.
+"""
+import matplotlib
+matplotlib.use("pgf")
+from matplotlib import rcParams
 import numpy as np
 import qutip as qt
 from math import factorial
 import time
+
+rcParams.update({
+    "pgf.texsystem": "pdflatex",
+    "pgf.rcfonts": False,
+    "font.family": "serif",
+    "font.size": 12,
+})
 
 # =============================================================================
 # PARÁMETROS — 2QD producción
@@ -54,8 +83,8 @@ Ncut_full = 14        # dim = 4·14 = 56
 # =============================================================================
 # GRILLA 2D: λ/ω_b × κ/ω_b
 # =============================================================================
-n_lam   = 30          # Producción: 50-60
-n_kappa = 30
+n_lam   = 10          # Producción: 50-60
+n_kappa = 10
 
 lambda_arr = np.linspace(0.08, 0.26, n_lam)
 kappa_arr  = np.logspace(-5, -1, n_kappa)
@@ -412,7 +441,6 @@ for n_b in n_bundle_list:
         'nbar':  nb_map,
         'delta': delta_map,
     }
-
 # =============================================================================
 # VISUALIZACIÓN — Heatmaps 2D
 # =============================================================================
@@ -452,9 +480,9 @@ for col, n_b in enumerate(n_bundle_list):
             bbox=dict(facecolor='white', edgecolor='none', alpha=0.7))
 
 plt.tight_layout()
-plt.savefig("purity_2qd.png", dpi=300, bbox_inches='tight')
-plt.savefig("purity_2qd.pdf", bbox_inches='tight')
-print("\n✓ Heatmaps: purity_2qd.png / purity_2qd.pdf")
+plt.savefig("./figs/oficial/purity_2qd_heatmap.pdf", bbox_inches='tight')
+plt.savefig("./figs/oficial/pgf/purity_2qd_heatmap.pgf")
+print("\n✓ Heatmap guardado: ./figs/oficial/purity_2qd_heatmap.pdf + ./figs/oficial/pgf/purity_2qd_heatmap.pgf")
 
 
 # =============================================================================
@@ -504,8 +532,9 @@ ax_d.tick_params(labelsize=12)
 ax_d.axhline(0.95, ls=':', color='gray', alpha=0.5)
 
 plt.tight_layout()
-plt.savefig("purity_2qd_cuts1.png", dpi=300, bbox_inches='tight')
-print("✓ Cortes: purity_2qd_cuts.png")
+plt.savefig("./figs/oficial/purity_2qd_cuts.pdf", bbox_inches='tight')
+plt.savefig("./figs/oficial/pgf/purity_2qd_cuts.pgf")
+print("✓ Cortes guardados: ./figs/oficial/purity_2qd_cuts.pdf + ./figs/oficial/pgf/purity_2qd_cuts.pgf")
 
 
 # =============================================================================
