@@ -14,7 +14,7 @@ gphi_over_ob = 0.0004
 J_over_ob     = 0.5
 
 Delta_list = np.linspace(0.0, -6.0, 501)
-n_order = 3
+n_order = 2
 
 Ncut = 5
 print(f"Usando Ncut = {Ncut}")

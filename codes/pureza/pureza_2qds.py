@@ -86,10 +86,10 @@ Ncut_full = 14        # dim = 4·14 = 56
 n_lam   = 10          # Producción: 50-60
 n_kappa = 10
 
-lambda_arr = np.linspace(0.08, 0.26, n_lam)
-kappa_arr  = np.logspace(-5, -1, n_kappa)
+lambda_arr = np.linspace(0.02, 0.14, n_lam)
+kappa_arr  = np.logspace(-3, 0, n_kappa)
 
-n_bundle_list = [3, 4]
+n_bundle_list = [4, 5]
 
 # Puntos en el barrido de Δ para optimización
 n_Delta_opt = 17
@@ -480,9 +480,10 @@ for col, n_b in enumerate(n_bundle_list):
             bbox=dict(facecolor='white', edgecolor='none', alpha=0.7))
 
 plt.tight_layout()
-plt.savefig("./figs/oficial/purity_2qd_heatmap.pdf", bbox_inches='tight')
-plt.savefig("./figs/oficial/pgf/purity_2qd_heatmap.pgf")
-print("\n✓ Heatmap guardado: ./figs/oficial/purity_2qd_heatmap.pdf + ./figs/oficial/pgf/purity_2qd_heatmap.pgf")
+plt.savefig(f"pureza{n_bundle_list}.png", dpi=300)
+#plt.savefig("./figs/oficial/purity_2qd_heatmap.pdf", bbox_inches='tight')
+#plt.savefig("./figs/oficial/pgf/purity_2qd_heatmap.pgf")
+#print("\n✓ Heatmap guardado: ./figs/oficial/purity_2qd_heatmap.pdf + ./figs/oficial/pgf/purity_2qd_heatmap.pgf")
 
 
 # =============================================================================
@@ -531,10 +532,10 @@ ax_d.set_title(r'2QD — $\kappa/\omega_b$ fija', fontsize=13)
 ax_d.tick_params(labelsize=12)
 ax_d.axhline(0.95, ls=':', color='gray', alpha=0.5)
 
-plt.tight_layout()
-plt.savefig("./figs/oficial/purity_2qd_cuts.pdf", bbox_inches='tight')
-plt.savefig("./figs/oficial/pgf/purity_2qd_cuts.pgf")
-print("✓ Cortes guardados: ./figs/oficial/purity_2qd_cuts.pdf + ./figs/oficial/pgf/purity_2qd_cuts.pgf")
+#plt.tight_layout()
+#plt.savefig("./figs/oficial/purity_2qd_cuts.pdf", bbox_inches='tight')
+#plt.savefig("./figs/oficial/pgf/purity_2qd_cuts.pgf")
+#print("✓ Cortes guardados: ./figs/oficial/purity_2qd_cuts.pdf + ./figs/oficial/pgf/purity_2qd_cuts.pgf")
 
 
 # =============================================================================
