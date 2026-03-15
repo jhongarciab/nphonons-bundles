@@ -46,7 +46,7 @@ x_ins = omegab * t_ins
 # Lienzo y ejes
 # -----------------------------------------------------------------------------
 TEXTWIDTH_IN = (16.5 / 2.54) * 0.95
-fig, axes = plt.subplots(3, 1, figsize=(TEXTWIDTH_IN, TEXTWIDTH_IN * 0.682), sharex=True)
+fig, axes = plt.subplots(3, 1, figsize=(TEXTWIDTH_IN, TEXTWIDTH_IN * 0.65), sharex=True)
 fig.subplots_adjust(hspace=0.08)
 
 
@@ -61,7 +61,7 @@ def fix_main_axis(ax):
     ax.set_yticks([0, 1])
     ax.xaxis.set_major_locator(FixedLocator([1e2, 1e4, 1e6]))
     ax.xaxis.set_major_formatter(LogFormatterMathtext())
-    ax.tick_params(labelsize=10)
+    ax.tick_params(labelsize=11)
 
 
 def fix_inset_axis(axins):
@@ -72,7 +72,7 @@ def fix_inset_axis(axins):
     axins.set_yticks([0, 1])
     axins.xaxis.set_major_locator(FixedLocator([1e5, 1e7]))
     axins.xaxis.set_major_formatter(LogFormatterMathtext())
-    axins.tick_params(labelsize=8)
+    axins.tick_params(labelsize=9)
 
 
 # -----------------------------------------------------------------------------
@@ -105,8 +105,8 @@ ax.plot(x, P0v, color="black", lw=0.9)
 ax.plot(x, Pnc, color="blue", lw=0.9)
 fix_main_axis(ax)
 
-ax.text(0.6e5, 0.75, r"$P_{0vv}$", color="black", fontsize=12)
-ax.text(0.6e5, 0.20, r"$P_{2\Psi_+}$", color="blue", fontsize=12)
+ax.text(0.6e5, 0.75, r"$P_{0vv}$", color="black", fontsize=11)
+ax.text(0.6e5, 0.20, r"$P_{2\Psi_+}$", color="blue", fontsize=11)
 
 axins = inset_axes(
     ax,
@@ -120,8 +120,8 @@ axins.plot(x_ins, P0v_ins, color="black", lw=0.9)
 axins.plot(x_ins, Pnc_ins, color="green", lw=0.9)
 fix_inset_axis(axins)
 
-axins.text(1.3e6, 0.75, r"$P_{0vv}$", color="black", fontsize=8)
-axins.text(1.3e6, 0.20, r"$P_{3\Psi_+}$", color="green", fontsize=8)
+axins.text(1.3e6, 0.75, r"$P_{0vv}$", color="black", fontsize=9)
+axins.text(1.3e6, 0.20, r"$P_{3\Psi_+}$", color="green", fontsize=9)
 
 
 # -----------------------------------------------------------------------------
@@ -157,8 +157,8 @@ ax.plot(x, Pnc, color="blue", lw=0.9)
 fix_main_axis(ax)
 ax.set_ylabel("Poblaciones de los estados del sistema", fontsize=12, labelpad=10)
 
-ax.text(6e3, 0.75, r"$P_{0vv}$", color="black", fontsize=12)
-ax.text(6e3, 0.20, r"$P_{2\Psi_+}$", color="blue", fontsize=12)
+ax.text(6e3, 0.75, r"$P_{0vv}$", color="black", fontsize=11)
+ax.text(6e3, 0.20, r"$P_{2\Psi_+}$", color="blue", fontsize=11)
 
 axins = inset_axes(
     ax,
@@ -172,8 +172,8 @@ axins.plot(x_ins, P0v_ins, color="black", lw=0.9)
 axins.plot(x_ins, Pnc_ins, color="green", lw=0.9)
 fix_inset_axis(axins)
 
-axins.text(3e4, 0.75, r"$P_{0vv}$", color="black", fontsize=8)
-axins.text(3e4, 0.20, r"$P_{3\Psi_+}$", color="green", fontsize=8)
+axins.text(3e4, 0.75, r"$P_{0vv}$", color="black", fontsize=9)
+axins.text(3e4, 0.20, r"$P_{3\Psi_+}$", color="green", fontsize=9)
 
 
 # -----------------------------------------------------------------------------
@@ -234,8 +234,8 @@ ax.plot(x, Pnc, color="blue", lw=0.9)
 fix_main_axis(ax)
 ax.set_xlabel(r"$\omega_b\,t$", fontsize=12)
 
-ax.text(1.6e3, 0.75, r"$P_{0+}$", color="black", fontsize=12)
-ax.text(1.6e3, 0.20, r"$P_{2-}$", color="blue", fontsize=12)
+ax.text(1.6e3, 0.75, r"$P_{0+}$", color="black", fontsize=11)
+ax.text(1.6e3, 0.20, r"$P_{2-}$", color="blue", fontsize=11)
 
 axins = inset_axes(
     ax,
@@ -249,8 +249,8 @@ axins.plot(x_ins, P0v_ins, color="black", lw=0.9)
 axins.plot(x_ins, Pnc_ins, color="green", lw=0.9)
 fix_inset_axis(axins)
 
-axins.text(1.8e4, 0.75, r"$P_{0+}$", color="black", fontsize=8)
-axins.text(1.8e4, 0.20, r"$P_{3-}$", color="green", fontsize=8)
+axins.text(1.8e4, 0.75, r"$P_{0+}$", color="black", fontsize=9)
+axins.text(1.8e4, 0.20, r"$P_{3-}$", color="green", fontsize=9)
 
 
 # -----------------------------------------------------------------------------

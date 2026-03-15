@@ -168,7 +168,7 @@ print(f"{'=' * 70}\n")
 # -----------------------------------------------------------------------------
 # Figura apilada g^(n)(0) vs Δ/ω_b
 # -----------------------------------------------------------------------------
-fig, axes = plt.subplots(4, 1, figsize=(7, 12), sharex=True)
+fig, axes = plt.subplots(4, 1, figsize=(3.37, 5.73), sharex=True)
 fig.subplots_adjust(hspace=0.08)
 
 color_by_order = {2: "blue", 3: "green", 4: "#c4942a", 5: "red"}
