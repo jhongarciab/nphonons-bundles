@@ -45,10 +45,7 @@ x_ins = omegab * t_ins
 # -----------------------------------------------------------------------------
 # Lienzo y ejes
 # -----------------------------------------------------------------------------
-TEXTWIDTH_IN = (16.5 / 2.54) * 0.95
-fig, axes = plt.subplots(3, 1, figsize=(TEXTWIDTH_IN, TEXTWIDTH_IN * 0.65), sharex=True)
-fig.subplots_adjust(hspace=0.08)
-
+fig, axes = plt.subplots(3, 1, figsize=(6.30, 4.00), sharex=True)
 
 # -----------------------------------------------------------------------------
 # Helpers de formato
@@ -61,7 +58,7 @@ def fix_main_axis(ax):
     ax.set_yticks([0, 1])
     ax.xaxis.set_major_locator(FixedLocator([1e2, 1e4, 1e6]))
     ax.xaxis.set_major_formatter(LogFormatterMathtext())
-    ax.tick_params(labelsize=11)
+    ax.tick_params(labelsize=12)
 
 
 def fix_inset_axis(axins):
@@ -72,7 +69,7 @@ def fix_inset_axis(axins):
     axins.set_yticks([0, 1])
     axins.xaxis.set_major_locator(FixedLocator([1e5, 1e7]))
     axins.xaxis.set_major_formatter(LogFormatterMathtext())
-    axins.tick_params(labelsize=9)
+    axins.tick_params(labelsize=10)
 
 
 # -----------------------------------------------------------------------------
@@ -105,14 +102,14 @@ ax.plot(x, P0v, color="black", lw=0.9)
 ax.plot(x, Pnc, color="blue", lw=0.9)
 fix_main_axis(ax)
 
-ax.text(0.6e5, 0.75, r"$P_{0vv}$", color="black", fontsize=11)
-ax.text(0.6e5, 0.20, r"$P_{2\Psi_+}$", color="blue", fontsize=11)
+ax.text(0.4e5, 0.75, r"$P_{0vv}$", color="black", fontsize=12)
+ax.text(0.4e5, 0.20, r"$P_{2\Psi_+}$", color="blue", fontsize=12)
 
 axins = inset_axes(
     ax,
     width="33%",
     height="95%",
-    bbox_to_anchor=(0.16, 0.30, 0.8, 0.7),
+    bbox_to_anchor=(0.215, 0.30, 0.8, 0.7),
     bbox_transform=ax.transAxes,
     loc="upper left",
 )
@@ -120,8 +117,8 @@ axins.plot(x_ins, P0v_ins, color="black", lw=0.9)
 axins.plot(x_ins, Pnc_ins, color="green", lw=0.9)
 fix_inset_axis(axins)
 
-axins.text(1.3e6, 0.75, r"$P_{0vv}$", color="black", fontsize=9)
-axins.text(1.3e6, 0.20, r"$P_{3\Psi_+}$", color="green", fontsize=9)
+axins.text(0.8e6, 0.75, r"$P_{0vv}$", color="black", fontsize=10)
+axins.text(0.8e6, 0.20, r"$P_{3\Psi_+}$", color="green", fontsize=10)
 
 
 # -----------------------------------------------------------------------------
@@ -157,14 +154,14 @@ ax.plot(x, Pnc, color="blue", lw=0.9)
 fix_main_axis(ax)
 ax.set_ylabel("Poblaciones de los estados del sistema", fontsize=12, labelpad=10)
 
-ax.text(6e3, 0.75, r"$P_{0vv}$", color="black", fontsize=11)
-ax.text(6e3, 0.20, r"$P_{2\Psi_+}$", color="blue", fontsize=11)
+ax.text(5.3e3, 0.75, r"$P_{\bar{0}vv}$", color="black", fontsize=12)
+ax.text(5.3e3, 0.20, r"$P_{\bar{2}\Psi_+}$", color="blue", fontsize=12)
 
 axins = inset_axes(
     ax,
     width="33%",
     height="95%",
-    bbox_to_anchor=(0.11, 0.30, 0.8, 0.7),
+    bbox_to_anchor=(0.135,0.30, 0.8, 0.7),
     bbox_transform=ax.transAxes,
     loc="upper left",
 )
@@ -172,8 +169,8 @@ axins.plot(x_ins, P0v_ins, color="black", lw=0.9)
 axins.plot(x_ins, Pnc_ins, color="green", lw=0.9)
 fix_inset_axis(axins)
 
-axins.text(3e4, 0.75, r"$P_{0vv}$", color="black", fontsize=9)
-axins.text(3e4, 0.20, r"$P_{3\Psi_+}$", color="green", fontsize=9)
+axins.text(2.4e4, 0.75, r"$P_{\bar{0}vv}$", color="black", fontsize=10)
+axins.text(2.4e4, 0.20, r"$P_{\bar{3}\Psi_+}$", color="green", fontsize=10)
 
 
 # -----------------------------------------------------------------------------
@@ -234,14 +231,14 @@ ax.plot(x, Pnc, color="blue", lw=0.9)
 fix_main_axis(ax)
 ax.set_xlabel(r"$\omega_b\,t$", fontsize=12)
 
-ax.text(1.6e3, 0.75, r"$P_{0+}$", color="black", fontsize=11)
-ax.text(1.6e3, 0.20, r"$P_{2-}$", color="blue", fontsize=11)
+ax.text(1.5e3, 0.80, r"$P_{0+}$", color="black", fontsize=12)
+ax.text(1.6e3, 0.15, r"$P_{2-}$", color="blue", fontsize=12)
 
 axins = inset_axes(
     ax,
     width="33%",
     height="95%",
-    bbox_to_anchor=(0.06, 0.30, 0.8, 0.7),
+    bbox_to_anchor=(0.055, 0.30, 0.8, 0.7),
     bbox_transform=ax.transAxes,
     loc="upper left",
 )
@@ -249,17 +246,17 @@ axins.plot(x_ins, P0v_ins, color="black", lw=0.9)
 axins.plot(x_ins, Pnc_ins, color="green", lw=0.9)
 fix_inset_axis(axins)
 
-axins.text(1.8e4, 0.75, r"$P_{0+}$", color="black", fontsize=9)
-axins.text(1.8e4, 0.20, r"$P_{3-}$", color="green", fontsize=9)
+axins.text(1.3e4, 0.75, r"$P_{0+}$", color="black", fontsize=10)
+axins.text(1.3e4, 0.20, r"$P_{3-}$", color="green", fontsize=10)
 
 
 # -----------------------------------------------------------------------------
 # Etiquetas de panel: (a), (b), (c)
 # -----------------------------------------------------------------------------
 label_positions = {
-    0: (0.005, 0.95),
-    1: (0.005, 0.95),
-    2: (0.005, 0.95),
+    0: (0.004, 0.20),
+    1: (0.004, 0.20),
+    2: (0.004, 0.20),
 }
 
 for idx, ax in enumerate(axes):
@@ -278,8 +275,9 @@ for idx, ax in enumerate(axes):
 # Salida
 # -----------------------------------------------------------------------------
 plt.tight_layout()
-fig.subplots_adjust(hspace=0.12)
+fig.subplots_adjust(hspace=0.16)
 #plt.show() 
 plt.savefig("./figs/oficial/rabi_allreg.pdf", bbox_inches="tight")
 plt.savefig("./figs/oficial/pgf/rabi_allreg.pgf")
 plt.close()
+print("Imágenes guardadas")

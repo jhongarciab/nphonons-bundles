@@ -27,29 +27,33 @@ Lorem ipsum dolor sit amet consectetur adipiscing elit vivamus convallis sollici
 Donec eu pellentesque auctor aptent habitasse commodo rhoncus mattis, hac per dictum placerat litora nam pharetra lacus etiam, potenti eros sagittis natoque neque pretium ad. Suspendisse ligula leo viverra semper gravida cum tellus dictumst vulputate etiam euismod, habitant non hac augue vitae purus bibendum dignissim urna. Rutrum purus platea nulla sem pretium ultricies sed, erat lectus molestie accumsan viverra porta sociosqu, quam ut scelerisque inceptos hendrerit enim.
 
 
-
 \begin{figure}[H]
 	\centering
-	\begin{subfigure}{0.48\textwidth}
+	\tikzmark{topleft}% marca la posición superior
+	\begin{subfigure}[t]{0.47\textwidth}
 		\centering
-		\resizebox{\textwidth}{!}{%
-			\input{../../codes/figs/oficial/pgf/g_n_orders_stacked.pgf}
-		}
-		\caption{Escalamiento de $g^{(n)}$ en función del orden de correlación.}
+		\input{../../codes/figs/oficial/pgf/g_n_orders_stacked.pgf}
 		\label{fig:gn_orders_stacked1}
 	\end{subfigure}
-	\hfill
-	\begin{subfigure}{0.48\textwidth}
+	\hspace{0.04\textwidth}
+	\begin{subfigure}[t]{0.47\textwidth}
 		\centering
-		\resizebox{\textwidth}{!}{%
-			\input{../../codes/figs/oficial/pgf/corr_2qds_combined_heatmap.pgf}
-		}
-		\caption{Mapa de calor de $g^{(3)}$ para 2QDs acoplados por Förster.}
+		\hspace*{0.8cm}
+		\raisebox{0.5cm}{\input{../../codes/figs/oficial/pgf/corr_2qds_combined_heatmap.pgf}}
 		\label{fig:corr_2qds_lambda_heatmap1}
 	\end{subfigure}
-	\caption{Funciones de correlación de orden superior para el sistema de dos puntos cuánticos acoplados.}
-	\label{fig:correlaciones_2qds}
+	\begin{tikzpicture}[overlay, remember picture]
+		% (a) esquina superior izquierda del forster
+		\node at ([shift={(0.3cm,13cm)}]pic cs:topleft) {\large$(a)$};
+		% (b) misma altura, desplazado a la derecha
+		\node at ([shift={(11cm,13cm)}]pic cs:topleft) {\large$(b)$};
+	\end{tikzpicture}
+	\caption{Funciones de nth-orden de correlación y heatmaps para g(3) variando Lambda y Omega}
 \end{figure}
+
+Lorem ipsum dolor sit amet consectetur adipiscing elit vivamus convallis sollicitudin, nisi congue lacus justo potenti gravida montes maecenas rutrum commodo, pellentesque tellus proin magnis ultricies sodales risus netus dictum. Velit pharetra dapibus interdum luctus mollis et dignissim, accumsan cubilia lacinia nec eros volutpat, mauris parturient phasellus litora sem nulla. Fusce vulputate metus est magna neque fermentum aptent ornare, auctor suscipit potenti netus justo rutrum turpis, senectus elementum ut donec quisque semper nostra. Suspendisse ante etiam tempus leo habitant euismod mattis est, eros felis tempor facilisi primis taciti nullam commodo, molestie dis rhoncus imperdiet torquent neque ullamcorper.
+
+Donec eu pellentesque auctor aptent habitasse commodo rhoncus mattis, hac per dictum placerat litora nam pharetra lacus etiam, potenti eros sagittis natoque neque pretium ad. Suspendisse ligula leo viverra semper gravida cum tellus dictumst vulputate etiam euismod, habitant non hac augue vitae purus bibendum dignissim urna. Rutrum purus platea nulla sem pretium ultricies sed, erat lectus molestie accumsan viverra porta sociosqu, quam ut scelerisque inceptos hendrerit enim.
 
 \begin{figure}[H]
 	\centering

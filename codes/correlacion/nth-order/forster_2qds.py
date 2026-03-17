@@ -9,6 +9,8 @@ Figura apilada con n = 2, 3, 4, 5 en función de Δ/ω_b.
 
 import numpy as np
 import qutip as qt
+import matplotlib
+matplotlib.use("pgf")
 import matplotlib.pyplot as plt
 from matplotlib import rcParams
 from matplotlib.ticker import LogLocator
@@ -168,8 +170,7 @@ print(f"{'=' * 70}\n")
 # -----------------------------------------------------------------------------
 # Figura apilada g^(n)(0) vs Δ/ω_b
 # -----------------------------------------------------------------------------
-fig, axes = plt.subplots(4, 1, figsize=(3.37, 5.73), sharex=True)
-fig.subplots_adjust(hspace=0.08)
+fig, axes = plt.subplots(4, 1, figsize=(3.80, 5.20), sharex=True)
 
 color_by_order = {2: "blue", 3: "green", 4: "#c4942a", 5: "red"}
 
@@ -187,32 +188,32 @@ resonancias = {
     5: -5 * omega_b - J_over_ob,
 }
 
-y_label = {2: 3e5, 3: 1e13, 4: 1e20, 5: 4e25}
-x_label = {2: -2.5, 3: -3.5, 4: -4.5, 5: -5.2}
+y_label = {2: 2e5, 3: 1e12, 4: 4e18, 5: 2e24}
+x_label = {2: -2.5, 3: -3.5, 4: -4.5, 5: -5.1}
 
 
 for idx, (ax, n_order) in enumerate(zip(axes, n_orders[::-1])):
 
-    ax.plot(Delta_list, results[n_order]["g_vals"], lw=1.6, color=color_by_order[n_order])
+    ax.plot(Delta_list, results[n_order]["g_vals"], lw=0.9, color=color_by_order[n_order])
 
     ax.set_yscale("log")
     ax.set_xlim(0.0, -6.0)
     ax.set_ylim(ylims[n_order])
-    ax.set_ylabel(rf"$g^{{({n_order})}}(0)$", fontsize=16)
+    ax.set_ylabel(rf"$g^{{({n_order})}}(0)$", fontsize=12)
 
     ax.grid(False)
     ax.set_facecolor("white")
-    ax.set_xticks([0, -1, -2, -3, -4, -5])
+    ax.set_xticks([0, -1, -2, -3, -4, -5, -6])
 
     ymin, ymax = ylims[n_order]
-    exp_min = int(np.floor(np.log10(ymin)))
+    exp_min = 0 if n_order == 2 else 2
     exp_max = int(np.floor(np.log10(ymax)))
-    exp_ticks = np.linspace(exp_min, exp_max, 5)
+    exp_ticks = np.linspace(exp_min, exp_max, 3)
     exp_ticks = np.round(exp_ticks).astype(int)
     y_ticks = [10.0**e for e in exp_ticks]
     ax.set_yticks(y_ticks)
     ax.set_yticklabels([rf"$10^{{{e}}}$" for e in exp_ticks])
-    ax.tick_params(labelsize=15)
+    ax.tick_params(labelsize=12)
 
     delta_n = resonancias[n_order]
     ymin, ymax = ylims[n_order]
@@ -230,19 +231,24 @@ for idx, (ax, n_order) in enumerate(zip(axes, n_orders[::-1])):
         rf"$\Delta \approx {val}\,\omega_b$",
         ha="center",
         va="bottom",
-        fontsize=16,
+        fontsize=10,
         color=color_by_order[n_order],
     )
 
 
-axes[-1].set_xlabel(r"$\Delta/\omega_b$", fontsize=24)
-fig.text(0.02, 0.98, r'$(a)$', ha='left', va='top', fontsize=16)
+axes[-1].set_xlabel(r"$\Delta/\omega_b$", fontsize=12)
 
 
 # -----------------------------------------------------------------------------
 # Salida
 # -----------------------------------------------------------------------------
-plt.tight_layout()
+fig.subplots_adjust(
+    left=0.17,
+    right=0.94,
+    top=0.94,
+    bottom=0.10,
+    hspace=0.10,
+)
 #plt.show()
 plt.savefig("./figs/oficial/g_n_orders_stacked.pdf", bbox_inches="tight")
 plt.savefig("./figs/oficial/pgf/g_n_orders_stacked.pgf")

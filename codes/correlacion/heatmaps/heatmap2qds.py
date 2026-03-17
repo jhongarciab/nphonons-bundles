@@ -9,6 +9,8 @@ Una colorbar compartida a la derecha.
 
 import numpy as np
 import qutip as qt
+import matplotlib
+matplotlib.use("pgf")
 import matplotlib.pyplot as plt
 from matplotlib.colors import LogNorm
 from matplotlib import rcParams
@@ -32,8 +34,8 @@ gphi_ob  = 0.0004
 J_ob     = 0.5
 Ncut     = 8
 
-n_Delta  = 15
-n_sweep  = 5
+n_Delta  = 30
+n_sweep  = 10
 Delta_arr = np.linspace(0.0, -7.0, n_Delta)
 
 # Panel (b): barrido en lambda, Omega fijo
@@ -217,9 +219,12 @@ levels   = np.logspace(0, 15, 220)
 # sharex=True: eje x idéntico en ambos paneles
 fig, (ax_b, ax_c) = plt.subplots(
     2, 1,
-    figsize=(3.37, 5.73),
+    figsize=(2.95, 4.80),
     sharex=True,
-    gridspec_kw={'hspace': 0.06}
+    gridspec_kw={
+        'hspace': 0.10,
+        'height_ratios': [1, 1]
+    }
 )
 
 Delta_fine = np.linspace(-9.0, 0.0, 1000)
@@ -248,20 +253,20 @@ for n in n_res:
 
 # Labels panel (b)
 labels_b = {
-    1: (-1.4, 0.02), 2: (-2.4, 0.02), 3: (-3.4, 0.02),
+    1: (-1.45, 0.02), 2: (-2.4, 0.02), 3: (-3.4, 0.02),
     4: (-4.4, 0.02), 5: (-5.4, 0.02), 6: (-6.4, 0.02),
 }
 for n, (x_lab, y_lab) in labels_b.items():
     ax_b.text(x_lab, y_lab, rf'$\Delta_{n}(\lambda)$',
-              fontsize=11, ha='left', va='bottom', rotation=90, color='black')
+              fontsize=10, ha='left', va='bottom', rotation=90, color='black')
 
 ax_b.set_yscale('log')
 ax_b.set_xlim(-6.5, -1.0)
 ax_b.set_ylim(lambda_arr.min(), lambda_arr.max())
 ax_b.set_yticks([1e-2, 1e-1, 1e0])
 ax_b.set_yticklabels([r'$10^{-2}$', r'$10^{-1}$', r'$10^{0}$'])
-ax_b.set_ylabel(r'$\lambda/\omega_b$', fontsize=11)
-ax_b.tick_params(labelsize=9)
+ax_b.set_ylabel(r'$\lambda/\omega_b$', fontsize=12)
+ax_b.tick_params(labelsize=12)
 ax_b.set_facecolor('white')
 
 # ------------------------------------------------------------------
@@ -286,12 +291,12 @@ for n in n_res:
 
 # Labels panel (c)
 labels_c = {
-    1: (-1.4, 0.02), 2: (-2.4, 0.02), 3: (-3.4, 0.02),
+    1: (-1.45, 0.02), 2: (-2.4, 0.02), 3: (-3.4, 0.02),
     4: (-4.4, 0.02), 5: (-5.4, 0.02), 6: (-6.4, 0.02),
 }
 for n, (x_lab, y_lab) in labels_c.items():
     ax_c.text(x_lab, y_lab, rf'$\Delta_{n}(\Omega)$',
-              fontsize=9, ha='left', va='bottom', rotation=90, color='black')
+              fontsize=10, ha='left', va='bottom', rotation=90, color='black')
 
 ax_c.set_yscale('log')
 ax_c.set_ylim(Omega_arr.min(), Omega_arr.max())
@@ -301,14 +306,20 @@ ax_c.set_xticks([-6, -5, -4, -3, -2, -1])
 ax_c.set_xticklabels([r'$-6$', r'$-5$', r'$-4$', r'$-3$', r'$-2$', r'$-1$'])
 ax_c.set_xlabel(r'$\Delta/\omega_b$', fontsize=12)
 ax_c.set_ylabel(r'$\Omega/\omega_b$', fontsize=12)
-ax_c.tick_params(labelsize=9)
+ax_c.tick_params(labelsize=12)
 ax_c.set_facecolor('white')
 
 # ------------------------------------------------------------------
 # Colorbar única compartida
 # ------------------------------------------------------------------
 # Colorbar manual — ocupa exactamente el área de los dos paneles
-fig.subplots_adjust(right=0.82)  # deja espacio a la derecha
+fig.subplots_adjust(
+    left=0.22,
+    right=0.82,
+    top=0.92,
+    bottom=0.12,
+    hspace=0.10,
+)
 pos_b = ax_b.get_position()
 pos_c = ax_c.get_position()
 cax = fig.add_axes([
@@ -320,9 +331,8 @@ cax = fig.add_axes([
 cbar = fig.colorbar(im, cax=cax)
 cbar.set_ticks([1e0, 1e3, 1e6, 1e9, 1e12, 1e15])
 cbar.set_ticklabels(['0', '3', '6', '9', '12', '15'])
-cbar.ax.tick_params(labelsize=9)
+cbar.ax.tick_params(labelsize=10)
 
-fig.text(0.01, 0.90, r'$(b)$', ha='left', va='top', fontsize=12)
 # =============================================================================
 # SALIDA
 # =============================================================================
