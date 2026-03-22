@@ -17,6 +17,11 @@ from matplotlib.ticker import LogLocator
 
 
 # -----------------------------------------------------------------------------
+# Configuración general
+# -----------------------------------------------------------------------------
+RERUN = True # False para recalcular, True para cargar datos guardados
+
+# -----------------------------------------------------------------------------
 # Estilo global de figura
 # -----------------------------------------------------------------------------
 rcParams.update({
@@ -125,46 +130,71 @@ H_Forster = J_over_ob * (sp1 * sm2 + sp2 * sm1)
 
 
 # -----------------------------------------------------------------------------
-# Cálculo de g^(n)
+# Cálculo / carga de g^(n)
 # -----------------------------------------------------------------------------
-results = {}
+if not RERUN:
+    results = {}
 
-print(f"\n{'=' * 70}")
-print(f"Calculando g^(n) para órdenes {n_orders} con J/ωb = {J_over_ob}")
-print(f"{'=' * 70}\n")
+    print(f"\n{'=' * 70}")
+    print(f"Calculando g^(n) para órdenes {n_orders} con J/ωb = {J_over_ob}")
+    print(f"{'=' * 70}\n")
 
-for n_order in n_orders:
-    print(f"\n>>> Calculando g^({n_order}) <<<")
+    for n_order in n_orders:
+        print(f"\n>>> Calculando g^({n_order}) <<<")
 
-    bdagb_n = factorial_number_operator(num_sys, n_order, I_sys)
-    g_vals = np.full_like(Delta_list, np.nan, dtype=float)
-    nbar_vals = np.full_like(Delta_list, np.nan, dtype=float)
+        bdagb_n = factorial_number_operator(num_sys, n_order, I_sys)
+        g_vals = np.full_like(Delta_list, np.nan, dtype=float)
+        nbar_vals = np.full_like(Delta_list, np.nan, dtype=float)
 
-    for i, Delta in enumerate(Delta_list):
-        H_detuning = Delta * (proj_e1 + proj_e2)
-        H = H_detuning + H_phonon + H_interaction + H_drive + H_Forster
+        for i, Delta in enumerate(Delta_list):
+            H_detuning = Delta * (proj_e1 + proj_e2)
+            H = H_detuning + H_phonon + H_interaction + H_drive + H_Forster
 
-        rho_ss = solve_steady_state_robust(H, c_ops)
-        if rho_ss is None:
-            continue
+            rho_ss = solve_steady_state_robust(H, c_ops)
+            if rho_ss is None:
+                continue
 
-        nbar = qt.expect(num_sys, rho_ss)
-        nbar_vals[i] = nbar
+            nbar = qt.expect(num_sys, rho_ss)
+            nbar_vals[i] = nbar
 
-        if nbar > 1e-12:
-            numerator = qt.expect(bdagb_n, rho_ss)
-            g_val = numerator / (nbar ** n_order)
-            g_vals[i] = np.real(g_val) if abs(np.imag(g_val)) < 1e-10 else g_val
+            if nbar > 1e-12:
+                numerator = qt.expect(bdagb_n, rho_ss)
+                g_val = numerator / (nbar ** n_order)
+                g_vals[i] = np.real(g_val) if abs(np.imag(g_val)) < 1e-10 else g_val
 
-        if (i + 1) % 100 == 0:
-            print(f"  {i + 1}/{len(Delta_list)}  Δ={Delta:.2f}  ⟨n⟩={nbar:.2e}")
+            if (i + 1) % 100 == 0:
+                print(f"  {i + 1}/{len(Delta_list)}  Δ={Delta:.2f}  ⟨n⟩={nbar:.2e}")
 
-    results[n_order] = {"g_vals": g_vals.copy(), "nbar_vals": nbar_vals.copy()}
-    print(f"  ✓ Completado para g^({n_order})")
+        results[n_order] = {"g_vals": g_vals.copy(), "nbar_vals": nbar_vals.copy()}
+        print(f"  ✓ Completado para g^({n_order})")
 
-print(f"\n{'=' * 70}")
-print("Todos los cálculos completados")
-print(f"{'=' * 70}\n")
+    print(f"\n{'=' * 70}")
+    print("Todos los cálculos completados")
+    print(f"{'=' * 70}\n")
+
+    np.savez(
+        "results/data/g_n_orders_stacked_data.npz",
+        Delta_list=Delta_list,
+        n_orders=np.array(n_orders),
+        g2_vals=results[2]["g_vals"],
+        g2_nbar=results[2]["nbar_vals"],
+        g3_vals=results[3]["g_vals"],
+        g3_nbar=results[3]["nbar_vals"],
+        g4_vals=results[4]["g_vals"],
+        g4_nbar=results[4]["nbar_vals"],
+        g5_vals=results[5]["g_vals"],
+        g5_nbar=results[5]["nbar_vals"],
+    )
+
+else:
+    data = np.load("results/data/g_n_orders_stacked_data.npz")
+    Delta_list = data["Delta_list"]
+    results = {
+        2: {"g_vals": data["g2_vals"], "nbar_vals": data["g2_nbar"]},
+        3: {"g_vals": data["g3_vals"], "nbar_vals": data["g3_nbar"]},
+        4: {"g_vals": data["g4_vals"], "nbar_vals": data["g4_nbar"]},
+        5: {"g_vals": data["g5_vals"], "nbar_vals": data["g5_nbar"]},
+    }
 
 
 # -----------------------------------------------------------------------------
@@ -190,7 +220,6 @@ resonancias = {
 
 y_label = {2: 2e5, 3: 1e12, 4: 4e18, 5: 2e24}
 x_label = {2: -2.5, 3: -3.5, 4: -4.5, 5: -5.1}
-
 
 for idx, (ax, n_order) in enumerate(zip(axes, n_orders[::-1])):
 
@@ -235,7 +264,6 @@ for idx, (ax, n_order) in enumerate(zip(axes, n_orders[::-1])):
         color=color_by_order[n_order],
     )
 
-
 axes[-1].set_xlabel(r"$\Delta/\omega_b$", fontsize=12)
 
 
@@ -250,6 +278,6 @@ fig.subplots_adjust(
     hspace=0.10,
 )
 #plt.show()
-plt.savefig("./figs/oficial/g_n_orders_stacked.pdf", bbox_inches="tight")
-plt.savefig("./figs/oficial/pgf/g_n_orders_stacked.pgf")
+plt.savefig("results/oficial/g_n_orders_stacked.pdf", bbox_inches="tight")
+plt.savefig("results/oficial/pgf/g_n_orders_stacked.pgf")
 plt.close()

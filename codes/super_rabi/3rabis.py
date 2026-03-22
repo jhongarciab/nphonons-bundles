@@ -17,11 +17,13 @@ from matplotlib.ticker import FixedLocator, LogFormatterMathtext
 
 
 # -----------------------------------------------------------------------------
+# Configuración general
+# -----------------------------------------------------------------------------
+RERUN = False  # False para recalcular, True para cargar datos guardados
+
+# -----------------------------------------------------------------------------
 # Estilo global de figura
 # -----------------------------------------------------------------------------
-# - pgf.texsystem: motor TeX usado por PGF.
-# - text.usetex=False: evita depender del render externo TeX para texto general;
-#   PGF sigue exportando correctamente la figura vectorial.
 rcParams.update({
     "pgf.texsystem": "pdflatex",
     "pgf.rcfonts": False,
@@ -31,27 +33,9 @@ rcParams.update({
 
 
 # -----------------------------------------------------------------------------
-# Malla temporal común para los tres paneles
-# -----------------------------------------------------------------------------
-omegab = 1.0
-
-t = np.logspace(1, 6.3, 9000)      # dominio principal
-x = omegab * t                      # variable adimensional del eje x
-
-t_ins = np.logspace(3, 8.3, 9000)   # dominio para inset (más largo)
-x_ins = omegab * t_ins
-
-
-# -----------------------------------------------------------------------------
-# Lienzo y ejes
-# -----------------------------------------------------------------------------
-fig, axes = plt.subplots(3, 1, figsize=(6.30, 4.00), sharex=True)
-
-# -----------------------------------------------------------------------------
-# Helpers de formato
+# Helpers
 # -----------------------------------------------------------------------------
 def fix_main_axis(ax):
-    """Formato común para el eje principal de cada panel."""
     ax.set_xscale("log")
     ax.set_xlim(1e1, 1.8e6)
     ax.set_ylim(0, 1)
@@ -62,7 +46,6 @@ def fix_main_axis(ax):
 
 
 def fix_inset_axis(axins):
-    """Formato común para el inset (n=3) en cada panel."""
     axins.set_xscale("log")
     axins.set_xlim(1e4, 7e7)
     axins.set_ylim(0, 1)
@@ -73,33 +56,164 @@ def fix_inset_axis(axins):
 
 
 # -----------------------------------------------------------------------------
-# PANEL (a) — RÉGIMEN I (2QD)
+# Datos
 # -----------------------------------------------------------------------------
-lambda_omegab = 0.03
-Omega_omegab = 0.003
+if not RERUN:
+    # Malla temporal común para los tres paneles
+    omegab = 1.0
 
-# n = 2 (panel principal)
-n = 2
-Omega_eff = (
-    np.sqrt(2) * Omega_omegab / math.sqrt(math.factorial(n))
-    * (lambda_omegab / omegab) ** n
-)
+    t = np.logspace(1, 6.3, 9000)
+    x = omegab * t
 
-# n = 3 (inset)
-n_ins = 3
-Omega_eff_ins = (
-    np.sqrt(2) * Omega_omegab / math.sqrt(math.factorial(n_ins))
-    * (lambda_omegab / omegab) ** n_ins
-)
+    t_ins = np.logspace(3, 8.3, 9000)
+    x_ins = omegab * t_ins
 
-Pnc = np.sin(Omega_eff * t) ** 2
-P0v = 1 - Pnc
-Pnc_ins = np.sin(Omega_eff_ins * t_ins) ** 2
-P0v_ins = 1 - Pnc_ins
+    # -------------------------------------------------------------------------
+    # PANEL (a) — RÉGIMEN I (2QD)
+    # -------------------------------------------------------------------------
+    lambda_omegab = 0.03
+    Omega_omegab = 0.003
 
+    n = 2
+    Omega_eff = (
+        np.sqrt(2) * Omega_omegab / math.sqrt(math.factorial(n))
+        * (lambda_omegab / omegab) ** n
+    )
+
+    n_ins = 3
+    Omega_eff_ins = (
+        np.sqrt(2) * Omega_omegab / math.sqrt(math.factorial(n_ins))
+        * (lambda_omegab / omegab) ** n_ins
+    )
+
+    a_Pnc = np.sin(Omega_eff * t) ** 2
+    a_P0v = 1 - a_Pnc
+    a_Pnc_ins = np.sin(Omega_eff_ins * t_ins) ** 2
+    a_P0v_ins = 1 - a_Pnc_ins
+
+    # -------------------------------------------------------------------------
+    # PANEL (b) — RÉGIMEN II (2QD)
+    # -------------------------------------------------------------------------
+    lambda_omegab = 0.1
+    Omega_omegab = 0.003
+
+    n = 2
+    Omega_eff = (
+        np.sqrt(2) * Omega_omegab / math.sqrt(math.factorial(n))
+        * (lambda_omegab / omegab) ** n
+        * np.exp(-lambda_omegab**2 / (2 * omegab**2))
+    )
+
+    n_ins = 3
+    Omega_eff_ins = (
+        np.sqrt(2) * Omega_omegab / math.sqrt(math.factorial(n_ins))
+        * (lambda_omegab / omegab) ** n_ins
+        * np.exp(-lambda_omegab**2 / (2 * omegab**2))
+    )
+
+    b_Pnc = np.sin(Omega_eff * t) ** 2
+    b_P0v = 1 - b_Pnc
+    b_Pnc_ins = np.sin(Omega_eff_ins * t_ins) ** 2
+    b_P0v_ins = 1 - b_Pnc_ins
+
+    # -------------------------------------------------------------------------
+    # PANEL (c) — RÉGIMEN III (2QD)
+    # -------------------------------------------------------------------------
+    lambda_omegab = 0.03
+    Omega_omegab = 0.5
+    J = 0.5
+
+    n = 2
+    Delta_n = -np.sqrt((n * omegab) ** 2 - 8 * Omega_omegab**2) - J
+    c_minus = np.sqrt(
+        4 * Omega_omegab**2 /
+        (Delta_n**2 + 8 * Omega_omegab**2 - Delta_n * np.sqrt(Delta_n**2 + 8 * Omega_omegab**2))
+    )
+    prod = 1.0
+    for k in range(1, n):
+        prod *= (n * c_minus**2 - k)
+    Omega_eff = abs(
+        (-1) ** n * np.sqrt(2) * Omega_omegab
+        * (lambda_omegab / omegab) ** n
+        * prod
+        / (math.factorial(n - 1) * math.sqrt(math.factorial(n)))
+    )
+
+    n = 3
+    Delta_n = -np.sqrt((n * omegab) ** 2 - 8 * Omega_omegab**2) - J
+    c_minus = np.sqrt(
+        4 * Omega_omegab**2 /
+        (Delta_n**2 + 8 * Omega_omegab**2 - Delta_n * np.sqrt(Delta_n**2 + 8 * Omega_omegab**2))
+    )
+    prod = 1.0
+    for k in range(1, n):
+        prod *= (n * c_minus**2 - k)
+    Omega_eff_ins = abs(
+        (-1) ** n * np.sqrt(2) * Omega_omegab
+        * (lambda_omegab / omegab) ** n
+        * prod
+        / (math.factorial(n - 1) * math.sqrt(math.factorial(n)))
+    )
+
+    c_Pnc = np.sin(Omega_eff * t) ** 2
+    c_P0v = 1 - c_Pnc
+    c_Pnc_ins = np.sin(Omega_eff_ins * t_ins) ** 2
+    c_P0v_ins = 1 - c_Pnc_ins
+
+    np.savez(
+        "results/data/rabi_allreg_data.npz",
+        omegab=omegab,
+        t=t,
+        x=x,
+        t_ins=t_ins,
+        x_ins=x_ins,
+        a_Pnc=a_Pnc,
+        a_P0v=a_P0v,
+        a_Pnc_ins=a_Pnc_ins,
+        a_P0v_ins=a_P0v_ins,
+        b_Pnc=b_Pnc,
+        b_P0v=b_P0v,
+        b_Pnc_ins=b_Pnc_ins,
+        b_P0v_ins=b_P0v_ins,
+        c_Pnc=c_Pnc,
+        c_P0v=c_P0v,
+        c_Pnc_ins=c_Pnc_ins,
+        c_P0v_ins=c_P0v_ins,
+    )
+
+else:
+    data = np.load("results/data/rabi_allreg_data.npz")
+    omegab = data["omegab"]
+    t = data["t"]
+    x = data["x"]
+    t_ins = data["t_ins"]
+    x_ins = data["x_ins"]
+    a_Pnc = data["a_Pnc"]
+    a_P0v = data["a_P0v"]
+    a_Pnc_ins = data["a_Pnc_ins"]
+    a_P0v_ins = data["a_P0v_ins"]
+    b_Pnc = data["b_Pnc"]
+    b_P0v = data["b_P0v"]
+    b_Pnc_ins = data["b_Pnc_ins"]
+    b_P0v_ins = data["b_P0v_ins"]
+    c_Pnc = data["c_Pnc"]
+    c_P0v = data["c_P0v"]
+    c_Pnc_ins = data["c_Pnc_ins"]
+    c_P0v_ins = data["c_P0v_ins"]
+
+
+# -----------------------------------------------------------------------------
+# Lienzo y ejes
+# -----------------------------------------------------------------------------
+fig, axes = plt.subplots(3, 1, figsize=(6.30, 4.00), sharex=True)
+
+
+# -----------------------------------------------------------------------------
+# PANEL (a)
+# -----------------------------------------------------------------------------
 ax = axes[0]
-ax.plot(x, P0v, color="black", lw=0.9)
-ax.plot(x, Pnc, color="blue", lw=0.9)
+ax.plot(x, a_P0v, color="black", lw=0.9)
+ax.plot(x, a_Pnc, color="blue", lw=0.9)
 fix_main_axis(ax)
 
 ax.text(0.4e5, 0.75, r"$P_{0vv}$", color="black", fontsize=12)
@@ -113,8 +227,8 @@ axins = inset_axes(
     bbox_transform=ax.transAxes,
     loc="upper left",
 )
-axins.plot(x_ins, P0v_ins, color="black", lw=0.9)
-axins.plot(x_ins, Pnc_ins, color="green", lw=0.9)
+axins.plot(x_ins, a_P0v_ins, color="black", lw=0.9)
+axins.plot(x_ins, a_Pnc_ins, color="green", lw=0.9)
 fix_inset_axis(axins)
 
 axins.text(0.8e6, 0.75, r"$P_{0vv}$", color="black", fontsize=10)
@@ -122,35 +236,11 @@ axins.text(0.8e6, 0.20, r"$P_{3\Psi_+}$", color="green", fontsize=10)
 
 
 # -----------------------------------------------------------------------------
-# PANEL (b) — RÉGIMEN II (2QD)
+# PANEL (b)
 # -----------------------------------------------------------------------------
-lambda_omegab = 0.1
-Omega_omegab = 0.003
-
-# n = 2 (panel principal)
-n = 2
-Omega_eff = (
-    np.sqrt(2) * Omega_omegab / math.sqrt(math.factorial(n))
-    * (lambda_omegab / omegab) ** n
-    * np.exp(-lambda_omegab**2 / (2 * omegab**2))
-)
-
-# n = 3 (inset)
-n_ins = 3
-Omega_eff_ins = (
-    np.sqrt(2) * Omega_omegab / math.sqrt(math.factorial(n_ins))
-    * (lambda_omegab / omegab) ** n_ins
-    * np.exp(-lambda_omegab**2 / (2 * omegab**2))
-)
-
-Pnc = np.sin(Omega_eff * t) ** 2
-P0v = 1 - Pnc
-Pnc_ins = np.sin(Omega_eff_ins * t_ins) ** 2
-P0v_ins = 1 - Pnc_ins
-
 ax = axes[1]
-ax.plot(x, P0v, color="black", lw=0.9)
-ax.plot(x, Pnc, color="blue", lw=0.9)
+ax.plot(x, b_P0v, color="black", lw=0.9)
+ax.plot(x, b_Pnc, color="blue", lw=0.9)
 fix_main_axis(ax)
 ax.set_ylabel("Poblaciones de los estados del sistema", fontsize=12, labelpad=10)
 
@@ -165,8 +255,8 @@ axins = inset_axes(
     bbox_transform=ax.transAxes,
     loc="upper left",
 )
-axins.plot(x_ins, P0v_ins, color="black", lw=0.9)
-axins.plot(x_ins, Pnc_ins, color="green", lw=0.9)
+axins.plot(x_ins, b_P0v_ins, color="black", lw=0.9)
+axins.plot(x_ins, b_Pnc_ins, color="green", lw=0.9)
 fix_inset_axis(axins)
 
 axins.text(2.4e4, 0.75, r"$P_{\bar{0}vv}$", color="black", fontsize=10)
@@ -174,60 +264,11 @@ axins.text(2.4e4, 0.20, r"$P_{\bar{3}\Psi_+}$", color="green", fontsize=10)
 
 
 # -----------------------------------------------------------------------------
-# PANEL (c) — RÉGIMEN III (2QD)
+# PANEL (c)
 # -----------------------------------------------------------------------------
-lambda_omegab = 0.03
-Omega_omegab = 0.5
-J = 0.5  # acoplamiento Förster (J=0 recupera benchmark sin acoplamiento)
-
-# n = 2 (panel principal)
-n = 2
-Delta_n = -np.sqrt((n * omegab) ** 2 - 8 * Omega_omegab**2) - J
-
-c_minus = np.sqrt(
-    4 * Omega_omegab**2 /
-    (Delta_n**2 + 8 * Omega_omegab**2 - Delta_n * np.sqrt(Delta_n**2 + 8 * Omega_omegab**2))
-)
-
-prod = 1.0
-for k in range(1, n):
-    prod *= (n * c_minus**2 - k)
-
-Omega_eff = abs(
-    (-1) ** n * np.sqrt(2) * Omega_omegab
-    * (lambda_omegab / omegab) ** n
-    * prod
-    / (math.factorial(n - 1) * math.sqrt(math.factorial(n)))
-)
-
-# n = 3 (inset)
-n = 3
-Delta_n = -np.sqrt((n * omegab) ** 2 - 8 * Omega_omegab**2) - J
-
-c_minus = np.sqrt(
-    4 * Omega_omegab**2 /
-    (Delta_n**2 + 8 * Omega_omegab**2 - Delta_n * np.sqrt(Delta_n**2 + 8 * Omega_omegab**2))
-)
-
-prod = 1.0
-for k in range(1, n):
-    prod *= (n * c_minus**2 - k)
-
-Omega_eff_ins = abs(
-    (-1) ** n * np.sqrt(2) * Omega_omegab
-    * (lambda_omegab / omegab) ** n
-    * prod
-    / (math.factorial(n - 1) * math.sqrt(math.factorial(n)))
-)
-
-Pnc = np.sin(Omega_eff * t) ** 2
-P0v = 1 - Pnc
-Pnc_ins = np.sin(Omega_eff_ins * t_ins) ** 2
-P0v_ins = 1 - Pnc_ins
-
 ax = axes[2]
-ax.plot(x, P0v, color="black", lw=0.9)
-ax.plot(x, Pnc, color="blue", lw=0.9)
+ax.plot(x, c_P0v, color="black", lw=0.9)
+ax.plot(x, c_Pnc, color="blue", lw=0.9)
 fix_main_axis(ax)
 ax.set_xlabel(r"$\omega_b\,t$", fontsize=12)
 
@@ -242,8 +283,8 @@ axins = inset_axes(
     bbox_transform=ax.transAxes,
     loc="upper left",
 )
-axins.plot(x_ins, P0v_ins, color="black", lw=0.9)
-axins.plot(x_ins, Pnc_ins, color="green", lw=0.9)
+axins.plot(x_ins, c_P0v_ins, color="black", lw=0.9)
+axins.plot(x_ins, c_Pnc_ins, color="green", lw=0.9)
 fix_inset_axis(axins)
 
 axins.text(1.3e4, 0.75, r"$P_{0+}$", color="black", fontsize=10)
@@ -276,8 +317,7 @@ for idx, ax in enumerate(axes):
 # -----------------------------------------------------------------------------
 plt.tight_layout()
 fig.subplots_adjust(hspace=0.16)
-#plt.show() 
-plt.savefig("./figs/oficial/rabi_allreg.pdf", bbox_inches="tight")
-plt.savefig("./figs/oficial/pgf/rabi_allreg.pgf")
+plt.savefig("results/oficial/rabi_allreg.pdf", bbox_inches="tight")
+plt.savefig("results/oficial/pgf/rabi_allreg.pgf")
 plt.close()
 print("Imágenes guardadas")

@@ -1,317 +1,321 @@
+#!/usr/bin/env python3
+"""
+Trayectoria cuántica — Molécula excitónica (2QD + Förster)
+===========================================================
+
+Extensión del código de trayectorias de 1QD al sistema 2QD.
+Muestra la cascada de emisión de 2-fonon bundles con los estados
+colectivos de Dicke: |vv⟩, |Ψ₊⟩ = (|cv⟩+|vc⟩)/√2, |Ψ₋⟩, |cc⟩.
+
+Espacio: QD₁ ⊗ QD₂ ⊗ Fock(Nph)
+  - Base TLS QuTiP: |0⟩ = |c⟩ (excitado), |1⟩ = |v⟩ (valencia)
+  - sigmam = |v⟩⟨c| = |1⟩⟨0|
+
+Hamiltoniano (marco rotante):
+  H = ω_b b†b + Δ(σ₁†σ₁ + σ₂†σ₂) + λ(σ₁†σ₁ + σ₂†σ₂)(b+b†)
+      + Ω(σ₁+σ₁†+σ₂+σ₂†) + J(σ₁†σ₂+σ₂†σ₁)
+
+Resonancia de Stokes 2QD (Régimen II): Δ_n = λ²/ω_b - n·ω_b - J
+
+Autor: Jhon S. García B. — Tesis UQ 2025
+"""
+
 import numpy as np
+import matplotlib
+matplotlib.use("pgf")
 import matplotlib.pyplot as plt
+from matplotlib import rcParams
 from qutip import *
 
-# =====================================================
-# TRAYECTORIAS CUÁNTICAS 2QDs: RÉGIMEN n=3 FONONES
-# J = 0.5ωb (ACOPLAMIENTO FÖRSTER FUERTE)
-# Detuning en resonancia: Δ = -3.5ωb
-# =====================================================
+# -----------------------------------------------------------------------------
+# Configuración general
+# -----------------------------------------------------------------------------
+RERUN = True # False para recalcular, True para cargar datos guardados
 
-print("=" * 70)
-print("  EMISIÓN DE BUNDLES DE 3-FONONES: 2 QDs + FÖRSTER FUERTE")
-print("=" * 70)
+# -----------------------------------------------------------------------------
+# Estilo global de figura
+# -----------------------------------------------------------------------------
+rcParams.update({
+    "pgf.texsystem": "pdflatex",
+    "pgf.rcfonts": False,
+    "font.family": "serif",
+    "font.size": 12,
+})
 
-# =====================================================
-# PARÁMETROS FÍSICOS
-# =====================================================
+# =============================================================================
+# PARÁMETROS
+# =============================================================================
+omegab    = 1.0
+n         = 2             # bundle de 2 fonones
 
-omegab = 1.0
-n_target = 3  # Régimen de 3-fonones
-
-lambda_omegab = 0.3   # = 0.24 (¡más fuerte!)
-Omega_omegab = 0.2   # = 0.03
-kappa = 0.003  # Mantener igual (propiedad de la cavidad)
-gamma = 0.0004  # Mantener igual (propiedad del QD)
+lam       = 0.1 * omegab
+Om        = 0.2 * omegab
+kappa     = 0.0005
+gamma     = 0.0002
 gamma_phi = 0.0004
+J         = 0.5 * omegab
 
-lam = lambda_omegab * omegab
-Om = Omega_omegab * omegab
+# Resonancia de Stokes 2QD — Régimen II
+Delta = lam**2 / omegab - n * omegab - J
 
-# FÖRSTER FUERTE (el régimen que exploraste originalmente)
-J_omegab = 0.5  # ← CORRECCIÓN CLAVE
-J = J_omegab * omegab
+Nph   = 12
+ntraj = 25
+x_max = 10000.0
+Nt    = 10001
 
-# DETUNING EN RESONANCIA DE 3-FONONES
-# De tu g^(3): dip con antibunching en Δ/ωb = -3.5
-# Física: Δ_resonancia = -n·ωb - J = -3.0 - 0.5 = -3.5 ✓
-Delta_over_omegab = -3.5  # ← EXACTAMENTE EL DIP DE g^(3)
-Delta = Delta_over_omegab * omegab
+tlist = np.linspace(0.0, x_max / omegab, Nt)
+x     = omegab * tlist
 
-# Frecuencia de Rabi efectiva de 3-fonones
-# Con estado brillante: λ_eff = √2·λ
-lambda_eff = np.sqrt(2) * lam
-Omega_eff_3_bright = (lambda_eff ** 3 * Om) / (np.abs(Delta) ** 3)
+print(f"Δ/ω_b = {Delta/omegab:.5f}")
+print(f"Nph = {Nph}, ntraj = {ntraj}, t_max = {x_max}")
+print(f"dim = 2 × 2 × {Nph} = {4*Nph}")
 
-# Sweet spot check
-sweet_spot_ratio = kappa / Omega_eff_3_bright
+# =============================================================================
+# BASE TLS
+# =============================================================================
+ket_c  = basis(2, 0)           # |c⟩ = excitado
+ket_v  = basis(2, 1)           # |v⟩ = valencia
+Pc     = ket2dm(ket_c)         # |c⟩⟨c| = σ†σ
+sm_tls = ket_v * ket_c.dag()   # σ⁻ = |v⟩⟨c|
 
-print(f"\n{'PARÁMETROS FÍSICOS':^70}")
-print("-" * 70)
-print(f"  Régimen:           n = {n_target} fonones")
-print(f"  λ/ωb:              {lambda_omegab}")
-print(f"  Ω/ωb:              {Omega_omegab}")
-print(f"  J/ωb:              {J_omegab}  ← ACOPLAMIENTO FUERTE")
-print(f"  Splitting 2J/ωb:   {2 * J_omegab}  (comparable a ωb!)")
-print(f"  κ/ωb:              {kappa}  (Q = {1 / kappa:.0f})")
-print(f"  γ/ωb:              {gamma}")
-print(f"  γφ/ωb:             {gamma_phi}")
-print(f"\n  Δ/ωb:              {Delta_over_omegab}  ← RESONANCIA (dip en g³)")
-print(f"  Fórmula:           Δ = -n·ωb - J = -3.0 - 0.5 = -3.5 ✓")
-print(f"\n  λ_eff (brillante): {lambda_eff / omegab:.3f} ωb  (√2 × λ)")
-print(f"  Ω_eff^(3):         {Omega_eff_3_bright:.6f} ωb")
-print(f"  κ/Ω_eff^(3):       {sweet_spot_ratio:.1f}  (óptimo: ~10)")
-print(f"\n  1/κ:               {1 / kappa:.0f} ωb⁻¹")
-print(f"  Bundle 3-fonones:  ~{3 / kappa:.0f} ωb⁻¹  (3 clicks)")
-print("=" * 70)
+# =============================================================================
+# OPERADORES DEL SISTEMA QD₁ ⊗ QD₂ ⊗ Fock
+# =============================================================================
+b   = destroy(Nph)
+Ib  = qeye(Nph)
+Iq  = qeye(2)
+nb  = b.dag() * b
 
-# =====================================================
-# NOTA IMPORTANTE SOBRE J = 0.5ωb
-# =====================================================
-print(f"\n{'RÉGIMEN DE ACOPLAMIENTO FÖRSTER FUERTE':^70}")
-print("-" * 70)
-print("  Con J = 0.5ωb (mitad de la energía del fonón):")
-print("  • Estados |S⟩ y |A⟩ separados por 2J = 1.0 ωb")
-print("  • Molécula excitónica genuina (no perturbación)")
-print("  • Estado |S⟩ shifted +J = +0.5ωb en energía")
-print("  • Estado |A⟩ shifted -J = -0.5ωb en energía")
-print("  • Resonancia n=3 desde |S⟩: Δ = -3ωb - J = -3.5ωb")
-print("-" * 70)
+b_sys  = tensor(Iq, Iq, b)
+nb_sys = tensor(Iq, Iq, nb)
 
-# =====================================================
-# ESPACIO DE HILBERT
-# =====================================================
+sm1 = tensor(sm_tls, Iq, Ib);  sp1 = sm1.dag()
+sm2 = tensor(Iq, sm_tls, Ib);  sp2 = sm2.dag()
+pe1 = tensor(Pc, Iq, Ib)       # σ₁†σ₁
+pe2 = tensor(Iq, Pc, Ib)       # σ₂†σ₂
 
-Nph = 12  # Truncamiento fonónico
-ntraj = 100
-x_min, x_max = 0.0, 25000.0
-Nt = 10001
+I_sys = tensor(Iq, Iq, Ib)
 
-tlist = np.linspace(x_min / omegab, x_max / omegab, Nt)
-x = omegab * tlist
+# =============================================================================
+# PROYECTORES PARA POBLACIONES
+# =============================================================================
+psi_vv    = tensor(ket_v, ket_v)
+psi_plus  = (tensor(ket_c, ket_v) + tensor(ket_v, ket_c)).unit()  # |Ψ₊⟩
+psi_minus = (tensor(ket_c, ket_v) - tensor(ket_v, ket_c)).unit()  # |Ψ₋⟩
 
-print(f"\nDimensión: {Nph} × 2 × 2 = {Nph * 4}")
-print(f"Trayectorias: {ntraj}")
-print(f"Ventana: {x_max:.0f} ωb⁻¹")
+P_minus = tensor(ket2dm(psi_minus), Ib)
 
-# Estados TLS
-ket_e = basis(2, 0)
-ket_g = basis(2, 1)
+P0_vv   = tensor(ket2dm(psi_vv),   ket2dm(basis(Nph, 0)))
+P0_plus = tensor(ket2dm(psi_plus), ket2dm(basis(Nph, 0)))
+P1_vv   = tensor(ket2dm(psi_vv),   ket2dm(basis(Nph, 1)))
+P1_plus = tensor(ket2dm(psi_plus), ket2dm(basis(Nph, 1)))
+P2_vv   = tensor(ket2dm(psi_vv),   ket2dm(basis(Nph, 2)))
+P2_plus = tensor(ket2dm(psi_plus), ket2dm(basis(Nph, 2)))
 
-Pe_1qd = ket2dm(ket_e)
-Pg_1qd = ket2dm(ket_g)
-
-sm_1qd = ket_g * ket_e.dag()
-sp_1qd = sm_1qd.dag()
-
-# Operadores base
-b = destroy(Nph)
-nb = b.dag() * b
-Ib = qeye(Nph)
-Is = qeye(2)
-
-# =====================================================
-# OPERADORES EN ESPACIO TOTAL
-# =====================================================
-
-B = tensor(b, Is, Is)
-NB = tensor(nb, Is, Is)
-
-SM1 = tensor(Ib, sm_1qd, Is)
-SP1 = tensor(Ib, sp_1qd, Is)
-PE1 = tensor(Ib, Pe_1qd, Is)
-
-SM2 = tensor(Ib, Is, sm_1qd)
-SP2 = tensor(Ib, Is, sp_1qd)
-PE2 = tensor(Ib, Is, Pe_1qd)
-
-# =====================================================
+# =============================================================================
 # HAMILTONIANO
-# =====================================================
+# =============================================================================
+ne_total = pe1 + pe2
 
-H = (
-        omegab * NB
-        + Delta * (PE1 + PE2)
-        + lam * (PE1 + PE2) * (B + B.dag())
-        + Om * (SM1 + SP1 + SM2 + SP2)
-        + J * (SP1 * SM2 + SM1 * SP2)  # J = 0.5ωb (FUERTE)
-)
+H = (omegab * nb_sys
+     + Delta  * ne_total
+     + lam    * ne_total * (b_sys + b_sys.dag())
+     + Om     * (sm1 + sp1 + sm2 + sp2)
+     + J      * (sp1 * sm2 + sp2 * sm1))
 
-print("\nHamiltoniano construido con J = 0.5ωb ✓")
-
-# =====================================================
-# OPERADORES DE COLAPSO COLECTIVOS
-# =====================================================
-
-SM_bright = (SM1 + SM2).unit()
-PE_total = PE1 + PE2
-
+# =============================================================================
+# OPERADORES DE COLAPSO
+# =============================================================================
 c_ops = [
-    np.sqrt(kappa) * B,
-    np.sqrt(gamma) * SM_bright,
-    np.sqrt(gamma_phi / 2) * PE_total,
+    np.sqrt(kappa)     * b_sys,   # canal 0: emisión fonón
+    np.sqrt(gamma)     * sm1,     # canal 1: decaimiento QD₁
+    np.sqrt(gamma)     * sm2,     # canal 2: decaimiento QD₂
+    np.sqrt(gamma_phi) * pe1,     # canal 3: dephasing QD₁
+    np.sqrt(gamma_phi) * pe2,     # canal 4: dephasing QD₂
+]
+idx_cav = 0
+
+# =============================================================================
+# ESTADO INICIAL: |vv, 0⟩
+# =============================================================================
+psi0 = tensor(ket_v, ket_v, basis(Nph, 0))
+
+# =============================================================================
+# e_ops
+# =============================================================================
+e_ops = [
+    P0_vv,    # 0
+    P0_plus,  # 1
+    P1_vv,    # 2
+    P1_plus,  # 3
+    P2_vv,    # 4
+    P2_plus,  # 5
+    P_minus,  # 6
+    nb_sys,   # 7
+]
+e_labels = [
+    'P(vv,0)', 'P(Ψ+,0)', 'P(vv,1)', 'P(Ψ+,1)',
+    'P(vv,2)', 'P(Ψ+,2)', 'P(Ψ-)', '<n_b>',
 ]
 
-IDX_CAV = 0
+# =============================================================================
+# MCSOLVE o CARGA DE NPZ
+# =============================================================================
+if not RERUN:
+    seed  = 324680751
+    rng   = np.random.default_rng(seed)
+    seeds = [int(rng.integers(1e9)) for _ in range(ntraj)]
 
-print("Operadores colectivos (preservan simetría) ✓")
+    opts = {
+        "keep_runs_results": True,
+        "store_states": False,
+        "progress_bar": "text",
+        "nsteps": 200000,
+        "improved_sampling": True,
+    }
 
-psi0 = tensor(basis(Nph, 0), ket_g, ket_g)
+    print(f"\nLanzando mcsolve: {ntraj} trayectorias...")
+    res = mcsolve(H, psi0, tlist, c_ops, e_ops=e_ops, ntraj=ntraj,
+                  options=opts, seeds=seeds)
 
-# =====================================================
-# PROYECTORES EN BASE COLECTIVA
-# =====================================================
+    # Seleccionar trayectoria más activa
+    nj = np.zeros(ntraj, dtype=int)
+    for k in range(ntraj):
+        ct = np.array(res.col_times[k] if res.col_times[k] is not None else [])
+        cw = np.array(res.col_which[k] if res.col_which[k] is not None else [])
+        nj[k] = np.count_nonzero(cw == idx_cav)
 
-projectors = {}
-obs_keys = []
+    k_show = int(np.argmax(nj))
+    print(f"\nk_show={k_show}, cavity_jumps={int(nj[k_show])}, "
+          f"mean_jumps={np.mean(nj):.1f}, max_jumps={np.max(nj)}")
 
-for nph in range(6):  # 0,1,2,3,4,5 fonones
-    ket_n = basis(Nph, nph)
+    data = {label: res.expect[i][k_show] for i, label in enumerate(e_labels)}
 
-    # |n,gg⟩
-    key_gg = f"P{nph}_gg"
-    projectors[key_gg] = ket2dm(tensor(ket_n, ket_g, ket_g))
-    obs_keys.append(key_gg)
+    ct     = np.array(res.col_times[k_show] if res.col_times[k_show] is not None else [])
+    cw     = np.array(res.col_which[k_show] if res.col_which[k_show] is not None else [])
+    clicks = omegab * ct[cw == idx_cav]
 
-    # |n,S⟩ (brillante)
-    key_S = f"P{nph}_S"
-    ket_S = (tensor(ket_n, ket_e, ket_g) + tensor(ket_n, ket_g, ket_e)).unit()
-    projectors[key_S] = ket2dm(ket_S)
-    obs_keys.append(key_S)
+    export = {'time': x, 'clicks': clicks, 'k_show': k_show,
+              'cavity_jumps': int(nj[k_show]), 'mean_jumps': float(np.mean(nj))}
+    export.update({label: data[label] for label in e_labels})
+    np.savez('results/data/trayectoria_2qd_data.npz', **export)
+    print("✓ Datos exportados: trayectoria_2qd_data.npz")
 
-    # |n,A⟩ (oscuro)
-    key_A = f"P{nph}_A"
-    ket_A = (tensor(ket_n, ket_e, ket_g) - tensor(ket_n, ket_g, ket_e)).unit()
-    projectors[key_A] = ket2dm(ket_A)
-    obs_keys.append(key_A)
+else:
+    d      = np.load('results/data/trayectoria_2qd_data.npz', allow_pickle=True)
+    clicks = d['clicks']
+    data   = {label: d[label] for label in e_labels}
+    x      = d['time']
+    print(f"✓ Datos cargados: cavity_jumps={d['cavity_jumps']}, "
+          f"mean_jumps={d['mean_jumps']:.1f}")
 
-    # |n,ee⟩
-    key_ee = f"P{nph}_ee"
-    projectors[key_ee] = ket2dm(tensor(ket_n, ket_e, ket_e))
-    obs_keys.append(key_ee)
+# =============================================================================
+# RESUMEN NUMÉRICO
+# =============================================================================
+print(f"\n{'='*65}")
+print(f"  Clicks fonónicos: {len(clicks)}")
+print(f"  ⟨n̂_b⟩ promedio:   {np.mean(data['<n_b>']):.4e}")
+print(f"  P(vv,0) promedio:  {np.mean(data['P(vv,0)']):.4f}")
+print(f"  P(Ψ+,0) promedio:  {np.mean(data['P(Ψ+,0)']):.4e}")
+print(f"  P(Ψ+,2) promedio:  {np.mean(data['P(Ψ+,2)']):.4e}")
+print(f"  P(Ψ-)  promedio:   {np.mean(data['P(Ψ-)']):.4e}")
 
-e_ops = [projectors[k] for k in obs_keys]
+if len(clicks) > 1:
+    dt = np.diff(clicks)
+    print(f"\n  Inter-click times:")
+    print(f"    mean   = {np.mean(dt):.1f} ω_b⁻¹")
+    print(f"    min    = {np.min(dt):.1f} ω_b⁻¹")
+    print(f"    max    = {np.max(dt):.1f} ω_b⁻¹")
+    print(f"    median = {np.median(dt):.1f} ω_b⁻¹")
 
-print(f"Proyectores: {len(e_ops)} observables (n=0-5)")
+    bundle_window = 2.0 / kappa
+    bundles, cur = [], [clicks[0]]
+    for c in clicks[1:]:
+        if c - cur[-1] < bundle_window:
+            cur.append(c)
+        else:
+            bundles.append(cur); cur = [c]
+    bundles.append(cur)
+    sizes = [len(b) for b in bundles]
+    print(f"\n  Bundles (ventana {bundle_window:.0f} ω_b⁻¹): {len(bundles)} total")
+    for s in sorted(set(sizes)):
+        print(f"    {s}-fonón: {sizes.count(s)} ({100*sizes.count(s)/len(bundles):.1f}%)")
+print(f"{'='*65}")
 
-# =====================================================
-# SIMULACIÓN
-# =====================================================
+# =============================================================================
+# VISUALIZACIÓN
+# =============================================================================
+t_start = 5500.0
+t_end   = 8500.0
 
-opts = {
-    "keep_runs_results": True,
-    "store_states": False,
-    "progress_bar": "text",
-    "nsteps": 200000,
-    "improved_sampling": True,
-}
-
-print(f"\n{'CORRIENDO SIMULACIÓN':^70}")
-print("-" * 70)
-res = mcsolve(H, psi0, tlist, c_ops, e_ops=e_ops, ntraj=ntraj, options=opts)
-
-# =====================================================
-# ANÁLISIS
-# =====================================================
-
-nj_cav = np.zeros(ntraj, dtype=int)
-for k in range(ntraj):
-    ct = np.array(res.col_times[k] if res.col_times[k] is not None else [])
-    cw = np.array(res.col_which[k] if res.col_which[k] is not None else [])
-    nj_cav[k] = np.count_nonzero(cw == IDX_CAV)
-
-k_show = int(np.argmax(nj_cav))
-
-print("\n" + "=" * 70)
-print(f"{'RESULTADOS':^70}")
-print("=" * 70)
-print(f"  Trayectoria:     k = {k_show}")
-print(f"  Clicks:          {int(nj_cav[k_show])}")
-print(f"  Promedio:        {np.mean(nj_cav):.2f} clicks/trayectoria")
-print(f"  Máximo:          {int(np.max(nj_cav))}")
-print(f"  Tasa:            {np.mean(nj_cav) / x_max:.6f} clicks/ωb⁻¹")
-print("=" * 70)
-
-obs = {}
-for i, key in enumerate(obs_keys):
-    obs[key] = res.expect[i][k_show]
-
-ct_show = np.array(res.col_times[k_show] if res.col_times[k_show] is not None else [])
-cw_show = np.array(res.col_which[k_show] if res.col_which[k_show] is not None else [])
-clicks = omegab * ct_show[cw_show == IDX_CAV]
-
-# Verificación simetría
-P_A_total = sum(obs[f"P{n}_A"] for n in range(6))
-P_S_total = sum(obs[f"P{n}_S"] for n in range(6))
-
-print(f"\nVerificación simetría:")
-print(f"  P_oscuro_max:     {np.max(P_A_total):.8f}  (debe ser ~0)")
-print(f"  P_brillante_max:  {np.max(P_S_total):.4f}")
-
-# =====================================================
-# GRÁFICAS
-# =====================================================
+mask        = (x >= t_start) & (x <= t_end)
+x_plot      = x[mask] - t_start
+clicks_plot = clicks[(clicks >= t_start) & (clicks <= t_end)] - t_start
 
 eps = 1e-12
 
-fig, axes = plt.subplots(4, 1, figsize=(13, 10), sharex=True)
+fig, axes = plt.subplots(3, 1, figsize=(6.496, 3.90), sharex=True)
 
-# Panel (a): n=0
-axes[0].plot(x, obs["P0_gg"], lw=1.8, label=r"$P_{0,gg}$", color="C0")
-axes[0].plot(x, obs["P0_S"], lw=1.8, label=r"$P_{0,S}$ (brillante)", color="C1")
-axes[0].plot(x, obs["P0_A"], lw=0.8, label=r"$P_{0,A}$ (oscuro)",
-             color="red", ls="--", alpha=0.4)
-axes[0].set_ylim(-0.02, 1.02)
-axes[0].set_ylabel("Probabilidad", fontsize=11)
-axes[0].legend(loc="upper right", fontsize=9)
-axes[0].grid(True, alpha=0.25)
-axes[0].set_title(
-    f"n=3 FONONES: J/ωb={J_omegab}, Δ/ωb={Delta_over_omegab} (resonancia) "
-    f"— Traj k={k_show} ({int(nj_cav[k_show])} clicks)",
-    fontsize=11, fontweight='bold', pad=10
+# Panel (a): n_fock = 0
+axes[0].plot(x_plot, data['P(vv,0)'][mask],  lw=0.9, color='black', label=r'$P_{0,vv}$')
+axes[0].plot(x_plot, data['P(Ψ+,0)'][mask],  lw=0.9, color='red',   label=r'$P_{0,\Psi_+}$')
+axes[0].set_ylim(0, 1)
+axes[0].set_ylabel(r'Poblaci\'on', fontsize=12)
+axes[0].set_yticks([0, 0.5, 1])
+axes[0].set_yticklabels([r'$0$', r'$0.5$', r'$1$'])
+axes[0].tick_params(labelsize=12)
+axes[0].legend(loc='upper right', fontsize=10, frameon=False)
+axes[0].set_facecolor('white')
+axes[0].grid(False)
+axes[0].text(0.03, 0.85, r'(a)', transform=axes[0].transAxes,
+             fontsize=10, fontweight='bold', ha='left', va='top')
+
+# Panel (b): n_fock = 1
+axes[1].semilogy(x_plot, data['P(Ψ+,1)'][mask] + eps, lw=0.9, color='green',
+                 label=r'$P_{1,\Psi_+}$')
+axes[1].semilogy(x_plot, data['P(vv,1)'][mask]  + eps, lw=0.9, color='black',
+                 label=r'$P_{1,vv}$')
+axes[1].set_ylim(1e-8, 1e1)
+axes[1].set_ylabel(r'Poblaci\'on', fontsize=12)
+axes[1].set_yticks([1e-6, 1e-3, 1e0])
+axes[1].set_yticklabels([r'$10^{-6}$', r'$10^{-3}$', r'$10^{0}$'])
+axes[1].tick_params(labelsize=12)
+axes[1].legend(loc='upper right', fontsize=10, frameon=False)
+axes[1].set_facecolor('white')
+axes[1].grid(False)
+axes[1].text(0.03, 0.85, r'(b)', transform=axes[1].transAxes,
+             fontsize=10, fontweight='bold', ha='left', va='top')
+
+# Panel (c): n_fock = 2 + clicks
+axes[2].semilogy(x_plot, data['P(Ψ+,2)'][mask] + eps, lw=0.9, color='blue',
+                 label=r'$P_{2,\Psi_+}$')
+axes[2].semilogy(x_plot, data['P(vv,2)'][mask]  + eps, lw=0.9, color='black',
+                 label=r'$P_{2,vv}$')
+for xc in clicks_plot:
+    axes[2].axvline(xc, lw=0.9, ls='--', alpha=0.8, color='gray')
+axes[2].set_ylim(1e-11, 1e1)
+axes[2].set_ylabel(r'Poblaci\'on', fontsize=12)
+axes[2].set_yticks([1e-10, 1e-5, 1e0])
+axes[2].set_yticklabels([r'$10^{-10}$', r'$10^{-5}$', r'$10^{0}$'])
+axes[2].set_xlabel(r'$\omega_b\,t$', fontsize=12)
+axes[2].set_xlim(0, 3000)
+axes[2].set_xticks([0, 1000, 2000, 3000])
+axes[2].tick_params(labelsize=12)
+axes[2].legend(loc='upper right', fontsize=10, frameon=False)
+axes[2].set_facecolor('white')
+axes[2].grid(False)
+axes[2].text(0.03, 0.85, r'(c)', transform=axes[2].transAxes,
+             fontsize=10, fontweight='bold', ha='left', va='top')
+
+fig.subplots_adjust(
+    left=0.17,
+    right=0.94,
+    top=0.94,
+    bottom=0.10,
+    hspace=0.10,
 )
 
-# Panel (b): n=1
-axes[1].semilogy(x, obs["P1_S"] + eps, lw=1.8,
-                 label=r"$P_{1,S}$ (brillante)", color="C1")
-axes[1].semilogy(x, obs["P1_gg"] + eps, lw=1.2,
-                 label=r"$P_{1,gg}$", color="C0", alpha=0.7)
-axes[1].set_ylim(1e-10, 1e0)
-axes[1].set_ylabel("Prob. (log)", fontsize=11)
-axes[1].legend(loc="upper right", fontsize=9)
-axes[1].grid(True, which="both", alpha=0.25)
-
-# Panel (c): n=2
-axes[2].semilogy(x, obs["P2_S"] + eps, lw=1.8,
-                 label=r"$P_{2,S}$ (brillante)", color="C1")
-axes[2].semilogy(x, obs["P2_gg"] + eps, lw=1.2,
-                 label=r"$P_{2,gg}$", color="C0", alpha=0.7)
-axes[2].set_ylim(1e-10, 1e0)
-axes[2].set_ylabel("Prob. (log)", fontsize=11)
-axes[2].legend(loc="upper right", fontsize=9)
-axes[2].grid(True, which="both", alpha=0.25)
-
-# Panel (d): n=3 ← CLAVE
-axes[3].semilogy(x, obs["P3_S"] + eps, lw=2.2,
-                 label=r"$\mathbf{P_{3,S}}$ (brillante) ← ESTADO CLAVE",
-                 color="C1")
-axes[3].semilogy(x, obs["P3_gg"] + eps, lw=1.2,
-                 label=r"$P_{3,gg}$", color="C0", alpha=0.7)
-for xc in clicks:
-    axes[3].axvline(xc, lw=0.6, alpha=0.25, color="red")
-axes[3].set_ylim(1e-10, 1e0)
-axes[3].set_xlabel(r"$\omega_b t$", fontsize=12)
-axes[3].set_ylabel("Prob. (log)", fontsize=11)
-axes[3].legend(loc="upper right", fontsize=9)
-axes[3].grid(True, which="both", alpha=0.25)
-
-fig.tight_layout()
-#plt.savefig("traj_2QD_n3_J05_resonancia.png", dpi=200)
-#print(f"\n✓ Guardado: traj_2QD_n3_J05_resonancia.png")
-
-plt.show()
-
-print("\n" + "=" * 70)
-print("  SIMULACIÓN COMPLETADA")
-print(f"  Régimen: n=3 fonones, J=0.5ωb, Δ=-3.5ωb (resonancia exacta)")
-print("=" * 70)
+plt.savefig("results/oficial/trayectoria_2qd.pdf", bbox_inches="tight")
+plt.savefig("results/oficial/pgf/trayectoria_2qd.pgf")
+plt.close()
+print("Imágenes guardadas con éxito.")
