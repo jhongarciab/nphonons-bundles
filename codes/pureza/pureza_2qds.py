@@ -44,11 +44,11 @@ Entradas
 
 Salidas
 - Figura heatmap (PDF + PGF) en carpeta oficial:
-  codes/figs/oficial/purity_2qd_heatmap.pdf
-  codes/figs/oficial/purity_2qd_heatmap.pgf
+  codes/results/oficial/purity_2qd_heatmap.pdf
+  codes/results/oficial/purity_2qd_heatmap.pgf
 - Figura de cortes 1D (PDF + PGF) en carpeta oficial:
-  codes/figs/oficial/purity_2qd_cuts.pdf
-  codes/figs/oficial/purity_2qd_cuts.pgf
+  codes/results/oficial/purity_2qd_cuts.pdf
+  codes/results/oficial/purity_2qd_cuts.pgf
 
 Convención
 - Este script exporta solo PDF/PGF.
@@ -83,16 +83,16 @@ Ncut_full = 14        # dim = 4·14 = 56
 # =============================================================================
 # GRILLA 2D: λ/ω_b × κ/ω_b
 # =============================================================================
-n_lam   = 10          # Producción: 50-60
-n_kappa = 10
+n_lam   = 4          # Producción: 50-60
+n_kappa = 4
 
-lambda_arr = np.linspace(0.02, 0.14, n_lam)
-kappa_arr  = np.logspace(-3, 0, n_kappa)
+lambda_arr = np.linspace(0.04, 0.28, n_lam)
+kappa_arr  = np.logspace(-5, 0, n_kappa)
 
-n_bundle_list = [4, 5]
+n_bundle_list = [2, 3, 4]
 
 # Puntos en el barrido de Δ para optimización
-n_Delta_opt = 17
+n_Delta_opt = 10
 
 
 # =============================================================================
@@ -442,6 +442,21 @@ for n_b in n_bundle_list:
         'delta': delta_map,
     }
 # =============================================================================
+# GUARDAR DATOS
+# =============================================================================
+np.savez('results/data/pureza_2qd_data.npz',
+         lambda_arr=lambda_arr,
+         kappa_arr=kappa_arr,
+         n_bundle_list=np.array(n_bundle_list),
+         omega_b=omega_b, Omega=Omega, gamma=gamma,
+         gamma_phi=gamma_phi, J=J, Ncut_full=Ncut_full,
+         **{f'munoz_n{n}': all_results[n]['munoz'] for n in n_bundle_list},
+         **{f'nbar_n{n}': all_results[n]['nbar'] for n in n_bundle_list},
+         **{f'delta_n{n}': all_results[n]['delta'] for n in n_bundle_list},
+         **{f'fock_n{n}': all_results[n]['fock'] for n in n_bundle_list},
+         **{f'Tn_n{n}': all_results[n]['Tn'] for n in n_bundle_list})
+print("✓ Datos guardados: pureza_2qd_data.npz")
+# =============================================================================
 # VISUALIZACIÓN — Heatmaps 2D
 # =============================================================================
 import matplotlib.pyplot as plt
@@ -480,10 +495,10 @@ for col, n_b in enumerate(n_bundle_list):
             bbox=dict(facecolor='white', edgecolor='none', alpha=0.7))
 
 plt.tight_layout()
-plt.savefig(f"pureza{n_bundle_list}.png", dpi=300)
-#plt.savefig("./figs/oficial/purity_2qd_heatmap.pdf", bbox_inches='tight')
-#plt.savefig("./figs/oficial/pgf/purity_2qd_heatmap.pgf")
-#print("\n✓ Heatmap guardado: ./figs/oficial/purity_2qd_heatmap.pdf + ./figs/oficial/pgf/purity_2qd_heatmap.pgf")
+plt.savefig("results/pruebas/pureza_2qds.png", dpi=300)
+plt.savefig("results/oficial/purity_2qd_heatmap.pdf", bbox_inches='tight')
+plt.savefig("results/oficial/pgf/purity_2qd_heatmap.pgf")
+#print("\n✓ Heatmap guardado: results/oficial/purity_2qd_heatmap.pdf + results/oficial/pgf/purity_2qd_heatmap.pgf")
 
 
 # =============================================================================
@@ -533,9 +548,9 @@ ax_d.tick_params(labelsize=12)
 ax_d.axhline(0.95, ls=':', color='gray', alpha=0.5)
 
 #plt.tight_layout()
-#plt.savefig("./figs/oficial/purity_2qd_cuts.pdf", bbox_inches='tight')
-#plt.savefig("./figs/oficial/pgf/purity_2qd_cuts.pgf")
-#print("✓ Cortes guardados: ./figs/oficial/purity_2qd_cuts.pdf + ./figs/oficial/pgf/purity_2qd_cuts.pgf")
+plt.savefig("results/oficial/purity_2qd_cuts.pdf", bbox_inches='tight')
+plt.savefig("results/oficial/pgf/purity_2qd_cuts.pgf")
+#print("✓ Cortes guardados: results/oficial/purity_2qd_cuts.pdf + results/oficial/pgf/purity_2qd_cuts.pgf")
 
 
 # =============================================================================
@@ -576,3 +591,40 @@ run_diagnostico(lam_test=0.14, kap_test=0.003)
 print(f"\n{'='*65}")
 print("  CÁLCULO COMPLETO")
 print(f"{'='*65}")
+
+# =============================================================================
+# PUNTO CANÓNICO — argmax de π_n en región sweet spot
+# =============================================================================
+from math import factorial
+
+print(f"\n{'='*65}")
+print("  PUNTOS CANÓNICOS")
+print(f"{'='*65}")
+
+for n_b in n_bundle_list:
+    Pi    = all_results[n_b]['munoz']   # shape (n_lam, n_kappa)
+    Delta = all_results[n_b]['delta']
+
+    # Máscara: excluir κ < γ (viola jerarquía) y NaNs
+    mask = np.ones((n_lam, n_kappa), dtype=bool)
+    for i in range(n_lam):
+        for j, kap in enumerate(kappa_arr):
+            if kap < gamma or np.isnan(Pi[i, j]):
+                mask[i, j] = False
+
+    Pi_masked = np.where(mask, Pi, 0.0)
+    idx = np.unravel_index(np.argmax(Pi_masked), Pi_masked.shape)
+
+    lam_c   = lambda_arr[idx[0]]
+    kap_c   = kappa_arr[idx[1]]
+    Pi_c    = Pi[idx]
+    Delta_c = Delta[idx]
+    Oeff    = np.sqrt(2) * lam_c**n_b * Omega / np.sqrt(factorial(n_b))
+
+    print(f"\n  n={n_b}:")
+    print(f"    λ/ω_b   = {lam_c:.4f}")
+    print(f"    κ/ω_b   = {kap_c:.2e}")
+    print(f"    Δ/ω_b   = {Delta_c:.4f}")
+    print(f"    π_{n_b}  = {Pi_c:.4f}")
+    print(f"    Ω_eff   = {Oeff:.2e}")
+    print(f"    κ/Ω_eff = {kap_c/Oeff:.1f}  (sweet spot ~10)")
