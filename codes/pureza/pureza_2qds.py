@@ -494,7 +494,7 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import Normalize
 
 n_cols = len(n_bundle_list)
-fig, axes = plt.subplots(1, n_cols, figsize=(6.30, 4.00), sharey=True)
+fig, axes = plt.subplots(1, n_cols, figsize=(6.30, 3.35), sharey=True)
 if n_cols == 1:
     axes = [axes]
 
@@ -517,6 +517,7 @@ for col, n_b in enumerate(n_bundle_list):
 
     ax.set_rasterization_zorder(0)
     ax.set_yscale('log')
+    ax.set_ylim(1e-3, 1e0)
     if col == 1:
         ax.set_xlabel(r'$\lambda/\omega_b$', fontsize=12)
     else:
