@@ -15,17 +15,29 @@ Uso:
 Autor: Jhon S. García B. — Tesis UQ 2025
 """
 
+import matplotlib
+matplotlib.use("pgf")
+
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import TwoSlopeNorm
+from matplotlib import rcParams
 
-# ─── Flag de control ─────────────────────────────────────────────
-COMPUTE_REAL = True   # ← Cambiar a True para lanzar mesolve
-# ─────────────────────────────────────────────────────────────────
+rcParams.update({
+    "pgf.texsystem": "pdflatex",
+    "pgf.rcfonts": False,
+    "font.family": "serif",
+    "font.size": 12,
+})
 
-# =================================================================
+# -----------------------------------------------------------------------------
+# Configuración general
+# -----------------------------------------------------------------------------
+RERUN = True  # False para recalcular, True para cargar datos guardados
+
+# -----------------------------------------------------------------------------
 # 1. PARÁMETROS DE GRILLA (idénticos al cómputo real)
-# =================================================================
+# -----------------------------------------------------------------------------
 omega_b   = 1.0
 Omega     = 0.2
 lam       = 0.1
@@ -59,10 +71,10 @@ for kap in kappa_list:
     }
 
 
-# =================================================================
+# -----------------------------------------------------------------------------
 # 2. DATOS: dummy o reales
-# =================================================================
-if COMPUTE_REAL:
+# -----------------------------------------------------------------------------
+if not RERUN:
     # ── Importar QuTiP solo cuando se necesita ──────────────────
     import qutip as qt
     import time
@@ -117,32 +129,34 @@ if COMPUTE_REAL:
         p['g2_map'] = g2_map
 
     # Guardar para no recalcular
-    np.savez('fig_S6_data.npz',
+    np.savez('results/data/fig_S6_data.npz',
              gamma_arr=gamma_arr,
              **{f'g2_kap{k}': panels[k]['g2_map'] for k in kappa_list},
              **{f'tau_kap{k}': panels[k]['tau_arr'] for k in kappa_list})
-    print("✓ Datos guardados en fig_S6_data.npz")
+    print("✓ Datos guardados en results/data/fig_S6_data.npz")
 
 else:
-    # ── Datos dummy: decaimiento exponencial + ruido ────────────
-    print("⚠ Usando datos DUMMY para validar la grilla 3D")
+    data = np.load('results/data/fig_S6_data.npz')
+    gamma_arr = data['gamma_arr']
+
+    panels = {}
     for kap in kappa_list:
-        p = panels[kap]
-        tau = p['tau_arr']
-        g2_map = np.zeros((n_gamma, n_tau))
+        tau_arr = data[f'tau_kap{kap}']
+        TAU, GAMMA = np.meshgrid(tau_arr, gamma_arr)
+        LOG_GAMMA = np.log10(GAMMA)
+        panels[kap] = {
+            'tau_arr': tau_arr,
+            'TAU': TAU,
+            'GAMMA': GAMMA,
+            'LOG_GAMMA': LOG_GAMMA,
+            'g2_map': data[f'g2_kap{kap}'],
+        }
 
-        for i, gam in enumerate(gamma_arr):
-            rate = max(kap, gam)
-            peak = 10**(2.0 - 2.0 * i / n_gamma)
-            g2_map[i, :] = 1.0 + (peak - 1.0) * np.exp(-rate * tau)
 
-        p['g2_map'] = g2_map
-
-
-# =================================================================
+# -----------------------------------------------------------------------------
 # 3. VISUALIZACIÓN 3D
-# =================================================================
-fig = plt.figure(figsize=(14, 6))
+# -----------------------------------------------------------------------------
+fig = plt.figure(figsize=(6.17, 3.10))
 
 for col, kap in enumerate(kappa_list):
     ax = fig.add_subplot(1, 2, col + 1, projection='3d')
@@ -183,18 +197,18 @@ for col, kap in enumerate(kappa_list):
     z_floor = np.full_like(x_line, -2.5)
 
     # ── Eje X: γ/ωb (frente, log) ──────────────────────────────
-    ax.set_xlabel(r'$\gamma/\omega_b$', fontsize=12, labelpad=12)
+    ax.set_xlabel(r'$\gamma/\omega_b$', fontsize=12, labelpad=10)
     x_ticks = [0, -1, -2, -3, -4, -5]
     ax.set_xticks(x_ticks)
-    ax.set_xticklabels([r'$10^{%d}$' % v for v in x_ticks], fontsize=8)
+    ax.set_xticklabels([r'$10^{%d}$' % v for v in x_ticks], fontsize=10)
     ax.set_xlim(np.log10(gamma_arr[-1]), np.log10(gamma_arr[0]))
 
     # ── Eje Y: ωb·τ (fondo) ────────────────────────────────────
-    ax.set_ylabel(r'$\omega_b \tau\;(\times 10^3)$', fontsize=12, labelpad=12)
+    ax.set_ylabel(r'$\omega_b \tau\;(\times 10^3)$', fontsize=12, labelpad=10)
     y_tick_vals = [0, 2000, 4000, 6000, 8000, 10000]
     ax.set_yticks(y_tick_vals)
     ax.set_yticklabels([r'$0$', r'$2$', r'$4$', r'$6$', r'$8$', r'$10$'],
-                       fontsize=8)
+                       fontsize=10)
     ax.set_ylim(0, p['tau_arr'][-1])
 
     # ── Eje Z: ticks a la IZQUIERDA + label manual ─────────────
@@ -205,7 +219,7 @@ for col, kap in enumerate(kappa_list):
     ax.zaxis._axinfo['juggled'] = (1, 2, 0)
     # Label más separado de los ticks (x=-0.12)
     ax.text2D(-0.12, 0.50, r'$\log_{10}\,g_2^{(2)}(\tau)$',
-              transform=ax.transAxes, fontsize=11,
+              transform=ax.transAxes, fontsize=10,
               rotation=90, va='center', ha='center')
 
     # ── Vista ───────────────────────────────────────────────────
@@ -214,16 +228,17 @@ for col, kap in enumerate(kappa_list):
 
     # ── Título ──────────────────────────────────────────────────
     label = '(a)' if col == 0 else '(b)'
-    ax.set_title(rf'{label}  $\kappa/\omega_b = {kap}$', fontsize=13, pad=10)
+    ax.set_title(rf'{label}  $\kappa/\omega_b = {kap}$', fontsize=12, pad=8)
 
     # ── Colorbar con solo ticks -1, 0, 1 (sin label) ───────────
     sm_cb = plt.cm.ScalarMappable(cmap='jet', norm=norm)
     sm_cb.set_array([])
     cbar = fig.colorbar(sm_cb, ax=ax, shrink=0.55, pad=0.08, aspect=15)
     cbar.set_ticks([-1, 0, 1])
+    cbar.ax.tick_params(labelsize=10)
 
-fig.subplots_adjust(wspace=0.25)
-plt.savefig("fig_S6_scaffold.png", dpi=150, bbox_inches='tight',
-            transparent=False)
-print("✓ Scaffold guardado: fig_S6_scaffold.png")
-plt.show()
+fig.subplots_adjust(left=0.04, right=0.98, top=0.92, bottom=0.08, wspace=0.16)
+plt.savefig("results/oficial/fig_S6_scaffold.pdf", bbox_inches='tight')
+plt.savefig("results/oficial/pgf/fig_S6_scaffold.pgf")
+print("✓ Figura guardada: results/oficial/fig_S6_scaffold.pdf")
+plt.close()
