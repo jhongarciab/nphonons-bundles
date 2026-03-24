@@ -60,6 +60,7 @@ import numpy as np
 import qutip as qt
 from math import factorial
 import time
+from matplotlib.colors import LinearSegmentedColormap
 
 rcParams.update({
     "pgf.texsystem": "pdflatex",
@@ -68,9 +69,11 @@ rcParams.update({
     "font.size": 12,
 })
 
-# =============================================================================
+# -----------------------------------------------------------------------------
 # PARÁMETROS — 2QD producción
-# =============================================================================
+# -----------------------------------------------------------------------------
+RERUN = True  # False para recalcular, True para cargar datos guardados
+
 omega_b   = 1.0
 Omega     = 0.2       # Ω/ω_b
 gamma     = 0.0002    # γ/ω_b   (decaimiento espontáneo)
@@ -80,9 +83,9 @@ J         = 0.5       # J/ω_b   (acoplamiento de Förster)
 # Ncut del modelo completo — debe ser > max(n_bundle) + margen
 Ncut_full = 14        # dim = 4·14 = 56
 
-# =============================================================================
+# -----------------------------------------------------------------------------
 # GRILLA 2D: λ/ω_b × κ/ω_b
-# =============================================================================
+# -----------------------------------------------------------------------------
 n_lam   = 4          # Producción: 50-60
 n_kappa = 4
 
@@ -95,9 +98,9 @@ n_bundle_list = [2, 3, 4]
 n_Delta_opt = 10
 
 
-# =============================================================================
+# -----------------------------------------------------------------------------
 # CONSTRUCCIÓN DE OPERADORES — QD₁ ⊗ QD₂ ⊗ Fock(Nc)
-# =============================================================================
+# -----------------------------------------------------------------------------
 def build_2qd_operators(Nc):
     """
     Construye todos los operadores del sistema 2QD+fonón para un
@@ -163,9 +166,9 @@ bdagn_bn_full = {
 ops_trunc = {n: build_2qd_operators(n) for n in n_bundle_list}
 
 
-# =============================================================================
+# -----------------------------------------------------------------------------
 # UTILIDADES
-# =============================================================================
+# -----------------------------------------------------------------------------
 def validate_rho(rho, tol=1e-8):
     """Verifica traza, hermiticidad y positividad de ρ."""
     if abs(rho.tr() - 1.0) > 1e-6:
@@ -247,9 +250,9 @@ def resonance_estimate_2qd(n_bundle, lam):
     return Delta_III + Lamb_shift - J
 
 
-# =============================================================================
+# -----------------------------------------------------------------------------
 # CÁLCULO DE PUREZA EN UN PUNTO (Δ, λ, κ) — DESCOMPOSICIÓN DE MUÑOZ
-# =============================================================================
+# -----------------------------------------------------------------------------
 def compute_purity_at_Delta_2qd(lam, kappa, Delta, n_bundle):
     """
     Calcula π_n en un (λ, κ, Δ) dado usando la descomposición de Muñoz.
@@ -297,9 +300,9 @@ def compute_purity_at_Delta_2qd(lam, kappa, Delta, n_bundle):
     return purity, n_a_full, n_a_trunc, rho_f
 
 
-# =============================================================================
+# -----------------------------------------------------------------------------
 # OPTIMIZACIÓN SOBRE Δ PARA UN PUNTO (λ, κ)
-# =============================================================================
+# -----------------------------------------------------------------------------
 def compute_optimized_2qd(lam, kappa, n_bundle):
     """
     Para un punto (λ, κ) y un orden n_bundle, encuentra el Δ que
@@ -377,185 +380,271 @@ def compute_optimized_2qd(lam, kappa, n_bundle):
     return best_result
 
 
-# =============================================================================
+# -----------------------------------------------------------------------------
 # BARRIDO PRINCIPAL 2D: λ × κ
-# =============================================================================
+# -----------------------------------------------------------------------------
 all_results = {}
 
-for n_b in n_bundle_list:
+if not RERUN:
 
-    # Ncut del truncado correcto para este n_b
-    Nc_t = n_b   # Fock(n_b) → estados |0⟩ ... |n_b-1⟩
+    for n_b in n_bundle_list:
 
-    print(f"\n{'='*65}")
-    print(f"  Π_{n_b} — 2QD (Förster J={J})")
-    print(f"  Resonancia Régimen I: Δ = -{n_b}·ω_b - J = {-n_b*omega_b - J:.4f}")
-    print(f"  Grilla: {n_lam}×{n_kappa} = {n_lam*n_kappa} puntos")
-    print(f"  Δ scan: {n_Delta_opt} pts/punto, ventana ±0.20")
-    print(f"  Ncut_full={Ncut_full} (dim={4*Ncut_full})")
-    print(f"  Ncut_trunc={Nc_t} (Fock(n_b), dim={4*Nc_t})  ← correcto para n={n_b}")
-    print(f"  Ω={Omega}, λ∈[{lambda_arr[0]:.2f},{lambda_arr[-1]:.2f}]")
-    print(f"  γ={gamma}, γ_φ={gamma_phi}, κ∈[{kappa_arr[0]:.1e},{kappa_arr[-1]:.1e}]")
-    print(f"{'='*65}")
+        # Ncut del truncado correcto para este n_b
+        Nc_t = n_b   # Fock(n_b) → estados |0⟩ ... |n_b-1⟩
 
-    pm_map    = np.full((n_lam, n_kappa), np.nan)
-    pf_map    = np.full((n_lam, n_kappa), np.nan)
-    tn_map    = np.full((n_lam, n_kappa), np.nan)
-    nb_map    = np.full((n_lam, n_kappa), np.nan)
-    delta_map = np.full((n_lam, n_kappa), np.nan)
+        print(f"\n{'='*65}")
+        print(f"  Π_{n_b} — 2QD (Förster J={J})")
+        print(f"  Resonancia Régimen I: Δ = -{n_b}·ω_b - J = {-n_b*omega_b - J:.4f}")
+        print(f"  Grilla: {n_lam}×{n_kappa} = {n_lam*n_kappa} puntos")
+        print(f"  Δ scan: {n_Delta_opt} pts/punto, ventana ±0.20")
+        print(f"  Ncut_full={Ncut_full} (dim={4*Ncut_full})")
+        print(f"  Ncut_trunc={Nc_t} (Fock(n_b), dim={4*Nc_t})  ← correcto para n={n_b}")
+        print(f"  Ω={Omega}, λ∈[{lambda_arr[0]:.2f},{lambda_arr[-1]:.2f}]")
+        print(f"  γ={gamma}, γ_φ={gamma_phi}, κ∈[{kappa_arr[0]:.1e},{kappa_arr[-1]:.1e}]")
+        print(f"{'='*65}")
 
-    t0    = time.time()
-    total = n_lam * n_kappa
-    count = 0
+        pm_map    = np.full((n_lam, n_kappa), np.nan)
+        pf_map    = np.full((n_lam, n_kappa), np.nan)
+        tn_map    = np.full((n_lam, n_kappa), np.nan)
+        nb_map    = np.full((n_lam, n_kappa), np.nan)
+        delta_map = np.full((n_lam, n_kappa), np.nan)
 
-    for i, lam in enumerate(lambda_arr):
-        for j, kap in enumerate(kappa_arr):
+        t0    = time.time()
+        total = n_lam * n_kappa
+        count = 0
 
-            res = compute_optimized_2qd(lam, kap, n_b)
-            count += 1
+        for i, lam in enumerate(lambda_arr):
+            for j, kap in enumerate(kappa_arr):
 
-            if res is not None:
-                pm_map[i, j]    = res['purity_munoz']
-                pf_map[i, j]    = res['purity_fock']
-                tn_map[i, j]    = res['Tn']
-                nb_map[i, j]    = res['nbar']
-                delta_map[i, j] = res['Delta_opt']
+                res = compute_optimized_2qd(lam, kap, n_b)
+                count += 1
 
-            if count % 25 == 0 or count == total:
-                elapsed = time.time() - t0
-                rate    = count / elapsed if elapsed > 0 else 0
-                eta     = (total - count) / rate if rate > 0 else 0
-                pv = pm_map[i, j]    if not np.isnan(pm_map[i, j])    else -1.0
-                dv = delta_map[i, j] if not np.isnan(delta_map[i, j]) else 0.0
-                print(f"  [{count:5d}/{total}]  λ={lam:.3f}  κ={kap:.1e}  "
-                      f"π_{n_b}={pv:.4f}  Δ_opt={dv:.4f}  "
-                      f"({elapsed:.0f}s, ETA ~{eta:.0f}s)")
+                if res is not None:
+                    pm_map[i, j]    = res['purity_munoz']
+                    pf_map[i, j]    = res['purity_fock']
+                    tn_map[i, j]    = res['Tn']
+                    nb_map[i, j]    = res['nbar']
+                    delta_map[i, j] = res['Delta_opt']
 
-    elapsed_total = time.time() - t0
-    print(f"\n  ✓ Π_{n_b} completado en {elapsed_total:.1f}s")
+                if count % 25 == 0 or count == total:
+                    elapsed = time.time() - t0
+                    rate    = count / elapsed if elapsed > 0 else 0
+                    eta     = (total - count) / rate if rate > 0 else 0
+                    pv = pm_map[i, j]    if not np.isnan(pm_map[i, j])    else -1.0
+                    dv = delta_map[i, j] if not np.isnan(delta_map[i, j]) else 0.0
+                    print(f"  [{count:5d}/{total}]  λ={lam:.3f}  κ={kap:.1e}  "
+                          f"π_{n_b}={pv:.4f}  Δ_opt={dv:.4f}  "
+                          f"({elapsed:.0f}s, ETA ~{eta:.0f}s)")
 
-    all_results[n_b] = {
-        'munoz': pm_map,
-        'fock':  pf_map,
-        'Tn':    tn_map,
-        'nbar':  nb_map,
-        'delta': delta_map,
-    }
-# =============================================================================
-# GUARDAR DATOS
-# =============================================================================
-np.savez('results/data/pureza_2qd_data.npz',
-         lambda_arr=lambda_arr,
-         kappa_arr=kappa_arr,
-         n_bundle_list=np.array(n_bundle_list),
-         omega_b=omega_b, Omega=Omega, gamma=gamma,
-         gamma_phi=gamma_phi, J=J, Ncut_full=Ncut_full,
-         **{f'munoz_n{n}': all_results[n]['munoz'] for n in n_bundle_list},
-         **{f'nbar_n{n}': all_results[n]['nbar'] for n in n_bundle_list},
-         **{f'delta_n{n}': all_results[n]['delta'] for n in n_bundle_list},
-         **{f'fock_n{n}': all_results[n]['fock'] for n in n_bundle_list},
-         **{f'Tn_n{n}': all_results[n]['Tn'] for n in n_bundle_list})
-print("✓ Datos guardados: pureza_2qd_data.npz")
-# =============================================================================
+        elapsed_total = time.time() - t0
+        print(f"\n  ✓ Π_{n_b} completado en {elapsed_total:.1f}s")
+
+        all_results[n_b] = {
+            'munoz': pm_map,
+            'fock':  pf_map,
+            'Tn':    tn_map,
+            'nbar':  nb_map,
+            'delta': delta_map,
+        }
+
+    # -----------------------------------------------------------------------------
+    # GUARDAR DATOS
+    # -----------------------------------------------------------------------------
+    np.savez('results/data/pureza_2qd_data.npz',
+             lambda_arr=lambda_arr,
+             kappa_arr=kappa_arr,
+             n_bundle_list=np.array(n_bundle_list),
+             omega_b=omega_b, Omega=Omega, gamma=gamma,
+             gamma_phi=gamma_phi, J=J, Ncut_full=Ncut_full,
+             **{f'munoz_n{n}': all_results[n]['munoz'] for n in n_bundle_list},
+             **{f'nbar_n{n}': all_results[n]['nbar'] for n in n_bundle_list},
+             **{f'delta_n{n}': all_results[n]['delta'] for n in n_bundle_list},
+             **{f'fock_n{n}': all_results[n]['fock'] for n in n_bundle_list},
+             **{f'Tn_n{n}': all_results[n]['Tn'] for n in n_bundle_list})
+    print("✓ Datos guardados: results/data/pureza_2qd_data.npz")
+
+else:
+    data = np.load('results/data/pureza_2qd_data.npz')
+    lambda_arr = data['lambda_arr']
+    kappa_arr = data['kappa_arr']
+    n_lam = len(lambda_arr)
+    n_kappa = len(kappa_arr)
+    n_bundle_list = list(data['n_bundle_list'])
+    omega_b = data['omega_b'].item()
+    Omega = data['Omega'].item()
+    gamma = data['gamma'].item()
+    gamma_phi = data['gamma_phi'].item()
+    J = data['J'].item()
+    Ncut_full = int(data['Ncut_full'])
+
+    all_results = {}
+    for n_b in n_bundle_list:
+        n_b = int(n_b)
+        all_results[n_b] = {
+            'munoz': data[f'munoz_n{n_b}'],
+            'fock': data[f'fock_n{n_b}'],
+            'Tn': data[f'Tn_n{n_b}'],
+            'nbar': data[f'nbar_n{n_b}'],
+            'delta': data[f'delta_n{n_b}'],
+        }
+# -----------------------------------------------------------------------------
 # VISUALIZACIÓN — Heatmaps 2D
-# =============================================================================
+# -----------------------------------------------------------------------------
 import matplotlib.pyplot as plt
 from matplotlib.colors import Normalize
 
 n_cols = len(n_bundle_list)
-fig, axes = plt.subplots(1, n_cols, figsize=(6*n_cols, 5))
-axes = axes.reshape(1, n_cols)
+fig, axes = plt.subplots(1, n_cols, figsize=(6.30, 4.00), sharey=True)
+if n_cols == 1:
+    axes = [axes]
 
-cmap_pur   = plt.cm.RdYlBu_r
+cmap_pur = plt.cm.RdYlBu_r
+norm_pur = Normalize(vmin=0, vmax=1)
 
 for col, n_b in enumerate(n_bundle_list):
 
-    # ── Fila 0: Pureza π_n (Muñoz) ───────────────────────────────────
-    ax   = axes[0, col]
+    ax   = axes[col]
     pmap = all_results[n_b]['munoz']
     Z    = np.nan_to_num(np.clip(pmap, 0, 1), nan=0).T
-
+        
     im1 = ax.pcolormesh(
         lambda_arr, kappa_arr, Z,
-        shading='auto', cmap=cmap_pur,
-        norm=Normalize(vmin=0, vmax=1)
+        shading='gouraud',
+        cmap=cmap_pur,
+        norm=norm_pur,
+        rasterized=True,
     )
+
+    ax.set_rasterization_zorder(0)
     ax.set_yscale('log')
-    ax.set_xlabel(r'$\lambda/\omega_b$', fontsize=13)
-    ax.set_ylabel(r'$\kappa/\omega_b$', fontsize=13)
-    ax.set_title(rf'$\pi_{n_b}$ — 2QD ($J={J}$, $\Omega={Omega}$)', fontsize=13)
-    ax.tick_params(labelsize=11)
+    if col == 1:
+        ax.set_xlabel(r'$\lambda/\omega_b$', fontsize=12)
+    else:
+        ax.set_xlabel('')
+    ax.tick_params(labelsize=12)
+    ax.set_facecolor('white')
 
-    cbar1 = fig.colorbar(im1, ax=ax, fraction=0.045, pad=0.02)
-    cbar1.set_label(rf'$\pi_{n_b}$', fontsize=12)
+    if col == 0:
+        ax.set_ylabel(r'$\kappa/\omega_b$', fontsize=12)
+    else:
+        ax.tick_params(axis='y', which='both', left=False, labelleft=False)
 
-    label = chr(ord('a') + col)
-    ax.text(0.03, 0.95, f'({label})', transform=ax.transAxes,
-            fontsize=13, va='top', ha='left',
-            bbox=dict(facecolor='white', edgecolor='none', alpha=0.7))
+    ax.text(
+        0.03, 0.98, f'$({chr(97 + col)})$',
+        transform=ax.transAxes,
+        fontsize=12,
+        ha='left',
+        va='top',
+        color='white',
+    )
+    ax.text(
+        0.50, 1.03, rf'$\prod_{{{n_b}}}$',
+        transform=ax.transAxes,
+        fontsize=10,
+        ha='center',
+        va='bottom',
+        color='#333333',
+    )
 
-plt.tight_layout()
-plt.savefig("results/pruebas/pureza_2qds.png", dpi=300)
+fig.subplots_adjust(
+    left=0.15,
+    right=0.88,
+    top=0.92,
+    bottom=0.15,
+    wspace=0.06,
+)
+
+pos_first = axes[0].get_position()
+pos_last = axes[-1].get_position()
+cax = fig.add_axes([
+    pos_last.x1 + 0.02,
+    pos_first.y0,
+    0.02,
+    pos_first.y1 - pos_first.y0,
+])
+cbar = fig.colorbar(im1, cax=cax)
+cbar.set_ticks([0, 0.5, 1.0])
+cbar.ax.tick_params(labelsize=10)
+
 plt.savefig("results/oficial/purity_2qd_heatmap.pdf", bbox_inches='tight')
 plt.savefig("results/oficial/pgf/purity_2qd_heatmap.pgf")
-#print("\n✓ Heatmap guardado: results/oficial/purity_2qd_heatmap.pdf + results/oficial/pgf/purity_2qd_heatmap.pgf")
+print("Imágenes guardadas")
 
 
-# =============================================================================
+# -----------------------------------------------------------------------------
 # VISUALIZACIÓN — Cortes 1D
-# =============================================================================
-fig2, (ax_c, ax_d) = plt.subplots(1, 2, figsize=(13, 5))
+# -----------------------------------------------------------------------------
+fig, (ax_a, ax_b) = plt.subplots(1, 2, figsize=(6.17, 2.25), sharey=True)
 
-lam_cuts  = [0.06, 0.10, 0.14]
-kap_cuts  = [1e-4, 5e-4, 1e-3]
-styles    = ['-', '--', ':']
+colors_n = {3: 'C0', 4: 'C2'}
 
-# Cortes a λ fija: π_n vs κ
-for k, lam_val in enumerate(lam_cuts):
-    idx = np.argmin(np.abs(lambda_arr - lam_val))
-    for n_b in n_bundle_list:
-        color = 'C0' if n_b == 3 else 'C3'
-        pmap  = all_results[n_b]['munoz']
-        ax_c.plot(kappa_arr, pmap[idx, :],
-                  ls=styles[k], color=color, lw=1.8,
-                  label=rf'$\pi_{n_b}$, $\lambda={lambda_arr[idx]:.2f}$')
+# ── Panel (a): λ fija → Π_n vs κ ─────────────────────────
+lam_cuts = [0.22, 0.28]
+lam_indices = [np.argmin(np.abs(lambda_arr - lam_cut)) for lam_cut in lam_cuts]
+lam_reals = [lambda_arr[idx] for idx in lam_indices]
+lam_styles = ['-', '-.']
 
-ax_c.set_xscale('log')
-ax_c.set_xlabel(r'$\kappa/\omega_b$', fontsize=14)
-ax_c.set_ylabel(r'$\pi_n$', fontsize=14)
-ax_c.set_ylim(-0.05, 1.05)
-ax_c.legend(fontsize=8, ncol=2, loc='lower left')
-ax_c.set_title(r'2QD — $\lambda/\omega_b$ fija', fontsize=13)
-ax_c.tick_params(labelsize=12)
-ax_c.axhline(0.95, ls=':', color='gray', alpha=0.5)
+for idx_lam, lam_real, ls in zip(lam_indices, lam_reals, lam_styles):
+    for n_b in [3, 4]:
+        pmap = all_results[n_b]['munoz']
+        ax_a.plot(kappa_arr, pmap[idx_lam, :],
+                  color=colors_n[n_b], lw=0.9, ls=ls)
 
-# Cortes a κ fija: π_n vs λ
-for k, kap_val in enumerate(kap_cuts):
-    idx = np.argmin(np.abs(kappa_arr - kap_val))
-    for n_b in n_bundle_list:
-        color = 'C0' if n_b == 3 else 'C3'
-        pmap  = all_results[n_b]['munoz']
-        ax_d.plot(lambda_arr, pmap[:, idx],
-                  ls=styles[k], color=color, lw=1.8,
-                  label=rf'$\pi_{n_b}$, $\kappa={kappa_arr[idx]:.1e}$')
+ax_a.set_xscale('log')
+ax_a.set_xlim(1e-3, 1e0)
+ax_a.set_xlabel(r'$\kappa/\omega_b$', fontsize=12)
+ax_a.set_ylabel(r'$\Pi_n$', fontsize=12)
+ax_a.set_ylim(-0.05, 1.05)
+ax_a.set_yticks([0, 0.5, 1.0])
+ax_a.set_yticklabels([r'$0$', r'$0.5$', r'$1$'])
+ax_a.tick_params(labelsize=12)
+ax_a.set_facecolor('white')
+ax_a.text(0.97, 0.95, r'(a)', transform=ax_a.transAxes,
+          fontsize=12, ha='right', va='top')
+ax_a.text(0.05, 0.17, r'$\Pi_3$', color=colors_n[3],
+          transform=ax_a.transAxes, fontsize=10, ha='left', va='bottom')
+ax_a.text(0.05, 0.08, r'$\Pi_4$', color=colors_n[4],
+          transform=ax_a.transAxes, fontsize=10, ha='left', va='bottom')
 
-ax_d.set_xlabel(r'$\lambda/\omega_b$', fontsize=14)
-ax_d.set_ylabel(r'$\pi_n$', fontsize=14)
-ax_d.set_ylim(-0.05, 1.05)
-ax_d.legend(fontsize=8, ncol=2, loc='lower right')
-ax_d.set_title(r'2QD — $\kappa/\omega_b$ fija', fontsize=13)
-ax_d.tick_params(labelsize=12)
-ax_d.axhline(0.95, ls=':', color='gray', alpha=0.5)
+# ── Panel (b): κ fija → Π_n vs λ ────────────────────────
+kap_cuts = [1e-3, 1e-2]
+kap_indices = [np.argmin(np.abs(kappa_arr - kap_cut)) for kap_cut in kap_cuts]
+kap_reals = [kappa_arr[idx] for idx in kap_indices]
+kap_styles = ['-', '-.']
 
-#plt.tight_layout()
+for idx_kap, kap_real, ls in zip(kap_indices, kap_reals, kap_styles):
+    for n_b in [3, 4]:
+        pmap = all_results[n_b]['munoz']
+        ax_b.plot(lambda_arr, pmap[:, idx_kap],
+                  color=colors_n[n_b], lw=0.9, ls=ls)
+
+ax_b.set_xlabel(r'$\lambda/\omega_b$', fontsize=12)
+ax_b.set_xlim(0.04, 0.28)
+ax_b.set_xticks([0.04, 0.12, 0.20, 0.28])
+ax_b.set_ylim(-0.05, 1.05)
+ax_b.set_yticks([0, 0.5, 1.0])
+ax_b.tick_params(labelsize=12)
+ax_b.tick_params(axis='y', which='both', left=False, labelleft=False)
+ax_b.set_facecolor('white')
+ax_b.text(0.03, 0.95, r'(b)', transform=ax_b.transAxes,
+          fontsize=12, ha='left', va='top')
+ax_b.text(0.95, 0.17, r'$\Pi_3$', color=colors_n[3],
+          transform=ax_b.transAxes, fontsize=10, ha='right', va='bottom')
+ax_b.text(0.95, 0.08, r'$\Pi_4$', color=colors_n[4],
+          transform=ax_b.transAxes, fontsize=10, ha='right', va='bottom')
+
+fig.subplots_adjust(
+    left=0.10, right=0.98,
+    top=0.88, bottom=0.22,
+    wspace=0.12,
+)
 plt.savefig("results/oficial/purity_2qd_cuts.pdf", bbox_inches='tight')
 plt.savefig("results/oficial/pgf/purity_2qd_cuts.pgf")
-#print("✓ Cortes guardados: results/oficial/purity_2qd_cuts.pdf + results/oficial/pgf/purity_2qd_cuts.pgf")
+print("Cortes guardados")
 
-
-# =============================================================================
+# -----------------------------------------------------------------------------
 # DIAGNÓSTICO — puntos de referencia
-# =============================================================================
+# -----------------------------------------------------------------------------
 def run_diagnostico(lam_test, kap_test):
     print(f"\n{'='*65}")
     print(f"  DIAGNÓSTICO 2QD — λ={lam_test}, κ={kap_test}, J={J}")
@@ -585,46 +674,10 @@ def run_diagnostico(lam_test, kap_test):
         print(f"    p(m):  {['%.2e' % x for x in res['p_m']]}")
 
 
-run_diagnostico(lam_test=0.08, kap_test=0.003)
-run_diagnostico(lam_test=0.14, kap_test=0.003)
+if not RERUN:
+    run_diagnostico(lam_test=0.08, kap_test=0.003)
+    run_diagnostico(lam_test=0.14, kap_test=0.003)
 
-print(f"\n{'='*65}")
-print("  CÁLCULO COMPLETO")
-print(f"{'='*65}")
-
-# =============================================================================
-# PUNTO CANÓNICO — argmax de π_n en región sweet spot
-# =============================================================================
-from math import factorial
-
-print(f"\n{'='*65}")
-print("  PUNTOS CANÓNICOS")
-print(f"{'='*65}")
-
-for n_b in n_bundle_list:
-    Pi    = all_results[n_b]['munoz']   # shape (n_lam, n_kappa)
-    Delta = all_results[n_b]['delta']
-
-    # Máscara: excluir κ < γ (viola jerarquía) y NaNs
-    mask = np.ones((n_lam, n_kappa), dtype=bool)
-    for i in range(n_lam):
-        for j, kap in enumerate(kappa_arr):
-            if kap < gamma or np.isnan(Pi[i, j]):
-                mask[i, j] = False
-
-    Pi_masked = np.where(mask, Pi, 0.0)
-    idx = np.unravel_index(np.argmax(Pi_masked), Pi_masked.shape)
-
-    lam_c   = lambda_arr[idx[0]]
-    kap_c   = kappa_arr[idx[1]]
-    Pi_c    = Pi[idx]
-    Delta_c = Delta[idx]
-    Oeff    = np.sqrt(2) * lam_c**n_b * Omega / np.sqrt(factorial(n_b))
-
-    print(f"\n  n={n_b}:")
-    print(f"    λ/ω_b   = {lam_c:.4f}")
-    print(f"    κ/ω_b   = {kap_c:.2e}")
-    print(f"    Δ/ω_b   = {Delta_c:.4f}")
-    print(f"    π_{n_b}  = {Pi_c:.4f}")
-    print(f"    Ω_eff   = {Oeff:.2e}")
-    print(f"    κ/Ω_eff = {kap_c/Oeff:.1f}  (sweet spot ~10)")
+    print(f"\n{'='*65}")
+    print("  CÁLCULO COMPLETO")
+    print(f"{'='*65}")
