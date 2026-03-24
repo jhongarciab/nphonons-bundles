@@ -5,7 +5,7 @@ El presente capítulo desarrolla las herramientas conceptuales y formales necesa
 \section{Sistemas cuánticos de dos niveles}
 \label{sec:tls}
 
-El modelo de dos niveles (TLS, del inglés: \textit{two-level system}) constituye la descripción más elemental de un emisor cuántico interactuando con un campo de radiación \cite{gerry2005,fox2006}. A pesar de su aparente simplicidad, captura con precisión la física esencial de una amplia clase de sistemas cuánticos en el régimen de cuasi-resonancia con el campo conductor, donde la aproximación de dos niveles es válida. Cuando el TLS interactúa con un campo electromagnético coherente, su dinámica exhibe un comportamiento oscilatorio conocido como oscilaciones de Rabi, cuyo análisis constituye el punto de partida para comprender los procesos de emisión multifonónica que se desarrollan en las secciones siguientes. A continuación se presenta el hamiltoniano del sistema y los operadores que generan su álgebra, seguido de la descripción de la dinámica oscilatoria bajo conducción coherente.
+El modelo de dos niveles (TLS, del inglés: \textit{two-level system}) constituye la descripción más elemental de un emisor cuántico interactuando con un campo de radiación \cite{gerry2005,fox2006}. Este captura con precisión la física esencial de una amplia clase de sistemas cuánticos en el régimen de cuasi-resonancia con el campo conductor, donde la aproximación de dos niveles es válida. Cuando el TLS interactúa con un campo electromagnético coherente, su dinámica exhibe un comportamiento oscilatorio conocido como oscilaciones de Rabi, cuyo análisis constituye el punto de partida para comprender los procesos de emisión multifonónica que se desarrollan en las secciones siguientes. A continuación se presenta el hamiltoniano del sistema y los operadores que generan su álgebra, seguido de la descripción de la dinámica oscilatoria bajo conducción coherente.
 
 \subsection{Hamiltoniano y operadores}
 \label{sec:tls_hamiltoniano}
@@ -116,77 +116,132 @@ donde $\Delta = \omega_L - \omega_0$ es la desintonía entre la frecuencia del l
 \subsection{Oscilaciones de Rabi}
 \label{sec:rabi}
 
-El hamiltoniano~\eqref{eq:H_RWA} describe un TLS conducido por un campo coherente en el marco rotante. La dinámica del sistema bajo este hamiltoniano puede obtenerse resolviendo la ecuación de Schrödinger para un estado general $|\psi(t)\rangle = c_g(t)|g\rangle + c_e(t)|e\rangle$, lo que conduce al sistema de ecuaciones diferenciales acopladas
+El hamiltoniano~\eqref{eq:H_RWA} describe un TLS conducido por un campo coherente en el marco rotante. Para un estado general $|\psi(t)\rangle = c_g(t)|g\rangle + c_e(t)|e\rangle$, la ecuación de Schrödinger $i\hbar\,\partial_t|\psi\rangle = \hat{H}|\psi\rangle$ conduce al sistema de ecuaciones diferenciales acopladas
 
 \begin{equation}
 	i\dot{c}_g = \frac{\Omega}{2}\,c_e, \qquad
-	i\dot{c}_e = -\Delta\, c_e + \frac{\Omega}{2}\,c_g.
+	i\dot{c}_e = -\Delta\,c_e + \frac{\Omega}{2}\,c_g.
 	\label{eq:bloch_eqs}
 \end{equation}
 
-Resolviendo~\eqref{eq:bloch_eqs} con la condición inicial $c_g(0) = 1$, $c_e(0) = 0$, la probabilidad de encontrar el sistema en el estado excitado en el tiempo $t$ es \cite{gerry2005,fox2006}
+Diferenciando la segunda ecuación respecto al tiempo y sustituyendo $\dot{c}_g$ de la primera se obtiene
+
+\begin{equation}
+	\ddot{c}_e + i\Delta\,\dot{c}_e + \frac{\Omega^2}{4}\,c_e = 0.
+	\label{eq:ce_ode}
+\end{equation}
+
+Proponiendo $c_e(t) = e^{-i\Delta t/2}\,u(t)$, la ecuación~\eqref{eq:ce_ode} se reduce a $\ddot{u} + \Omega_R^2 u/4 = 0$, con solución general $u(t) = A\,e^{i\Omega_R t/2} + B\,e^{-i\Omega_R t/2}$, donde
+
+\begin{equation}
+	\Omega_R = \sqrt{\Omega^2 + \Delta^2}
+	\label{eq:omega_R}
+\end{equation}
+
+es la frecuencia de Rabi generalizada. Aplicando las condiciones iniciales $c_g(0) = 1$, $c_e(0) = 0$ y usando~\eqref{eq:bloch_eqs} para fijar $\dot{c}_e(0) = \Omega/2i$, se determinan las constantes $A$ y $B$, y la probabilidad de ocupación del estado excitado resulta
 
 \begin{equation}
 	P_e(t) = \frac{\Omega^2}{\Omega_R^2}\,\sin^2\!\left(\frac{\Omega_R\,t}{2}\right),
 	\label{eq:Pe}
 \end{equation}
 
-donde $\Omega_R = \sqrt{\Omega^2 + \Delta^2}$ es la frecuencia de Rabi generalizada. La expresión~\eqref{eq:Pe} describe oscilaciones periódicas entre $|g\rangle$ y $|e\rangle$, conocidas como oscilaciones de Rabi \cite{gerry2005}, ilustradas en la figura~\ref{fig:rabi_oscilaciones}. 
+que describe oscilaciones periódicas entre $|g\rangle$ y $|e\rangle$ de periodo $T = 2\pi/\Omega_R$, conocidas como oscilaciones de Rabi \cite{gerry2005,fox2006}, ilustradas en la figura~\ref{fig:rabi_oscilaciones}.
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.65\textwidth]{Kap2/rabi.png}
-	\caption{Probabilidad de encontrar el sistema en el estado excitado $P_e(t)$
-		cuando inicialmente está en el estado base, para diferentes valores de
-		desintonía $\Delta = \omega_L - \omega_0$. Tomado de \cite{steck2007}.}
+	\shorthandoff{>}
+	\begin{tikzpicture}[>=stealth, thick, font=\small]
+		
+		% Dimensiones del canvas
+		\def\W{10}    % ancho en cm
+		\def\H{4}    % alto en cm (Pe de 0 a 1)
+		\def\xmax{6.0} % dominio: Omega*t/pi de 0 a 6pi
+		
+		% Ejes
+		\draw[->] (0,0) -- (\W+0.35, 0) node[right] {$\Omega t$};
+		\draw[->] (0,0) -- (0, \H+0.35) node[above] {$P_e(t)$};
+		
+		% Escalas
+		\pgfmathsetmacro{\sx}{\W/\xmax}
+		\pgfmathsetmacro{\sy}{\H}
+		
+		% Ticks eje x: 0, pi, 2pi, 3pi, 4pi, 5pi, 6pi
+		\foreach \k in {1,2,3,4,5,6}{
+			\pgfmathsetmacro{\xpos}{\k*\sx}
+			\draw (\xpos, 0.06) -- (\xpos, -0.06);
+			\ifnum\k=1
+			\node[below] at (\xpos, -0.06) {$\pi$};
+			\else
+			\node[below] at (\xpos, -0.06) {$\k\pi$};
+			\fi
+		}
+		\node[below left] at (0,0) {$0$};
+		
+		% Ticks eje y: 0, 0.5, 1
+		\foreach \yv/\lbl in {0.5/0.5, 1/1}{
+			\draw (0.06, \yv*\sy) -- (-0.06, \yv*\sy);
+			\node[left] at (-0.06, \yv*\sy) {$\lbl$};
+		}
+		
+		% ---- Curvas ----
+		
+		% Delta = 0:       r=1,      A=1,    cresta en x=1.3667cm, y=3.5cm
+		\draw[blue!80!black, very thick, domain=0:\xmax, samples=400, smooth]
+		plot ({\x*\sx}, {\sy * sin(90*1.0000*\x)*sin(90*1.0000*\x)});
+		\draw[blue!30!gray!40, thin] (1.6000, 4.0500) -- (2.5500, 4.5500); % <-- mover (x_inicio, y) y (x_fin, y)
+		\node[right, blue!80!black] at (2.4500, 4.5500) {$\Delta=0$};      % <-- mover (x, y) del label
+		
+		% Delta = Omega/2: r=1.1180, A=0.8,  cresta en x=1.2224cm, y=2.8cm
+		\draw[teal!80!black, thick, domain=0:\xmax, samples=400, smooth]
+		plot ({\x*\sx}, {\sy * 0.8000 * sin(90*1.1180*\x)*sin(90*1.1180*\x)});
+		\draw[teal!30!gray!40, thin] (1.4500, 3.2500) -- (2.5500, 4.0500); % <-- mover
+		\node[right, teal!80!black] at (2.4500, 4.0500) {$\Delta=\Omega/2$}; % <-- mover
+		
+		% Delta = Omega:   r=1.4142, A=0.5,  cresta en x=0.9664cm, y=1.75cm
+		\draw[orange!80!black, thick, domain=0:\xmax, samples=400, smooth]
+		plot ({\x*\sx}, {\sy * 0.5000 * sin(90*1.4142*\x)*sin(90*1.4142*\x)});
+		\draw[orange!30!gray!40, thin] (1.2000, 2.0500) -- (2.5500, 3.5500); % <-- mover
+		\node[right, orange!80!black] at (2.4500, 3.5500) {$\Delta=\Omega$}; % <-- mover
+		
+		% Delta = 2Omega:  r=2.2361, A=0.2,  cresta en x=0.6112cm, y=0.7cm
+		\draw[red!70!black, thick, domain=0:\xmax, samples=500, smooth]
+		plot ({\x*\sx}, {\sy * 0.2000 * sin(90*2.2361*\x)*sin(90*2.2361*\x)});
+		\draw[red!30!gray!40, thin] (0.7000, 0.8500) -- (2.5500, 3.0500); % <-- mover
+		\node[right, red!70!black] at (2.4500, 3.0500) {$\Delta=2\Omega$}; % <-- mover
+		
+		% Delta = 5Omega:  r=5.0990, A=0.0385, cresta en x=0.2680cm, y=0.1348cm
+		\draw[purple!70!black, thick, domain=0:\xmax, samples=800, smooth]
+		plot ({\x*\sx}, {\sy * 0.0385 * sin(90*5.0990*\x)*sin(90*5.0990*\x)});
+		\draw[purple!30!gray!40, thin] (0.9900, 0.1600) -- (2.5500, 2.5500); % <-- mover
+		\node[right, purple!70!black] at (2.4500, 2.5500) {$\Delta=5\Omega$}; % <-- mover
+		
+	\end{tikzpicture}
+	\shorthandon{>}
+	\caption{Probabilidad de excitación $P_e(t)$ según~\eqref{eq:Pe} para diferentes valores de desintonía $\Delta$, con condición inicial $c_g(0)=1$.}
 	\label{fig:rabi_oscilaciones}
 \end{figure}
 
-El comportamiento de~\eqref{eq:Pe} depende cualitativamente del valor de la desintonía $\Delta$. En resonancia exacta ($\Delta = 0$), la frecuencia de Rabi generalizada coincide con la frecuencia de Rabi, $\Omega_R = \Omega$, y la transferencia de población entre $|g\rangle$ y $|e\rangle$ es completa: el sistema oscila entre $P_e = 0$ y $P_e = 1$ con la frecuencia mínima posible. A medida que $|\Delta|$ aumenta, dos efectos ocurren simultáneamente: la amplitud de las oscilaciones $\Omega^2/\Omega_R^2$ disminuye, de modo que la inversión de población deja de ser completa, y la frecuencia de oscilación $\Omega_R$ aumenta. En el límite $|\Delta| \gg \Omega$, la amplitud se suprime como $(\Omega/\Delta)^2$ y el sistema prácticamente no se excita. Esto establece un principio central: la desintonía $\Delta$ entre el láser y la transición del sistema es el parámetro que controla la dinámica coherente. Sintonizar $\Delta$ a un valor específico equivale a seleccionar qué par de estados del sistema se pone en resonancia, determinando así entre qué estados ocurre el intercambio coherente de energía. 
-
-Este principio adquiere especial relevancia en el sistema electrón--fonón que se desarrolla en las secciones siguientes. Cuando el QD está acoplado a un modo fonónico confinado, el espectro del sistema contiene estados $|c,n\rangle$ con el excitón en el estado de conducción y $n$ fonones, y estados $|v,n\rangle$ con el excitón en el estado de valencia y $n$ fonones. Sintonizando la desintonía del láser a $\Delta = -n\omega_b$, es decir, satisfaciendo la condición de resonancia de Stokes de orden $n$, los estados $|v,0\rangle$ y $|c,n\rangle$ se ponen en resonancia efectiva. El sistema experimenta entonces oscilaciones coherentes entre el vacío fonónico y un estado de $n$ fonones (las oscilaciones super-Rabi \cite{bin2020,vargas2022}) cuya frecuencia efectiva $\Omega_\text{eff}^{(n)}$ generaliza la frecuencia de Rabi $\Omega$ de~\eqref{eq:Pe} al caso multifonónico no lineal, como se analiza en detalle en la sección~\ref{sec:stokes}.
+La expresión~\eqref{eq:Pe} exhibe dos efectos simultáneos al variar $\Delta$: la amplitud $\Omega^2/\Omega_R^2$ disminuye y el periodo $2\pi/\Omega_R$ se acorta. En resonancia ($\Delta=0$) se tiene $\Omega_R=\Omega$ y la inversión de población es completa; en el límite $|\Delta|\gg\Omega$, la amplitud se suprime como $(\Omega/\Delta)^2$ y el sistema prácticamente no se excita. La desintonía $\Delta$ es así el parámetro que selecciona entre qué estados del sistema ocurre el intercambio coherente de energía, principio que adquiere su significado central en la sección~\ref{sec:stokes}, donde $\Delta = -n\omega_b$ pone en resonancia el vacío fonónico con el estado de $n$ fonones. 
 
 % ============================================================
 
 \section{Modos fonónicos confinados y acoplamiento electrón-fonón}
 \label{sec:fonones}
 
-Los fonones son los cuantos de vibración de una red cristalina \cite{kittel2005},
-en estrecha analogía con los fotones del campo electromagnético. Cuando las vibraciones del cristal se confinan en una nanocavidad acústica, el espectro fonónico se discretiza y el modo relevante puede describirse como un oscilador armónico cuántico. En un punto cuántico semiconductor embebido en dicha cavidad, el excitón interactúa con estos modos vibracionales a través
-del acoplamiento electrón--fonón: la deformación de la red cristalina inducida
-por la presencia del electrón en la banda de conducción acopla el estado
-electrónico del QD al modo fonónico confinado \cite{stock2011}. Este
-acoplamiento, descrito en el marco del modelo de Holstein, es el mecanismo
-que habilita los procesos de emisión multifonónica que constituyen el objeto
-central de este trabajo. A continuación se presenta la cuantización del modo
-fonónico, el modelo de Holstein para el acoplamiento electrón--fonón, y la
-condición de resonancia de Stokes que gobierna la emisión coherente de
-paquetes de $n$ fonones.
+Los fonones son los cuantos de vibración de una red cristalina \cite{kittel2005}, en estrecha analogía con los fotones del campo electromagnético. Cuando las vibraciones del cristal se confinan en una nanocavidad acústica, el espectro fonónico se discretiza y el modo relevante puede describirse como un oscilador armónico cuántico. En un punto cuántico semiconductor embebido en dicha cavidad, el excitón interactúa con estos modos vibracionales a través del acoplamiento electrón--fonón: la deformación de la red cristalina inducidapor la presencia del electrón en la banda de conducción acopla el estado electrónico del QD al modo fonónico confinado \cite{stock2011}. Este acoplamiento, descrito en el marco del modelo de Holstein, es el mecanismo que habilita los procesos de emisión multifonónica que constituyen el objeto central de este trabajo. A continuación se presenta la cuantización del modo fonónico, el modelo de Holstein para el acoplamiento electrón--fonón, y la condición de resonancia de Stokes que gobierna la emisión coherente de paquetes de $n$ fonones.
 
 \subsection{Cuantización del modo fonónico confinado}
 \label{sec:cuantizacion_fononico}
 
-Una nanocavidad acústica es una estructura en la que las ondas elásticas del
-cristal quedan confinadas en un volumen suficientemente pequeño como para que
-su espectro vibracional se discretice, de manera análoga a como una cavidad
-óptica discretiza los modos del campo electromagnético \cite{kittel2005,
-	vahala2003}. El modo fonónico relevante para este trabajo es el modo de
-frecuencia más baja de la cavidad, caracterizado por una frecuencia angular
-$\omega_b$, cuya dinámica puede describirse en términos de coordenadas
-normales. Siguiendo el procedimiento estándar de cuantización canónica
-\cite{kittel2005}, se introducen las coordenadas generalizadas de posición
-$\hat{q}$ y momento $\hat{p}$, que satisfacen la relación de conmutación
-canónica $[\hat{q},\hat{p}] = i\hbar$, y el hamiltoniano del modo toma la
-forma de un oscilador armónico cuántico:
-%
+Una nanocavidad acústica es una estructura en la que las ondas elásticas del cristal quedan confinadas en un volumen suficientemente pequeño como para que su espectro vibracional se discretice, de manera análoga a como una cavidad óptica discretiza los modos del campo electromagnético \cite{kittel2005,vahala2003}. El modo fonónico de interés es el de frecuencia más baja de la cavidad, caracterizado por una frecuencia angular $\omega_b$, cuya dinámica puede describirse en términos de coordenadas normales. Siguiendo el procedimiento estándar de cuantización canónica \cite{kittel2005}, se introducen las coordenadas generalizadas de posición $\hat{q}$ y momento $\hat{p}$, que satisfacen la relación de conmutación canónica $[\hat{q},\hat{p}] = i\hbar$, y el hamiltoniano del modo toma la forma de un oscilador armónico cuántico:
+
 \begin{equation}
 	\hat{H}_b = \frac{\hat{p}^2}{2m} + \frac{1}{2}m\omega_b^2\hat{q}^2,
 	\label{eq:Hb_cuadraturas}
 \end{equation}
-%
-donde $m$ es la masa efectiva asociada al modo. Definiendo los operadores de
-creación y aniquilación de fonones
-%
+
+donde $m$ es la masa efectiva asociada al modo. Definiendo los operadores de creación y aniquilación de fonones
+
 \begin{equation}
 	\hat{b} = \sqrt{\frac{m\omega_b}{2\hbar}}\left(\hat{q} +
 	\frac{i\hat{p}}{m\omega_b}\right), \qquad
@@ -194,125 +249,80 @@ creación y aniquilación de fonones
 	\frac{i\hat{p}}{m\omega_b}\right),
 	\label{eq:b_def}
 \end{equation}
-%
-los cuales satisfacen la relación de conmutación bosónica
-$[\hat{b},\hat{b}^\dagger] = 1$, el hamiltoniano~\eqref{eq:Hb_cuadraturas}
-adopta la forma diagonal
-%
+
+los cuales satisfacen la relación de conmutación bosónica $[\hat{b},\hat{b}^\dagger] = 1$, el hamiltoniano~\eqref{eq:Hb_cuadraturas} adopta la forma diagonal
+
 \begin{equation}
 	\hat{H}_b = \hbar\omega_b\left(\hat{b}^\dagger\hat{b} +
 	\frac{1}{2}\right),
 	\label{eq:Hb}
 \end{equation}
-%
-donde $\hat{n}_b = \hat{b}^\dagger\hat{b}$ es el operador número de fonones,
-cuyos eigenvalores $n = 0, 1, 2, \ldots$ indican el número de cuantos de
-vibración presentes en el modo. Los estados de Fock $|n\rangle$, definidos
-por $\hat{n}_b|n\rangle = n|n\rangle$, forman una base ortonormal completa
-del espacio de Hilbert del modo fonónico, y los operadores de escalera actúan
-sobre ellos como
-%
+
+donde $\hat{n}_b = \hat{b}^\dagger\hat{b}$ es el operador número de fonones, cuyos eigenvalores $n = 0, 1, 2, \ldots$ indican el número de cuantos de vibración presentes en el modo. Los estados de Fock $|n\rangle$, definidos por $\hat{n}_b|n\rangle = n|n\rangle$, forman una base ortonormal completa del espacio de Hilbert del modo fonónico, y los operadores de escalera actúan sobre ellos como
+
 \begin{equation}
 	\hat{b}|n\rangle = \sqrt{n}\,|n-1\rangle, \qquad
 	\hat{b}^\dagger|n\rangle = \sqrt{n+1}\,|n+1\rangle.
 	\label{eq:escalera_fonon}
 \end{equation}
-%
-El término de energía de punto cero $\hbar\omega_b/2$ en~\eqref{eq:Hb}
-representa la energía mínima del modo en ausencia de fonones y no tiene
-consecuencias en la dinámica del sistema acoplado, por lo que se omite
-en lo sucesivo. El hamiltoniano libre del modo fonónico queda entonces
-%
+
+El término de energía de punto cero $\hbar\omega_b/2$ en~\eqref{eq:Hb} representa la energía mínima del modo en ausencia de fonones y no tiene consecuencias en la dinámica del sistema acoplado, por lo que se omite en lo sucesivo. El hamiltoniano libre del modo fonónico queda entonces
+
 \begin{equation}
 	\hat{H}_b = \hbar\omega_b\,\hat{b}^\dagger\hat{b}.
 	\label{eq:Hb_final}
 \end{equation}
-%
-Este resultado establece que el modo fonónico confinado se comporta
-formalmente como un campo bosónico de un solo modo, en completa analogía
-con el campo electromagnético cuantizado en una cavidad óptica
-\cite{gerry2005}. La diferencia física fundamental reside en la naturaleza
-del quantum: mientras que el fotón es un quantum del campo electromagnético,
-el fonón es un quantum de deformación elástica del cristal, cuya interacción
-con el excitón del punto cuántico se describe en la subsección siguiente.
+
+Este resultado establece que el modo fonónico confinado se comporta formalmente como un campo bosónico de un solo modo, en completa analogía con el campo electromagnético cuantizado en una cavidad óptica \cite{gerry2005}. La diferencia física fundamental reside en la naturaleza del quantum: mientras que el fotón es un quantum del campo electromagnético, el fonón es un quantum de deformación elástica del cristal, cuya interacción con el excitón del punto cuántico se describe en la subsección siguiente.
 
 \subsection{Modelo de Holstein}
 \label{sec:holstein}
 
-Con el modo fonónico cuantizado según~\eqref{eq:Hb_final} y el excitón
-descrito por el hamiltoniano~\eqref{eq:HS_final} bajo la identificación ~\eqref{eq:mapeo}, el siguiente paso es establecer cómo interactúan estos
-dos subsistemas. En un punto cuántico semiconductor, la presencia del
-electrón en la banda de conducción deforma la red cristalina circundante,
-desplazando el equilibrio del modo fonónico confinado. Este acoplamiento
-es diagonal en el espacio electrónico: solo el estado de conducción
-$|c\rangle$ deforma la red, mientras que el estado de valencia $|v\rangle$
-no lo hace \cite{stock2011}. El hamiltoniano que describe esta interacción
-es el modelo de Holstein \cite{holstein1959}:
-%
+Con el modo fonónico cuantizado según~\eqref{eq:Hb_final} y el excitón descrito por el hamiltoniano~\eqref{eq:HS_final} bajo la identificación ~\eqref{eq:mapeo}, el siguiente paso es establecer cómo interactúan estos dos subsistemas. En un punto cuántico semiconductor, la presencia del electrón en la banda de conducción deforma la red cristalina circundante, desplazando el equilibrio del modo fonónico confinado. Este acoplamiento es diagonal en el espacio electrónico: solo el estado de conducción $|c\rangle$ deforma la red, mientras que el estado de valencia $|v\rangle$ no lo hace \cite{stock2011}. El hamiltoniano que describe esta interacción es el modelo de Holstein \cite{holstein1959}:
+
 \begin{equation}
 	\hat{H}_{\lambda} = \hbar\lambda\,|c\rangle\langle c|
 	\left(\hat{b}^\dagger + \hat{b}\right),
 	\label{eq:Holstein}
 \end{equation}
-%
-donde $\lambda$ es la constante de acoplamiento electrón--fonón, con
-unidades de frecuencia, que cuantifica la intensidad de la deformación
-inducida por el excitón. El operador $|c\rangle\langle c|$ es el proyector
-sobre el estado de conducción introducido en la sección~\ref{sec:tls_hamiltoniano},
-y el factor $(\hat{b}^\dagger + \hat{b})$ es proporcional al desplazamiento
-del modo fonónico respecto a su posición de equilibrio.
 
-El hamiltoniano total del sistema QD--cavidad acústica en el marco del
-laboratorio es entonces la suma de los tres términos:
-%
+donde $\lambda$ es la constante de acoplamiento electrón--fonón, con unidades de frecuencia, que cuantifica la intensidad de la deformación inducida por el excitón. El operador $|c\rangle\langle c|$ es el proyector sobre el estado de conducción introducido en la sección~\ref{sec:tls_hamiltoniano}, y el factor $(\hat{b}^\dagger + \hat{b})$ es proporcional al desplazamiento del modo fonónico respecto a su posición de equilibrio.
+
+El hamiltoniano total del sistema QD--cavidad acústica en el marco del laboratorio es entonces la suma de los tres términos:
+
 \begin{equation}
 	\hat{H}_\text{lab} = \hbar\omega_\sigma\,|c\rangle\langle c|
 	+ \hbar\omega_b\,\hat{b}^\dagger\hat{b}
 	+ \hbar\lambda\,|c\rangle\langle c|\left(\hat{b}^\dagger + \hat{b}\right),
 	\label{eq:H_lab_1QD}
 \end{equation}
-%
-al que debe añadirse el término de conducción óptica~\eqref{eq:Hint_RWA}
-cuando el sistema es excitado por un láser externo. La estructura física de~\eqref{eq:Holstein} se comprende mejor aplicando
-una transformación unitaria de desplazamiento al hamiltoniano total
-~\eqref{eq:H_lab_1QD}. Definiendo el operador de desplazamiento
-%
+
+al que debe añadirse el término de conducción óptica~\eqref{eq:Hint_RWA} cuando el sistema es excitado por un láser externo. La estructura física de~\eqref{eq:Holstein} se comprende mejor aplicando una transformación unitaria de desplazamiento al hamiltoniano total ~\eqref{eq:H_lab_1QD}. Definiendo el operador de desplazamiento
+
 \begin{equation}
 	\hat{D} = \exp\!\left[\frac{\lambda}{\omega_b}
 	|c\rangle\langle c|\left(\hat{b}^\dagger - \hat{b}\right)\right],
 	\label{eq:D_op}
 \end{equation}
-%
-y aplicando la transformación $\hat{\tilde{H}} = \hat{D}\hat{H}_\text{lab}
-\hat{D}^\dagger$, se obtiene que el operador de aniquilación fonónico
-se desplaza según
-%
+
+y aplicando la transformación $\hat{\tilde{H}} = \hat{D}\hat{H}_\text{lab} \hat{D}^\dagger$, se obtiene que el operador de aniquilación fonónico se desplaza según
+
 \begin{equation}
 	\hat{D}\,\hat{b}\,\hat{D}^\dagger = \hat{b} -
 	\frac{\lambda}{\omega_b}|c\rangle\langle c|,
 	\label{eq:b_desplazado}
 \end{equation}
-%
+
 de modo que el hamiltoniano transformado toma la forma
-%
+
 \begin{equation}
 	\hat{\tilde{H}} = \left(\hbar\omega_\sigma -
 	\frac{\hbar\lambda^2}{\omega_b}\right)|c\rangle\langle c|
 	+ \hbar\omega_b\,\hat{b}^\dagger\hat{b}.
 	\label{eq:H_polaronico}
 \end{equation}
-%
-Este resultado tiene una interpretación física precisa: el acoplamiento
-electrón--fonón desplaza el centro de oscilación del modo fonónico en una
-cantidad $\lambda/\omega_b$ cuando el excitón ocupa el estado de conducción,
-y deja el modo inalterado cuando el excitón está en el estado de valencia.
-Los estados fonónicos asociados a cada configuración electrónica tienen
-por tanto centros de oscilación distintos, separados por un desplazamiento
-$2\lambda/\omega_b$ en unidades de la longitud de punto cero del oscilador,
-como se ilustra esquemáticamente en la figura~\ref{fig:holstein}. Además,
-la frecuencia de transición del excitón queda renormalizada por la energía
-de reorganización polarónica $\hbar\lambda^2/\omega_b$, que representa la
-energía ganada por el sistema al deformar la red en presencia del excitón.
+
+Este resultado tiene una interpretación física precisa: el acoplamiento electrón--fonón desplaza el centro de oscilación del modo fonónico en una cantidad $\lambda/\omega_b$ cuando el excitón ocupa el estado de conducción, y deja el modo inalterado cuando el excitón está en el estado de valencia. Los estados fonónicos asociados a cada configuración electrónica tienen por tanto centros de oscilación distintos, separados por un desplazamiento $2\lambda/\omega_b$ en unidades de la longitud de punto cero del oscilador, como se ilustra esquemáticamente en la figura~\ref{fig:holstein}. Además, la frecuencia de transición del excitón queda renormalizada por la energía de reorganización polarónica $\hbar\lambda^2/\omega_b$, que representa la energía ganada por el sistema al deformar la red en presencia del excitón.
 
 \begin{figure}[h]
 	\centering
@@ -378,194 +388,102 @@ energía ganada por el sistema al deformar la red en presencia del excitón.
 		
 	\end{tikzpicture}
 	\shorthandon{>}
-	\caption{Diagrama de coordenada de configuración para el modelo de Holstein.
-		Las parábolas azul y roja representan la energía potencial fonónica en los
-		estados electrónicos $|v\rangle$ y $|c\rangle$, respectivamente. El
-		acoplamiento electrón--fonón desplaza el mínimo de la parábola roja en
-		$\lambda/\omega_b$ respecto al de la parábola azul, y la energía de
-		reorganización polarónica $\hbar\lambda^2/\omega_b$ renormaliza la
-		frecuencia excitónica. La flecha naranja ilustra una transición vertical
-		de Franck--Condon desde el estado $|v,0\rangle$ hasta $|c,2\rangle$. Adaptado de \cite{mahan2000}.}
+	\caption{Diagrama de coordenada de configuración para el modelo de Holstein. Las parábolas azul y roja representan la energía potencial fonónica en los estados electrónicos $|v\rangle$ y $|c\rangle$, respectivamente. El acoplamiento electrón--fonón desplaza el mínimo de la parábola roja en $\lambda/\omega_b$ respecto al de la parábola azul, y la energía de reorganización polarónica $\hbar\lambda^2/\omega_b$ renormaliza la frecuencia excitónica. La flecha naranja ilustra una transición vertical de Franck--Condon desde el estado $|v,0\rangle$ hasta $|c,2\rangle$. Adaptado de \cite{mahan2000}.}
 	\label{fig:holstein}
 \end{figure}
 
-La consecuencia más importante de este desplazamiento para la dinámica del
-sistema aparece al calcular los elementos de matriz del operador de
-desplazamiento entre estados fonónicos con distinto número de cuantos. En
-la base de estados de Fock, el elemento de matriz
-$\langle m|\hat{D}(\lambda/\omega_b)|n\rangle$ es el factor de Franck--Condon
-\cite{huang1950}, que cuantifica el solapamiento entre los estados
-vibracionales de las dos configuraciones electrónicas. Para la transición
-entre el estado $|v,0\rangle$ y el estado $|c,n\rangle$, este elemento de
-matriz es
-%
+La consecuencia más importante de este desplazamiento para la dinámica del sistema aparece al calcular los elementos de matriz del operador de desplazamiento entre estados fonónicos con distinto número de cuantos. En la base de estados de Fock, el elemento de matriz $\langle m|\hat{D}(\lambda/\omega_b)|n\rangle$ es el factor de Franck--Condon \cite{huang1950}, que cuantifica el solapamiento entre los estados vibracionales de las dos configuraciones electrónicas. Para la transición entre el estado $|v,0\rangle$ y el estado $|c,n\rangle$, este elemento de matriz es
+
 \begin{equation}
 	M_n = \langle n|\hat{D}\!\left(\frac{\lambda}{\omega_b}\right)|0\rangle
 	= e^{-S/2}\frac{S^{n/2}}{\sqrt{n!}},
 	\label{eq:franck_condon}
 \end{equation}
-%
+
 donde
-%
+
 \begin{equation}
 	S = \frac{\lambda^2}{\omega_b^2}
 	\label{eq:huang_rhys}
 \end{equation}
-%
-es el factor de Huang--Rhys \cite{huang1950}. La expresión~\eqref{eq:franck_condon}
-muestra que la amplitud de probabilidad para crear exactamente $n$ fonones
-durante una transición electrónica es $M_n$, cuyo cuadrado $|M_n|^2 =
-e^{-S}S^n/n!$ sigue una distribución de Poisson con media $S$. El factor
-de Huang--Rhys determina por tanto el número medio de fonones involucrados
-en cada transición electrónica y establece los dos regímenes de acoplamiento
-relevantes para este trabajo: en el régimen de acoplamiento débil $S \ll 1$,
-los procesos multifonónicos de orden $n$ son suprimidos como $S^n/n!$ y la
-línea de cero fonones domina el espectro; en el régimen de acoplamiento
-fuerte $S \gtrsim 1$, la distribución $|M_n|^2$ se ensancha y los procesos
-de orden $n \geq 1$ adquieren amplitud significativa, habilitando la emisión
-coherente de paquetes de $n$ fonones bajo las condiciones de resonancia que
-se analizan en la sección~\ref{sec:stokes}.
 
-\subsection{Procesos de Stokes y resonancia multifonónica}
+es el factor de Huang--Rhys \cite{huang1950}. La expresión~\eqref{eq:franck_condon} muestra que la amplitud de probabilidad para crear exactamente $n$ fonones durante una transición electrónica es $M_n$, cuyo cuadrado $|M_n|^2 = e^{-S}S^n/n!$ sigue una distribución de Poisson con media $S$. El factor de Huang--Rhys determina por tanto el número medio de fonones involucrados en cada transición electrónica y establece los dos regímenes de acoplamiento relevantes para este trabajo: en el régimen de acoplamiento débil $S \ll 1$, los procesos multifonónicos de orden $n$ son suprimidos como $S^n/n!$ y la línea de cero fonones domina el espectro; en el régimen de acoplamiento fuerte $S \gtrsim 1$, la distribución $|M_n|^2$ se ensancha y los procesos de orden $n \geq 1$ adquieren amplitud significativa, habilitando la emisión coherente de paquetes de $n$ fonones bajo las condiciones de resonancia que se analizan en la sección~\ref{sec:stokes}.
+
+\subsection{Resonancia de Stokes multifonónica}
 \label{sec:stokes}
 
-El proceso de Stokes es un fenómeno de dispersión inelástica de la luz en el
-que un fotón incidente de frecuencia $\omega_L$ interactúa con un modo
-vibracional del sistema, cediendo parte de su energía y emergiendo con una
-frecuencia menor $\omega_s < \omega_L$ \cite{loudon2000}. La diferencia de
-energía $\hbar(\omega_L - \omega_s)$ queda depositada en el modo vibracional
-como una excitación fonónica. En términos de la conservación de energía, el
-proceso satisface
-%
+El proceso de Stokes es un fenómeno de dispersión inelástica en el que un fotón de frecuencia $\omega_L$ interactúa con un modo vibracional del sistema, creando $n$ cuantos de vibración y emergiendo con una frecuencia menor $\omega_s = \omega_L - n\omega_b$ \cite{loudon2000}. La condición de conservación de energía es
+
 \begin{equation}
 	\hbar\omega_L = \hbar\omega_s + n\hbar\omega_b,
 	\label{eq:conservacion_stokes}
 \end{equation}
-%
-donde $n$ es el número de fonones creados y $\omega_b$ es la frecuencia del
-modo confinado. Para $n=1$ se recupera el proceso de Stokes estándar; para
-$n > 1$ se habla de un proceso de Stokes de orden $n$, en el que el campo
-óptico genera simultáneamente $n$ cuantos de vibración.
 
-En el sistema QD--cavidad acústica descrito por el hamiltoniano
-~\eqref{eq:H_lab_1QD}, la condición para que este proceso ocurra de manera
-resonante puede entenderse en el marco rotante. Cuando el láser se desintoniza
-respecto a la transición excitónica en una cantidad
-%
+donde $n = 1$ recupera el proceso de Stokes estándar y $n > 1$ corresponde a un proceso de Stokes de orden $n$, en el que el campo óptico genera simultáneamente $n$ cuantos de vibración.
+
+La condición para que este proceso ocurra de manera resonante se deriva en el marco rotante a la frecuencia del láser $\omega_L$. En este marco, el término de desintonía $-\hbar\Delta\,|c\rangle\langle c|$ con $\Delta = \omega_L - \omega_\sigma$ desplaza los niveles electrónicos, de modo que las energías de los estados producto son
+
 \begin{equation}
-	\Delta = \omega_L - \omega_\sigma = -n\omega_b,
+	E_{v,k} = k\hbar\omega_b, \qquad
+	E_{c,k} = \hbar\Delta + k\hbar\omega_b,
+	\label{eq:energias_mr}
+\end{equation}
+
+donde $k = 0, 1, 2, \ldots$ es el número de fonones. La condición de resonancia $E_{v,0} = E_{c,n}$ impone entonces
+
+\begin{equation}
+	\Delta = \omega_L - \omega_\sigma = -n\omega_b.
 	\label{eq:resonancia_stokes}
 \end{equation}
-%
-los estados $|v,0\rangle$ y $|c,n\rangle$ quedan en resonancia efectiva en
-el marco rotante \cite{bin2020}: la energía que el láser no entrega al
-excitón es exactamente la necesaria para crear $n$ fonones a través del
-acoplamiento Holstein. Esta condición de resonancia de Stokes de orden $n$
-es el mecanismo central del presente trabajo.
 
-Bajo esta condición, el sistema experimenta un intercambio coherente de
-población entre los estados $|v,0\rangle$ y $|c,n\rangle$, análogo a las
-oscilaciones de Rabi descritas en la sección~\ref{sec:rabi} pero mediado
-por un proceso no lineal de orden $n$. Este intercambio ocurre a una
-frecuencia efectiva $\Omega_\text{eff}^{(n)}$ que depende de la frecuencia
-de Rabi $\Omega$, el acoplamiento electrón--fonón $\lambda$ y el orden $n$
-del proceso \cite{bin2020}. A diferencia de las oscilaciones
-de Rabi estándar, la frecuencia efectiva disminuye rápidamente con $n$
-debido a los factores de Franck--Condon~\eqref{eq:franck_condon}, que
-suprimen exponencialmente la amplitud de los procesos de orden elevado.
-Estas oscilaciones entre estados que difieren en $n$ excitaciones fonónicas
-se denominan oscilaciones super-Rabi \cite{bin2020,vargas2022}.
+Bajo esta condición, la energía que el láser no entrega al excitón, $-\hbar\Delta = n\hbar\omega_b$, es exactamente la necesaria para crear $n$ fonones a través del acoplamiento Holstein, y los estados $|v,0\rangle$ y $|c,n\rangle$ quedan degenerados en el marco rotante.
 
-Cuando el sistema opera en el régimen disipativo --- es decir, cuando las
-pérdidas de la cavidad $\kappa$ son suficientemente grandes para convertir
-las oscilaciones super-Rabi en emisión irreversible hacia el exterior ---
-cada colapso del modo fonónico libera exactamente $n$ fonones al entorno.
-Este es el mecanismo de emisión de paquetes de $n$ fonones: la resonancia
-de Stokes~\eqref{eq:resonancia_stokes} selecciona el orden del proceso, y
-la disipación convierte la dinámica coherente en emisión estadísticamente
-pura. La caracterización cuantitativa de esta pureza se realiza mediante
-los observables introducidos en la sección~\ref{sec:estadistica}.
+Esta degeneración habilita un intercambio coherente de población entre $|v,0\rangle$ y $|c,n\rangle$, análogo a las oscilaciones de Rabi de la sección~\ref{sec:rabi} pero mediado por un proceso de orden $n$ en el acoplamiento Holstein. La amplitud de este intercambio está gobernada por el factor de Franck--Condon $M_n$~\eqref{eq:franck_condon}, que suprime los procesos de orden elevado como $S^{n/2}$ en el régimen $S \ll 1$, estableciendo la jerarquía $|M_1| > |M_2| > |M_3| > \cdots$ entre los distintos procesos de Stokes. Estas oscilaciones entre estados que difieren en $n$ cuantos fonónicos se denominan oscilaciones super-Rabi \cite{bin2020,vargas2022}.
+
+Cuando la tasa de pérdida de la cavidad $\kappa$ supera la frecuencia de las oscilaciones super-Rabi, la dinámica coherente se convierte en emisión irreversible: cada evento de relajación del modo fonónico libera exactamente $n$ cuantos al entorno. La resonancia de Stokes~\eqref{eq:resonancia_stokes} actúa así como mecanismo de selección del orden de emisión, mientras que la disipación convierte la coherencia en pureza estadística, cuya caracterización cuantitativa constituye el objeto de la sección~\ref{sec:estadistica}.
 
 % ============================================================
 
 \section{Interacción de Förster e hibridación excitónica}
 \label{sec:forster}
 
-Cuando dos emisores cuánticos se encuentran suficientemente próximos, su
-interacción dipolo--dipolo da lugar a un acoplamiento coherente conocido
-como interacción de Förster, mediante el cual la
-excitación puede transferirse resonantemente de un emisor al otro sin
-intercambio neto de fonones ni fotones. Este mecanismo, originalmente
-descrito en el contexto de la transferencia de energía entre moléculas
-fluorescentes \cite{forster1948}, tiene una manifestación directa en
-sistemas de puntos cuánticos semiconductores próximos \cite{kagan1996,
-	crooker2002}: la hibridación coherente de los estados excitónicos
-individuales produce modos colectivos con propiedades ópticas
-cualitativamente distintas a las de cada emisor aislado. En particular,
-uno de los modos híbridos acopla constructivamente al campo de radiación
-y exhibe una tasa de emisión colectiva amplificada --- el estado
-superradiante de Dicke \cite{dicke1954} --- mientras que el otro se
-desacopla del campo y se vuelve ópticamente inactivo. Esta estructura
-de estados colectivos, con sus consecuencias sobre la emisión y la
-dinámica coherente del sistema, se desarrolla en las subsecciones
-siguientes.
+Cuando dos emisores cuánticos se encuentran suficientemente próximos, su interacción dipolo--dipolo da lugar a un acoplamiento coherente conocido como interacción de Förster, mediante el cual la excitación puede transferirse resonantemente de un emisor al otro sin intercambio neto de fonones ni fotones \cite{forster1948}. La hibridación coherente de los estados excitónicos individuales produce modos colectivos con propiedades ópticas cualitativamente distintas a las de cada emisor aislado: uno de los modos híbridos acopla constructivamente al campo de radiación, mientras que el otro se desacopla del campo y se vuelve ópticamente inactivo. La derivación del hamiltoniano de Förster y la diagonalización exacta de los estados colectivos resultantes se desarrollan en las subsecciones siguientes.
 
-\subsection{Interacción de Förster}
+\subsection{Hamiltoniano de Förster}
 \label{sec:forster_interaccion}
 
-La interacción de Förster es un mecanismo de transferencia resonante de
-energía entre dos emisores dipolares próximos, cuyo origen físico reside
-en la interacción electrostática entre los campos eléctricos dipolares de
-cada emisor \cite{forster1948}. A diferencia de la emisión y reabsorción
-de fotones reales, este proceso ocurre a través del intercambio de fotones
-virtuales y no requiere propagación de radiación al vacío: es un acoplamiento
-de campo cercano que decae como $r^{-3}$ con la distancia $r$ entre los
-emisores \cite{forster1948,kagan1996}.
+La interacción de Förster es un mecanismo de transferencia resonante de energía entre dos emisores dipolares próximos, cuyo origen físico reside en la interacción electrostática entre sus campos eléctricos dipolares \cite{forster1948}. A diferencia de la emisión y reabsorción de fotones reales, este proceso ocurre a través del intercambio de fotones virtuales y no requiere propagación de radiación al vacío: es un acoplamiento de campo cercano que decae como $r^{-3}$ con la distancia $r$ entre los emisores \cite{forster1948,kagan1996}.
 
-Para derivar el hamiltoniano de Förster, consideremos dos emisores
-dipolares idénticos separados una distancia $r$, cada uno modelado como
-un TLS con frecuencia de transición $\omega_\sigma$ y momento dipolar de
-transición $\boldsymbol{\mu}$. La energía de interacción dipolo--dipolo
-entre los dos emisores en la aproximación de campo cercano es
-\cite{forster1948}
-%
+Para derivar el hamiltoniano de Förster, consideremos dos emisores dipolares idénticos separados una distancia $r$, cada uno modelado como un TLS con frecuencia de transición $\omega_\sigma$ y momento dipolar de transición $\boldsymbol{\mu}$. La energía de interacción dipolo--dipolo en la aproximación de campo cercano es \cite{forster1948}
+
 \begin{equation}
 	V_{dd} = \frac{1}{4\pi\epsilon_0}\frac{1}{r^3}
 	\left[\boldsymbol{\mu}_1\cdot\boldsymbol{\mu}_2 -
 	3(\boldsymbol{\mu}_1\cdot\hat{r})(\boldsymbol{\mu}_2\cdot\hat{r})\right],
 	\label{eq:Vdd}
 \end{equation}
-%
-donde $\hat{r}$ es el vector unitario que conecta los dos emisores y
-$\epsilon_0$ es la permitividad del vacío. Para conectar~\eqref{eq:Vdd} con el formalismo de segunda cuantización
-introducido en la sección~\ref{sec:tls_hamiltoniano}, se expresa el
-operador de momento dipolar de cada emisor en términos de los operadores
-de subida y bajada:
-%
+
+donde $\hat{r}$ es el vector unitario que conecta los dos emisores y $\epsilon_0$ es la permitividad del vacío.
+
+Para expresar~\eqref{eq:Vdd} en el formalismo de segunda cuantización introducido en la sección~\ref{sec:tls_hamiltoniano}, se escribe el operador de momento dipolar de cada emisor en términos de los operadores de subida y bajada:
+
 \begin{equation}
 	\hat{\boldsymbol{\mu}}_i = \boldsymbol{\mu}
 	\left(\hat{\sigma}_i^+ + \hat{\sigma}_i^-\right),
 	\label{eq:dipolo_operador}
 \end{equation}
-%
-donde se ha asumido que ambos emisores son idénticos y tienen el mismo
-momento dipolar de transición $\boldsymbol{\mu} = \langle
-c|\hat{\boldsymbol{\mu}}|v\rangle$. Sustituyendo~\eqref{eq:dipolo_operador}
-en~\eqref{eq:Vdd}, el hamiltoniano de interacción dipolo--dipolo toma la
-forma
-%
+
+donde $\boldsymbol{\mu} = \langle c|\hat{\boldsymbol{\mu}}|v\rangle$ es el elemento matricial del momento dipolar, idéntico para ambos emisores por hipótesis. Sustituyendo~\eqref{eq:dipolo_operador} en~\eqref{eq:Vdd} y definiendo el factor de orientación dipolar $\kappa = \hat{\mu}_1\cdot\hat{\mu}_2 - 3(\hat{\mu}_1\cdot\hat{r})(\hat{\mu}_2\cdot\hat{r})$, el hamiltoniano de interacción toma la forma
+
 \begin{equation}
 	\hat{V}_{dd} = \frac{\kappa|\boldsymbol{\mu}|^2}{4\pi\epsilon_0 r^3}
 	\left(\hat{\sigma}_1^+ + \hat{\sigma}_1^-\right)
-	\left(\hat{\sigma}_2^+ + \hat{\sigma}_2^-\right),
+	\left(\hat{\sigma}_2^+ + \hat{\sigma}_2^-\right).
 	\label{eq:Vdd_operadores}
 \end{equation}
-%
-donde $\kappa = \hat{\mu}_1\cdot\hat{\mu}_2 -
-3(\hat{\mu}_1\cdot\hat{r})(\hat{\mu}_2\cdot\hat{r})$ es el factor de
-orientación dipolar. Expandiendo el producto en~\eqref{eq:Vdd_operadores}
-se obtienen cuatro términos:
-%
+
+Expandiendo el producto en~\eqref{eq:Vdd_operadores} se obtienen cuatro términos:
+
 \begin{equation}
 	\hat{V}_{dd} = \frac{\kappa|\boldsymbol{\mu}|^2}{4\pi\epsilon_0 r^3}
 	\left(
@@ -576,82 +494,38 @@ se obtienen cuatro términos:
 	\right).
 	\label{eq:Vdd_4terms}
 \end{equation}
-%
-Los dos primeros términos, $\hat{\sigma}_1^\dagger\hat{\sigma}_2$ y
-$\hat{\sigma}_2^\dagger\hat{\sigma}_1$, transfieren la excitación de un
-emisor al otro conservando el número total de excitaciones $\hat{N}$.
-Los dos últimos, $\hat{\sigma}_1^\dagger\hat{\sigma}_2^\dagger$ y
-$\hat{\sigma}_1\hat{\sigma}_2$, crean o destruyen simultáneamente dos
-excitaciones, violando la conservación de $\hat{N}$. En la aproximación
-de onda rotante, estos últimos oscilan a la frecuencia de suma
-$2\omega_\sigma$ y se promedian a cero en tiempos relevantes para la
-dinámica del sistema \cite{gerry2005}, de manera completamente análoga
-a como se eliminaron los términos contrarrotantes en la
-sección~\ref{sec:rwa}. Reteniendo únicamente los términos resonantes y
-definiendo la constante de acoplamiento de Förster como
-%
+
+Los dos primeros términos conservan el número total de excitaciones $\hat{N} = \hat{\sigma}_1^\dagger\hat{\sigma}_1 + \hat{\sigma}_2^\dagger\hat{\sigma}_2$: transfieren la excitación de un emisor al otro. Los dos últimos crean o destruyen simultáneamente dos excitaciones, violando la conservación de $\hat{N}$. En la aproximación de onda rotante, estos términos oscilan a la frecuencia de suma $2\omega_\sigma$ y se promedian a cero en tiempos relevantes para la dinámica, de manera análoga a como se eliminaron los términos contrarrotantes en la sección~\ref{sec:rwa} \cite{gerry2005}. Reteniendo únicamente los términos resonantes y definiendo la constante de acoplamiento de Förster
+
 \begin{equation}
 	J = \frac{\kappa|\boldsymbol{\mu}|^2}{4\pi\epsilon_0 r^3},
 	\label{eq:J_Forster}
 \end{equation}
-%
+
 se obtiene el hamiltoniano de Förster
-%
+
 \begin{equation}
-	\hat{H}_J = J\left(\hat{\sigma}_1^\dagger\hat{\sigma}_2 +
-	\hat{\sigma}_2^\dagger\hat{\sigma}_1\right).
+	\hat{H}_J = J\!\left(\hat{\sigma}_1^\dagger\hat{\sigma}_2 +
+	\hat{\sigma}_2^\dagger\hat{\sigma}_1\right),
 	\label{eq:Forster}
 \end{equation}
-%
-El término $\hat{\sigma}_1^\dagger\hat{\sigma}_2$ describe la transferencia
-de la excitación del emisor 2 al emisor 1, y
-$\hat{\sigma}_2^\dagger\hat{\sigma}_1$ el proceso inverso.
 
-Una propiedad fundamental del hamiltoniano~\eqref{eq:Forster} es que
-conserva el número total de excitaciones electrónicas del sistema. Esto
-puede verificarse directamente: el operador número total de excitaciones
-$\hat{N} = \hat{\sigma}_1^\dagger\hat{\sigma}_1 +
-\hat{\sigma}_2^\dagger\hat{\sigma}_2$ conmuta con $\hat{H}_J$,
-%
+donde $\hat{\sigma}_1^\dagger\hat{\sigma}_2$ describe la transferencia de la excitación del emisor 2 al emisor 1 y $\hat{\sigma}_2^\dagger\hat{\sigma}_1$ el proceso inverso.
+
+Una propiedad fundamental de~\eqref{eq:Forster} es que conserva el número total de excitaciones electrónicas. Esto puede verificarse calculando el conmutador con $\hat{N}$:
+
 \begin{equation}
-	[\hat{H}_J, \hat{N}] = 0,
+	[\hat{H}_J,\,\hat{N}] = 0,
 	\label{eq:conmutacion_N}
 \end{equation}
-%
-de modo que la dinámica generada por~\eqref{eq:Forster} está restringida
-a subespacios con número fijo de excitaciones. Esta conservación es
-análoga a la impuesta por la RWA en el modelo de Jaynes--Cummings
-\cite{gerry2005} y tiene una consecuencia crucial: en el subespacio de
-una excitación, el hamiltoniano de Förster puede diagonalizarse
-exactamente, dando lugar a los estados colectivos que se desarrollan en
-la subsección siguiente. La transferencia de excitación es coherente ---
-preserva la fase cuántica del estado --- a diferencia de los procesos
-disipativos de transferencia de energía incoherente.
 
-Es importante señalar que la constante $J$ en~\eqref{eq:J_Forster}
-depende fuertemente de la geometría del sistema: varía como $r^{-3}$
-con la distancia entre los emisores y como $\kappa$ con su orientación
-relativa. En sistemas de puntos cuánticos semiconductores, donde los
-momentos dipolares están determinados por la estructura de bandas del
-material y la geometría de confinamiento, $J$ puede sintonizarse
-mediante el control de la separación y orientación relativa de los QDs
-\cite{kagan1996,crooker2002}. Esta sintonizabilidad convierte al
-acoplamiento de Förster en un parámetro de control del sistema, cuyo
-efecto sobre las resonancias de Stokes se analiza en el capítulo de
-resultados.
+de modo que la dinámica generada por~\eqref{eq:Forster} queda restringida a subespacios con número fijo de excitaciones. Esta conservación es análoga a la impuesta por la RWA en el modelo de Jaynes--Cummings \cite{gerry2005} y tiene una consecuencia inmediata: en el subespacio de una excitación, $\hat{H}_J$ puede diagonalizarse exactamente, dando lugar a los estados colectivos que se derivan en la subsección siguiente. La transferencia de excitación generada por~\eqref{eq:Forster} es coherente, preserva la fase cuántica del estado, a diferencia de los procesos disipativos de transferencia de energía incoherente descritos por la relajación cruzada.
 
 \subsection{Estados colectivos e hibridación excitónica}
 \label{sec:estados_colectivos}
 
-El hamiltoniano de Förster~\eqref{eq:Forster} actúa sobre el espacio de
-Hilbert del sistema de dos emisores, que en el subespacio de una
-excitación electrónica total está generado por los estados
-$|c\rangle_1|v\rangle_2 \equiv |cv\rangle$ y
-$|v\rangle_1|c\rangle_2 \equiv |vc\rangle$, que representan la excitación
-localizada en el emisor 1 y en el emisor 2, respectivamente. En esta base,
-el hamiltoniano total del sistema libre más la interacción de Förster
-toma la forma matricial
-%
+El hamiltoniano de Förster~\eqref{eq:Forster} actúa sobre el espacio de Hilbert del sistema de dos emisores. En el subespacio de una excitación electrónica total, generado por $|c\rangle_1|v\rangle_2 \equiv |cv\rangle$ y $|v\rangle_1|c\rangle_2 \equiv |vc\rangle$, el hamiltoniano libre más la interacción de Förster toma la forma matricial
+
 \begin{equation}
 	\hat{H}_0 + \hat{H}_J =
 	\begin{pmatrix}
@@ -660,11 +534,9 @@ toma la forma matricial
 	\end{pmatrix},
 	\label{eq:H_matriz}
 \end{equation}
-%
-donde se ha tomado $\hbar = 1$ por conveniencia. La diagonalización
-de~\eqref{eq:H_matriz} es inmediata: los eigenvalores son
-$E_\pm = \omega_\sigma \pm J$, con eigenvectores
-%
+
+donde se ha tomado $\hbar = 1$. Los eigenvalores de~\eqref{eq:H_matriz} son $E_\pm = \omega_\sigma \pm J$, con eigenvectores
+
 \begin{equation}
 	|\Psi_+\rangle = \frac{1}{\sqrt{2}}\left(|cv\rangle +
 	|vc\rangle\right), \qquad
@@ -672,174 +544,83 @@ $E_\pm = \omega_\sigma \pm J$, con eigenvectores
 	|vc\rangle\right).
 	\label{eq:estados_colectivos}
 \end{equation}
-%
-El estado $|\Psi_+\rangle$ es la combinación simétrica de las dos
-excitaciones localizadas, con energía $\omega_\sigma + J$, mientras que
-$|\Psi_-\rangle$ es la combinación antisimétrica, con energía
-$\omega_\sigma - J$. El acoplamiento de Förster desdobla los niveles
-excitónicos degenerados en dos ramas separadas por $2J$, en un fenómeno
-análogo al desdoblamiento de niveles en moléculas diatómicas por
-acoplamiento de orbitales atómicos.
 
-La diferencia física entre $|\Psi_+\rangle$ y $|\Psi_-\rangle$ se
-manifiesta al examinar su acoplamiento al campo óptico externo. El
-operador de momento dipolar colectivo del sistema es
-%
+El estado simétrico $|\Psi_+\rangle$ tiene energía $\omega_\sigma + J$ y el antisimétrico $|\Psi_-\rangle$ energía $\omega_\sigma - J$: el acoplamiento de Förster desdobla los niveles excitónicos degenerados en dos ramas separadas por $2J$, de manera análoga al desdoblamiento de niveles en moléculas diatómicas por acoplamiento de orbitales atómicos.
+
+La diferencia física entre $|\Psi_+\rangle$ y $|\Psi_-\rangle$ se manifiesta en su acoplamiento al campo óptico externo. El operador de momento dipolar colectivo del sistema es
+
 \begin{equation}
 	\hat{\boldsymbol{\mu}}_\text{tot} = \boldsymbol{\mu}
 	\left(\hat{\sigma}_1^+ + \hat{\sigma}_2^+\right) + \text{h.c.},
 	\label{eq:dipolo_colectivo}
 \end{equation}
-%
-y los elementos de matriz entre el estado base
-$|vv\rangle$ y los estados colectivos son
-%
+
+cuyos elementos de matriz entre el estado base $|vv\rangle$ y los estados colectivos se obtienen sustituyendo~\eqref{eq:estados_colectivos}:
+
 \begin{align}
-	\langle vv|\hat{\boldsymbol{\mu}}_\text{tot}|\Psi_+\rangle &=
-	\sqrt{2}\,\boldsymbol{\mu},
-	\label{eq:dipolo_brillante}\\
-	\langle vv|\hat{\boldsymbol{\mu}}_\text{tot}|\Psi_-\rangle &= 0.
+	\langle vv|\hat{\boldsymbol{\mu}}_\text{tot}|\Psi_+\rangle
+	&= \frac{\boldsymbol{\mu}}{\sqrt{2}}\left(
+	\langle vv|\hat{\sigma}_1^+|cv\rangle +
+	\langle vv|\hat{\sigma}_2^+|vc\rangle
+	\right) = \sqrt{2}\,\boldsymbol{\mu},
+	\label{eq:dipolo_brillante}\\[4pt]
+	\langle vv|\hat{\boldsymbol{\mu}}_\text{tot}|\Psi_-\rangle
+	&= \frac{\boldsymbol{\mu}}{\sqrt{2}}\left(
+	\langle vv|\hat{\sigma}_1^+|cv\rangle -
+	\langle vv|\hat{\sigma}_2^+|vc\rangle
+	\right) = 0.
 	\label{eq:dipolo_oscuro}
 \end{align}
-%
-El estado $|\Psi_+\rangle$ tiene un momento dipolar de transición
-amplificado por un factor $\sqrt{2}$ respecto al de un emisor individual,
-mientras que el elemento de matriz de $|\Psi_-\rangle$ se anula
-exactamente por interferencia destructiva entre las contribuciones de
-los dos emisores. Por esta razón, $|\Psi_+\rangle$ recibe el nombre de
-estado \textit{brillante} y $|\Psi_-\rangle$ el de estado
-\textit{oscuro}: el primero acopla constructivamente
-al campo óptico y al modo fonónico, mientras que el segundo se desacopla
-completamente de ambos en el límite de emisores idénticos.
 
-Esta estructura de estados colectivos tiene una consecuencia directa
-sobre la dinámica del sistema: toda la excitación óptica queda
-canalizada exclusivamente a través del estado brillante $|\Psi_+\rangle$,
-mientras que el estado oscuro $|\Psi_-\rangle$ permanece inaccesible al
-láser y al modo fonónico.
+El resultado~\eqref{eq:dipolo_brillante} muestra que $|\Psi_+\rangle$ tiene un momento dipolar de transición amplificado por $\sqrt{2}$  respecto al de un emisor individual: las contribuciones de ambos emisores interfieren constructivamente. El resultado~\eqref{eq:dipolo_oscuro} muestra que el elemento de matriz de $|\Psi_-\rangle$ se anula exactamente por interferencia destructiva. Por esta razón, $|\Psi_+\rangle$ recibe el nombre de estado \textit{brillante} y $|\Psi_-\rangle$ el de estado \textit{oscuro}.
 
-\subsection{Superradiancia y emisión colectiva}
-\label{sec:superradiancia}
-
-La amplificación del momento dipolar de transición del estado brillante
-$|\Psi_+\rangle$ por un factor $\sqrt{2}$ tiene consecuencias directas
-sobre la tasa de emisión espontánea colectiva del sistema. Para un emisor
-individual con momento dipolar $\boldsymbol{\mu}$ y tasa de decaimiento
-espontáneo $\gamma$, la regla de oro de Fermi establece que $\gamma
-\propto |\boldsymbol{\mu}|^2$ \cite{fox2006}. Dado que la tasa de
-emisión es proporcional al cuadrado del elemento de matriz del momento
-dipolar, la tasa de decaimiento del estado brillante es
-%
-\begin{equation}
-	\Gamma_+ = \left|\sqrt{2}\right|^2\gamma = 2\gamma,
-	\label{eq:tasa_brillante}
-\end{equation}
-%
-mientras que la del estado oscuro es
-%
-\begin{equation}
-	\Gamma_- = 0,
-	\label{eq:tasa_oscuro}
-\end{equation}
-%
-por la extinción exacta de su momento dipolar de transición. Este
-comportamiento --- en el que un estado colectivo emite a una tasa
-mayor que la de un emisor individual y otro queda completamente
-inhibido --- es la manifestación más simple de la superradiancia de
-Dicke \cite{dicke1954}: la emisión colectiva coherente de un conjunto
-de emisores cuánticos acoplados, cuya tasa excede la suma incoherente
-de las tasas individuales.
-
-El origen físico de~\eqref{eq:tasa_brillante} es la interferencia
-cuántica constructiva entre las amplitudes de emisión de los dos
-emisores. En el estado $|\Psi_+\rangle$, las contribuciones al campo
-radiado por el emisor 1 y el emisor 2 tienen la misma fase y se suman
-coherentemente, produciendo una intensidad proporcional al cuadrado de
-la amplitud total --- y por tanto cuatro veces mayor que la de un
-emisor solo, o el doble que la suma incoherente de dos emisores
-independientes. En el estado $|\Psi_-\rangle$, las amplitudes tienen
-fases opuestas e interfieren destructivamente, suprimiendo completamente
-la emisión. Este contraste entre superradiancia y subradiancia ha sido
-observado experimentalmente en sistemas de QDs acoplados a guías de
-onda nanofotónicas \cite{tiranov2023}.
-
-Es importante destacar que la superradiancia descrita aquí es un
-fenómeno de dos emisores --- el caso más simple del modelo de Dicke
-\cite{dicke1954} --- y no requiere un número macroscópico de emisores
-para manifestarse. La condición necesaria es únicamente que los dos
-emisores sean idénticos y estén acoplados coherentemente, de modo que
-sus funciones de onda excitónicas se hibriden en los modos colectivos
-$|\Psi_\pm\rangle$. En el sistema de dos QDs acoplados por interacción
-de Förster que constituye el objeto de este trabajo, esta condición se
-satisface naturalmente cuando la constante de acoplamiento $J$ es mayor
-que el ancho de línea excitónico $\gamma$, es decir, en el régimen de
-acoplamiento fuerte excitónico $J \gg \gamma$. Bajo
-esta condición, los estados brillante y oscuro son eigenstados bien
-definidos del sistema y la dinámica queda efectivamente restringida al
-subespacio brillante, con las consecuencias sobre la resonancia de
-Stokes y la emisión de paquetes de fonones que se desarrollan en el
-capítulo de resultados.
+Esta asimetría en el acoplamiento al campo tiene consecuencias directas sobre los canales disipativos del sistema: el estado brillante es el único accesible por el láser y por el modo fonónico, mientras que el estado oscuro queda desacoplado de ambos en el límite de emisores idénticos. Las implicaciones de esta estructura sobre la ecuación maestra del sistema se desarrollan en la sección~\ref{sec:superradiancia}, una vez establecido el formalismo de sistemas cuánticos abiertos.
 
 % ============================================================
 
 \section{Sistemas cuánticos abiertos}
 \label{sec:sistemas_abiertos}
 
-Los sistemas físicos de interés en este trabajo --- un punto cuántico o
-una molécula excitónica acoplados a una cavidad acústica --- no están
-aislados de su entorno: el excitón decae espontáneamente, la red
-cristalina introduce procesos de desfase, y los fonones escapan de la
-cavidad hacia los modos del continuo externo. Estos procesos irreversibles
-no pueden describirse mediante la ecuación de Schrödinger, que solo genera
-evolución unitaria. Para modelarlos, se emplea el formalismo de sistemas
-cuánticos abiertos, en el que el sistema de interés está acoplado a un
-reservorio o baño térmico de muchos grados de libertad, y la dinámica del
-sistema reducido se obtiene trazando sobre los grados de libertad del baño
-\cite{breuerpetruccione2002}.
+Los sistemas cuánticos de interés físico no están aislados de su entorno: los emisores decaen espontáneamente, las fluctuaciones del medio introducen procesos de desfase, y los modos de cavidad pierden energía hacia el continuo externo. Estos procesos irreversibles no pueden describirse mediante la ecuación de Schrödinger, que solo genera evolución unitaria. Para modelarlos, se emplea el formalismo de sistemas cuánticos abiertos, en el que el sistema de interés está acoplado a un reservorio o baño térmico de muchos grados de libertad, y la dinámica del sistema reducido se obtiene trazando sobre los grados de libertad del baño \cite{breuerpetruccione2002}.
+
+La derivación parte de las aproximaciones de Born y Markov, que permiten obtener una ecuación de movimiento local en el tiempo para el operador densidad reducido del sistema. Bajo condiciones adicionales de separabilidad espectral, esta ecuación toma la forma de Lindblad o GKLS \cite{lindblad1976}, que garantiza la positividad completa del mapa dinámico para todo tiempo. Finalmente, los resultados de la sección~\ref{sec:estados_colectivos} sobre la hibridación excitónica permiten identificar los operadores de salto colectivos del sistema de dos emisores acoplados, cerrando el vínculo entre la estructura coherente de los estados brillante y oscuro y sus consecuencias disipativas en la ecuación maestra.
 
 \subsection{Aproximación de Born--Markov}
 \label{sec:born_markov}
 
 Consideremos un sistema cuyo hamiltoniano total es
-%
+
 \begin{equation}
 	\hat{H} = \hat{H}_S + \hat{H}_B + \hat{H}_{SB},
 	\label{eq:H_total_abierto}
 \end{equation}
-%
-donde $\hat{H}_S$ es el hamiltoniano del sistema de interés, $\hat{H}_B$
-describe el baño de osciladores armónicos, y $\hat{H}_{SB}$ representa
-la interacción entre ambos. La evolución temporal del operador densidad
-global $\hat{\rho}_{SB}$, que describe el estado conjunto sistema--baño,
-está regida por la ecuación de Liouville--von Neumann \cite{brasil2013}:
-%
+
+donde $\hat{H}_S$ es el hamiltoniano del sistema de interés, $\hat{H}_B$ describe el baño de osciladores armónicos, y $\hat{H}_{SB}$ representa la interacción entre ambos. La evolución temporal del operador densidad global $\hat{\rho}_{SB}$, que describe el estado conjunto sistema--baño, está regida por la ecuación de Liouville--von Neumann \cite{brasil2013}:
+
 \begin{equation}
 	\frac{d\hat{\rho}_{SB}}{dt} = -\frac{i}{\hbar}
 	\left[\hat{H}_S + \hat{H}_B + \hat{H}_{SB},\,\hat{\rho}_{SB}\right].
 	\label{eq:von_neumann}
 \end{equation}
-%
-Es conveniente trabajar en la representación de interacción respecto a
-$\hat{H}_S + \hat{H}_B$, definida por la transformación unitaria
-%
+
+Es conveniente trabajar en la representación de interacción respecto a $\hat{H}_S + \hat{H}_B$, definida por la transformación unitaria
+
 \begin{equation}
 	\tilde{O}(t) = e^{\frac{i}{\hbar}(\hat{H}_S+\hat{H}_B)t}
 	\hat{O}\,e^{-\frac{i}{\hbar}(\hat{H}_S+\hat{H}_B)t},
 	\label{eq:rep_interaccion}
 \end{equation}
-%
+
 bajo la cual la ecuación~\eqref{eq:von_neumann} toma la forma simplificada
-%
+
 \begin{equation}
 	\frac{d\tilde{\rho}_{SB}}{dt} = -\frac{i}{\hbar}
 	\left[\tilde{H}_{SB}(t),\,\tilde{\rho}_{SB}(t)\right].
 	\label{eq:von_neumann_interaccion}
 \end{equation}
-%
-Integrando formalmente~\eqref{eq:von_neumann_interaccion} y
-sustituyendo el resultado en sí misma, se obtiene la ecuación
-integro--diferencial de segundo orden \cite{brasil2013}:
-%
+
+Integrando formalmente~\eqref{eq:von_neumann_interaccion} y sustituyendo el resultado en sí misma, se obtiene la ecuación integro--diferencial de segundo orden \cite{brasil2013}:
+
 \begin{equation}
 	\frac{d\tilde{\rho}_{SB}}{dt} = -\frac{i}{\hbar}
 	\left[\tilde{H}_{SB}(t),\,\tilde{\rho}_{SB}(0)\right]
@@ -848,108 +629,60 @@ integro--diferencial de segundo orden \cite{brasil2013}:
 	\tilde{\rho}_{SB}(t')\right]\right].
 	\label{eq:von_neumann_iterada}
 \end{equation}
-%
-Dado que el interés está en la dinámica del sistema y no del baño, se
-toma la traza parcial sobre los grados de libertad del baño,
-$\hat{\rho}_S(t) = \mathrm{tr}_B[\hat{\rho}_{SB}(t)]$. Asumiendo que
-inicialmente no existen correlaciones entre el sistema y el baño, es
-decir, $\hat{\rho}_{SB}(0) = \hat{\rho}_S(0)\otimes\hat{\rho}_B$, y
-que el valor medio del hamiltoniano de interacción sobre el estado del
-baño es nulo, $\mathrm{tr}_B[\tilde{H}_{SB}(t)\hat{\rho}_B] = 0$, el
-primer término de~\eqref{eq:von_neumann_iterada} se anula. Esta
-suposición se conoce como \textbf{aproximación de separabilidad}.
 
-La ecuación resultante contiene aún la historia completa de
-$\tilde{\rho}_{SB}(t')$, lo que la hace no tratable. Para simplificarla
-se introducen dos aproximaciones adicionales \cite{brasil2013,
-	breuerpetruccione2002}.
+Dado que el interés está en la dinámica del sistema y no del baño, se toma la traza parcial sobre los grados de libertad del baño, $\hat{\rho}_S(t) = \mathrm{tr}_B[\hat{\rho}_{SB}(t)]$. Asumiendo que inicialmente no existen correlaciones entre el sistema y el baño, es decir, $\hat{\rho}_{SB}(0) = \hat{\rho}_S(0)\otimes\hat{\rho}_B$, y que el valor medio del hamiltoniano de interacción sobre el estado del baño es nulo, $\mathrm{tr}_B[\tilde{H}_{SB}(t)\hat{\rho}_B] = 0$, el primer término de~\eqref{eq:von_neumann_iterada} se anula. Esta suposición se conoce como \textbf{aproximación de separabilidad}.
 
-La \textbf{aproximación de Born} supone que el acoplamiento
-sistema--baño es suficientemente débil como para que las correlaciones
-entre ambos sean despreciables en todo momento. Bajo esta condición,
-el estado total puede factorizarse como $\hat{\rho}_{SB}(t) \approx
-\hat{\rho}_S(t)\otimes\hat{\rho}_B$ dentro del integrando, donde
-$\hat{\rho}_B$ es el estado de equilibrio térmico del baño, invariante
-en el tiempo. Además, puede mostrarse que la diferencia entre
-$\hat{\rho}_S(t)$ y $\hat{\rho}_S(t')$ es de segundo orden en la
-constante de acoplamiento \cite{brasil2013}, de modo que es válido
-sustituir $\hat{\rho}_S(t')$ por $\hat{\rho}_S(t)$ en el integrando
-sin violar la aproximación de Born. Esto conduce a una ecuación local
-en el tiempo para el operador densidad reducido:
-%
+La ecuación resultante contiene aún la historia completa de $\tilde{\rho}_{SB}(t')$, lo que la hace no tratable. Para simplificarla se introducen dos aproximaciones adicionales \cite{brasil2013,breuerpetruccione2002}.
+
+La \textbf{aproximación de Born} supone que el acoplamiento sistema--baño es suficientemente débil como para que las correlaciones entre ambos sean despreciables en todo momento. Bajo esta condición, el estado total puede factorizarse como $\hat{\rho}_{SB}(t) \approx \hat{\rho}_S(t)\otimes\hat{\rho}_B$ dentro del integrando, donde $\hat{\rho}_B$ es el estado de equilibrio térmico del baño, invariante en el tiempo. Además, puede mostrarse que la diferencia entre $\hat{\rho}_S(t)$ y $\hat{\rho}_S(t')$ es de segundo orden en la constante de acoplamiento \cite{brasil2013}, de modo que es válido sustituir $\hat{\rho}_S(t')$ por $\hat{\rho}_S(t)$ en el integrando sin violar la aproximación de Born. Esto conduce a una ecuación local en el tiempo para el operador densidad reducido:
+
 \begin{equation}
 	\frac{d\hat{\rho}_S}{dt} = -\frac{1}{\hbar^2}\int_0^t dt'\,
 	\mathrm{tr}_B\!\left[\tilde{H}_{SB}(t),\left[\tilde{H}_{SB}(t'),\,
 	\hat{\rho}_S(t)\otimes\hat{\rho}_B\right]\right].
 	\label{eq:born_ecuacion}
 \end{equation}
-%
-La \textbf{aproximación de Markov} supone que el tiempo de correlación
-del baño $\tau_B$ es mucho menor que el tiempo de relajación del sistema
-$\tau_S$, es decir, $\tau_B \ll \tau_S$. Bajo esta condición, el baño
-pierde memoria de su interacción con el sistema en escalas de tiempo
-muy cortas comparadas con la dinámica de interés, de modo que el límite
-superior de la integral en~\eqref{eq:born_ecuacion} puede extenderse
-al infinito sin modificar el resultado \cite{brasil2013}:
-%
+
+La \textbf{aproximación de Markov} supone que el tiempo de correlación del baño $\tau_B$ es mucho menor que el tiempo de relajación del sistema $\tau_S$, es decir, $\tau_B \ll \tau_S$. Bajo esta condición, el baño pierde memoria de su interacción con el sistema en escalas de tiempo muy cortas comparadas con la dinámica de interés, de modo que el límite superior de la integral en~\eqref{eq:born_ecuacion} puede extenderse al infinito sin modificar el resultado \cite{brasil2013}:
+
 \begin{equation}
 	\frac{d\hat{\rho}_S}{dt} = -\frac{1}{\hbar^2}\int_0^\infty dt'\,
 	\mathrm{tr}_B\!\left[\tilde{H}_{SB}(t),\left[\tilde{H}_{SB}(t'),\,
 	\hat{\rho}_S(t)\otimes\hat{\rho}_B\right]\right].
 	\label{eq:born_markov}
 \end{equation}
-%
-Esta es la \textbf{ecuación maestra de Born--Markov}, que describe la
-evolución del operador densidad reducido del sistema bajo la influencia
-del baño de manera local en el tiempo \cite{brasil2013,
-	breuerpetruccione2002}. Aunque preserva la hermiticidad y la traza
-unitaria de $\hat{\rho}_S$, no garantiza en general la positividad
-completa del mapa dinámico. Esta limitación se supera con la forma
-de Lindblad que se desarrolla en la subsección siguiente.
+
+Esta es la \textbf{ecuación maestra de Born--Markov}, que describe la evolución del operador densidad reducido del sistema bajo la influencia del baño de manera local en el tiempo \cite{brasil2013,breuerpetruccione2002}. Aunque preserva la hermiticidad y la traza unitaria de $\hat{\rho}_S$, no garantiza en general la positividad completa del mapa dinámico. Esta limitación se supera con la forma de Lindblad que se desarrolla en la subsección siguiente.
 
 \subsection{Ecuación maestra de Lindblad}
 \label{sec:lindblad}
 
-Para obtener la ecuación de Lindblad a partir de la ecuación maestra de
-Born--Markov~\eqref{eq:born_markov}, consideramos que el hamiltoniano de
-interacción sistema--baño tiene la forma
-%
+Para obtener la ecuación de Lindblad a partir de la ecuación maestra de Born--Markov~\eqref{eq:born_markov}, consideramos que el hamiltoniano de interacción sistema--baño tiene la forma
+
 \begin{equation}
 	\hat{H}_{SB} = \hbar\left(\hat{S}\hat{B}^\dagger +
 	\hat{S}^\dagger\hat{B}\right),
 	\label{eq:H_SB}
 \end{equation}
-%
-donde $\hat{S}$ es un operador que actúa únicamente sobre el sistema y
-$\hat{B}$ es un operador que actúa únicamente sobre el baño. Esta forma
-es análoga al hamiltoniano de Jaynes--Cummings y
-es suficientemente general para describir los canales disipativos
-relevantes en sistemas de óptica y fonónica cuántica \cite{brasil2013}. El baño se modela
-como un conjunto de osciladores armónicos independientes con hamiltoniano
-%
+
+donde $\hat{S}$ es un operador que actúa únicamente sobre el sistema y $\hat{B}$ es un operador que actúa únicamente sobre el baño. Esta forma es análoga al hamiltoniano de Jaynes--Cummings y es suficientemente general para describir los canales disipativos relevantes en sistemas de óptica y fonónica cuántica \cite{brasil2013}. El baño se modela como un conjunto de osciladores armónicos independientes con hamiltoniano
+
 \begin{equation}
 	\hat{H}_B = \hbar\sum_k \omega_k\hat{a}_k^\dagger\hat{a}_k,
 	\label{eq:H_B}
 \end{equation}
-%
-donde $\hat{a}_k$ y $\hat{a}_k^\dagger$ son los operadores de
-aniquilación y creación del $k$-ésimo modo del baño con frecuencia
-$\omega_k$, y el operador del baño en~\eqref{eq:H_SB} es
-%
+
+donde $\hat{a}_k$ y $\hat{a}_k^\dagger$ son los operadores de aniquilación y creación del $k$-ésimo modo del baño con frecuencia $\omega_k$, y el operador del baño en~\eqref{eq:H_SB} es
+
 \begin{equation}
 	\hat{B} = \sum_k g_k^*\hat{a}_k,
 	\label{eq:B_operador}
 \end{equation}
-%
-donde $g_k$ son las constantes de acoplamiento entre el sistema y cada
-modo del baño. En la representación de interacción, el operador del
-baño toma la forma $\tilde{B}(t) = \sum_k g_k^*\hat{a}_k e^{-i\omega_k t}$.
 
-Sustituyendo~\eqref{eq:H_SB} en la ecuación maestra de
-Born--Markov~\eqref{eq:born_markov} y expandiendo el conmutador doble,
-se obtienen términos que involucran las funciones de correlación del
-baño \cite{brasil2013}
-%
+donde $g_k$ son las constantes de acoplamiento entre el sistema y cada modo del baño. En la representación de interacción, el operador del baño toma la forma $\tilde{B}(t) = \sum_k g_k^*\hat{a}_k e^{-i\omega_k t}$.
+
+Sustituyendo~\eqref{eq:H_SB} en la ecuación maestra de Born--Markov~\eqref{eq:born_markov} y expandiendo el conmutador doble, se obtienen términos que involucran las funciones de correlación del baño \cite{brasil2013}
+
 \begin{equation}
 	F(t) = \int_0^\infty dt'\,
 	\mathrm{tr}_B\!\left\{\tilde{B}(t)\tilde{B}^\dagger(t')
@@ -960,38 +693,32 @@ baño \cite{brasil2013}
 	\hat{\rho}_B\right\}.
 	\label{eq:FG}
 \end{equation}
-%
-Para un baño en el estado de vacío $\hat{\rho}_B = |0\rangle\langle 0|$,
-puede mostrarse que $G(t) = 0$, pues el operador de aniquilación del
-baño actúa sobre el vacío dando cero \cite{brasil2013}. La función
-$F(t)$ puede evaluarse reemplazando la suma discreta sobre los modos
-del baño por una integral sobre la densidad espectral
-$J(\omega) = \sum_k|g_k|^2\delta(\omega-\omega_k)$:
-%
+
+Para un baño en el estado de vacío $\hat{\rho}_B = |0\rangle\langle 0|$, puede mostrarse que $G(t) = 0$, pues el operador de aniquilación del baño actúa sobre el vacío dando cero \cite{brasil2013}. La función $F(t)$ puede evaluarse reemplazando la suma discreta sobre los modos del baño por una integral sobre la densidad espectral $J(\omega) = \sum_k|g_k|^2\delta(\omega-\omega_k)$:
+
 \begin{equation}
 	F(t) = \int_0^\infty d\omega\,J(\omega)\int_0^\infty
 	d\tau\,e^{-i\omega\tau},
 	\label{eq:F_integral}
 \end{equation}
-%
-donde se ha introducido el cambio de variable $\tau = t - t'$. Aplicando
-la identidad
-%
+
+donde se ha introducido el cambio de variable $\tau = t - t'$. Aplicando la identidad
+
 \begin{equation}
 	\int_0^\infty d\tau\,e^{-i\omega\tau} = \pi\delta(\omega) -
 	i\,\mathcal{P}\!\left(\frac{1}{\omega}\right),
 	\label{eq:identidad_markov}
 \end{equation}
-%
+
 donde $\mathcal{P}$ denota la parte principal de Cauchy, se obtiene
-%
+
 \begin{equation}
 	F = \frac{\gamma + i\varepsilon}{2},
 	\label{eq:F_final}
 \end{equation}
-%
+
 con
-%
+
 \begin{equation}
 	\gamma = 2\pi\int_0^\infty d\omega\,J(\omega)\,\delta(\omega),
 	\qquad
@@ -999,17 +726,9 @@ con
 	\frac{J(\omega)}{\omega}.
 	\label{eq:gamma_epsilon}
 \end{equation}
-%
-El término $\varepsilon$ corresponde al corrimiento de Lamb, que produce
-una renormalización de la frecuencia de transición del sistema. Para una
-densidad espectral lorentziana, o extendiendo el límite inferior de
-integración a $-\infty$, se obtiene $\varepsilon = 0$ \cite{brasil2013}.
-Bajo esta condición, sustituyendo $G = 0$ y $F = \gamma/2$
-en la ecuación resultante de la expansión del conmutador doble y
-retornando a la imagen de Schrödinger, se obtiene la ecuación maestra
-en forma de Lindblad, o ecuación GKLS
-(Gorini--Kossakowski--Lindblad--Sudarshan) \cite{lindblad1976,brasil2013}:
-%
+
+El término $\varepsilon$ corresponde al corrimiento de Lamb, que produce una renormalización de la frecuencia de transición del sistema. Para una densidad espectral lorentziana, o extendiendo el límite inferior de integración a $-\infty$, se obtiene $\varepsilon = 0$ \cite{brasil2013}. Bajo esta condición, sustituyendo $G = 0$ y $F = \gamma/2$ en la ecuación resultante de la expansión del conmutador doble y retornando a la imagen de Schrödinger, se obtiene la ecuación maestra en forma de Lindblad, o ecuación GKLS (Gorini--Kossakowski--Lindblad--Sudarshan) \cite{lindblad1976,brasil2013}:
+
 \begin{equation}
 	\frac{d\hat{\rho}}{dt} = -\frac{i}{\hbar}
 	\left[\hat{H},\hat{\rho}\right]
@@ -1020,151 +739,138 @@ en forma de Lindblad, o ecuación GKLS
 	\right),
 	\label{eq:lindblad}
 \end{equation}
-%
-donde $\hat{L}_j$ son los operadores de Lindblad o de salto que
-describen los distintos canales disipativos, y $\gamma_j$ son las
-tasas de disipación asociadas. Esta ecuación puede escribirse de
-forma compacta definiendo el superoperador disipador
-%
+
+donde $\hat{L}_j$ son los operadores de Lindblad o de salto que describen los distintos canales disipativos, y $\gamma_j$ son las tasas de disipación asociadas. Esta ecuación puede escribirse de forma compacta definiendo el superoperador disipador
+
 \begin{equation}
 	\mathcal{D}[\hat{L}]\hat{\rho} = 2\hat{L}\hat{\rho}\hat{L}^\dagger
 	- \hat{L}^\dagger\hat{L}\hat{\rho}
 	- \hat{\rho}\hat{L}^\dagger\hat{L},
 	\label{eq:disipador}
 \end{equation}
-%
+
 de modo que~\eqref{eq:lindblad} toma la forma
-%
+
 \begin{equation}
 	\frac{d\hat{\rho}}{dt} = -\frac{i}{\hbar}
 	\left[\hat{H},\hat{\rho}\right]
 	+ \sum_j \frac{\gamma_j}{2}\mathcal{D}[\hat{L}_j]\hat{\rho}.
 	\label{eq:lindblad_compacta}
 \end{equation}
-%
-La ecuación~\eqref{eq:lindblad_compacta} garantiza que $\hat{\rho}$
-permanece hermítico, de traza unitaria y positivo semidefinido para todo
-tiempo, preservando la interpretación probabilística de la mecánica
-cuántica \cite{lindblad1976}. El primer término describe la evolución
-coherente bajo el hamiltoniano $\hat{H}$, mientras que el superoperador
-$\mathcal{D}[\hat{L}_j]$ describe los procesos irreversibles de
-disipación y decoherencia inducidos por la interacción con el baño.
 
-En el sistema QD--cavidad acústica descrito en este trabajo, los canales
-disipativos relevantes son tres. El primero es el \textbf{decaimiento
-	espontáneo} del excitón con tasa $\gamma$, descrito por el operador de
-salto $\hat{L}_1 = \hat{\sigma}^-$, que representa la emisión espontánea
-de un fotón y el retorno del excitón al estado de valencia. El segundo
-es el \textbf{desfase puro} con tasa $\gamma_\phi$, descrito por
-$\hat{L}_2 = \hat{\sigma}_z$, que modela las fluctuaciones de la energía
-de transición excitónica inducidas por los fonones del entorno sin cambio
-en la población. El tercero es la \textbf{pérdida de fonones} de la
-cavidad con tasa $\kappa$, descrito por $\hat{L}_3 = \hat{b}$, que
-representa el escape de fonones hacia los modos del continuo externo.
-La ecuación maestra completa del sistema es entonces
-%
+La ecuación~\eqref{eq:lindblad_compacta} garantiza que $\hat{\rho}$ permanece hermítico, de traza unitaria y positivo semidefinido para todo tiempo, preservando la interpretación probabilística de la mecánica cuántica \cite{lindblad1976}. El primer término describe la evolución coherente bajo el hamiltoniano $\hat{H}$, mientras que el superoperador $\mathcal{D}[\hat{L}_j]$ describe los procesos irreversibles de disipación y decoherencia inducidos por la interacción con el baño.
+
+Para un emisor cuántico acoplado a una cavidad fonónica, los canales disipativos relevantes son tres: el primero, es el \textbf{decaimiento espontáneo} del excitón con tasa $\gamma$, descrito por el operador de salto $\hat{L}_1 = \hat{\sigma}^-$, que representa la emisión espontánea de un fotón y el retorno del excitón al estado de valencia; el segundo es el \textbf{desfase puro} con tasa $\gamma_\phi$, descrito por $\hat{L}_2 = |c\rangle\langle c| = \hat{\sigma}^+\hat{\sigma}^-$, que modela las fluctuaciones de la energía de transición excitónica inducidas por los fonones del entorno sin cambio en la población \cite{breuerpetruccione2002}; el tercero es la \textbf{pérdida de fonones} de la cavidad con tasa $\kappa$, descrito por $\hat{L}_3 = \hat{b}$, que representa el escape de fonones hacia los modos del continuo externo. La ecuación maestra completa del sistema es entonces
+
 \begin{equation}
 	\frac{d\hat{\rho}}{dt} = -\frac{i}{\hbar}
 	\left[\hat{H},\hat{\rho}\right]
 	+ \frac{\gamma}{2}\mathcal{D}[\hat{\sigma}^-]\hat{\rho}
-	+ \frac{\gamma_\phi}{2}\mathcal{D}[\hat{\sigma}_z]\hat{\rho}
+	+ \frac{\gamma_\phi}{2}\mathcal{D}[\hat{\sigma}^+\hat{\sigma}^-]\hat{\rho}
 	+ \frac{\kappa}{2}\mathcal{D}[\hat{b}]\hat{\rho},
 	\label{eq:lindblad_sistema}
 \end{equation}
-%
-donde el hamiltoniano $\hat{H}$ incluye todos los términos coherentes
-del sistema. El régimen físico de interés satisface la jerarquía
-$\gamma,\gamma_\phi \ll \kappa \ll \omega_b$, que garantiza que las
-pérdidas de la cavidad dominan sobre el decaimiento excitónico y que
-el modo fonónico es el canal principal de emisión del sistema
-\cite{bin2020}.
+
+donde el hamiltoniano $\hat{H}$ incluye todos los términos coherentes del sistema. El régimen físico de interés satisface la jerarquía $\gamma,\gamma_\phi \ll \kappa \ll \omega_b$, que garantiza que las pérdidas de la cavidad dominan sobre el decaimiento excitónico y que el modo fonónico es el canal principal de emisión del sistema.
+
+\subsection{Superradiancia y operadores de salto colectivos}
+\label{sec:superradiancia}
+
+La amplificación del elemento de matriz~\eqref{eq:dipolo_brillante} y la extinción de~\eqref{eq:dipolo_oscuro} tienen una consecuencia directa sobre la estructura disipativa del sistema: determinan los operadores de salto colectivos que aparecen en la ecuación maestra de Lindblad. Para identificarlos, se introduce el operador de decaimiento colectivo
+
+\begin{equation}
+	\hat{S} = \hat{\sigma}_1^- + \hat{\sigma}_2^-,
+	\label{eq:S_colectivo}
+\end{equation}
+
+que es la suma de los operadores de decaimiento individual de cada emisor.Sus elementos de matriz en la base colectiva $\{|\Psi_+\rangle, |\Psi_-\rangle\}$ se calculan directamente sustituyendo~\eqref{eq:estados_colectivos}:
+
+\begin{align}
+	\langle vv|\hat{S}|\Psi_+\rangle
+	&= \frac{1}{\sqrt{2}}\langle vv|
+	\left(\hat{\sigma}_1^- + \hat{\sigma}_2^-\right)
+	\left(|cv\rangle + |vc\rangle\right)
+	= \sqrt{2},
+	\label{eq:S_brillante}\\[4pt]
+	\langle vv|\hat{S}|\Psi_-\rangle
+	&= \frac{1}{\sqrt{2}}\langle vv|
+	\left(\hat{\sigma}_1^- + \hat{\sigma}_2^-\right)
+	\left(|cv\rangle - |vc\rangle\right)
+	= 0,
+	\label{eq:S_oscuro}
+\end{align}
+
+donde se ha usado que $\hat{\sigma}_1^-|cv\rangle = |vv\rangle$, $\hat{\sigma}_2^-|vc\rangle = |vv\rangle$, y los demás términos son nulos. El resultado~\eqref{eq:S_oscuro} es consecuencia de la interferencia destructiva entre las amplitudes de decaimiento del emisor 1 y del emisor 2 en el estado antisimétrico.
+
+Dado que la regla de oro de Fermi establece que la tasa de decaimiento espontáneo es proporcional al cuadrado del elemento de matriz del operador de transición \cite{fox2006}, las tasas de emisión colectiva  de cada estado son
+
+\begin{equation}
+	\Gamma_+ = \gamma\,|\langle vv|\hat{S}|\Psi_+\rangle|^2 = 2\gamma,
+	\qquad
+	\Gamma_- = \gamma\,|\langle vv|\hat{S}|\Psi_-\rangle|^2 = 0.
+	\label{eq:tasas_colectivas}
+\end{equation}
+
+El estado brillante $|\Psi_+\rangle$ decae con tasa $2\gamma$ mientras que $|\Psi_-\rangle$ no decae en absoluto. Este comportamiento es la manifestación más elemental de la superradiancia de Dicke \cite{dicke1954}: toda la emisión radiativa del sistema queda canalizada en un único modo colectivo, con una tasa que supera la de un emisor individual, mientras el otro modo queda completamente inhibido.
+
+Los resultados~\eqref{eq:S_brillante}--\eqref{eq:S_oscuro} muestran además que $\hat{S}$ actúa únicamente sobre $|\Psi_+\rangle$ en el subespacio de una excitación. Expresando $\hat{S}$ en la base colectiva,
+
+\begin{equation}
+	\hat{S} = \sqrt{2}\,|vv\rangle\langle\Psi_+|,
+	\label{eq:S_descomposicion}
+\end{equation}
+
+y usando la bilinealidad del superoperador disipador~\eqref{eq:disipador} junto con la ortogonalidad $\langle\Psi_+|\Psi_-\rangle = 0$, puede verificarse que
+
+\begin{equation}
+	\frac{\gamma}{2}\mathcal{D}[\hat{\sigma}_1^-]\hat{\rho}
+	+ \frac{\gamma}{2}\mathcal{D}[\hat{\sigma}_2^-]\hat{\rho}
+	= \gamma\,\mathcal{D}\!\left[|vv\rangle\langle\Psi_+|\right]\hat{\rho}.
+	\label{eq:lindblad_colectivo}
+\end{equation}
+
+Esta identidad expresa que el decaimiento espontáneo de dos emisores idénticos acoplados es equivalente, en la base colectiva, a un único canal de Lindblad con operador de salto $|vv\rangle\langle\Psi_+|$ y tasa $2\gamma$. El estado oscuro $|\Psi_-\rangle$ queda completamente desacoplado de este canal y solo puede depopularse a través del desfase puro, descrito por el superoperador $\mathcal{D}[\hat{\sigma}^+\hat{\sigma}^-]$ introducido anteriormente en~\ref{sec:lindblad}.
 
 % ============================================================
 
 \section{Estadística de la emisión multifonónica}
 \label{sec:estadistica}
 
-La caracterización cuantitativa de la calidad estadística de la emisión
-fonónica requiere ir más allá de los observables de primer orden como la
-población media del modo $\langle\hat{n}_b\rangle$. La estadística de
-fotones y fonones se describe mediante las funciones de correlación de
-orden superior, introducidas por Glauber en el contexto de la teoría
-cuántica de la coherencia óptica \cite{glauber1963}, que permiten
-distinguir entre los diferentes regímenes de emisión: coherente,
-térmica y no clásica. En el contexto de la emisión de paquetes de
-$n$ fonones, estas funciones deben adaptarse para capturar la
-estadística de los paquetes como unidades individuales y no la
-de los fonones individuales que los componen \cite{bin2020}. La
-pureza de emisión $\Pi_n$, introducida por Muñoz et al.
-\cite{munoz2014,munoz2018}, complementa esta descripción
-cuantificando la probabilidad relativa de que cada evento de emisión
-libere exactamente $n$ fonones. Juntos, estos observables constituyen
-las herramientas centrales con las que se analizan los resultados de
-este trabajo.
+La caracterización cuantitativa de la calidad estadística de la emisión fonónica requiere ir más allá de los observables de primer orden como la población media del modo $\langle\hat{n}_b\rangle$. La estadística de fotones y fonones se describe mediante las funciones de correlación de orden superior, introducidas por Glauber en el contexto de la teoría cuántica de la coherencia óptica \cite{glauber1963}, que permiten distinguir entre los regímenes de emisión coherente, térmica y no clásica. En el contexto de la emisión de paquetes de $n$ fonones, estas funciones deben adaptarse para capturar la estadística de los paquetes como unidades individuales \cite{bin2020}. La pureza de emisión $\Pi_n$ \cite{munoz2014,munoz2018} complementa esta descripción cuantificando la fracción de la emisión debida exclusivamente al proceso resonante de $n$ fonones. Estos dos observables constituyen las herramientas de caracterización central de la emisión multifonónica.
 
 \subsection{Funciones de correlación de orden superior $g^{(n)}(0)$}
 \label{sec:correlaciones}
 
-La teoría cuántica de la coherencia óptica establece que la descripción completa del estado
-estadístico de un campo cuántico requiere el conocimiento de todas sus
-funciones de correlación de orden superior. Para un campo bosónico
-descrito por los operadores de creación y aniquilación $\hat{b}^\dagger$
-y $\hat{b}$, la función de correlación de orden $n$ en tiempo cero se
-define como \cite{glauber1963}
-%
+La descripción completa del estado estadístico de un campo cuántico requiere el conocimiento de todas sus funciones de correlación de orden superior \cite{glauber1963}. Para un campo bosónico descrito por los operadores $\hat{b}^\dagger$ y $\hat{b}$, la función de correlación de orden $n$ en tiempo cero se define como
+
 \begin{equation}
 	g^{(n)}(0) = \frac{\langle(\hat{b}^\dagger)^n\hat{b}^n\rangle}
-	{\langle\hat{b}^\dagger\hat{b}\rangle^n}
-	= \frac{\langle(\hat{b}^\dagger)^n\hat{b}^n\rangle}
 	{\langle\hat{n}_b\rangle^n},
 	\label{eq:gn}
 \end{equation}
-%
-donde $\hat{n}_b = \hat{b}^\dagger\hat{b}$ es el operador número de
-fonones y el símbolo de ordenamiento normal garantiza que los operadores
-de creación preceden a los de aniquilación. El numerador de~\eqref{eq:gn}
-puede reescribirse en términos del operador número como
-%
+
+donde $\hat{n}_b = \hat{b}^\dagger\hat{b}$ es el operador número y el ordenamiento normal garantiza que los operadores de creación preceden a los de aniquilación. El numerador de~\eqref{eq:gn} puede reescribirse en términos del momento factorial de orden $n$ del operador número,
+$\hat{n}_b^{(n)} = \hat{n}_b(\hat{n}_b-1)\cdots(\hat{n}_b-n+1)$:
+
 \begin{equation}
 	\langle(\hat{b}^\dagger)^n\hat{b}^n\rangle =
-	\langle\hat{n}_b(\hat{n}_b-1)(\hat{n}_b-2)\cdots(\hat{n}_b-n+1)\rangle
-	= \langle\hat{n}_b^{(n)}\rangle,
+	\langle\hat{n}_b(\hat{n}_b-1)\cdots(\hat{n}_b-n+1)\rangle
+	= \langle\hat{n}_b^{(n)}\rangle.
 	\label{eq:factorial_moment}
 \end{equation}
-%
-donde $\hat{n}_b^{(n)} = \hat{n}_b(\hat{n}_b-1)\cdots(\hat{n}_b-n+1)$
-es el momento factorial de orden $n$ del operador número. La función~\eqref{eq:gn}
-cuantifica las correlaciones entre $n$ detecciones simultáneas de
-fonones y proporciona información directa sobre la estadística de la
-distribución de fonones \cite{glauber1963,gerry2005}.
 
-El valor de $g^{(n)}(0)$ permite clasificar el estado del campo en tres
-regímenes estadísticos fundamentales. Para un \textbf{estado coherente},
-la distribución de fonones es poissoniana y se obtiene
-$g^{(n)}(0) = 1$ para todo $n$. Para un \textbf{estado térmico}, las
-fluctuaciones son superpoissoninas y $g^{(n)}(0) = n!$, reflejando el
-bunching térmico de las excitaciones. Para estados \textbf{no clásicos}
-con distribución sub-poissoniana, se obtiene $g^{(n)}(0) < 1$, lo que
-indica anticorrelación entre las detecciones — el denominado
-antibunching \cite{gerry2005,fox2006}. En particular, para un estado de
-Fock $|m\rangle$ con número fijo de fonones, la función de correlación
-toma el valor
-%
+El valor de $g^{(n)}(0)$ clasifica el estado del campo en tres regímenes estadísticos. Para un \textbf{estado coherente}, la distribución es poissoniana y $g^{(n)}(0) = 1$ para todo $n$. Para un \textbf{estado térmico}, las fluctuaciones son superpoissoninas y $g^{(n)}(0) = n!$, reflejando el bunching térmico. Para estados \textbf{no clásicos} con distribución sub-poissoniana, $g^{(n)}(0) < 1$, indicando antibunching \cite{gerry2005,fox2006}. En particular, para un estado de Fock $|m\rangle$ con número fijo de fonones:
+
 \begin{equation}
 	g^{(n)}(0)\big|_{|m\rangle} =
 	\frac{m!}{(m-n)!\,m^n}, \quad n \leq m,
 	\label{eq:gn_fock}
 \end{equation}
-%
-y se anula para $n > m$, reflejando la naturaleza discreta y no clásica
-del estado de Fock.
 
-En el contexto de la emisión de paquetes de $n$ fonones, la función
-$g^{(n)}(0)$ estándar cuantifica correlaciones entre fonones
-individuales pero no captura adecuadamente la estadística de los
-paquetes como unidades. Bin et al. \cite{bin2020} introdujeron la
-función de correlación de $m$-paquetes de orden $n$, definida como
-%
+que se anula para $n > m$, reflejando la naturaleza discreta y no clásica del estado de Fock.
+
+En el contexto de la emisión de paquetes de $n$ fonones, la función~\eqref{eq:gn} cuantifica correlaciones entre fonones individuales pero no captura la estadística de los paquetes como unidades. Bin et al.\ \cite{bin2020} introdujeron la función de correlación de $m$-paquetes de orden $n$:
+
 \begin{equation}
 	g_m^{(n)}(t_1,\ldots,t_n) =
 	\frac{\left\langle T_-\!\left\{\prod_{i=1}^n
@@ -1173,85 +879,52 @@ función de correlación de $m$-paquetes de orden $n$, definida como
 	{\prod_{i=1}^n \langle(\hat{b}^\dagger)^m\hat{b}^m\rangle(t_i)},
 	\label{eq:gn_bundle}
 \end{equation}
-%
-donde $T_\pm$ son los operadores de ordenamiento temporal progresivo y
-regresivo respectivamente, $m$ es el número de fonones por paquete y
-$n$ es el orden de la correlación entre paquetes. La función estándar
-de Glauber~\eqref{eq:gn} es el caso particular $m=1$
-de~\eqref{eq:gn_bundle}.
 
-En tiempo cero, la función~\eqref{eq:gn_bundle} se reduce a
-%
+donde $T_\pm$ son los operadores de ordenamiento temporal progresivo y regresivo, $m$ es el número de fonones por paquete y $n$ el orden de la correlación entre paquetes. La función estándar de Glauber~\eqref{eq:gn} es el caso particular $m=1$. En tiempo cero, \eqref{eq:gn_bundle} se reduce a
+
 \begin{equation}
 	g_m^{(n)}(0) =
 	\frac{\langle(\hat{b}^\dagger)^{mn}\hat{b}^{mn}\rangle}
 	{\langle(\hat{b}^\dagger)^m\hat{b}^m\rangle^n},
 	\label{eq:gn_bundle_zero}
 \end{equation}
-%
-y cuantifica las correlaciones entre $n$ detecciones simultáneas de
-paquetes de $m$ fonones. Un valor $g_m^{(2)}(0) < 1$ indica
-antibunching de paquetes --- cada paquete tiende a emitirse de forma
-aislada --- mientras que $g_m^{(2)}(0) > 1$ indica bunching de paquetes
-y $g_m^{(2)}(0) = 1$ corresponde a una estadística poissoniana de
-paquetes coherentes \cite{bin2020}. En este trabajo se calculan las
-funciones $g^{(n)}(0)$ estándar para caracterizar la estadística de
-los fonones individuales emitidos, complementadas por la pureza de
-emisión $\Pi_n$ que se introduce en la subsección siguiente.
+
+cuantificando las correlaciones entre $n$ detecciones simultáneas de paquetes de $m$ fonones. Un valor $g_m^{(2)}(0) < 1$ indica antibunching de paquetes, $g_m^{(2)}(0) > 1$ indica bunching, y $g_m^{(2)}(0) = 1$ corresponde a estadística poissoniana de paquetes coherentes \cite{bin2020}.
 
 \subsection{Pureza de emisión $\Pi_n$}
 \label{sec:pureza}
 
-Las funciones de correlación $g^{(n)}(0)$ caracterizan el carácter no
-clásico de la emisión pero no cuantifican directamente la probabilidad
-de que cada evento de emisión libere exactamente $n$ fonones. Para este
-propósito, Muñoz et al. \cite{munoz2014,munoz2018} introdujeron la
-pureza de emisión de $N$ cuantos, que adoptamos aquí al caso fonónico.
+Las funciones de correlación $g^{(n)}(0)$ caracterizan el carácter no clásico de la emisión pero no cuantifican directamente la probabilidad de que cada evento de emisión libere exactamente $n$ fonones. Para este propósito, Muñoz et al.\ \cite{munoz2014,munoz2018} introdujeron la pureza de emisión de $N$ cuantos, que se adopta aquí al caso fonónico.
 
-La idea central es descomponer la población total del modo fonónico en
-el estado estacionario en contribuciones provenientes de procesos de
-distinto orden. En el estado estacionario, la población media del modo
-fonónico $\langle\hat{n}_b\rangle$ recibe contribuciones de todos los
-procesos de emisión activos: el proceso resonante de $n$ fonones y los
-procesos fuera de resonancia de orden $m \neq n$. Para separar estas
-contribuciones se recurre a dos resoluciones del estado estacionario
-\cite{munoz2018}.
+La idea central es descomponer la población total del modo fonónico en el estado estacionario en contribuciones de procesos de distinto orden. La población media $\langle\hat{n}_b\rangle$ recibe contribuciones del proceso resonante de $n$ fonones y de los procesos fuera de resonancia de orden $m \neq n$. Para separar estas contribuciones se recurre a dos resoluciones del estado estacionario \cite{munoz2018}.
 
-En primer lugar, se resuelve la ecuación maestra~\eqref{eq:lindblad_sistema}
-en el espacio de Fock completo con truncación $N_\text{cut}$ estados,
-obteniendo la población total del modo fonónico:
-%
+En primer lugar, se resuelve la ecuación maestra de Lindblad~\eqref{eq:lindblad_compacta} en el espacio de Fock completo con truncación $N_\text{cut}$ estados, obteniendo la población total:
+
 \begin{equation}
 	n_b = \langle\hat{n}_b\rangle_\text{full}
 	= \mathrm{tr}\!\left[\hat{n}_b\,\hat{\rho}_\text{ss}^\text{full}
 	\right].
 	\label{eq:nb_full}
 \end{equation}
-%
-En segundo lugar, se resuelve la misma ecuación maestra en un espacio
-de Fock truncado a exactamente $n$ estados, de modo que el estado
-$|n\rangle$ no existe en dicho espacio y los procesos de $n$ o más
-fonones quedan bloqueados. La población resultante
-%
+
+En segundo lugar, se resuelve la misma ecuación en un espacio de Fock truncado a exactamente $n$ estados, de modo que el estado $|n\rangle$ no existe y los procesos de $n$ o más fonones quedan bloqueados:
+
 \begin{equation}
 	n_b^\text{trunc} = \langle\hat{n}_b\rangle_\text{trunc}
 	= \mathrm{tr}\!\left[\hat{n}_b\,\hat{\rho}_\text{ss}^\text{trunc}
-	\right]
+	\right].
 	\label{eq:nb_trunc}
 \end{equation}
-%
-contiene únicamente las contribuciones de los procesos de orden
-estrictamente menor que $n$. La diferencia entre ambas poblaciones da
-entonces la contribución exclusiva del proceso resonante de $n$ fonones:
-%
+
+La diferencia entre ambas poblaciones aísla la contribución exclusiva del proceso resonante de $n$ fonones:
+
 \begin{equation}
 	n_b^{(n)} = n_b - n_b^\text{trunc}.
 	\label{eq:nb_n}
 \end{equation}
-%
-La pureza de emisión de $n$ fonones se define como la fracción de la
-población total debida a este proceso \cite{munoz2018}:
-%
+
+La pureza de emisión se define como la fracción de la población total debida a este proceso \cite{munoz2018}:
+
 \begin{equation}
 	\Pi_n = \frac{n_b^{(n)}}{n_b} =
 	\frac{\langle\hat{n}_b\rangle_\text{full} -
@@ -1259,28 +932,7 @@ población total debida a este proceso \cite{munoz2018}:
 	{\langle\hat{n}_b\rangle_\text{full}}.
 	\label{eq:pureza}
 \end{equation}
-%
-La pureza~\eqref{eq:pureza} es una probabilidad acotada entre 0 y 1:
-$\Pi_n = 1$ corresponde a emisión perfectamente pura de paquetes de
-$n$ fonones, mientras que $\Pi_n \to 0$ indica que el proceso resonante
-de $n$ fonones es despreciable frente a los procesos de orden inferior.
 
-Este método requiere únicamente el operador densidad en el estado
-estacionario, obtenido resolviendo $\mathcal{L}[\hat{\rho}_\text{ss}]
-= 0$ para ambos espacios de Fock. A diferencia del método de
-trayectorias cuánticas de Monte Carlo empleado en \cite{bin2020},
-este enfoque es determinista y computacionalmente más eficiente,
-pues evita la acumulación de estadística sobre múltiples trayectorias.
+La pureza~\eqref{eq:pureza} está acotada entre 0 y 1: $\Pi_n = 1$ corresponde a emisión perfectamente pura de paquetes de $n$ fonones, mientras que $\Pi_n \to 0$ indica que el proceso resonante es despreciable frente a los procesos de orden inferior.
 
-Es importante destacar que la pureza $\Pi_n$ y la función de correlación
-$g^{(n)}(0)$ son observables complementarios pero esencialmente
-distintos. Mientras que $g^{(n)}(0)$ cuantifica las correlaciones entre
-$n$ detecciones simultáneas de fonones, $\Pi_n$ cuantifica la fracción
-de la población del modo fonónico debida al proceso resonante de $n$
-fonones. Muñoz et al. \cite{munoz2014} demostraron que estos dos
-observables son en general anticorrelados: el máximo de $g^{(N)}(0)$
-no coincide con el máximo de $\Pi_N$, lo que evidencia que
-$g^{(N)}(0)$ no es una medida directa de la pureza de la fuente.
-La pureza $\Pi_n$ es por tanto el observable más apropiado para
-cuantificar la calidad de la emisión de paquetes fonónicos y
-constituye el observable central de este trabajo.
+Este método requiere únicamente el operador densidad en el estado estacionario, obtenido resolviendo $\mathcal{L}[\hat{\rho}_\text{ss}] = 0$ para ambos espacios de Fock, es un enfoque determinista y computacionalmente más eficiente, pues evita la acumulación de estadística sobre múltiples trayectorias. Es importante destacar que $\Pi_n$ y $g^{(n)}(0)$ son observables complementarios pero esencialmente distintos. Mientras que $g^{(n)}(0)$ cuantifica correlaciones entre $n$ detecciones simultáneas de fonones, $\Pi_n$ cuantifica la fracción de la población fonónica debida al proceso resonante de $n$ fonones. Muñoz et al.\ \cite{munoz2014} demostraron que estos dos observables son en general anticorrelados: el máximo de $g^{(N)}(0)$ no coincide con el máximo de $\Pi_N$, lo que evidencia que $g^{(N)}(0)$ no es una medida directa de la pureza de la fuente. La pureza $\Pi_n$ es por tanto el observable más apropiado para cuantificar la calidad de la emisión de paquetes fonónicos.
