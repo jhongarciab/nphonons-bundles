@@ -45,7 +45,7 @@ rcParams.update({
 # =============================================================================
 # CONFIGURACIÓN
 # =============================================================================
-RERUN = False   # True para cargar datos guardados, False para recalcular
+RERUN = True   # True para cargar datos guardados, False para recalcular
 
 # =============================================================================
 # PARÁMETROS FÍSICOS
@@ -63,8 +63,8 @@ Delta_2ph = -np.sqrt((2 * omega_b)**2 - 8 * Omega**2) + lam**2 / omega_b - J
 print(f"Δ₂(2QD) = {Delta_2ph:.5f}")
 
 # Grillas
-n_gamma = 15          # Producción: 50-60
-n_tau   = 100         # Producción: 300
+n_gamma = 60          # Producción: 50-60
+n_tau   = 300         # Producción: 300
 gamma_arr = np.logspace(-5, 0, n_gamma)
 
 kappa_list = [0.001, 0.01]
@@ -198,7 +198,7 @@ else:
 # =============================================================================
 # VISUALIZACIÓN 3D
 # =============================================================================
-fig = plt.figure(figsize=(6.17, 3.10))
+fig = plt.figure(figsize=(6.60, 2.80))
 
 for col, kap in enumerate(kappa_list):
     ax = fig.add_subplot(1, 2, col + 1, projection='3d')
@@ -237,7 +237,7 @@ for col, kap in enumerate(kappa_list):
     ax.set_xlabel(r'$\gamma/\omega_b$', fontsize=12, labelpad=10)
     x_ticks = [0, -1, -2, -3, -4, -5]
     ax.set_xticks(x_ticks)
-    ax.set_xticklabels([r'$10^{%d}$' % v for v in x_ticks], fontsize=10)
+    ax.set_xticklabels([r'$10^{%d}$' % v for v in x_ticks], fontsize=9)
     ax.set_xlim(np.log10(gamma_arr[-1]), np.log10(gamma_arr[0]))
 
     # Eje Y: ωb·τ
@@ -245,35 +245,38 @@ for col, kap in enumerate(kappa_list):
     y_tick_vals = [0, 2000, 4000, 6000, 8000, 10000]
     ax.set_yticks(y_tick_vals)
     ax.set_yticklabels([r'$0$', r'$2$', r'$4$', r'$6$', r'$8$', r'$10$'],
-                       fontsize=10)
+                       fontsize=9)
     ax.set_ylim(0, p['tau_arr'][-1])
 
     # Eje Z
     ax.set_zlabel('')
     ax.set_zlim(-2, 2)
-    ax.set_zticks([-2, -1, 0, 1, 2])
-    ax.zaxis.set_tick_params(pad=-1)
+    ax.set_zticklabels([r'$-2$', r'$-1$', r'$\phantom{-}0$', r'$\phantom{-}1$', r'$\phantom{-}2$'])
+    ax.zaxis.set_tick_params(pad=-2, labelsize=9)
     ax.zaxis._axinfo['juggled'] = (1, 2, 0)
-    ax.text2D(-0.12, 0.50, r'$\log_{10}\,g_2^{(2)}(\tau)$',
-              transform=ax.transAxes, fontsize=10,
+    ax.text2D(-0.15, 0.50, r'$\log_{10}\,g_2^{(2)}(\tau)$',
+              transform=ax.transAxes, fontsize=12,
               rotation=90, va='center', ha='center')
 
     # Vista
-    ax.view_init(elev=15, azim=-35)
-    ax.set_box_aspect([2, 2, 1])
+    ax.view_init(elev=12, azim=-40)
+    ax.set_box_aspect([2.4, 2.4, 1.0])
 
-    # Título
+    # ── Título ──────────────────────────────────────────────────
     label = '(a)' if col == 0 else '(b)'
-    ax.set_title(rf'{label}  $\kappa/\omega_b = {kap}$', fontsize=12, pad=8)
+    ax.text2D(0.50, 0.90, label,
+              transform=ax.transAxes, fontsize=12,
+              ha='center', va='bottom')
 
     # Colorbar
     sm_cb = plt.cm.ScalarMappable(cmap='jet', norm=norm)
     sm_cb.set_array([])
-    cbar = fig.colorbar(sm_cb, ax=ax, shrink=0.55, pad=0.08, aspect=15)
-    cbar.set_ticks([-1, 0, 1])
-    cbar.ax.tick_params(labelsize=10)
+    cbar = fig.colorbar(sm_cb, ax=ax, shrink=0.21, pad=0.01, aspect=7)
+    cbar.set_ticklabels([r'$-1$', r'$\phantom{-}0$', r'$\phantom{-}1$'], fontsize=9)
+    cbar.ax.tick_params(labelsize=9)
 
-fig.subplots_adjust(left=0.04, right=0.98, top=0.92, bottom=0.08, wspace=0.16)
+print(ax.get_position())
+fig.subplots_adjust(left=0.07, right=0.97, top=0.98, bottom=-0.10, wspace=0.20)
 plt.savefig("results/oficial/fig_S6_2qd.pdf", bbox_inches='tight')
 plt.savefig("results/oficial/pgf/fig_S6_2qd.pgf")
 print("✓ Figura guardada: results/oficial/fig_S6_2qd.pdf")
