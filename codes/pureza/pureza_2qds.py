@@ -577,13 +577,22 @@ print("Imágenes guardadas")
 # -----------------------------------------------------------------------------
 fig, (ax_a, ax_b) = plt.subplots(1, 2, figsize=(6.17, 2.25), sharey=True)
 
-colors_n = {3: 'C0', 4: 'C2'}
+colors_n = {2: 'C3', 3: 'C0', 4: 'C2'}
 
 # ── Panel (a): λ fija → Π_n vs κ ─────────────────────────
 lam_cuts = [0.22, 0.28]
 lam_indices = [np.argmin(np.abs(lambda_arr - lam_cut)) for lam_cut in lam_cuts]
 lam_reals = [lambda_arr[idx] for idx in lam_indices]
 lam_styles = ['-', '-.']
+
+# Pi_2: línea continua a lambda=0.22, punteada a lambda=0.28
+idx_lam_pi2 = np.argmin(np.abs(lambda_arr - 0.22))
+idx_lam_pi2_dot = np.argmin(np.abs(lambda_arr - 0.28))
+pmap2 = all_results[2]['munoz']
+ax_a.plot(kappa_arr, pmap2[idx_lam_pi2, :],
+          color=colors_n[2], lw=0.9, ls='-')
+ax_a.plot(kappa_arr, pmap2[idx_lam_pi2_dot, :],
+          color=colors_n[2], lw=0.9, ls='-.')
 
 for idx_lam, lam_real, ls in zip(lam_indices, lam_reals, lam_styles):
     for n_b in [3, 4]:
@@ -602,6 +611,8 @@ ax_a.tick_params(labelsize=12)
 ax_a.set_facecolor('white')
 ax_a.text(0.97, 0.95, r'(a)', transform=ax_a.transAxes,
           fontsize=12, ha='right', va='top')
+ax_a.text(0.05, 0.26, r'$\Pi_2$', color=colors_n[2],
+          transform=ax_a.transAxes, fontsize=10, ha='left', va='bottom')
 ax_a.text(0.05, 0.17, r'$\Pi_3$', color=colors_n[3],
           transform=ax_a.transAxes, fontsize=10, ha='left', va='bottom')
 ax_a.text(0.05, 0.08, r'$\Pi_4$', color=colors_n[4],
@@ -612,6 +623,14 @@ kap_cuts = [1e-3, 1e-2]
 kap_indices = [np.argmin(np.abs(kappa_arr - kap_cut)) for kap_cut in kap_cuts]
 kap_reals = [kappa_arr[idx] for idx in kap_indices]
 kap_styles = ['-', '-.']
+
+# Pi_2: línea continua a kappa=1e-3, punteada a kappa=1e-2
+idx_kap_pi2 = np.argmin(np.abs(kappa_arr - 1e-3))
+idx_kap_pi2_dot = np.argmin(np.abs(kappa_arr - 1e-2))
+ax_b.plot(lambda_arr, pmap2[:, idx_kap_pi2],
+          color=colors_n[2], lw=0.9, ls='-')
+ax_b.plot(lambda_arr, pmap2[:, idx_kap_pi2_dot],
+          color=colors_n[2], lw=0.9, ls='-.')
 
 for idx_kap, kap_real, ls in zip(kap_indices, kap_reals, kap_styles):
     for n_b in [3, 4]:
@@ -629,6 +648,8 @@ ax_b.tick_params(axis='y', which='both', left=False, labelleft=False)
 ax_b.set_facecolor('white')
 ax_b.text(0.03, 0.95, r'(b)', transform=ax_b.transAxes,
           fontsize=12, ha='left', va='top')
+ax_b.text(0.95, 0.26, r'$\Pi_2$', color=colors_n[2],
+          transform=ax_b.transAxes, fontsize=10, ha='right', va='bottom')
 ax_b.text(0.95, 0.17, r'$\Pi_3$', color=colors_n[3],
           transform=ax_b.transAxes, fontsize=10, ha='right', va='bottom')
 ax_b.text(0.95, 0.08, r'$\Pi_4$', color=colors_n[4],
