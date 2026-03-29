@@ -1,57 +1,30 @@
 \documentclass[12pt,spanish,openany,letterpaper,pagesize]{scrbook}
-
 \usepackage[utf8]{inputenc}
-\usepackage[spanish]{babel} 
+\usepackage[spanish,es-noquoting]{babel}
 \usepackage[automark,headsepline]{scrlayer-scrpage}
 \usepackage{epsfig}
 \usepackage{epic}
 \usepackage{eepic}
-\usepackage{pgf}
 \usepackage{graphicx}
-\usepackage{tikz}
-\usetikzlibrary{arrows.meta}
-\usepackage{amsmath}
-\usetikzlibrary{calc, tikzmark}
-\usepackage{amssymb}
-\usepackage{amsfonts}
-\usepackage{amsmath,amssymb,mathtools}
-\usepackage{physics}
-\usepackage{amsmath}
-\usepackage{amssymb}
+\usepackage{pgf}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.18}
+\usepackage{tikz-cd}
+\usetikzlibrary{calc,arrows.meta,tikzmark}
+\usepackage{amsmath,amssymb,amsfonts,amscd,mathtools}
+\usepackage{physics}
 \usepackage{mathrsfs}
 \usepackage{threeparttable}
-\usepackage{amscd}
 \usepackage{here}
-\usepackage{graphicx}
 \usepackage{lscape}
 \usepackage{tabularx}
 \usepackage{subcaption}
 \usepackage{longtable}
-
-%Para imágenes de pgf
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{pgf}
-\usepackage{graphicx}
+\usepackage{rotating}
 \providecommand{\mathdefault}[1]{#1}
-
-
-% Comprimir citas numéricas consecutivas: [9-14] en lugar de [9,10,11,12,13,14]
 \usepackage[numbers,sort&compress]{natbib}
-
-% Hipervínculos (incluye entradas del índice/tabla de contenido)
 \usepackage[hidelinks]{hyperref}
 \hypersetup{linktoc=all}
-
-
-\usepackage{rotating} %Para rotar texto, objetos y tablas seite. No se ve en DVI solo en PS. Seite 328 Hundebuch
-                        %se usa junto con \rotate, \sidewidestable ....
-
-\usepackage{mathrsfs}
-
-\usepackage{mathrsfs}
 
 
 \renewcommand{\theequation}{\thechapter-\arabic{equation}}
