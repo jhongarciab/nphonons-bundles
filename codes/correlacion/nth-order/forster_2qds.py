@@ -200,7 +200,7 @@ else:
 # -----------------------------------------------------------------------------
 # Figura apilada g^(n)(0) vs Δ/ω_b
 # -----------------------------------------------------------------------------
-fig, axes = plt.subplots(4, 1, figsize=(3.80, 5.20), sharex=True)
+fig, axes = plt.subplots(4, 1, figsize=(3.65, 5.05), sharex=True)
 
 color_by_order = {2: "blue", 3: "green", 4: "#c4942a", 5: "red"}
 

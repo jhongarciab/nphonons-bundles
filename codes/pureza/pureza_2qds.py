@@ -609,7 +609,7 @@ ax_a.set_yticks([0, 0.5, 1.0])
 ax_a.set_yticklabels([r'$0$', r'$0.5$', r'$1$'])
 ax_a.tick_params(labelsize=12)
 ax_a.set_facecolor('white')
-ax_a.text(0.97, 0.95, r'(a)', transform=ax_a.transAxes,
+ax_a.text(0.97, 0.85, r'(a)', transform=ax_a.transAxes,
           fontsize=12, ha='right', va='top')
 ax_a.text(0.05, 0.26, r'$\Pi_2$', color=colors_n[2],
           transform=ax_a.transAxes, fontsize=10, ha='left', va='bottom')
@@ -646,7 +646,7 @@ ax_b.set_yticks([0, 0.5, 1.0])
 ax_b.tick_params(labelsize=12)
 ax_b.tick_params(axis='y', which='both', left=False, labelleft=False)
 ax_b.set_facecolor('white')
-ax_b.text(0.03, 0.95, r'(b)', transform=ax_b.transAxes,
+ax_b.text(0.03, 0.85, r'(b)', transform=ax_b.transAxes,
           fontsize=12, ha='left', va='top')
 ax_b.text(0.95, 0.26, r'$\Pi_2$', color=colors_n[2],
           transform=ax_b.transAxes, fontsize=10, ha='right', va='bottom')
@@ -656,7 +656,7 @@ ax_b.text(0.95, 0.08, r'$\Pi_4$', color=colors_n[4],
           transform=ax_b.transAxes, fontsize=10, ha='right', va='bottom')
 
 fig.subplots_adjust(
-    left=0.10, right=0.98,
+    left=0.10, right=0.95,
     top=0.88, bottom=0.22,
     wspace=0.12,
 )

@@ -29,7 +29,7 @@ from matplotlib.ticker import FixedLocator, LogFormatterMathtext
 # -----------------------------------------------------------------------------
 # Configuración
 # -----------------------------------------------------------------------------
-RERUN = False  # False = recalcular; True = cargar datos guardados
+RERUN = True  # False = recalcular; True = cargar datos guardados
 
 rcParams.update({
     "pgf.texsystem": "pdflatex",
@@ -211,7 +211,7 @@ else:
 # -----------------------------------------------------------------------------
 # FIGURA
 # -----------------------------------------------------------------------------
-fig, axes = plt.subplots(3, 1, figsize=(6.30, 4.00), sharex=True)
+fig, axes = plt.subplots(3, 1, figsize=(6.00, 3.90), sharex=True)
 kw = dict(lw=0.9)
 skip = 200
 

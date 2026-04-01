@@ -261,7 +261,7 @@ for col, kap in enumerate(kappa_list):
     ax.set_zticklabels([r'$-2$', r'$-1$', r'$\phantom{-}0$', r'$\phantom{-}1$', r'$\phantom{-}2$'])
     ax.zaxis.set_tick_params(pad=-2, labelsize=9)
     ax.zaxis._axinfo['juggled'] = (1, 2, 0)
-    ax.text2D(-0.15, 0.50, r'$\log_{10}\,g_2^{(2)}(\tau)$',
+    ax.text2D(-0.15, 0.50, r'$g_2^{(2)}(\tau)$',
               transform=ax.transAxes, fontsize=12,
               rotation=90, va='center', ha='center')
 
