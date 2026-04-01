@@ -1,19 +1,8 @@
 \begin{appendix}
 \chapter{Derivación de las tasas de transición de n-fonones}\label{AnexoA}
 
-Consideramos dos puntos cuánticos idénticos, QD$_1$ y QD$_2$, cada uno
-modelado como un sistema de dos niveles con estados electrónicos $|v\rangle$
-(valencia) y $|c\rangle$ (conducción), frecuencia de transición
-$\omega_\sigma$ y acoplamiento electrón-fonón $\lambda$. Ambos QDs
-interactúan con un único modo fonónico de cavidad de frecuencia $\omega_b$,
-con operadores de escalera $b$ y $b^\dagger$. Los QDs están acoplados entre
-sí por la interacción de Förster con constante $J$. Un láser coherente de
-frecuencia $\omega_L$ conduce ambos QDs con la misma frecuencia de Rabi
-$\Omega$. Con $\hbar = 1$ y el operador de número electrónico total
-$\hat{N} \equiv \sigma_1^\dagger\sigma_1 + \sigma_2^\dagger\sigma_2$,
-donde $\sigma_i = |v\rangle_i\!\langle c|$ y
-$\sigma_i^\dagger = |c\rangle_i\!\langle v|$, el Hamiltoniano total es
-%
+Consideramos dos puntos cuánticos idénticos, QD$_1$ y QD$_2$, cada uno modelado como un sistema de dos niveles con estados electrónicos $|v\rangle$ (valencia) y $|c\rangle$ (conducción), frecuencia de transición $\omega_\sigma$ y acoplamiento electrón-fonón $\lambda$. Ambos QDs interactúan con un único modo fonónico de cavidad de frecuencia $\omega_b$, con operadores de escalera $b$ y $b^\dagger$. Los QDs están acoplados entre sí por la interacción de Förster con constante $J$. Un láser coherente de frecuencia $\omega_L$ conduce ambos QDs con la misma frecuencia de Rabi $\Omega$. Con $\hbar = 1$ y el operador de número electrónico total $\hat{N} \equiv \sigma_1^\dagger\sigma_1 + \sigma_2^\dagger\sigma_2$, donde $\sigma_i = |v\rangle_i\!\langle c|$ y $\sigma_i^\dagger = |c\rangle_i\!\langle v|$, el Hamiltoniano total es
+
 \begin{equation}
 	H_\mathrm{lab}
 	= \omega_b b^\dagger b
@@ -24,11 +13,9 @@ $\sigma_i^\dagger = |c\rangle_i\!\langle v|$, el Hamiltoniano total es
 	+ e^{-i\omega_L t}\sigma_i^\dagger\right).
 	\label{eq:Hlab}
 \end{equation}
-%
-En el marco rotante con el láser, con desintonía
-$\Delta \equiv \omega_\sigma - \omega_L$,
-el Hamiltoniano~\eqref{eq:Hlab} se convierte en
-%
+
+En el marco rotante con el láser, con desintonía $\Delta \equiv \omega_\sigma - \omega_L$, el Hamiltoniano~\eqref{eq:Hlab} se convierte en
+
 \begin{equation}
 	H = \omega_b b^\dagger b
 	+ \Delta\,\hat{N}
@@ -37,14 +24,9 @@ el Hamiltoniano~\eqref{eq:Hlab} se convierte en
 	+ \Omega\sum_{i=1,2}\!\left(\sigma_i + \sigma_i^\dagger\right).
 	\label{eq:H}
 \end{equation}
-%
-El término de Förster conserva $\hat{N}$ y por tanto es independiente del
-tiempo en el marco rotante. En el subespacio de una excitación electrónica
-$\{|cv\rangle,|vc\rangle\}$, con $|cv\rangle \equiv |c\rangle_1|v\rangle_2$,
-dicho término tiene representación matricial $J\bigl(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\bigr)$,
-cuyos autoestados son el estado brillante simétrico y el estado oscuro
-antisimétrico,
-%
+
+El término de Förster conserva $\hat{N}$ y por tanto es independiente del tiempo en el marco rotante. En el subespacio de una excitación electrónica $\{|cv\rangle,|vc\rangle\}$, con $|cv\rangle \equiv |c\rangle_1|v\rangle_2$, dicho término tiene representación matricial $J\bigl(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\bigr)$, cuyos autoestados son el estado brillante simétrico y el estado oscuro antisimétrico,
+
 \begin{align}
 	|\Psi_+\rangle &= \tfrac{1}{\sqrt{2}}\!\left(|cv\rangle + |vc\rangle\right),
 	\quad E_+ = +J,
@@ -53,17 +35,9 @@ antisimétrico,
 	\quad E_- = -J.
 	\label{eq:dark}
 \end{align}
-%
-El término de conducción sobre el vacío electrónico $|vv\rangle$ satisface
-$\Omega(\sigma_1^\dagger+\sigma_2^\dagger)|vv\rangle = \sqrt{2}\,\Omega\,|\Psi_+\rangle$,
-de modo que el láser acopla exclusivamente el estado brillante con frecuencia
-de Rabi colectiva $\sqrt{2}\,\Omega$. El estado oscuro $|\Psi_-\rangle$ está
-desacoplado del láser y no participa en la dinámica de emisión. Introduciendo
-los operadores colectivos $S^\dagger = |\Psi_+\rangle\langle vv|$ y
-$S = |vv\rangle\langle\Psi_+|$, y restringiendo la dinámica al subespacio
-$\{|vv\rangle, |\Psi_+\rangle\}$, el Hamiltoniano~\eqref{eq:H} adopta la
-forma efectiva
-%
+
+La acción del operador de excitación colectivo sobre el estado base electrónico satisface $\Omega(\sigma_1^\dagger+\sigma_2^\dagger)|vv\rangle = \sqrt{2}\,\Omega\,|\Psi_+\rangle$, de modo que el láser acopla exclusivamente el estado brillante con frecuencia de Rabi colectiva $\sqrt{2}\,\Omega$. El estado oscuro $|\Psi_-\rangle$ está desacoplado del láser y no participa en la dinámica de emisión en el límite de emisores idénticos; solo adquiere población a través del desfase puro $\gamma_\varphi$, que actúa individualmente sobre cada QD y rompe la simetría del subespacio colectivo. Introduciendo los operadores colectivos $S^\dagger = |\Psi_+\rangle\langle vv|$ y $S = |vv\rangle\langle\Psi_+|$, y restringiendo la dinámica al subespacio $\{|vv\rangle, |\Psi_+\rangle\}$, el Hamiltoniano~\eqref{eq:H} adopta la forma efectiva
+
 \begin{equation}
 	H_\mathrm{eff} = \omega_b b^\dagger b
 	+ (\Delta + J)\,S^\dagger S
@@ -71,30 +45,20 @@ forma efectiva
 	+ \sqrt{2}\,\Omega\!\left(S + S^\dagger\right).
 	\label{eq:Heff}
 \end{equation}
-%
-Definimos la desintonía efectiva $\widetilde\Delta \equiv \Delta + J$ y la
-frecuencia de Rabi efectiva $\widetilde\Omega \equiv \sqrt{2}\,\Omega$.
-A continuación tratamos los distintos regímenes de interés.
 
+Con estas definiciones, $H_\mathrm{eff}$ tiene la misma estructura que el Hamiltoniano de un único punto cuántico acoplado a un modo fonónico~\cite{bin2020}, con los reemplazos $\Delta \to \widetilde\Delta$ y $\Omega \to \widetilde\Omega$, más el factor superradiante $\sqrt{2}$ heredado de la hibridación excitónica. A continuación tratamos los distintos regímenes de interés.
 
 \subsection{Régimen de conducción débil y acoplamiento débil}\label{reg1}
 
-En el régimen $\widetilde\Omega,\,\lambda \ll \omega_b$, los autoestados del Hamiltoniano~\eqref{eq:Heff} son
-próximos a los estados producto $|m,vv\rangle$ y $|m,\Psi_+\rangle$. Cuando
-el sistema se conduce a la resonancia de Stokes de $n$ fonones,
-$\widetilde\Delta = -n\omega_b$, es decir
-%
+En el régimen $\widetilde\Omega,\,\lambda \ll \omega_b$, los autoestados del Hamiltoniano~\eqref{eq:Heff} son aproximadamente los estados producto $|m,vv\rangle$ y $|m,\Psi_+\rangle$. Cuando el sistema se conduce a la resonancia de Stokes de $n$ fonones, $\widetilde\Delta = -n\omega_b$, es decir
+
 \begin{equation}
 	\Delta_n = -n\omega_b - J,
 	\label{eq:res}
 \end{equation}
-%
-se puede considerar el espacio de Hilbert truncado generado por los
-$2(n+1)$ estados producto
-$\{|0,vv\rangle, |n,\Psi_+\rangle, |0,\Psi_+\rangle, |1,vv\rangle,
-\ldots, |n-1,\Psi_+\rangle, |n,vv\rangle\}$.
-El Hamiltoniano truncado tiene la forma de bloques
-%
+
+se puede considerar el espacio de Hilbert truncado generado por los $2(n+1)$ estados producto $\{|0,vv\rangle, |n,\Psi_+\rangle, |0,\Psi_+\rangle, |1,vv\rangle, \ldots, |n-1,\Psi_+\rangle, |n,vv\rangle\}$. El Hamiltoniano truncado tiene la forma de bloques
+
 \begin{equation}
 	H^{(n)} = \begin{pmatrix}
 		\mathbf{H}^{(n)} & X^{(n)} \\[4pt]
@@ -102,15 +66,9 @@ El Hamiltoniano truncado tiene la forma de bloques
 	\end{pmatrix},
 	\label{eq:bloques}
 \end{equation}
-%
-donde $\mathbf{H}^{(n)}$ actúa en el subespacio de interés
-$\{|0,vv\rangle,\,|n,\Psi_+\rangle\}$. En resonancia, los dos estados de
-interés son degenerados y $\mathbf{H}^{(n)} = 0$. La submatriz $R^{(n)}$
-es diagonal con las energías de los $2n$ estados intermedios,
-$E_{|k,vv\rangle} = k\omega_b$ y
-$E_{|k,\Psi_+\rangle} = -(n-k)\omega_b$ para $k=1,\ldots,n$.
-Los dos subespacios quedan acoplados por
-%
+
+donde $\mathbf{H}^{(n)}$ actúa en el subespacio de interés $\{|0,vv\rangle,\,|n,\Psi_+\rangle\}$. En resonancia, los dos estados de interés son degenerados y $\mathbf{H}^{(n)} = 0$. La submatriz $R^{(n)}$ es diagonal con las energías de los $2n$ estados intermedios, $E_{|k,vv\rangle} = k\omega_b$ y $E_{|k,\Psi_+\rangle} = -(n-k)\omega_b$ para $k=1,\ldots,n$. Los dos subespacios quedan acoplados por
+
 \begin{equation}
 	X^{(n)} = \begin{pmatrix}
 		\widetilde\Omega & 0 & \cdots & 0 & 0 \\
@@ -118,25 +76,16 @@ Los dos subespacios quedan acoplados por
 	\end{pmatrix},
 	\label{eq:Xn}
 \end{equation}
-%
-donde la primera (segunda) fila corresponde a $|0,vv\rangle$
-($|n,\Psi_+\rangle$). Aplicando la fórmula de partición de Löwdin para
-eliminar adiabáticamente los estados intermedios,
-%
+
+donde la primera (segunda) fila corresponde a $|0,vv\rangle$ ($|n,\Psi_+\rangle$). La partición de Löwdin~\cite{lowdin1951} es un método perturbativo que proyecta la dinámica sobre el subespacio de interés eliminando los estados intermedios de forma exacta cuando $\mathbf{H}^{(n)}=0$: el Hamiltoniano efectivo resultante es
+
 \begin{equation}
 	H_\mathrm{eff}^{(n)} = X^{(n)}\!\left(-R^{(n)}\right)^{-1}\!X^{(n)T},
 	\label{eq:Lowdin}
 \end{equation}
-%
-la frecuencia super-Rabi efectiva de $n$ fonones queda definida como el
-elemento fuera de la diagonal,
-$\Omega_\mathrm{eff}^{(n)} = H_\mathrm{eff}^{(n)}(1,2)$.
-\textit{Caso base $n=1$.}
-El espacio truncado es
-$\{|0,vv\rangle,\,|1,\Psi_+\rangle,\,|0,\Psi_+\rangle,\,|1,vv\rangle\}$.
-En resonancia $\widetilde\Delta = -\omega_b$, el Hamiltoniano completo en
-esta base (estados de interés primero, intermedios después) es
-%
+
+la frecuencia super-Rabi efectiva de $n$ fonones queda definida como el elemento fuera de la diagonal, $\Omega_\mathrm{eff}^{(n)} = H_\mathrm{eff}^{(n)}(1,2)$. \textit{Caso base $n=1$.} El espacio truncado es $\{|0,vv\rangle,\,|1,\Psi_+\rangle,\,|0,\Psi_+\rangle,\,|1,vv\rangle\}$. En resonancia $\widetilde\Delta = -\omega_b$, el Hamiltoniano completo en esta base (estados de interés primero, intermedios después) es
+
 \begin{equation}
 	H^{(1)} = \begin{pmatrix}
 		0 & 0 & \widetilde\Omega & 0 \\[4pt]
@@ -146,17 +95,10 @@ esta base (estados de interés primero, intermedios después) es
 	\end{pmatrix},
 	\label{eq:H1}
 \end{equation}
-%
-donde los elementos fuera de la diagonal provienen directamente de
-$H_\mathrm{eff}$~\eqref{eq:Heff}: el acoplamiento
-$\langle 0,\Psi_+|\widetilde\Omega\,S^\dagger|0,vv\rangle = \widetilde\Omega$
-da las posiciones $(3,1)$ y $(1,3)$; el elemento
-$\langle 1,\Psi_+|\lambda\,S^\dagger S\,b^\dagger|0,\Psi_+\rangle
-= \lambda\sqrt{1} = \lambda$ da $(2,3)$ y $(3,2)$; y
-$\langle 1,vv|\widetilde\Omega\,S|1,\Psi_+\rangle = \widetilde\Omega$
-da $(4,2)$ y $(2,4)$.
-Identificamos los bloques de~\eqref{eq:bloques}:
-%
+
+donde los elementos fuera de la diagonal provienen directamente de $H_\mathrm{eff}$~\eqref{eq:Heff}: el acoplamiento $\langle 0,\Psi_+|\widetilde\Omega\,S^\dagger|0,vv\rangle = \widetilde\Omega$ da las posiciones $(3,1)$ y $(1,3)$; el elemento $\langle 1,\Psi_+|\lambda\,S^\dagger S\,b^\dagger|0,\Psi_+\rangle = \lambda\sqrt{1} = \lambda$ da $(2,3)$ y $(3,2)$; y $\langle 1,vv|\widetilde\Omega\,S|1,\Psi_+\rangle = \widetilde\Omega$
+da $(4,2)$ y $(2,4)$. Identificamos los bloques de~\eqref{eq:bloques}:
+
 \begin{equation}
 	X^{(1)} = \begin{pmatrix}
 		\widetilde\Omega & 0 \\[4pt] \lambda & \widetilde\Omega
@@ -167,9 +109,9 @@ Identificamos los bloques de~\eqref{eq:bloques}:
 	\end{pmatrix}.
 	\label{eq:bloques1}
 \end{equation}
-%
+
 Aplicando~\eqref{eq:Lowdin} explícitamente:
-%
+
 \begin{equation}
 	H_\mathrm{eff}^{(1)}
 	= \begin{pmatrix}\widetilde\Omega & 0\\\lambda & \widetilde\Omega\end{pmatrix}
@@ -181,22 +123,11 @@ Aplicando~\eqref{eq:Lowdin} explícitamente:
 	\end{pmatrix},
 	\label{eq:Heff1}
 \end{equation}
-%
-de donde $\Omega_\mathrm{eff}^{(1)} = \widetilde\Omega\lambda/\omega_b$.
-En términos de $\Delta = -\omega_b$ esto equivale a
-$\Omega_\mathrm{eff}^{(1)} = -\widetilde\Omega\lambda/\Delta$,
-que es la semilla de la recurrencia.
 
-Para obtener la expresión general consideramos el espacio truncado
-generado por los cuatro estados
-$\{|0,vv\rangle, |n,\Psi_+\rangle, |n-1,\Psi_+\rangle, |n,vv\rangle\}$,
-donde $\Omega_\mathrm{eff}^{(n-1)}$ es el acoplamiento efectivo ya calculado
-entre $|0,vv\rangle$ y $|n-1,\Psi_+\rangle$. En la resonancia de $n$
-fonones, la energía del estado intermedio $|n-1,\Psi_+\rangle$ es
-$(n-1)\omega_b + \widetilde\Delta = (n-1)\omega_b - n\omega_b = -\omega_b$.
-El Hamiltoniano en el ordenamiento
-$(|0,vv\rangle,\,|n,\Psi_+\rangle,\,|n-1,\Psi_+\rangle,\,|n,vv\rangle)$ es
-%
+de donde $\Omega_\mathrm{eff}^{(1)} = \widetilde\Omega\lambda/\omega_b$. En términos de $\Delta = -\omega_b$ esto equivale a $\Omega_\mathrm{eff}^{(1)} = -\widetilde\Omega\lambda/\Delta$, que es la semilla de la recurrencia.
+
+Para obtener la expresión general consideramos el espacio truncado generado por los cuatro estados $\{|0,vv\rangle, |n,\Psi_+\rangle, |n-1,\Psi_+\rangle, |n,vv\rangle\}$, donde $\Omega_\mathrm{eff}^{(n-1)}$ es el acoplamiento efectivo ya calculado entre $|0,vv\rangle$ y $|n-1,\Psi_+\rangle$. En la resonancia de $n$ fonones, la energía del estado intermedio $|n-1,\Psi_+\rangle$ es $(n-1)\omega_b + \widetilde\Delta = (n-1)\omega_b - n\omega_b = -\omega_b$. El Hamiltoniano en el ordenamiento $(|0,vv\rangle,\,|n,\Psi_+\rangle,\,|n-1,\Psi_+\rangle,\,|n,vv\rangle)$ es
+
 \begin{equation}
 	H^{(n)} = \begin{pmatrix}
 		0 & 0 & \Omega_\mathrm{eff}^{(n-1)} & 0 \\[4pt]
@@ -206,11 +137,9 @@ $(|0,vv\rangle,\,|n,\Psi_+\rangle,\,|n-1,\Psi_+\rangle,\,|n,vv\rangle)$ es
 	\end{pmatrix},
 	\label{eq:Hn}
 \end{equation}
-%
-donde la energía del estado intermedio en la diagonal $(3,3)$ es
-$-\omega_b$ (evaluada en la resonancia de $n$ fonones), no $-(n-1)\omega_b$.
-El Hamiltoniano reducido adopta entonces la forma~\eqref{eq:bloques} con
-%
+
+donde la diagonal $(3,3)$ corresponde a la energía del estado $|n-1,\Psi_+\rangle$ evaluada en la resonancia de $n$ fonones: $(n-1)\omega_b + \widetilde\Delta = (n-1)\omega_b - n\omega_b = -\omega_b$. El Hamiltoniano reducido adopta entonces la forma~\eqref{eq:bloques} con
+
 \begin{equation}
 	X^{(n)} = \begin{pmatrix}
 		\Omega_\mathrm{eff}^{(n-1)} & 0 \\[4pt]
@@ -223,21 +152,18 @@ El Hamiltoniano reducido adopta entonces la forma~\eqref{eq:bloques} con
 	\end{pmatrix}.
 	\label{eq:XnRn}
 \end{equation}
-%
-Aplicando~\eqref{eq:Lowdin} al espacio reducido, el único contribuyente al
-elemento $(1,2)$ del Hamiltoniano efectivo es el estado intermedio
-$|n-1,\Psi_+\rangle$ (con denominador $-\omega_b$), lo que da la relación
-de recurrencia
-%
+
+Aplicando~\eqref{eq:Lowdin} al espacio reducido, el único contribuyente al elemento $(1,2)$ del Hamiltoniano efectivo es el estado intermedio $|n-1,\Psi_+\rangle$ (con denominador $-\omega_b$), lo que da la relación de recurrencia
+
 \begin{equation}
 	\Omega_\mathrm{eff}^{(n)}
 	= -\frac{\sqrt{n}\,\lambda}{\Delta+(n-1)\omega_b}\,
 	\Omega_\mathrm{eff}^{(n-1)}.
 	\label{eq:rec}
 \end{equation}
-%
-Siguiendo el mismo procedimiento hacia atrás,
-%
+
+Iterando la relación~\eqref{eq:rec} hacia órdenes inferiores,
+
 \begin{equation}
 	\Omega_\mathrm{eff}^{(n-1)}
 	= -\frac{\sqrt{n-1}\,\lambda}{\Delta+(n-2)\omega_b}\,
@@ -248,14 +174,9 @@ Siguiendo el mismo procedimiento hacia atrás,
 	\Omega_\mathrm{eff}^{(1)}.
 	\label{eq:chain}
 \end{equation}
-%
-Para el espacio de cuatro estados con $n=1$,
-$\{|0,vv\rangle,|1,\Psi_+\rangle,|0,\Psi_+\rangle,|1,vv\rangle\}$,
-la aplicación directa de~\eqref{eq:Lowdin} da
-$\Omega_\mathrm{eff}^{(1)} = -\widetilde\Omega\lambda/\Delta$.
-Evaluando todo en la resonancia de $n$ fonones $\Delta = -n\omega_b$, la
-frecuencia super-Rabi efectiva de orden cualquiera es
-%
+
+Para el espacio de cuatro estados con $n=1$, $\{|0,vv\rangle,|1,\Psi_+\rangle,|0,\Psi_+\rangle,|1,vv\rangle\}$, la aplicación directa de~\eqref{eq:Lowdin} da $\Omega_\mathrm{eff}^{(1)} = -\widetilde\Omega\lambda/\Delta$. Evaluando todo en la resonancia de $n$ fonones $\Delta = -n\omega_b$, la frecuencia super-Rabi efectiva de orden cualquiera es
+
 \begin{equation}
 	\Omega_\mathrm{eff}^{(n)}
 	= -\frac{\sqrt{n}\,\lambda}{\Delta+(n-1)\omega_b}\,
@@ -268,17 +189,9 @@ frecuencia super-Rabi efectiva de orden cualquiera es
 	\frac{\widetilde\Omega}{\sqrt{n!}},
 	\label{eq:Oeff_I_pre}
 \end{equation}
-%
-donde en el último paso se usó que los denominadores evaluados en
-$\Delta = -n\omega_b$ son
-$\Delta = -n\omega_b$,
-$\Delta+\omega_b = -(n-1)\omega_b$,
-\ldots,
-$\Delta+(n-1)\omega_b = -\omega_b$,
-de modo que el producto de denominadores es $(-1)^n\,\omega_b^n\,(n-1)!$ y
-el producto de numeradores es $\lambda^n\sqrt{n!}$.
-Sustituyendo $\widetilde\Omega = \sqrt{2}\,\Omega$, el resultado final es
-%
+
+donde en el último paso se usó que los denominadores evaluados en $\Delta = -n\omega_b$ son $\Delta = -n\omega_b$, $\Delta+\omega_b = -(n-1)\omega_b$, \ldots, $\Delta+(n-1)\omega_b = -\omega_b$, de modo que el producto de denominadores es $(-1)^n\,\omega_b^n\,(n-1)!$ y el producto de numeradores es $\lambda^n\sqrt{n!}$. Sustituyendo $\widetilde\Omega = \sqrt{2}\,\Omega$, el resultado final es
+
 \begin{equation}
 	\boxed{
 		\Omega_\mathrm{eff}^{(n)}
@@ -287,36 +200,24 @@ Sustituyendo $\widetilde\Omega = \sqrt{2}\,\Omega$, el resultado final es
 	}
 	\label{eq:resultado}
 \end{equation}
-%
-válido al orden dominante en $\lambda/\omega_b$, bajo la condición de
-resonancia~\eqref{eq:res}. El factor $\sqrt{2}$ es de origen puramente
-colectivo: proviene del acoplamiento superradiante del estado brillante al
-láser.
+
+válido al orden dominante en $\lambda/\omega_b$, bajo la condición de resonancia~\eqref{eq:res}. El factor $\sqrt{2}$ proviene de $\widetilde\Omega = \sqrt{2}\,\Omega$ y es de origen puramente colectivo: refleja que el estado brillante $|\Psi_+\rangle$ se acopla al láser con una frecuencia de Rabi amplificada por la interferencia constructiva de los dos emisores.
 
 \subsection{Régimen de acoplamiento fuerte electrón-fonón}\label{reg2}
 
-En el régimen $\lambda \sim \omega_b$ con $\widetilde\Omega \ll \omega_b$,
-el acoplamiento electrón-fonón no puede tratarse perturbativamente.
-La estrategia es eliminarlo primero mediante una transformación unitaria
-exacta, dejando al láser como único término perturbativo. Definimos el
-operador de desplazamiento colectivo
-%
+En el régimen $\lambda \sim \omega_b$ con $\widetilde\Omega \ll \omega_b$, el acoplamiento electrón-fonón no puede tratarse perturbativamente. La estrategia es eliminarlo primero mediante una transformación unitaria exacta, dejando al láser como único término perturbativo. Definimos el operador de desplazamiento colectivo
+
 \begin{equation}
 	\widetilde{D} = \exp\!\left[
 	\frac{\lambda}{\omega_b}\,S^\dagger S\,(b^\dagger - b)
 	\right].
 	\label{eq:D}
 \end{equation}
-%
-Dado que $S^\dagger S$ tiene autovalores $0$ (en $|vv\rangle$) y $1$
-(en $|\Psi_+\rangle$), la transformación actúa como la identidad en el
-sector electrónico vacío y como el desplazamiento estándar
-$D(\lambda/\omega_b)$ en el sector excitado.
 
-Calculamos $\widetilde{D}\,H_\mathrm{eff}\,\widetilde{D}^\dagger$ término
-a término. Denotando $\hat{n}_e \equiv S^\dagger S$ y usando
-$D(\alpha)\,b\,D^\dagger(\alpha) = b - \alpha$ con $\alpha = \lambda/\omega_b$:
-%
+Dado que $S^\dagger S$ es un proyector con autovalores $0$ en $|vv\rangle$ y $1$ en $|\Psi_+\rangle$, la transformación actúa como la identidad en el sector vacío y como el desplazamiento estándar $D(\lambda/\omega_b)$ en el sector excitado, eliminando exactamente el acoplamiento electrón-fonón.
+
+Calculamos $\widetilde{D}\,H_\mathrm{eff}\,\widetilde{D}^\dagger$ término a término. Denotando $\hat{n}_e \equiv S^\dagger S$ y usando $D(\alpha)\,b\,D^\dagger(\alpha) = b - \alpha$ con $\alpha = \lambda/\omega_b$:
+
 \begin{align}
 	\widetilde{D}\,(\omega_b b^\dagger b)\,\widetilde{D}^\dagger
 	&= \omega_b b^\dagger b
@@ -331,11 +232,9 @@ $D(\alpha)\,b\,D^\dagger(\alpha) = b - \alpha$ con $\alpha = \lambda/\omega_b$:
 	- \frac{2\lambda^2}{\omega_b}\,\hat{n}_e,
 	\label{eq:D_eph}
 \end{align}
-%
-donde en~\eqref{eq:D_fon} se usó $\hat{n}_e^2 = \hat{n}_e$ (proyector).
-Sumando~\eqref{eq:D_fon}--\eqref{eq:D_eph}, los términos en
-$\hat{n}_e(b^\dagger+b)$ se cancelan exactamente:
-%
+
+donde en~\eqref{eq:D_fon} se usó $\hat{n}_e^2 = \hat{n}_e$ (proyector). Sumando~\eqref{eq:D_fon}--\eqref{eq:D_eph}, los términos en $\hat{n}_e(b^\dagger+b)$ se cancelan exactamente:
+
 \begin{equation}
 	\widetilde{D}\bigl[\omega_b b^\dagger b
 	+ \widetilde\Delta\,\hat{n}_e
@@ -344,15 +243,11 @@ $\hat{n}_e(b^\dagger+b)$ se cancelan exactamente:
 	+ \left(\widetilde\Delta - \frac{\lambda^2}{\omega_b}\right)\hat{n}_e.
 	\label{eq:D_libre}
 \end{equation}
-%
-La frecuencia de transición renormalizada queda
-$\widetilde\omega_\sigma \equiv \widetilde\Delta - \lambda^2/\omega_b
-= \Delta + J - \lambda^2/\omega_b$.
 
-Para el término del láser, $S^\dagger$ eleva $\hat{n}_e$ de $0$ a $1$,
-de modo que la transformación actúa con $\hat{n}_e = 1$ a la izquierda
-de $S^\dagger$ y con $\hat{n}_e = 0$ a su derecha:
-%
+La frecuencia de transición renormalizada queda $\widetilde\omega_\sigma \equiv \widetilde\Delta - \lambda^2/\omega_b = \Delta + J - \lambda^2/\omega_b$.
+
+Para el término del láser, $S^\dagger$ crea una excitación electrónica, de modo que $\widetilde{D}$ actúa con $\hat{n}_e = 1$ en el sector final (a la izquierda) y con $\hat{n}_e = 0$ en el sector inicial (a la derecha):
+
 \begin{equation}
 	\widetilde{D}\,\widetilde\Omega(S+S^\dagger)\,\widetilde{D}^\dagger
 	= \widetilde\Omega\!\left[
@@ -361,10 +256,9 @@ de $S^\dagger$ y con $\hat{n}_e = 0$ a su derecha:
 	\right].
 	\label{eq:D_laser}
 \end{equation}
-%
-Reuniendo~\eqref{eq:D_libre} y~\eqref{eq:D_laser}, el Hamiltoniano
-transformado es
-%
+
+Reuniendo~\eqref{eq:D_libre} y~\eqref{eq:D_laser}, el Hamiltoniano transformado es
+
 \begin{equation}
 	\widetilde{H} = \omega_b b^\dagger b
 	+ \widetilde\omega_\sigma\,S^\dagger S
@@ -374,11 +268,9 @@ transformado es
 	\right].
 	\label{eq:Htilde}
 \end{equation}
-%
-Para identificar los procesos resonantes de $n$ fonones, expandimos la
-exponencial en~\eqref{eq:Htilde} en orden normal mediante la identidad
-de Baker-Campbell-Hausdorff,
-%
+
+Para identificar los procesos resonantes de $n$ fonones, expandimos la exponencial en~\eqref{eq:Htilde} en orden normal mediante la fórmula de ordenamiento del operador de desplazamiento~\cite{cahill1969},
+
 \begin{equation}
 	e^{(\lambda/\omega_b)(b^\dagger - b)}
 	= e^{-\frac{1}{2}(\lambda/\omega_b)^2}
@@ -386,24 +278,16 @@ de Baker-Campbell-Hausdorff,
 	\frac{(-1)^l(\lambda/\omega_b)^{k+l}}{k!\,l!}\,b^{\dagger k} b^l.
 	\label{eq:BCH}
 \end{equation}
-%
-El término $S^\dagger b^{\dagger k}b^l$ acopla $|0,vv\rangle$ con
-$|k-l,\Psi_+\rangle$, de modo que el proceso Stokes de $n = k - l$
-fonones tiene como condición de resonancia
-$E_{|0,vv\rangle} = E_{|n,\Psi_+\rangle}$, es decir
-$\widetilde\omega_\sigma = -n\omega_b$:
-%
+
+El término $S^\dagger b^{\dagger k}b^l$ acopla $|0,vv\rangle$ con $|k-l,\Psi_+\rangle$, de modo que el proceso Stokes de $n = k - l$ fonones tiene como condición de resonancia $E_{|0,vv\rangle} = E_{|n,\Psi_+\rangle}$, es decir $\widetilde\omega_\sigma = -n\omega_b$:
+
 \begin{equation}
-	\boxed{\Delta_n = \frac{\lambda^2}{\omega_b} - n\omega_b - J.}
+	\Delta_n = \frac{\lambda^2}{\omega_b} - n\omega_b - J.
 	\label{eq:res_II}
 \end{equation}
-%
-En resonancia, la frecuencia super-Rabi efectiva de $n$ fonones es el
-elemento de matriz del operador $e^{(\lambda/\omega_b)(b^\dagger - b)}$
-entre los estados fonónicos $|0\rangle$ y $|n\rangle$, multiplicado
-por $\widetilde\Omega$. Usando la fórmula general para el elemento de
-matriz de un operador de desplazamiento entre estados de Fock,
-%
+
+En resonancia, la frecuencia super-Rabi efectiva de $n$ fonones es el elemento de matriz del operador $e^{(\lambda/\omega_b)(b^\dagger - b)}$ entre los estados fonónicos $|0\rangle$ y $|n\rangle$, multiplicado por $\widetilde\Omega$. Usando la fórmula general para el elemento de matriz de un operador de desplazamiento entre estados de Fock,
+
 \begin{equation}
 	\langle n|\,e^{(\lambda/\omega_b)(b^\dagger - b)}\,|0\rangle
 	= e^{-\frac{1}{2}(\lambda/\omega_b)^2}
@@ -411,10 +295,9 @@ matriz de un operador de desplazamiento entre estados de Fock,
 	\frac{1}{\sqrt{n!}}\,L_0^n\!\left(\!\left(\frac{\lambda}{\omega_b}\right)^{\!2}\right),
 	\label{eq:elem_mat}
 \end{equation}
-%
-donde $L_m^n(\varepsilon)$ es el polinomio de Laguerre asociado.
-Para $m=0$, $L_0^n(\varepsilon) = 1$ para todo $n$, y por tanto:
-%
+
+donde $L_m^n(\varepsilon)$ es el polinomio de Laguerre asociado. Para $m=0$, $L_0^n(\varepsilon) = 1$ para todo $n$, y por tanto:
+
 \begin{equation}
 	\boxed{
 		\Omega_\mathrm{eff}^{(n)}
@@ -425,25 +308,13 @@ Para $m=0$, $L_0^n(\varepsilon) = 1$ para todo $n$, y por tanto:
 	}
 	\label{eq:resultado_II}
 \end{equation}
-%
-bajo la condición de resonancia~\eqref{eq:res_II}. El factor gaussiano
-$\exp[-(\lambda/\omega_b)^2/2]$ es el factor de Franck-Condon generado
-por el desplazamiento fonónico; en el límite $\lambda \ll \omega_b$
-tiende a $1$ y recupera el resultado~\eqref{eq:resultado} del Régimen~I.
-Las correcciones de la molécula excitónica respecto al caso de un solo
-punto cuántico son las mismas que en el Régimen~I: el factor superradiante
-$\sqrt{2}$ en la amplitud y el desplazamiento de resonancia $-J$.
+
+bajo la condición de resonancia~\eqref{eq:res_II}. El factor gaussiano $\exp[-(\lambda/\omega_b)^2/2]$ es el factor de Franck-Condon generado por el desplazamiento fonónico; en el límite $\lambda \ll \omega_b$ tiende a $1$ y recupera el resultado~\eqref{eq:resultado} del Régimen~I. Las modificaciones introducidas por la molécula excitónica respecto al caso de un único punto cuántico~\cite{bin2020} son idénticas a las del Régimen~I: el factor superradiante $\sqrt{2}$ amplifica la frecuencia efectiva y el acoplamiento de Förster desplaza la resonancia en $-J$.
 
 \subsection{Régimen de conducción fuerte}\label{reg3}
 
-En el régimen $\widetilde\Omega \sim \omega_b$ con $\lambda \ll \omega_b$,
-el láser ya no puede tratarse perturbativamente. La estrategia es
-diagonalizar primero la parte electrónica y luego tratar
-$H_\mathrm{e\text{-}ph} = \lambda\,S^\dagger S(b^\dagger+b)$
-perturbativamente en la base de estados vestidos resultante.
-Escribimos $H_\mathrm{eff} = H_0 + H_\mathrm{e\text{-}ph}$ con
-$H_0 = \omega_b b^\dagger b + H_\sigma$, donde
-%
+En el régimen $\widetilde\Omega \sim \omega_b$ con $\lambda \ll \omega_b$, el láser ya no puede tratarse perturbativamente. La estrategia es diagonalizar primero la parte electrónica $H_\sigma$, que contiene el término dominante $\widetilde\Omega \sim \omega_b$, y tratar después $H_\mathrm{e\text{-}ph} = \lambda\,S^\dagger S(b^\dagger+b)$ perturbativamente en la base de estados vestidos resultante, lo cual es válido porque $\lambda \ll \omega_b$ por hipótesis. Escribimos $H_\mathrm{eff} = H_0 + H_\mathrm{e\text{-}ph}$ con $H_0 = \omega_b b^\dagger b + H_\sigma$, donde
+
 \begin{equation}
 	H_\sigma = \widetilde\Delta\,S^\dagger S
 	+ \widetilde\Omega\bigl(S + S^\dagger\bigr)
@@ -451,26 +322,19 @@ $H_0 = \omega_b b^\dagger b + H_\sigma$, donde
 		\widetilde\Omega & \widetilde\Delta \end{pmatrix}
 	\label{eq:Hsigma}
 \end{equation}
-%
-en la base $\{|vv\rangle,|\Psi_+\rangle\}$.
 
-\textit{Diagonalización de $H_\sigma$.}
-Los autovalores se obtienen de
+en la base $\{|vv\rangle,|\Psi_+\rangle\}$. Para la diagonalización de $H_\sigma$, los autovalores se obtienen de
 $E^2 - \widetilde\Delta E - \widetilde\Omega^2 = 0$:
-%
+
 \begin{equation}
 	E_\pm = \frac{\widetilde\Delta \pm \tilde{r}}{2},
 	\qquad
 	\tilde{r} \equiv \sqrt{\widetilde\Delta^2 + 4\widetilde\Omega^2}.
 	\label{eq:autovalores}
 \end{equation}
-%
-Para el autovector de $E_+$, la ecuación
-$(H_\sigma - E_+\mathbb{I})\binom{\alpha}{\beta} = 0$ da
-$\beta/\alpha = E_+/\widetilde\Omega
-= (\widetilde\Delta + \tilde{r})/(2\widetilde\Omega) > 0$.
-Normalizando con $\alpha,\beta > 0$:
-%
+
+Para el autovector de $E_+$, la ecuación $(H_\sigma - E_+\mathbb{I})\binom{\alpha}{\beta} = 0$ da $\beta/\alpha = E_+/\widetilde\Omega = (\widetilde\Delta + \tilde{r})/(2\widetilde\Omega) > 0$. Normalizando con $\alpha,\beta > 0$:
+
 \begin{align}
 	|{+}\rangle &= \tilde{c}_+\,|vv\rangle + \tilde{c}_-\,|\Psi_+\rangle,
 	\qquad E_+ = \tfrac{1}{2}(\widetilde\Delta + \tilde{r}),
@@ -479,9 +343,9 @@ Normalizando con $\alpha,\beta > 0$:
 	\qquad E_- = \tfrac{1}{2}(\widetilde\Delta - \tilde{r}),
 	\label{eq:ket_m}
 \end{align}
-%
+
 con coeficientes
-%
+
 \begin{equation}
 	\tilde{c}_\pm = \sqrt{\frac{2\widetilde\Omega^2}
 		{\widetilde\Delta^2 + 4\widetilde\Omega^2
@@ -489,35 +353,20 @@ con coeficientes
 	\qquad \tilde{c}_+^2 + \tilde{c}_-^2 = 1.
 	\label{eq:cpm}
 \end{equation}
-%
-Verificación del autovector $|+\rangle$: la componente en
-$|vv\rangle$ de $H_\sigma|+\rangle$ da $\tilde{c}_-\widetilde\Omega$,
-que debe ser $E_+\tilde{c}_+$. De hecho,
-$\tilde{c}_-/\tilde{c}_+ = E_+/\widetilde\Omega
-= (\widetilde\Delta+\tilde{r})/(2\widetilde\Omega) > 0$~$\checkmark$.
-Ortogonalidad: $\langle+|-\rangle = \tilde{c}_+\tilde{c}_- - \tilde{c}_-\tilde{c}_+ = 0$~$\checkmark$.
 
-Los autoestados de $H_0$ son los productos tensor
-$|n,\pm\rangle \equiv |n\rangle\otimes|\pm\rangle$
-con energías $E_{|n,\pm\rangle} = n\omega_b + E_\pm$.
+Los autoestados de $H_0$ son los productos tensor $|n,\pm\rangle \equiv |n\rangle\otimes|\pm\rangle$ con energías $E_{|n,\pm\rangle} = n\omega_b + E_\pm$.
 
-\textit{Inversión de la base vestida.}
-Multiplicando~\eqref{eq:ket_p} por $\tilde{c}_+$
-y~\eqref{eq:ket_m} por $\tilde{c}_-$ y sumando; luego
-restando con los factores intercambiados; con
-$\tilde{c}_+^2+\tilde{c}_-^2 = 1$:
-%
+Para la inversión de la base vestida, multiplicando~\eqref{eq:ket_p} por $\tilde{c}_+$ y~\eqref{eq:ket_m} por $\tilde{c}_-$ y sumando; luego restando con los factores intercambiados; con $\tilde{c}_+^2+\tilde{c}_-^2 = 1$:
+
 \begin{equation}
 	|vv\rangle = \tilde{c}_+|{+}\rangle + \tilde{c}_-|{-}\rangle,
 	\qquad
 	|\Psi_+\rangle = \tilde{c}_-|{+}\rangle - \tilde{c}_+|{-}\rangle.
 	\label{eq:inv}
 \end{equation}
-%
-Usando $S^\dagger S = |\Psi_+\rangle\langle\Psi_+|$
-y~\eqref{eq:inv}, los elementos de matriz de $S^\dagger S$
-en la base vestida son
-%
+
+Usando $S^\dagger S = |\Psi_+\rangle\langle\Psi_+|$ y~\eqref{eq:inv}, los elementos de matriz de $S^\dagger S$ en la base vestida son
+
 \begin{equation}
 	\langle{+}|S^\dagger S|{+}\rangle = \tilde{c}_-^2,\quad
 	\langle{-}|S^\dagger S|{-}\rangle = \tilde{c}_+^2,\quad
@@ -525,12 +374,8 @@ en la base vestida son
 	\label{eq:SdagS}
 \end{equation}
 
-\textit{Elementos de matriz de $H_\mathrm{e\text{-}ph}$.}
-Combinando~\eqref{eq:SdagS} con
-$\langle m|b^\dagger+b|n\rangle = \sqrt{n+1}\,\delta_{m,n+1}+\sqrt{n}\,\delta_{m,n-1}$,
-los elementos no nulos de $H_\mathrm{e\text{-}ph}$ que aumentan el
-número fonónico son
-%
+Los elementos de matriz de $H_\mathrm{e\text{-}ph}$, combinando~\eqref{eq:SdagS} con $\langle m|b^\dagger+b|n\rangle = \sqrt{n+1}\,\delta_{m,n+1}+\sqrt{n}\,\delta_{m,n-1}$, los elementos no nulos de $H_\mathrm{e\text{-}ph}$ que aumentan el número fonónico son
+
 \begin{align}
 	\langle n{+}1,{+}|H_\mathrm{e\text{-}ph}|n,{+}\rangle
 	&= +\tilde{c}_-^2\,\lambda\sqrt{n+1},
@@ -545,33 +390,20 @@ número fonónico son
 	&= -\tilde{c}_+\tilde{c}_-\,\lambda\sqrt{n+1}.
 	\label{eq:Heph_pm}
 \end{align}
-%
-Los acoplamientos~\eqref{eq:Heph_pp}--\eqref{eq:Heph_mm} conservan
-el índice vestido; los~\eqref{eq:Heph_mp}--\eqref{eq:Heph_pm}
-lo invierten con amplitud $-\tilde{c}_+\tilde{c}_-\lambda$.
-Son estos últimos los que median, a orden $\lambda^n$, el proceso
-de $n$ fonones $|0,{+}\rangle \leftrightarrow |n,{-}\rangle$.
 
-\textit{Condición de resonancia Stokes.}
-La condición $E_{|0,+\rangle} = E_{|n,-\rangle}$ simplifica a
-$\tilde{r} = n\omega_b$. Sustituyendo
-$\tilde{r}^2 = (\Delta+J)^2 + 8\Omega^2$ y tomando la raíz
-negativa (proceso Stokes, $\Delta < 0$):
-%
+Los acoplamientos~\eqref{eq:Heph_pp}--\eqref{eq:Heph_mm} conservan el índice vestido; los~\eqref{eq:Heph_mp}--\eqref{eq:Heph_pm} lo invierten con amplitud $-\tilde{c}_+\tilde{c}_-\lambda$. Son estos últimos los que median, a orden $\lambda^n$, el proceso de $n$ fonones $|0,{+}\rangle \leftrightarrow |n,{-}\rangle$.
+
+La condición $E_{|0,+\rangle} = E_{|n,-\rangle}$ simplifica a $\tilde{r} = n\omega_b$. Sustituyendo $\tilde{r}^2 = (\Delta+J)^2 + 8\Omega^2$ y tomando la raíz negativa (proceso Stokes, $\Delta < 0$):
+
 \begin{equation}
-	\boxed{\Delta_n = -\sqrt{n^2\omega_b^2 - 8\Omega^2} - J,}
+	\Delta_n = -\sqrt{n^2\omega_b^2 - 8\Omega^2} - J,
 	\label{eq:res_III}
 \end{equation}
-%
-válida para $n\omega_b > 2\sqrt{2}\,\Omega$. En el límite
-$\Omega \to 0$ se recupera $\Delta_n \to -n\omega_b - J$~$\checkmark$.
-La diferencia respecto al caso de un solo punto cuántico es doble:
-el término $8\Omega^2 = 4\widetilde\Omega^2$ lleva el factor
-superradiante, y el desplazamiento $-J$ proviene de Förster.
 
-En resonancia $\tilde{r} = n\omega_b$, las energías relativas de
-los estados intermedios respecto a $E_0 \equiv E_{|0,+\rangle}$ son
-%
+válida para $n\omega_b > 2\sqrt{2}\,\Omega$. En el límite $\Omega \to 0$ se recupera $\Delta_n \to -n\omega_b - J$. La diferencia respecto al caso de un solo punto cuántico es doble: el término $8\Omega^2 = 4\widetilde\Omega^2$ lleva el factor superradiante, y el desplazamiento $-J$ proviene de Förster.
+
+En resonancia $\tilde{r} = n\omega_b$, las energías relativas de los estados intermedios respecto a $E_0 \equiv E_{|0,+\rangle}$ son
+
 \begin{equation}
 	E_{|k,+\rangle} - E_0 = k\omega_b > 0,
 	\qquad
@@ -579,22 +411,11 @@ los estados intermedios respecto a $E_0 \equiv E_{|0,+\rangle}$ son
 	\qquad 1 \leq k \leq n-1,
 	\label{eq:energ_rel}
 \end{equation}
-%
-todos no nulos y múltiplos enteros de $\omega_b$.
-Los denominadores en la eliminación adiabática serán
-$-k\omega_b$ (para $|k,+\rangle$) y $(n-k)\omega_b$ (para $|k,-\rangle$),
-garantizando la no singularidad del proceso perturbativo cuando
-$\lambda \ll \omega_b$.
 
-\textit{Caso base $n=2$: forma matricial explícita.}
-El espacio truncado es
-$\mathcal{H}^{(2)} = \{|0,{+}\rangle,\,|2,{-}\rangle,\,|1,{-}\rangle,\,|1,{+}\rangle\}$.
-Los estados degenerados son $|0,+\rangle$ y $|2,-\rangle$
-(energía relativa $0$); los intermedios son $|1,-\rangle$
-(energía relativa $-\omega_b$) y $|1,+\rangle$
-(energía relativa $+\omega_b$). Calculando cada elemento
-de la matriz de $H_\mathrm{eff}$ en $\mathcal{H}^{(2)}$ mediante~\eqref{eq:Heph_pp}--\eqref{eq:Heph_pm} con $n=0$ y $n=1$:
-%
+todos no nulos y múltiplos enteros de $\omega_b$. Los denominadores en la eliminación adiabática serán $-k\omega_b$ (para $|k,+\rangle$) y $(n-k)\omega_b$ (para $|k,-\rangle$), garantizando la no singularidad del proceso perturbativo cuando $\lambda \ll \omega_b$.
+
+Caso base $n=2$: forma matricial explícita. El espacio truncado es $\mathcal{H}^{(2)} = \{|0,{+}\rangle,\allowbreak\,|2,{-}\rangle,\allowbreak\,|1,{-}\rangle,\allowbreak\,|1,{+}\rangle\}$. Los estados degenerados son $|0,+\rangle$ y $|2,-\rangle$ (energía relativa $0$); los intermedios son $|1,-\rangle$ (energía relativa $-\omega_b$) y $|1,+\rangle$ (energía relativa $+\omega_b$). Calculando cada elemento de la matriz de $H_\mathrm{eff}$ en $\mathcal{H}^{(2)}$ mediante~\eqref{eq:Heph_pp}--\eqref{eq:Heph_pm} con $n=0$ y $n=1$:
+
 \begin{align}
 	\langle 1,{-}|H_\mathrm{e\text{-}ph}|0,{+}\rangle
 	&= -\tilde{c}_+\tilde{c}_-\lambda,
@@ -609,15 +430,9 @@ de la matriz de $H_\mathrm{eff}$ en $\mathcal{H}^{(2)}$ mediante~\eqref{eq:Heph_
 	&= -\sqrt{2}\,\tilde{c}_+\tilde{c}_-\lambda.
 	\label{eq:h21mp}
 \end{align}
-%
-El acoplamiento directo
-$\langle 2,-|H_\mathrm{e\text{-}ph}|0,+\rangle = 0$
-porque $H_\mathrm{e\text{-}ph} \propto b^\dagger + b$ cambia
-el número fonónico en $\pm 1$ en un solo paso.
-En el ordenamiento
-$\{|0,{+}\rangle,\,|2,{-}\rangle,\,|1,{-}\rangle,\,|1,{+}\rangle\}$
-el Hamiltoniano completo, con $\tilde{r} = 2\omega_b$, es
-%
+
+El acoplamiento directo $\langle 2,-|H_\mathrm{e\text{-}ph}|0,+\rangle = 0$ porque $H_\mathrm{e\text{-}ph} \propto b^\dagger + b$ cambia el número fonónico en $\pm 1$ en un solo paso. En el ordenamiento $\{|0,{+}\rangle,\,|2,{-}\rangle,\,|1,{-}\rangle,\,|1,{+}\rangle\}$ el Hamiltoniano completo, con $\tilde{r} = 2\omega_b$, es
+
 \begin{equation}
 	H^{(2)} = \begin{pmatrix}
 		0 & 0
@@ -633,10 +448,9 @@ el Hamiltoniano completo, con $\tilde{r} = 2\omega_b$, es
 	\end{pmatrix},
 	\label{eq:H2_full}
 \end{equation}
-%
-con bloques $X^{(2)}$ (acoplamiento subespacio degenerado--intermedio)
-y $R^{(2)}$ (parte intermedia) identificados como
-%
+
+con bloques $X^{(2)}$ (acoplamiento subespacio degenerado--intermedio) y $R^{(2)}$ (parte intermedia) identificados como
+
 \begin{equation}
 	X^{(2)} = \begin{pmatrix}
 		-\tilde{c}_+\tilde{c}_-\lambda & \tilde{c}_-^2\lambda \\[4pt]
@@ -646,15 +460,9 @@ y $R^{(2)}$ (parte intermedia) identificados como
 	R^{(2)} = \begin{pmatrix} -\omega_b & 0 \\[2pt] 0 & \omega_b \end{pmatrix}.
 	\label{eq:XR2}
 \end{equation}
-%
-Nótese que $R^{(2)}$ es diagonal: el acoplamiento entre
-$|1,{-}\rangle$ y $|1,{+}\rangle$ es nulo porque requeriría
-$\Delta n_\mathrm{fon} = 0$ con cambio de índice vestido, lo cual
-es cero en $H_\mathrm{e\text{-}ph} \propto b^\dagger + b$.
-Aplicando la fórmula de Löwdin~\eqref{eq:Lowdin} al elemento $(1,2)$
-del subespacio degenerado, con
-$[R^{(2)}]^{-1} = \mathrm{diag}(-1/\omega_b, 1/\omega_b)$:
-%
+
+Nótese que $R^{(2)}$ es diagonal: el acoplamiento entre $|1,-\rangle$ y $|1,+\rangle$ es nulo porque $H_\mathrm{e\text{-}ph} \propto b^\dagger + b$ solo conecta estados con $\Delta n_b = \pm 1$, de modo que no puede cambiar el índice vestido manteniendo fijo el número fonónico. Aplicando la fórmula de Löwdin~\eqref{eq:Lowdin} al elemento $(1,2)$ del subespacio degenerado, con $[R^{(2)}]^{-1} = \mathrm{diag}(-1/\omega_b, 1/\omega_b)$:
+
 \begin{align}
 	\Omega_\mathrm{eff}^{(2)}
 	&= \left[X^{(2)}\bigl(-R^{(2)}\bigr)^{-1}X^{(2)\,T}\right]_{12}
@@ -667,11 +475,9 @@ $[R^{(2)}]^{-1} = \mathrm{diag}(-1/\omega_b, 1/\omega_b)$:
 	= \frac{\tilde{c}_+\tilde{c}_-\lambda^2(2\tilde{c}_+^2 - \tilde{c}_-^2)}{\omega_b},
 	\label{eq:Oeff2_paso}
 \end{align}
-%
-que con $2\tilde{c}_+^2 - \tilde{c}_-^2 = 2(1-\tilde{c}_-^2) - \tilde{c}_-^2
-= 2 - 3\tilde{c}_-^2$ y $\tilde{r} = 2\omega_b$ puede reescribirse
-de forma compacta como:
-%
+
+que con $2\tilde{c}_+^2 - \tilde{c}_-^2 = 2(1-\tilde{c}_-^2) - \tilde{c}_-^2 = 2 - 3\tilde{c}_-^2$ y $\tilde{r} = 2\omega_b$ puede reescribirse de forma compacta como:
+
 \begin{equation}
 	\Omega_\mathrm{eff}^{(2)}
 	= \frac{-\sqrt{2}\,\tilde{c}_+\tilde{c}_-\lambda^2
@@ -680,12 +486,8 @@ de forma compacta como:
 	\label{eq:Oeff2_III}
 \end{equation}
 
-\textit{Paso recursivo.}
-Para $n$ general, dado $\Omega_\mathrm{eff}^{(n-1)}$, se considera el
-espacio reducido de cuatro estados
-$\{|0,{+}\rangle,\,|n,{-}\rangle,\,|n-1,{+}\rangle,\,|n-1,{-}\rangle\}$.
-En este espacio el Hamiltoniano, antes de ninguna transformación, es
-%
+Para $n$ general, dado $\Omega_\mathrm{eff}^{(n-1)}$, se considera el espacio reducido de cuatro estados $\{|0,{+}\rangle,\,|n,{-}\rangle,\,|n-1,{+}\rangle,\,|n-1,{-}\rangle\}$. En este espacio el Hamiltoniano, antes de ninguna transformación, es
+
 \begin{equation}
 	H^{(n)}_0 = \begin{pmatrix}
 		0 & 0 & 0 & \Omega_\mathrm{eff}^{(n-1)} \\[4pt]
@@ -696,23 +498,17 @@ En este espacio el Hamiltoniano, antes de ninguna transformación, es
 	\end{pmatrix},
 	\label{eq:Hn0}
 \end{equation}
-%
-en el ordenamiento
-$\{|0,{+}\rangle,\,|n,{-}\rangle,\,|n-1,{+}\rangle,\,|n-1,{-}\rangle\}$,
-con $\tilde{r} = n\omega_b$ ya sustituido en los elementos diagonales.
-El acoplamiento cruzado entre los estados intermedios,
-$-\tilde{c}_+\tilde{c}_-\lambda\sqrt{n}$, impide aplicar directamente
-la fórmula de Löwdin. Se introduce el estado efectivo
-%
+
+en el ordenamiento $\{|0,{+}\rangle,\,|n,{-}\rangle,\,|n-1,{+}\rangle,\,|n-1,{-}\rangle\}$, con $\tilde{r} = n\omega_b$ ya sustituido en los elementos diagonales. El acoplamiento cruzado entre los estados intermedios, $-\tilde{c}_+\tilde{c}_-\lambda\sqrt{n}$ en las posiciones $(3,4)$ y $(4,3)$ de~\eqref{eq:Hn0}, impide aplicar directamente la fórmula de Löwdin, que requiere que el bloque intermedio $R^{(n)}$ sea diagonal. Para diagonalizarlo al orden dominante en $\lambda/\omega_b$, se introduce la combinación lineal de los estados intermedios
+
 \begin{equation}
 	|n-1,{+}\rangle_\mathrm{eff}
 	= |n-1,{+}\rangle + \frac{\tilde{c}_-}{\tilde{c}_+}\,|n-1,{-}\rangle,
 	\label{eq:estado_eff}
 \end{equation}
-%
-que al orden dominante en $\lambda/\omega_b$ diagonaliza el bloque
-intermedio. Bajo esta transformación el Hamiltoniano reducido toma la forma
-%
+
+que al orden dominante en $\lambda/\omega_b$ diagonaliza el bloque intermedio. Bajo esta transformación el Hamiltoniano reducido toma la forma
+
 \begin{equation}
 	H^{(n)} = \begin{pmatrix}
 		0 & 0 & 0 & \Omega_\mathrm{eff}^{(n-1)} \\[4pt]
@@ -725,18 +521,9 @@ intermedio. Bajo esta transformación el Hamiltoniano reducido toma la forma
 	\end{pmatrix}.
 	\label{eq:Hn_transf}
 \end{equation}
-%
-En resonancia $\tilde{r} = n\omega_b$, el elemento $H^{(n)}_{22} = 0$,
-de modo que $|n-1,{+}\rangle_\mathrm{eff}$ queda desacoplado de los
-estados degenerados al orden dominante. El único intermediario que
-conecta $|0,{+}\rangle$ con $|n,{-}\rangle$ es $|n-1,{-}\rangle$
-con energía relativa $-\omega_b$, y el acoplamiento
-$|0,{+}\rangle \leftrightarrow |n-1,{-}\rangle$ es
-$\Omega_\mathrm{eff}^{(n-1)}$, mientras que
-$|n-1,{-}\rangle \leftrightarrow |n,{-}\rangle$ tiene amplitud
-$\tilde{c}_+^2\lambda\sqrt{n}$. Aplicando la fórmula de Löwdin al
-elemento $(1,2)$ del subespacio degenerado:
-%
+
+En resonancia $\tilde{r} = n\omega_b$, el elemento $H^{(n)}_{22} = 0$, de modo que $|n-1,{+}\rangle_\mathrm{eff}$ queda desacoplado de los estados degenerados al orden dominante. El único intermediario que conecta $|0,{+}\rangle$ con $|n,{-}\rangle$ es $|n-1,{-}\rangle$ con energía relativa $-\omega_b$, y el acoplamiento $|0,{+}\rangle \leftrightarrow |n-1,{-}\rangle$ es $\Omega_\mathrm{eff}^{(n-1)}$, mientras que $|n-1,{-}\rangle \leftrightarrow |n,{-}\rangle$ tiene amplitud $\tilde{c}_+^2\lambda\sqrt{n}$. Aplicando la fórmula de Löwdin al elemento $(1,2)$ del subespacio degenerado:
+
 \begin{equation}
 	\Omega_\mathrm{eff}^{(n)}
 	= \frac{\sqrt{n}\,\lambda\bigl[(n-1)\omega_b
@@ -745,15 +532,9 @@ elemento $(1,2)$ del subespacio degenerado:
 	\;\Omega_\mathrm{eff}^{(n-1)},
 	\label{eq:rec_III}
 \end{equation}
-%
-válida al orden dominante en $\lambda/\omega_b$.
-Iterando~\eqref{eq:rec_III} desde el caso base~\eqref{eq:Oeff2_III},
-el factor de cada paso $k \to k+1$ es
-$\sqrt{k}\,\lambda(k-1 - n\tilde{c}_-^2)/[(k-1)(n-k+1)\omega_b]$.
-El producto acumulado desde $k=3$ hasta $k=n$, multiplicado por la
-semilla $\Omega_\mathrm{eff}^{(2)}$, da el resultado para orden
-arbitrario:
-%
+
+válida al orden dominante en $\lambda/\omega_b$. Iterando~\eqref{eq:rec_III} desde el caso base~\eqref{eq:Oeff2_III}, el factor de cada paso $k \to k+1$ es $\sqrt{k}\,\lambda(k-1 - n\tilde{c}_-^2)/[(k-1)(n-k+1)\omega_b]$. El producto acumulado desde $k=3$ hasta $k=n$, multiplicado por la semilla $\Omega_\mathrm{eff}^{(2)}$, da el resultado para orden arbitrario:
+
 \begin{equation}
 	\boxed{
 		\Omega_\mathrm{eff}^{(n)}
@@ -764,59 +545,6 @@ arbitrario:
 	}
 	\label{eq:resultado_III}
 \end{equation}
-%
-con la condición de resonancia~\eqref{eq:res_III}. Los primeros casos
-explícitos son
-%
-\begin{align}
-	\Omega_\mathrm{eff}^{(2)}
-	&= \frac{\sqrt{2}\,\widetilde\Omega\lambda^2}{\omega_b^2}
-	\,\tilde{c}_-^2(2\tilde{c}_-^2 - 1),
-	\label{eq:Oeff2_exp}\\[6pt]
-	\Omega_\mathrm{eff}^{(3)}
-	&= -\frac{\sqrt{2}\,\widetilde\Omega\lambda^3}{\sqrt{6}\,\omega_b^3}
-	\,\tilde{c}_-^2(3\tilde{c}_-^2-1)(3\tilde{c}_-^2-2),
-	\label{eq:Oeff3_exp}\\[6pt]
-	\Omega_\mathrm{eff}^{(4)}
-	&= \frac{\sqrt{2}\,\widetilde\Omega\lambda^4}{2\sqrt{6}\,\omega_b^4}
-	\,\tilde{c}_-^2(4\tilde{c}_-^2-1)(4\tilde{c}_-^2-2)(4\tilde{c}_-^2-3).
-	\label{eq:Oeff4_exp}
-\end{align}
-%
-El factor $(1/(n-1)!)$ adicional respecto a los regímenes anteriores
-hace que $|\Omega_\mathrm{eff}^{(n)}|$ decaiga más rápido con $n$.
 
-Los resultados de los tres regímenes se pueden resumir de forma
-compacta. En todos ellos las dos correcciones de la molécula
-excitónica respecto al caso de un solo punto cuántico son: un factor
-superradiante $\sqrt{2}$ en la frecuencia de Rabi efectiva, originado
-en el acoplamiento colectivo del estado brillante, y un desplazamiento
-rígido $-J$ en la condición de resonancia, originado en el acoplamiento
-de Förster:
-%
-\begin{equation}
-	\Omega_\mathrm{eff}^{(n)}\Big|_{2\mathrm{QD}} = \!
-	\begin{cases}
-		\dfrac{\sqrt{2}\,\Omega}{\sqrt{n!}}
-		\!\left(\dfrac{\lambda}{\omega_b}\right)^{\!n},
-		& \text{Régimen I},\\[12pt]
-		\dfrac{\sqrt{2}\,\Omega}{\sqrt{n!}}
-		\!\left(\dfrac{\lambda}{\omega_b}\right)^{\!n}
-		e^{-\lambda^2/(2\omega_b^2)},
-		& \text{Régimen II},\\[12pt]
-		\dfrac{(-1)^n\sqrt{2}\,\widetilde\Omega}
-		{(n-1)!\sqrt{n!}}
-		\!\left(\dfrac{\lambda}{\omega_b}\right)^{\!n}
-		\displaystyle\prod_{k=1}^{n-1}(n\tilde{c}_-^2 - k),
-		& \text{Régimen III},
-	\end{cases}
-	\label{eq:Oeff_resumen}
-\end{equation}
-%
-con resonancias
-$\Delta_n = -n\omega_b - J$ (I),
-$\;\Delta_n = \lambda^2/\omega_b - n\omega_b - J$ (II),
-$\;\Delta_n = -\sqrt{n^2\omega_b^2 - 8\Omega^2} - J$ (III).
-
-
+El factor $(1/(n-1)!)$ adicional, ausente en los Regímenes~I y~II, hace que $|\Omega_\mathrm{eff}^{(n)}|$ decaiga más rápidamente con el orden del paquete, lo que refleja la mayor complejidad del proceso de emisión en la escalera de Mollow respecto a los estados producto o desplazados.
 \end{appendix}
