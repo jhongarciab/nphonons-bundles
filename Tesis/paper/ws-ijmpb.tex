@@ -54,7 +54,7 @@
 Universidad del Quindío, AA 630004, Armenia, Colombia\\
 jhons.garciab@uqvirtual.edu.co}
 
-\author{Edgar A. Gómez G.}
+\author{Edgar A. Gómez}
 
 \address{Grupo de física teórica y computacional, Programa de Física,\\
 Universidad del Quindío, AA 630004, Armenia, Colombia\\
@@ -158,7 +158,7 @@ where $\langle\hat{n}_b\rangle_\mathrm{full}$ is the mean phonon number in the f
 
 \begin{figure}[H]
 	\centering
-	\input{../../codes/results/oficial/pgf/g_n_orders_stacked.pgf}
+	\input{../../codes/results/oficial/pgf/g_n_orders_stacked_paper.pgf}
 	\caption{(a) Funciones de correlación $g^{(n)}(0)$ en función de $\Delta/\omega_b$ para $n=2,3,4,5$ (de abajo a arriba). Las líneas verticales punteadas indican las resonancias de Stokes $\Delta_n = -n\omega_b - J$. (b) $g^{(3)}(0)$ en función de $\Delta/\omega_b$ variando  $\lambda/\omega_b$ (arriba) y $\Omega/\omega_b$ (abajo). Las líneas punteadas indican las resonancias teóricas. Parámetros del sistema: $\lambda/\omega_b = 0.08$ (fijo en panel inferior de (b)), $\Omega/\omega_b = 0.01$ (fijo en panel superior de (b)), $\kappa/\omega_b = 0.003$, $\gamma/\omega_b = 0.0002$, $\gamma_\varphi/\omega_b = 0.0004$, $J/\omega_b = 0.5$.}
 	\label{fig:gn_correlaciones}
 \end{figure}
@@ -166,7 +166,7 @@ where $\langle\hat{n}_b\rangle_\mathrm{full}$ is the mean phonon number in the f
 \newpage
 \begin{figure}[H]
 	\centering
-	\input{../../codes/results/oficial/pgf/g2_decay_2qds.pgf}
+	\input{../../codes/results/oficial/pgf/g2_decay_2qds_paper.pgf}
 	\caption{Mapa tridimensional de $g_2^{(2)}(\tau)$ en función de $\gamma/\omega_b$ y $\omega_b\tau$ para (a) $\kappa/\omega_b = 0.001$ y (b) $\kappa/\omega_b = 0.01$. Parámetros del sistema: $\lambda/\omega_b = 0.1$, $\Omega/\omega_b = 0.2$, $\gamma_\varphi/\omega_b = 0.0004$, $J/\omega_b = 0.5$.}
 	\label{fig:g2_decay}
 \end{figure}
@@ -174,7 +174,7 @@ where $\langle\hat{n}_b\rangle_\mathrm{full}$ is the mean phonon number in the f
 \newpage
 \begin{figure}[H]
 	\centering
-	\input{../../codes/results/oficial/pgf/trayectoria_2qd.pgf}
+	\input{../../codes/results/oficial/pgf/trayectoria_2qd_paper.pgf}
 	\caption{Trayectoria cuántica de Monte Carlo bajo la resonancia de Stokes de dos fonones. Los paneles muestran las poblaciones de los estados del sistema proyectadas sobre los sectores fonónicos $n_b = 0$ (a), $n_b = 1$ (b) y $n_b = 2$ (c). Parámetros del sistema: $\lambda/\omega_b = 0.1$, $\Omega/\omega_b = 0.2$, $\kappa/\omega_b = 0.0005$, $\gamma/\omega_b = 0.0002$, $\gamma_\varphi/\omega_b = 0.0004$, $J/\omega_b = 0.5$.}
 	\label{fig:trayectoria}
 \end{figure}
@@ -182,7 +182,7 @@ where $\langle\hat{n}_b\rangle_\mathrm{full}$ is the mean phonon number in the f
 \newpage
 \begin{figure}[H]
 	\centering
-	\input{../../codes/results/oficial/pgf/purity_2qd_heatmap.pgf}
+	\input{../../codes/results/oficial/pgf/purity_2qd_heatmap_paper.pgf}
 	\caption{Mapas de pureza $\Pi_n$ para $n = 2, 3, 4$ (de izquierda a
 		derecha) en función de $\lambda/\omega_b$ y $\kappa/\omega_b$,
 		evaluados en la condición de resonancia de Stokes de orden $n$. Parámetros: $\Omega/\omega_b = 0.2$,
@@ -194,7 +194,7 @@ where $\langle\hat{n}_b\rangle_\mathrm{full}$ is the mean phonon number in the f
 \newpage
 \begin{figure}[H]
 	\centering
-	\input{../../codes/results/oficial/pgf/purity_2qd_cuts.pgf}
+	\input{../../codes/results/oficial/pgf/purity_2qd_cuts_paper.pgf}
 	\caption{Cortes unidimensionales de la pureza $\Pi_n$ para $n=2,3,4$ en función de: (a) $\kappa/\omega_b$ a $\lambda/\omega_b = [0.22, 0.28]$ y (b) $\lambda/\omega_b$ a $\kappa/\omega_b = [10^{-3}, 10^{-2}]$ fijos, líneas continuas y líneas punteadas, respectivamente. Parámetros del sistema: $\Omega/\omega_b = 0.2$, $\gamma/\omega_b = 0.0002$, $\gamma_\varphi/\omega_b = 0.0004$, $J/\omega_b = 0.5$.}
 	\label{fig:purity_2qd_cuts}
 \end{figure}
@@ -209,92 +209,80 @@ E.A.G. thanks financial support from the ‘Ampliación del uso de la mecánica 
 %
 %
 \section*{References}
-
 \begin{thebibliography}{0}
-
-\bibitem{Dull}
-R. Düll et al., {\it Comput. Math. Model.} {\bf32}, 75 (2021).
-
-\bibitem{Heindel}
-T. Heindel et al., {\it Adv. Opt. Photon.} {\bf15}, 613 (2023).
-
-\bibitem{Cao}
-C. Cao et al., {\it Adv. Quantum Technol.} {\bf2}, 1900081 (2019).
-
-\bibitem{Pomorski}
-K. Pomorski and R. B. Staszewski, {\it AIP Conf. Proc.} {\bf2241}, 1 (2020).
-
-%5
-\bibitem{Dehghani}
-A. Dehghani et al., {\it Mod. Phys. Lett. A} {\bf34}, 1950104 (2019).
-
-\bibitem{Fakhri}
-H. Fakhri and M. Sayyah-Fard, {\it Sci. Rep.} {\bf11}, 22861 (2021).
-
-\bibitem{Sun}
-Y. Sun et al., {\it Adv. Opt. Photon.} {\bf15}, 86 (2023).
-
-\bibitem{Meher}
-N. Meher and S. Sivakumar, {\it Eur. Phys. J. Plus} {\bf137}, 985 (2022).
-
-\bibitem{Burkard}
-G. Burkard et al., {\it Rev. Mod. Phys.} {\bf95}, 025003 (2023).
-
-%10
-\bibitem{Hurtado}
-L. M. Hurtado-Molina et al., {\it Physica B Condens. Matter} {\bf604}, 412698 (2021).
-
-\bibitem{Krempasky}
-J. Krempaský et al., {\it J. Phys. Chem. Solids} {\bf128}, 237 (2019).
-
-\bibitem{Altowyan}
-A. S. Altowyan et al., {\it Results Phys.} {\bf16}, 102924 (2020).
-
-\bibitem{Mojarevi}
-B. Mojarevi and A. Dehghani, {\it MPLA} {\bf30} 1550198 (2015).
-
-\bibitem{Rocatti} 
-F. Roccati et al., {\it Open Syst. Inf. Dyn.} {\bf29}, 2250004 (2022).
-
-%15
-\bibitem{Wang}
-Y. Wang et al., {\it Sci. China Phys. Mech. Astron.} {\bf65}, 260314 (2022).
-
-\bibitem{Yao}
-B. Yao et al., {\it arXiv} {\bf1906}, (2019).
-
-\bibitem{Zhang} 
-X. X. Zhang and N. Nagaosa, {\it Sci. Bull.} {\bf69}, 325 (2024).
-
-\bibitem{Shi} 
-P. Shi et al., {\it Laser Photon. Rev.} {\bf15}, 2000554 (2021).
-
-\bibitem{Hijano} 
-A. Hijano et al., {\it Commun. Phys.} {\bf6}, 186 (2023).
-
-%20
-\bibitem{Odelli} 
-M. Odelli et al., {\it Phys. Rev. A} {\bf110}, 022610 (2024).
-
-\bibitem{Zhu} 
-B. Zhu et al., {\it Phys. Rev. Res.} {\bf2}, 023043 (2020).
-
-\bibitem{Ying} 
-Z. J. Ying, {\it Advanced Quantum Technologies}, 2400053 (2024).
-
-\bibitem{Amari}
-Y. Amari et al., {\it arXiv} {\bf2406}, (2024).
-
-\bibitem{Cohen}
-E. Cohen et al., {\it Nat. Rev. Phys.} {\bf1}, 437 (2019).
-
-%25
-\bibitem{Amooghorban}
-E. Amooghorban et al., {\it Phys. Rev. A} {\bf110}, 033710 (2024).
-
-\bibitem{Viotti} 
-L. Viotti et al., {\it Phys. Rev. A} {\bf105}, 022218 (2022).
-
+	
+	\bibitem{balandin2005}
+	A. A. Balandin, {\it J. Nanosci. Nanotechnol.} {\bf5}, 1015 (2005).
+	
+	\bibitem{manenti2017}
+	R. Manenti et al., {\it Nat. Commun.} {\bf8}, 975 (2017).
+	
+	\bibitem{schuetz2015}
+	M. J. A. Schuetz et al., {\it Phys. Rev. X} {\bf5}, 031031 (2015).
+	
+	\bibitem{gustafsson2014}
+	M. V. Gustafsson et al., {\it Science} {\bf346}, 207 (2014).
+	%5
+	\bibitem{weig2004}
+	E. M. Weig et al., {\it Phys. Rev. Lett.} {\bf92}, 046804 (2004).
+	
+	\bibitem{rozas2009}
+	G. Rozas et al., {\it Phys. Rev. Lett.} {\bf102}, 015502 (2009).
+	
+	\bibitem{oconnell2010}
+	A. D. O'Connell et al., {\it Nature} {\bf464}, 697 (2010).
+	
+	\bibitem{macCabe2020}
+	G. S. MacCabe et al., {\it Science} {\bf370}, 840 (2020).
+	
+	\bibitem{zalalutdinov2021}
+	M. K. Zalalutdinov et al., {\it Nat. Commun.} {\bf12}, 3267 (2021).
+	%10
+	\bibitem{calajo2019}
+	G. Calaj\'o et al., {\it Phys. Rev. A} {\bf99}, 053852 (2019).
+	
+	\bibitem{habraken2012}
+	S. J. M. Habraken et al., {\it New J. Phys.} {\bf14}, 115004 (2012).
+	
+	\bibitem{arrangoiz2018}
+	P. Arrangoiz-Arriola et al., {\it Phys. Rev. X} {\bf8}, 031007 (2018).
+	
+	\bibitem{toyoda2015}
+	K. Toyoda et al., {\it Nature} {\bf527}, 74 (2015).
+	
+	\bibitem{zhang2018}
+	J. Zhang et al., {\it Phys. Rev. Lett.} {\bf121}, 160502 (2018).
+	%15
+	\bibitem{borri2001}
+	P. Borri et al., {\it Phys. Rev. Lett.} {\bf87}, 157401 (2001).
+	
+	\bibitem{bin2020}
+	Q. Bin, X.-Y. L\"u, F. P. Laussy, F. Nori and Y. Wu, {\it Phys. Rev. Lett.} {\bf124}, 053601 (2020).
+	
+	\bibitem{forster1948}
+	Th. F\"orster, {\it Ann. Phys.} {\bf437}, 55 (1948).
+	
+	\bibitem{tiranov2023}
+	A. Tiranov et al., {\it Science} {\bf379}, 389 (2023).
+	
+	\bibitem{kagan1996}
+	C. R. Kagan, C. B. Murray and M. G. Bawendi, {\it Phys. Rev. B} {\bf54}, 8633 (1996).
+	%20
+	\bibitem{crooker2002}
+	S. A. Crooker et al., {\it Phys. Rev. Lett.} {\bf89}, 186802 (2002).
+	
+	\bibitem{lowdin1951}
+	P.-O. L\"owdin, {\it J. Chem. Phys.} {\bf19}, 1396 (1951).
+	
+	\bibitem{munoz2014}
+	C. S\'anchez Mu\~noz et al., {\it Nat. Photon.} {\bf8}, 550 (2014).
+	
+	\bibitem{munoz2018}
+	C. S\'anchez Mu\~noz et al., {\it Optica} {\bf5}, 14 (2018).
+	
+	\bibitem{vargas2022}
+	V. Vargas-Calder\'on, H. Vinck-Posada and J. M. Villas-Boas, {\it Phys. Rev. B} {\bf106}, 035305 (2022).
+	%25
 \end{thebibliography}
 
 \end{document}
