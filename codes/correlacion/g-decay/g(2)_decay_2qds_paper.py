@@ -284,7 +284,7 @@ for col, kap in enumerate(kappa_list):
     cbar.ax.tick_params(labelsize=8)
 
 print(ax.get_position())
-fig.subplots_adjust(left=0.15, right=0.97, top=0.98, bottom=-0.10, wspace=0.20)
+fig.subplots_adjust(left=0.09, right=0.87, top=0.98, bottom=-0.10, wspace=0.20)
 plt.savefig("results/oficial/g2_decay_2qds_paper.pdf", bbox_inches='tight')
 plt.savefig("results/oficial/pgf/g2_decay_2qds_paper.pgf")
 print("✓ Figura guardada: results/oficial/g2_decay_2qds_paper.pdf")
