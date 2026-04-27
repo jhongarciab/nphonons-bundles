@@ -254,7 +254,7 @@ clicks_plot = clicks[(clicks >= t_start) & (clicks <= t_end)] - t_start
 
 eps = 1e-12
 
-fig, axes = plt.subplots(3, 1, figsize=(5.00, 3.10), sharex=True)
+fig, axes = plt.subplots(3, 1, figsize=(4.70, 2.80), sharex=True)
 
 # Panel (a) — n_fock = 0
 axes[0].plot(x_plot, data['P(vv,0)'][mask],  lw=0.9, color='black')
@@ -265,8 +265,8 @@ axes[0].set_yticklabels([r'$0$', r'$0.5$', r'$1$'])
 axes[0].tick_params(labelsize=8)
 axes[0].set_facecolor('white')
 axes[0].grid(False)
-axes[0].text(400, 0.78, r'$P_{0vv}$', color='black', fontsize=8)
-axes[0].text(400, 0.12, r'$P_{0\Psi_+}$', color='red', fontsize=8)
+axes[0].text(370, 0.78, r'$P_{0vv}$', color='black', fontsize=8)
+axes[0].text(370, 0.12, r'$P_{0\Psi_+}$', color='red', fontsize=8)
 
 # Panel (b) — n_fock = 1
 axes[1].semilogy(x_plot, data['P(Ψ+,1)'][mask] + eps, lw=0.9, color='#c4942a')
@@ -278,8 +278,8 @@ axes[1].tick_params(labelsize=8)
 axes[1].set_facecolor('white')
 axes[1].set_ylabel("Poblaciones", fontsize=9, labelpad=8)
 axes[1].grid(False)
-axes[1].text(400, 2e-1, r'$P_{1\Psi_+}$', color='#c4942a', fontsize=8)
-axes[1].text(400, 0.4e-7, r'$P_{1vv}$', color='black', fontsize=8)
+axes[1].text(370, 2e-1, r'$P_{1\Psi_+}$', color='#c4942a', fontsize=8)
+axes[1].text(370, 0.4e-7, r'$P_{1vv}$', color='black', fontsize=8)
 
 # Panel (c) — n_fock = 2 + clicks
 axes[2].semilogy(x_plot, data['P(Ψ+,2)'][mask] + eps, lw=0.9, color='#1f77b4')
@@ -293,8 +293,8 @@ axes[2].tick_params(labelsize=8)
 axes[2].set_facecolor('white')
 axes[-1].set_xlabel(r'$\omega_b\,t$', fontsize=9)
 axes[2].grid(False)
-axes[2].text(380, 6e-2, r'$P_{2\Psi_+}$', color='#1f77b4', fontsize=8)
-axes[2].text(380, 2e-7, r'$P_{2vv}$', color='black', fontsize=8)
+axes[2].text(370, 6e-2, r'$P_{2\Psi_+}$', color='#1f77b4', fontsize=8)
+axes[2].text(370, 2e-7, r'$P_{2vv}$', color='black', fontsize=8)
 
 # -----------------------------------------------------------------------------
 # Etiquetas de panel: (a), (b), (c)
