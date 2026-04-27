@@ -11,6 +11,8 @@
 %%
 
 \documentclass{ws-ijmpb}
+\usepackage{amsmath}
+\DeclareRobustCommand{\mathdefault}[1]{#1}
 \usepackage{color}
 \usepackage{pgf}
 \usepackage{tikz}
@@ -35,8 +37,7 @@
 \newcommand{\tr}{\mbox{tr}}
 
 
-\markboth{J. García Barrera, E. A. Gómez, S. Echeverri-Arteaga}
-{Influence of deformed parity on geometrical topological characteristics}
+\markboth{J. S. García B., E. A. Gómez and S. Echeverri-Arteaga}{$n$-Phonon Bundle Emission in a F\"orster-Coupled Quantum Dot Molecule}
 
 %%%%%%%%%%%%%%%%%%%%% Publisher's Area please ignore %%%%%%%%%%%%%%%
 %
@@ -46,7 +47,8 @@
 
 %TOPOLOGICAL characteristics IN DEFORMED JAYNES-CUMMINGS MODEL UNDER DEFORMED PARITY
 
-\title{$N$-PHONON BUNDLE EMISSION FROM A FÖRSTER-COUPLED QUANTUM DOT MOLECULE IN THE BAD-CAVITY LIMIT}
+\title{$N$-PHONON BUNDLE EMISSION FROM A F\"ORSTER-COUPLED QUANTUM DOT 
+	MOLECULE IN THE BAD-CAVITY LIMIT}
 
 \author{J. S. García Barrera\footnote{Corresponding author}}
 
@@ -76,131 +78,403 @@ secheverri@uniquindio.edu.co}
 \end{history}
 
 \begin{abstract}
-	We study $n$-phonon bundle emission in an excitonic molecule consisting of two identical quantum dots coherently coupled via Förster interaction and driven by a laser in resonance with the Stokes sidebands of an acoustic nanocavity. The Förster coupling hybridizes the single-exciton manifold into collective bright and dark states, giving rise to superradiant emission dynamics and a characteristic shift of the Stokes resonances absent in the single-emitter case. We characterize the emission statistics through higher-order correlation functions and quantum trajectory simulations, and compute the emission purity $\Pi_n$ across the relevant parameter space. High-purity three-phonon bundle emission is achievable with cavity quality factors up to five times lower than those required in the single-emitter case, a relaxation that originates directly from the superradiant amplification of the emission cascade and renders the system inherently more robust against cavity losses. The predicted parameters are consistent with state-of-the-art semiconductor quantum dot nanocavity platforms, establishing the excitonic molecule as a viable route toward high-purity multi-phonon quantum acoustics.
+	We study $n$-phonon bundle emission in an excitonic molecule consisting of two identical quantum dots coherently coupled via F\"orster interaction and driven by a laser in resonance with the Stokes sidebands of an acoustic nanocavity. The F\"orster coupling hybridizes the single-exciton manifold into collective bright and dark states, giving rise to superradiant emission dynamics and a characteristic shift of the Stokes resonances absent in the single-emitter case. We characterize the emission statistics through higher-order correlation functions and quantum trajectory simulations, and compute the emission purity $\Pi_n$ across the relevant parameter space. High-purity three-phonon bundle emission is achievable with cavity quality factors up to five times lower than those required in the single-emitter case, a relaxation that originates directly from the superradiant amplification of the emission cascade and renders the system inherently more robust against cavity losses. The predicted parameters are consistent with state-of-the-art semiconductor quantum dot nanocavity platforms, establishing the excitonic molecule as a viable route toward high-purity multi-phonon quantum acoustics.
 \end{abstract}
 
-\keywords{phonon bundle emission, excitonic molecule, Förster coupling, superradiance, cavity QED, emission purity}
+\keywords{phonon bundle emission, excitonic molecule, F\"orster coupling, superradiance, cavity QED, emission purity}
 
 \newpage
 
 \section{Introduction}
-Phonons — the quanta of mechanical vibrations — have emerged as strong candidates for solid-state quantum devices and on-chip quantum communications~\cite{balandin2005,manenti2017,schuetz2015,gustafsson2014}, offering several advantages over photons: acoustic waves propagate at speeds orders of magnitude slower than light, making them better suited for short-distance communication; phonons are confined to material media and thus free from radiation losses; and acoustic cavities are highly tunable, with experimental demonstrations spanning from gigahertz to terahertz frequencies~\cite{weig2004,rozas2009,oconnell2010,macCabe2020,zalalutdinov2021}. Within this framework, quantum phononics has advanced toward applications demanding high-quality multi-phonon states, including phononic quantum networks~\cite{lemonde2018,calajo2019}, quantum memories and transducers~\cite{schuetz2015,arrangoiz2018}, and precision measurements via sub-Poissonian and NOON phonon states~\cite{toyoda2015,zhang2018}. The controlled generation of such states has therefore become a central task of quantum phononics.
+\label{sec:int}
 
-A key figure of merit in this context is the purity of the emitted multi-phonon state, which quantifies how selectively the source produces exactly $n$ phonons per emission event. Engineering sources with high $n$-phonon purity requires both a well-defined nonlinear coupling mechanism and a dissipative channel that extracts the correlated phonon bundle before off-resonance processes contaminate it. Semiconductor quantum dots coupled to acoustic nanocavities provide a natural platform for this purpose: the electron-phonon interaction is strong and tunable, the optical driving allows precise resonance control, and the relevant decay rates are within experimentally accessible ranges~\cite{weig2004,rozas2009,borri2001}.
+Quantum vibrational modes of solids, described by phonons, have a great potential to be used in 
+technological applications in quantum metrology, quantum sensing, and on-chip quantum 
+communications~\cite{balandin2005,manenti2017,schuetz2015,gustafsson2014,noguchi2017,arrangoiz2018}. 
+Analogous to photons in quantum electrodynamics, phonons can be used to store, process, and 
+transduce quantum information, with a three-fold advantage over their photonic counterparts: 
+acoustic waves propagate at speeds orders of magnitude slower than light, making them especially 
+suited for short-distance on-chip communication~\cite{gustafsson2014,kuzyk2018}; phonons are 
+confined to material media and thus immune to radiation losses into vacuum; and acoustic cavities are highly tunable, with experimental demonstrations spanning from gigahertz 
+to terahertz frequencies~\cite{weig2004,rozas2009,oconnell2010,macCabe2020,bolgar2018,chu2017,zalalutdinov2021,soykal2011,fainstein2013,kharel2018,gokhale2020}.
+As the control of individual phonons continues to improve, many-phonon states are increasingly 
+required for highly nonclassical sources, useful for quantum sensing and 
+metrology~\cite{toyoda2015,zhang2018,chu2018,satzinger2018}, phononic quantum 
+networks~\cite{habraken2012,calajo2019,lemonde2018}, and quantum memories and 
+transducers~\cite{schuetz2015,arrangoiz2018,bienfait2019}. The controlled generation of 
+high-quality multi-phonon states has therefore become a central task of quantum phononics.
 
-To this end, the recent work of Bin et al.~\cite{bin2020} proposes a physical system in quantum acoustodynamics in which a single quantum dot coupled to an acoustic nanocavity is driven at the $n$th-order Stokes sideband. The mechanism relies on super-Rabi oscillations between states differing by $n$ phonons, which, combined with cavity dissipation, coherently transfer pure $n$-phonon states out of the cavity. The scheme achieves near-unity purity over a wide parameter range and is optically tunable, but places demanding requirements on the cavity quality factor $Q$, which must remain sufficiently high to preserve coherence throughout the multi-phonon cascade.
+In the photonic domain, multiphoton bundle emission has been explored in cavity QED 
+settings~\cite{kubanek2008,ota2011,gonzaleztudela2013}, and a scheme for the direct generation 
+of $n$-photon bundles, states in which $n$ photons are emitted simultaneously into the same 
+mode, was proposed by Mu\~noz et al.~\cite{munoz2014} and later extended to the bad-cavity 
+regime through spectral filtering~\cite{munoz2018,chang2016}. The phononic analogue was 
+introduced by Bin et al.~\cite{bin2020}, who demonstrated theoretically that a single quantum dot 
+(QD) coupled to an acoustic nanocavity and coherently driven by a laser at the $n$th-order Stokes 
+sideband can emit $n$-phonon bundles of high purity. The mechanism relies on super-Rabi 
+oscillations~\cite{strekalov2014} between states differing by $n$ phonons, induced by the 
+nonlinear electron-phonon interaction: unlike the photonic leapfrog mechanism of 
+Ref.~\cite{munoz2014}, which exploits Jaynes-Cummings-enhanced multiphoton transitions, the 
+phononic Stokes process accompanies each QD flip with the coherent generation of $n$ phonons 
+directly in the cavity mode. Pure bundle emission is then achieved by opening a dissipative channel 
+that converts these oscillations into correlated phonon emission toward the 
+exterior~\cite{bin2020,vargas2022}. This scheme is optically tunable and achieves near-unity 
+purity over a wide parameter range; however, it places demanding requirements on the cavity 
+quality factor $Q$, which must remain sufficiently high to preserve coherence throughout the 
+multi-phonon cascade, a constraint that limits the practical accessibility of the proposal with 
+current acoustic nanocavity technology~\cite{wigger2021,kettler2021,macCabe2020}.
 
-A natural extension is to replace the single emitter with an excitonic molecule: two quantum dots coherently coupled via Förster interaction~\cite{forster1948} and jointly coupled to a confined phononic mode. The Förster coupling hybridizes the single-exciton manifold into collective bright and dark states, introducing superradiant emission dynamics and a characteristic shift of the Stokes resonances with no counterpart in the single-emitter case. Collective effects of this kind have been observed in solid-state quantum emitters coupled to nanophotonic waveguides~\cite{tiranov2023} and are known to modify spontaneous emission rates and coherence properties in coupled quantum dot systems~\cite{kagan1996,crooker2002}. In the phononic setting, the collective bright state amplifies the effective super-Rabi frequency, accelerating the emission cascade and reducing the sensitivity of the bundle purity to cavity losses.
+A natural extension is to replace the single emitter with an excitonic molecule formed by two 
+quantum dots coherently coupled via F\"orster 
+interaction~\cite{forster1948,kagan1996,crooker2002}. This resonant energy transfer mechanism 
+between quantum dots has been widely studied in semiconductor 
+systems~\cite{kagan1996,crooker2002}, and recent work has shown that a shared phononic 
+environment between coupled QDs introduces nontrivial many-body effects on the system's 
+decoherence dynamics~\cite{hall2025}. The F\"orster coupling hybridizes the single-exciton 
+manifold into bright and dark states, enabling superradiant emission dynamics and a 
+characteristic shift of the Stokes resonances with no counterpart in the single-emitter case. 
+Such phenomena have been observed in solid-state quantum emitters coupled to 
+nanophotonic waveguides~\cite{tiranov2023}, where both super- and subradiant emission have been 
+identified and controlled. In multi-emitter phononic systems, analogous symmetry-breaking 
+mechanisms have been shown to modify spontaneous emission rates~\cite{kockum2014} and amplify 
+phonon lasing~\cite{kabuss2012,droenner2017}. The bright state, in particular, amplifies the 
+effective super-Rabi frequency by a superradiant factor, accelerating the phonon emission 
+cascade and reducing the sensitivity of the bundle purity to cavity losses, potentially 
+allowing high-purity multi-phonon emission in the bad-cavity limit, i.e., with quality factors 
+far below those required in the single-emitter scheme of Bin et al.~\cite{bin2020}.
 
-In this work we extend the scheme of Bin et al. to the excitonic molecule and determine the conditions under which Förster coupling yields high-purity $n$-phonon bundle emission with less stringent cavity requirements than in the single-emitter case. We characterize the Stokes resonance structure and collective super-Rabi dynamics, analyze the emission statistics through higher-order correlation functions and quantum trajectory simulations, and compute purity maps $\Pi_n$ across the relevant parameter space. The paper is organized as follows: Section~\ref{sec:model} presents the model and theoretical framework; Section~\ref{sec:results} discusses the main results; and Section~\ref{sec:conclusions} summarizes the conclusions.
+In this work we extend the scheme of Bin et al.~\cite{bin2020} to the excitonic molecule and 
+determine the conditions under which F\"orster coupling yields high-purity $n$-phonon bundle 
+emission in the bad-cavity limit. We characterize the collective Stokes resonance structure and 
+the super-Rabi dynamics in the weak coupling and weak driving regime, analyze the $n$-phonon 
+emission statistics through higher-order correlation functions and quantum trajectory simulations, 
+and compute emission purity maps $\Pi_n$~\cite{munoz2014,munoz2018} across the relevant 
+parameter space. The paper is organized as follows: Section~\ref{sec:model} presents the model 
+and theoretical framework; Section~\ref{sec:results} discusses the main results; and 
+Section~\ref{sec:conclusions} summarizes the conclusions.
 
 \section{Model and Theoretical Framework}
+\label{sec:model}
 
-We consider an excitonic molecule formed by two identical quantum dots, QD$_1$ and QD$_2$, each modeled as a two-level system with valence state $|v\rangle$, conduction state $|c\rangle$, transition frequency $\omega_\sigma$, and electron-phonon coupling strength $\lambda$. Both dots interact with a single confined phonon mode of an acoustic nanocavity of frequency $\omega_b$, with ladder operators $b$ and $b^\dagger$, and are coherently coupled to each other via the Förster interaction with constant $J$. An external coherent laser of frequency $\omega_L$ and Rabi frequency $\Omega$ drives both dots symmetrically. Defining the individual exciton operators $\sigma_i = |v\rangle_i\langle c|$ and the total electronic number operator $\hat{N} = \sigma_1^\dagger\sigma_1 + \sigma_2^\dagger\sigma_2$, the total Hamiltonian in the laboratory frame reads ($\hbar = 1$)
+We consider an excitonic molecule formed by two identical quantum dots, QD$_1$ and QD$_2$,
+each modeled as a two-level system with valence state $|v\rangle$, conduction state $|c\rangle$,
+transition frequency $\omega_\sigma$, and electron-phonon coupling strength $\lambda$. Both dots
+interact with a single confined phonon mode of an acoustic nanocavity of frequency $\omega_b$,
+and are coherently coupled to each other via the F\"orster interaction with constant $J$. An
+external coherent laser of frequency $\omega_L$ and Rabi frequency $\Omega$ drives both dots
+symmetrically. Defining the individual exciton operators $\sigma_i = |v\rangle_i\langle c|$ and
+the total electronic number operator $\hat{N} = \sigma_1^\dagger\sigma_1 +
+\sigma_2^\dagger\sigma_2$, the total Hamiltonian reads ($\hbar = 1$)
 
 \begin{equation}
-	H_\mathrm{lab} = \omega_b b^\dagger b + \omega_\sigma \hat{N} + \lambda\,\hat{N}(b^\dagger + b) + J\!\left(\sigma_1^\dagger\sigma_2 + \sigma_2^\dagger\sigma_1\right) + \Omega\sum_{i=1,2}\!\left(e^{i\omega_L t}\sigma_i + e^{-i\omega_L t}\sigma_i^\dagger\right).
+	H_\mathrm{lab} = \omega_b b^\dagger b + \omega_\sigma \hat{N} + \lambda\,\hat{N}(b^\dagger + b)
+	+ J\!\left(\sigma_1^\dagger\sigma_2 + \sigma_2^\dagger\sigma_1\right)
+	+ \Omega\sum_{i=1,2}\!\left(e^{i\omega_L t}\sigma_i
+	+ e^{-i\omega_L t}\sigma_i^\dagger\right).
 	\label{eq:Hlab}
 \end{equation}
 
-Moving to the frame rotating with the laser and defining the detuning $\Delta \equiv \omega_\sigma - \omega_L$, the time-dependent driving terms are eliminated and the Hamiltonian becomes
+Moving to the rotating frame with detuning $\Delta \equiv \omega_\sigma - \omega_L$, the
+Hamiltonian becomes
 
 \begin{equation}
-	H = \omega_b b^\dagger b + \Delta\,\hat{N} + \lambda\,\hat{N}(b^\dagger + b) + J\!\left(\sigma_1^\dagger\sigma_2 + \sigma_2^\dagger\sigma_1\right) + \Omega\sum_{i=1,2}\!\left(\sigma_i + \sigma_i^\dagger\right).
+	H = \omega_b b^\dagger b + \Delta\,\hat{N} + \lambda\,\hat{N}(b^\dagger + b)
+	+ J\!\left(\sigma_1^\dagger\sigma_2 + \sigma_2^\dagger\sigma_1\right)
+	+ \Omega\sum_{i=1,2}\!\left(\sigma_i + \sigma_i^\dagger\right).
 	\label{eq:H}
 \end{equation}
 
-The Förster term conserves $\hat{N}$ and is therefore time-independent in the rotating frame. Within the single-excitation subspace $\{|cv\rangle, |vc\rangle\}$, it takes the matrix representation $J\bigl(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\bigr)$, whose eigenstates are the symmetric bright state and the antisymmetric dark state,
-
-\begin{align}
-	|\Psi_+\rangle &= \tfrac{1}{\sqrt{2}}\!\left(|cv\rangle + |vc\rangle\right), \quad E_+ = +J, \label{eq:bright}\\[4pt]
-	|\Psi_-\rangle &= \tfrac{1}{\sqrt{2}}\!\left(|cv\rangle - |vc\rangle\right), \quad E_- = -J. \label{eq:dark}
-\end{align}
-
-The collective excitation operator acting on the electronic ground state satisfies $\Omega(\sigma_1^\dagger + \sigma_2^\dagger)|vv\rangle = \sqrt{2}\,\Omega\,|\Psi_+\rangle$, so the laser couples exclusively to the bright state with an effective collective Rabi frequency $\sqrt{2}\,\Omega$. The dark state $|\Psi_-\rangle$ is decoupled from the driving field and does not participate in the emission dynamics in the limit of identical emitters; it acquires population only through pure dephasing, which acts individually on each dot and breaks the symmetry of the collective subspace. Introducing the collective operators $S^\dagger = |\Psi_+\rangle\langle vv|$ and $S = |vv\rangle\langle\Psi_+|$ and restricting the dynamics to the bright subspace $\{|vv\rangle, |\Psi_+\rangle\}$, the Hamiltonian takes the effective form
+The F\"orster term conserves $\hat{N}$ and is time-independent in the rotating frame.
+Diagonalizing it within the single-excitation subspace yields the symmetric bright state
+$|\Psi_+\rangle = (|cv\rangle + |vc\rangle)/\sqrt{2}$ with energy $+J$ and the antisymmetric
+dark state $|\Psi_-\rangle = (|cv\rangle - |vc\rangle)/\sqrt{2}$ with energy $-J$. Since
+$\Omega(\sigma_1^\dagger + \sigma_2^\dagger)|vv\rangle = \sqrt{2}\,\Omega\,|\Psi_+\rangle$,
+the laser couples exclusively to $|\Psi_+\rangle$ with collective Rabi frequency
+$\sqrt{2}\,\Omega$, while $|\Psi_-\rangle$ remains dark and acquires population only through
+individual pure dephasing. Introducing the collective operators $S^\dagger =
+|\Psi_+\rangle\langle vv|$ and $S = |vv\rangle\langle\Psi_+|$ and restricting the dynamics to
+the bright subspace $\{|vv\rangle, |\Psi_+\rangle\}$, the Hamiltonian takes the effective form
 
 \begin{equation}
-	H_\mathrm{eff} = \omega_b b^\dagger b + (\Delta + J)\,S^\dagger S + \lambda\,S^\dagger S(b^\dagger + b) + \sqrt{2}\,\Omega\!\left(S + S^\dagger\right),
+	H_\mathrm{eff} = \omega_b b^\dagger b + (\Delta + J)\,S^\dagger S
+	+ \lambda\,S^\dagger S(b^\dagger + b) + \sqrt{2}\,\Omega\!\left(S + S^\dagger\right).
 	\label{eq:Heff}
 \end{equation}
 
-which is structurally identical to the single-dot Hamiltonian of Ref.~\cite{bin2020}, with the substitutions $\omega_\sigma \to \omega_\sigma + J$ and $\Omega \to \sqrt{2}\,\Omega$. This mapping is the key structural result of the model: the Förster coupling shifts the effective transition frequency by $+J$ and amplifies the driving by a superradiant factor $\sqrt{2}$, with direct consequences for both the resonance conditions and the emission dynamics.
-
-In the weak coupling and weak driving regime $\Omega, \lambda \ll \omega_b$, the eigenstates of $H_\mathrm{eff}$ are approximately the product states $|n, vv\rangle$ and $|n, \Psi_+\rangle$. The system exhibits $n$-phonon Stokes resonances when the laser is tuned so that states $|0, vv\rangle$ and $|n, \Psi_+\rangle$ become degenerate, which occurs at
+In the weak coupling and weak driving regime $\Omega, \lambda \ll \omega_b$, the system exhibits
+$n$-phonon Stokes resonances when states $|0, vv\rangle$ and $|n, \Psi_+\rangle$ become
+degenerate, which occurs at
 
 \begin{equation}
 	\Delta_n = -n\omega_b - J.
 	\label{eq:res}
 \end{equation}
 
-At this resonance, perturbation theory via the Löwdin partitioning method~\cite{lowdin1951} projects the dynamics onto the two-dimensional subspace $\{|0, vv\rangle, |n, \Psi_+\rangle\}$ by eliminating the $2n$ intermediate states. The resulting effective Hamiltonian in this subspace is off-diagonal, with matrix element
+Applying the L\"owdin partitioning method~\cite{lowdin1951} to eliminate the $2n$ intermediate
+states, the effective coupling between $|0, vv\rangle$ and $|n, \Psi_+\rangle$ is
 
 \begin{equation}
-	\Omega_\mathrm{eff}^{(n)} = \sqrt{2}\left(\frac{\lambda}{\omega_b}\right)^{\!n} \frac{\Omega}{\sqrt{n!}},
+	\Omega_\mathrm{eff}^{(n)} = \sqrt{2}\left(\frac{\lambda}{\omega_b}\right)^{\!n}
+	\frac{\Omega}{\sqrt{n!}},
 	\label{eq:Oeff}
 \end{equation}
 
-which defines the collective super-Rabi frequency of the $n$-phonon process. The $(\lambda/\omega_b)^n$ dependence reflects the $n$-th order nature of the Stokes process, the $1/\sqrt{n!}$ factor arises from the sequential ladder operator matrix elements along the phonon cascade, and the $\sqrt{2}$ prefactor is the superradiant enhancement inherited from the collective bright state. Under the resonance condition~\eqref{eq:res}, the system undergoes coherent oscillations between $|0, vv\rangle$ and $|n, \Psi_+\rangle$ at frequency $\Omega_\mathrm{eff}^{(n)}$. Combined with cavity dissipation at rate $\kappa$, these oscillations drive a coherent cascade that transfers $n$ correlated phonons out of the cavity in a single emission event, provided $\kappa \sim \Omega_\mathrm{eff}^{(n)}$, the optimal sweet-spot condition for bundle emission.
+which defines the collective super-Rabi frequency of the $n$-phonon process. The sweet-spot
+condition for bundle emission, $\kappa \sim \Omega_\mathrm{eff}^{(n)}$, ensures that cavity
+dissipation extracts the correlated phonon cascade before off-resonance processes contaminate it. All numerical results were obtained using QuTiP~\cite{johansson2011}.
 
-The open-system dynamics is governed by the Lindblad master equation $\dot{\rho} = -i[H_\mathrm{eff}, \rho] + \sum_k \mathcal{D}[L_k]\rho$, where $\mathcal{D}[L]\rho = L\rho L^\dagger - \frac{1}{2}\{L^\dagger L, \rho\}$. The collapse operators are $L_1 = \sqrt{\kappa}\,b$ (phonon cavity decay), $L_2 = \sqrt{\gamma}\,S$ (collective spontaneous emission), and $L_{3,4} = \sqrt{\gamma_\varphi}\,\sigma_i^\dagger\sigma_i$ (individual pure dephasing on each dot).
+\section{Results and Discussion}
+\label{sec:results}
+\graphicspath{{../../codes/results/oficial/pgf/}{../../codes/results/oficial/}}
 
-To quantify the quality of the $n$-phonon source we use the emission purity $\Pi_n$, introduced by Muñoz et al.~\cite{munoz2014,munoz2018} as the fraction of the steady-state phonon population attributable exclusively to the resonant $n$-phonon process. It is computed via the two-steady-state method: the system is solved twice, once with a Fock space truncated at $N_\mathrm{cut}$ phonons and once at $N_\mathrm{cut} - n$, and the purity is defined as
+Dissipation is necessary to drive phonon bundle emission out of the cavity. The open-system 
+dynamics is governed by the Lindblad master equation
 
 \begin{equation}
-	\Pi_n = \frac{n\,\langle\hat{n}_b\rangle^{(n)}_\mathrm{trunc}}{\langle\hat{n}_b\rangle_\mathrm{full}},
-	\label{eq:purity}
+	\dot{\rho} = -i[H_\mathrm{eff},\rho]
+	+ \kappa\,\mathcal{D}[b]\,\rho
+	+ \gamma\sum_{i=1,2}\mathcal{D}[\sigma_i]\,\rho
+	+ \gamma_\varphi\sum_{i=1,2}\mathcal{D}[\sigma_i^\dagger\sigma_i]\,\rho,
+	\label{eq:lindblad}
 \end{equation}
 
-where $\langle\hat{n}_b\rangle_\mathrm{full}$ is the mean phonon number in the full space and $\langle\hat{n}_b\rangle^{(n)}_\mathrm{trunc}$ is the contribution isolated by the truncation. A value $\Pi_n \to 1$ indicates that the cavity field is composed almost entirely of $n$-phonon bundles, while $\Pi_n \to 0$ signals dominant contamination from off-resonance processes.
-
-\section{Results and Discussion}\label{S3}
-\graphicspath{{../../codes/results/oficial/pgf/}{../../codes/results/oficial/}}
+where $\kappa$ is the phonon cavity decay rate, $\gamma$ the spontaneous emission rate of each 
+dot, and $\gamma_\varphi$ the individual pure dephasing rate. A first signature of the emitted 
+field correlations is provided by the equal-time $n$-th order correlation function ~\cite{glauber1963}
+$g^{(n)}(0) = \langle b^{\dagger n}b^n\rangle/\langle b^\dagger b\rangle^n$. 
+Fig.~\ref{fig:gn} shows $g^{(n)}(0)$ as a function of $\Delta/\omega_b$ for $n = 2$ and $n = 3$. 
+Both panels display strong super-bunching peaks at the Stokes resonances 
+$\Delta_n = -n\omega_b - J$~\eqref{eq:res}, confirming that the phonon field is dominated by 
+correlated $n$-phonon events at the predicted detunings. Notably, each resonance exhibits a 
+pronounced dip at its center rather than a smooth maximum: at exact resonance, the $n$ phonons 
+are emitted as an indivisible bundle, so single-phonon detection events are no longer 
+statistically independent and $g^{(n)}(0)$ loses its ability to capture the relevant bundle 
+statistics~\cite{munoz2014}. The uniform spacing $\omega_b$ between consecutive resonances, 
+independent of $n$, is a direct signature of the Stokes process: each additional phonon costs 
+exactly $\omega_b$ in energy regardless of the bundle order.
 
 \begin{figure}[H]
 	\centering
-	\input{../../codes/results/oficial/pgf/g_n_orders_stacked_paper.pgf}
-	\caption{(a) Funciones de correlación $g^{(n)}(0)$ en función de $\Delta/\omega_b$ para $n=2,3,4,5$ (de abajo a arriba). Las líneas verticales punteadas indican las resonancias de Stokes $\Delta_n = -n\omega_b - J$. (b) $g^{(3)}(0)$ en función de $\Delta/\omega_b$ variando  $\lambda/\omega_b$ (arriba) y $\Omega/\omega_b$ (abajo). Las líneas punteadas indican las resonancias teóricas. Parámetros del sistema: $\lambda/\omega_b = 0.08$ (fijo en panel inferior de (b)), $\Omega/\omega_b = 0.01$ (fijo en panel superior de (b)), $\kappa/\omega_b = 0.003$, $\gamma/\omega_b = 0.0002$, $\gamma_\varphi/\omega_b = 0.0004$, $J/\omega_b = 0.5$.}
-	\label{fig:gn_correlaciones}
+	\begin{tikzpicture}
+		\node[anchor=south west, inner sep=0] at (0,0) {\input{../../codes/results/oficial/pgf/g_n_orders_stacked_paper.pgf}};
+		\node[anchor=north west] at (0.730266in,2.290752in) {\rmfamily\fontsize{9}{10.8}\selectfont $(a)$};
+		\node[anchor=north west] at (0.730266in,1.256228in) {\rmfamily\fontsize{9}{10.8}\selectfont $(b)$};
+	\end{tikzpicture}
+	\caption{Equal-time $n$-th order correlation functions $g^{(n)}(0)$ as a function of the laser 
+		detuning $\Delta/\omega_b$ for (a) $n = 3$ and (b) $n = 2$. Dashed vertical lines mark the 
+		theoretical Stokes resonances $\Delta_n = -n\omega_b - J$. System parameters: 
+		$\lambda/\omega_b = 0.08$, $\Omega/\omega_b = 0.01$, $\kappa/\omega_b = 0.003$, 
+		$\gamma/\omega_b = 0.0002$, $\gamma_\varphi/\omega_b = 0.0004$, $J/\omega_b = 0.5$.}
+	\label{fig:gn}
 \end{figure}
 
-\newpage
+To properly characterize the bundle statistics, we use the $m$-th order $n$-bundle correlation 
+function~\cite{munoz2014}, whose second-order case reads
+
+\begin{equation}
+	g_2^{(2)}(\tau) = \frac{\langle b^{\dagger 2}(0)\,b^{\dagger 2}(\tau)\,
+		b^2(\tau)\,b^2(0)\rangle}
+	{\langle (b^{\dagger 2}b^2 (0))\rangle\,\langle (b^{\dagger 2}b^2(\tau))\rangle},
+	\label{eq:g2bundle}
+\end{equation}
+
+which distinguishes sub-Poissonian ($g_2^{(2)} < 1$), Poissonian ($g_2^{(2)} = 1$), and 
+super-Poissonian ($g_2^{(2)} > 1$) bundle statistics for $\tau \gg \kappa^{-1}$, corresponding 
+to the $n$-phonon gun, $n$-phonon laser, and thermal bundle regimes, respectively. Fig.~\ref{fig:g2_decay} shows $g_2^{(2)}(\tau)$ as a function of $\gamma/\omega_b$ and 
+$\omega_b\tau$ at the two-phonon Stokes resonance for two cavity decay rates. In 
+panel~(a), for $\gamma \ll \kappa$ the function decays from super-bunching at short times 
+$\tau \lesssim \kappa^{-1}$ to $g_2^{(2)} \approx 0.35$ at long times, realizing the 
+$n$-phonon gun regime. As $\gamma$ increases toward $\kappa$, $g_2^{(2)}(\tau\to\infty) \to 1$ 
+and the emission becomes Poissonian, corresponding to the $n$-phonon laser. For 
+$\gamma \gg \kappa$, strong bunching persists at all times, signaling the thermal bundle regime. 
+In panel~(b), the larger cavity decay rate drives $g_2^{(2)}(\tau\to\infty) \to 1$ across the 
+entire range of $\gamma$, so the $n$-phonon laser regime is reached regardless of the 
+spontaneous emission rate. All three regimes are accessible in both panels by tuning 
+$\gamma/\kappa$, confirming that the bundle emission statistics are experimentally controllable.
+
 \begin{figure}[H]
 	\centering
 	\input{../../codes/results/oficial/pgf/g2_decay_2qds_paper.pgf}
-	\caption{Mapa tridimensional de $g_2^{(2)}(\tau)$ en función de $\gamma/\omega_b$ y $\omega_b\tau$ para (a) $\kappa/\omega_b = 0.001$ y (b) $\kappa/\omega_b = 0.01$. Parámetros del sistema: $\lambda/\omega_b = 0.1$, $\Omega/\omega_b = 0.2$, $\gamma_\varphi/\omega_b = 0.0004$, $J/\omega_b = 0.5$.}
+	\caption{Second-order two-phonon correlations $g_2^{(2)}(\tau)$ versus QD decay 
+		$\gamma/\omega_b$ for different cavity decays $\kappa/\omega_b$: (a) $\kappa/\omega_b = 
+		0.001$ and (b) $\kappa/\omega_b = 0.01$. System parameters: $\lambda/\omega_b = 0.1$, 
+		$\Omega/\omega_b = 0.2$, $\gamma_\varphi/\omega_b = 0.0004$, $J/\omega_b = 0.5$.}
 	\label{fig:g2_decay}
 \end{figure}
 
-\newpage
+The bundle emission mechanism is directly visualized through Monte Carlo quantum trajectory 
+simulations, which track individual system evolution and record phonon clicks at each quantum 
+jump in the cavity channel. Fig.~\ref{fig:trayectoria} shows a representative trajectory 
+segment at the two-phonon Stokes resonance. The system spends most of its time in the ground 
+state $|vv,0\rangle$ ($\langle P_{vv,0}\rangle \approx 0.97$, panel~(a)), while super-Rabi 
+oscillations coherently build population in $|\Psi_+,2\rangle$ up to $\sim 4\%$ (panel~(c)), 
+with $|\Psi_+,1\rangle$ acting as the intermediate state of the cascade (panel~(b)). When a 
+quantum jump occurs in the phonon channel, the first click projects the system onto 
+$|\Psi_+,1\rangle$ with near-unit probability, as confirmed by the peak 
+$P_{\Psi_+,1} \approx 0.93$ in panel~(b). The second phonon is emitted on a timescale much 
+shorter than the cavity lifetime $\kappa^{-1} = 2000\,\omega_b^{-1}$: both clicks occur within 
+a window of $\Delta\tau \approx 169\,\omega_b^{-1} \approx 0.08\,\kappa^{-1}$, confirming the 
+strongly correlated two-phonon cascade. The dark state $|\Psi_-\rangle$ remains essentially 
+unpopulated throughout (maximum $P_{\Psi_-} \approx 9\times10^{-3}$), validating that the 
+dynamics is effectively confined to the bright subspace.
+
+The role of individual pure dephasing $\gamma_\varphi$ deserves attention in the two-dot 
+context. In the single-emitter case, pure dephasing broadens the Stokes resonances without 
+activating additional emission channels. In the excitonic molecule, however, $\gamma_\varphi$ 
+acts individually on each dot and therefore breaks the symmetry of the collective subspace, 
+transferring population from $|\Psi_+\rangle$ to $|\Psi_-\rangle$ at a rate proportional to 
+$\gamma_\varphi$. Since $|\Psi_-\rangle$ is decoupled from the laser, this population transfer 
+represents a loss channel with no phononic output, introducing a source of purity degradation 
+absent in the single-emitter scheme. The trajectory confirms that this effect remains negligible 
+for the parameters considered, but it sets a fundamental limit on bundle purity as 
+$\gamma_\varphi$ increases, a constraint intrinsic to any collective two-emitter platform.
+
+After emission, the system returns to $|vv,0\rangle$ via an optical photon from the transition 
+$|\Psi_+,0\rangle \to |vv,0\rangle$. Since this photon carries optical frequency distinct from 
+$\omega_b$, it can be detected in an independent channel without disturbing the phonon bundle, 
+providing a heralding signal for quantum information protocols~\cite{bin2020}.
+
 \begin{figure}[H]
 	\centering
 	\input{../../codes/results/oficial/pgf/trayectoria_2qd_paper.pgf}
-	\caption{Trayectoria cuántica de Monte Carlo bajo la resonancia de Stokes de dos fonones. Los paneles muestran las poblaciones de los estados del sistema proyectadas sobre los sectores fonónicos $n_b = 0$ (a), $n_b = 1$ (b) y $n_b = 2$ (c). Parámetros del sistema: $\lambda/\omega_b = 0.1$, $\Omega/\omega_b = 0.2$, $\kappa/\omega_b = 0.0005$, $\gamma/\omega_b = 0.0002$, $\gamma_\varphi/\omega_b = 0.0004$, $J/\omega_b = 0.5$.}
+	\caption{Monte Carlo quantum trajectory at the two-phonon Stokes resonance. Panels show 
+		the system state populations projected onto the phonon sectors $n_b = 0$ (a), $n_b = 1$ 
+		(b), and $n_b = 2$ (c). System parameters: $\lambda/\omega_b = 0.1$, 
+		$\Omega/\omega_b = 0.2$, $\kappa/\omega_b = 0.0005$, $\gamma/\omega_b = 0.0002$, 
+		$\gamma_\varphi/\omega_b = 0.0004$, $J/\omega_b = 0.5$.}
 	\label{fig:trayectoria}
 \end{figure}
 
-\newpage
+\subsection{Discussion of Purity and Experimental Feasibility}
+
+In any realistic implementation, $n$-phonon emission is contaminated by off-resonance processes 
+of order $m \neq n$. To quantify the source quality we use the emission purity $\Pi_n$, 
+introduced by Mu\~noz et al.~\cite{munoz2014,munoz2018} as the fraction of the steady-state 
+phonon population attributable exclusively to the resonant $n$-phonon process. It is computed 
+via the two-steady-state method, solving the system at Fock space truncations $N_\mathrm{cut}$ 
+and $N_\mathrm{cut} - n$,
+
+\begin{equation}
+	\Pi_n = \frac{n\,\langle\hat{n}_b\rangle^{(n)}_\mathrm{trunc}}
+	{\langle\hat{n}_b\rangle_\mathrm{full}},
+	\label{eq:purity}
+\end{equation}
+
+where $\langle\hat{n}_b\rangle_\mathrm{full}$ is the mean phonon number in the full space and 
+$\langle\hat{n}_b\rangle^{(n)}_\mathrm{trunc}$ is the contribution isolated by the truncation.
+
+Fig.~\ref{fig:purity_2qd_heatmap} shows the purity maps for $n = 2, 3, 4$ in the 
+$(\lambda/\omega_b, \kappa/\omega_b)$ parameter space. For $n = 2$, the high-purity region 
+($\Pi_2 \gtrsim 0.90$) spans approximately half the explored space; as the order increases, 
+this region progressively narrows to a strip at small $\kappa$ and large $\lambda$ for $n = 4$. 
+This narrowing reflects the $\Omega_\mathrm{eff}^{(n)} \propto (\lambda/\omega_b)^n$ dependence: 
+higher-order processes require stronger coupling to dominate over off-resonance emission, 
+shifting the optimal purity point toward larger $\lambda$ with increasing $n$, from 
+$\lambda/\omega_b \sim 0.08$ for $n = 2$ to $\lambda/\omega_b \approx 0.22$ for $n = 3$, where 
+$\Pi_3 \approx 98.9\%$ and $\Pi_4 \approx 92.5\%$ are simultaneously accessible at 
+$\kappa/\omega_b \sim 10^{-3}$. The purity is also sensitive to $\kappa$: for 
+$\lambda/\omega_b = 0.22$, $\Pi_3$ drops from $\approx 99\%$ to $\approx 97\%$ as 
+$\kappa/\omega_b$ increases from $10^{-3}$ to $10^{-2}$, while $\Pi_4$ falls more severely 
+from $92\%$ to $62\%$ over the same range, since higher-order cascades offer more channels 
+for off-resonance contamination before the bundle is completed.
+
+It is worth noting that the F\"orster coupling $J$ enters the purity maps only indirectly 
+through the resonance shift $\Delta_n = -n\omega_b - J$~\eqref{eq:res}: once the laser is 
+tuned to the shifted resonance, $J$ does not appear explicitly in $\Omega_\mathrm{eff}^{(n)}$ 
+and therefore does not alter the purity landscape, making the maps in 
+Fig.~\ref{fig:purity_2qd_heatmap} robust against variations in the F\"orster constant. The 
+practical implication is that $J$ serves as a spectroscopic handle; it shifts the operating 
+frequency of the source without degrading its purity, which is advantageous for frequency 
+multiplexing in phononic quantum networks where multiple sources must operate at distinct but 
+well-defined acoustic frequencies.
+
 \begin{figure}[H]
 	\centering
 	\input{../../codes/results/oficial/pgf/purity_2qd_heatmap_paper.pgf}
-	\caption{Mapas de pureza $\Pi_n$ para $n = 2, 3, 4$ (de izquierda a
-		derecha) en función de $\lambda/\omega_b$ y $\kappa/\omega_b$,
-		evaluados en la condición de resonancia de Stokes de orden $n$. Parámetros: $\Omega/\omega_b = 0.2$,
-		$\gamma/\omega_b = 0.0002$, $\gamma_\varphi/\omega_b = 0.0004$,
-		$J/\omega_b = 0.5$.}
+	\caption{Emission purity maps $\Pi_n$ for $n = 2, 3, 4$ (left to right) as a function of 
+		$\lambda/\omega_b$ and $\kappa/\omega_b$, evaluated at the $n$th-order Stokes resonance 
+		condition. Parameters: $\Omega/\omega_b = 0.2$, $\gamma/\omega_b = 0.0002$, 
+		$\gamma_\varphi/\omega_b = 0.0004$, $J/\omega_b = 0.5$.}
 	\label{fig:purity_2qd_heatmap}
 \end{figure}
 
-\newpage
+The one-dimensional cuts in Fig.~\ref{fig:purity_2qd_cuts} further resolve the parameter 
+dependence. Along the $\lambda$ axis at $\kappa/\omega_b = 10^{-3}$, $\Pi_2$ remains above 
+$98\%$ across virtually the entire explored range, while $\Pi_3$ increases monotonically from 
+$\sim 10\%$ at $\lambda/\omega_b = 0.04$ to $\sim 99\%$ at $\lambda/\omega_b = 0.28$, and 
+$\Pi_4$ exceeds $90\%$ only for $\lambda/\omega_b \gtrsim 0.21$. This hierarchy indicates that 
+the source can be tuned to favor different bundle orders by adjusting $\lambda$: for 
+$\lambda/\omega_b \lesssim 0.10$ it is essentially a high-purity two-phonon source with 
+moderate $\Pi_3$, while for $\lambda/\omega_b \gtrsim 0.22$ all three orders $n = 2, 3, 4$ 
+simultaneously exceed $90\%$ purity. Along the $\kappa$ axis at $\lambda/\omega_b = 0.22$, 
+two- and three-phonon purities remain above $95\%$, degrading only for 
+$\kappa/\omega_b \gtrsim 10^{-2}$.
+
 \begin{figure}[H]
 	\centering
 	\input{../../codes/results/oficial/pgf/purity_2qd_cuts_paper.pgf}
-	\caption{Cortes unidimensionales de la pureza $\Pi_n$ para $n=2,3,4$ en función de: (a) $\kappa/\omega_b$ a $\lambda/\omega_b = [0.22, 0.28]$ y (b) $\lambda/\omega_b$ a $\kappa/\omega_b = [10^{-3}, 10^{-2}]$ fijos, líneas continuas y líneas punteadas, respectivamente. Parámetros del sistema: $\Omega/\omega_b = 0.2$, $\gamma/\omega_b = 0.0002$, $\gamma_\varphi/\omega_b = 0.0004$, $J/\omega_b = 0.5$.}
+	\caption{One-dimensional purity cuts $\Pi_n$ for $n = 2, 3, 4$ as a function of: 
+		(a) $\kappa/\omega_b$ at fixed $\lambda/\omega_b = 0.22$ (solid) and $0.28$ (dashed), 
+		and (b) $\lambda/\omega_b$ at fixed $\kappa/\omega_b = 10^{-3}$ (solid) and $10^{-2}$ 
+		(dashed). Parameters: $\Omega/\omega_b = 0.2$, $\gamma/\omega_b = 0.0002$, 
+		$\gamma_\varphi/\omega_b = 0.0004$, $J/\omega_b = 0.5$.}
 	\label{fig:purity_2qd_cuts}
 \end{figure}
 
+Throughout this work we use parameters of the same order of magnitude as those of 
+Ref.~\cite{bin2020}, which allows a direct comparison of the phonon bundle statistics and 
+purity between the single-emitter and excitonic molecule schemes. For 
+$\omega_b/2\pi = 1\,\mathrm{THz}$, these correspond to $\Omega/2\pi = 0.2\,\mathrm{THz}$, 
+$\gamma/2\pi = 0.2\,\mathrm{GHz}$, and $\gamma_\varphi/2\pi = 0.4\,\mathrm{GHz}$, consistent 
+with experimentally reported values in semiconductor QD-nanocavity 
+systems~\cite{weig2004,rozas2009,borri2001}. The value $\lambda/\omega_b = 0.22$ used in the 
+purity optimization represents a plausible scenario: the Weig et al.\ system exhibits 
+Huang-Rhys factors $S \sim 1.7$--$2.5$~\cite{weig2004}, equivalent under 
+$S = (\lambda/\omega_b)^2$ to $\lambda/\omega_b \sim 1.3$--$1.6$, confirming that 
+dimensionless couplings well above the conservative reference $\lambda/\omega_b = 0.14$ of 
+Ref.~\cite{bin2020} are physically attainable.
 
-\section{Conclusions}\label{S4}
+The cavity quality factor requirement is where the excitonic molecule offers its most 
+significant practical advantage. Rozas et al.\ demonstrate that $Q = \omega_b/\kappa$ in 
+$1\,\mathrm{THz}$ acoustic nanocavities is limited primarily by thickness fluctuations at the 
+$1/10$ unit-cell scale~\cite{rozas2009}, placing realistic fabrication constraints in the 
+range $Q \sim 90$--$300$. Consistently, free-decay measurements in high-frequency 2D acoustic 
+cavities report $Q \sim 140$ at $70\,\mathrm{GHz}$~\cite{zalalutdinov2021}, establishing a 
+direct experimental precedent for quality factors in this range. Under these conditions, at 
+$\lambda/\omega_b = 0.22$ the theory predicts $\Pi_2 \approx 98.6\%$ and 
+$\Pi_3 \approx 98.9\%$ at $\kappa/2\pi \approx 1\,\mathrm{GHz}$ ($Q \sim 900$), with 
+$\Pi_3 > 97\%$ maintained up to $\kappa/2\pi \approx 7.6\,\mathrm{GHz}$ ($Q \sim 130$) and 
+$\Pi_3 > 95\%$ up to $\kappa/2\pi \approx 11\,\mathrm{GHz}$ ($Q \sim 90$). The single-emitter 
+scheme of Bin et al.\ requires $Q \sim 500$ to reach the same $\Pi_3 \approx 95\%$ 
+threshold~\cite{bin2020}; the excitonic molecule achieves it with cavities up to five times 
+less demanding. The physical origin is the superradiant factor $\sqrt{2}$ amplifying 
+$\Omega_\mathrm{eff}^{(n)}$: the emission cascade completes more rapidly, reducing the time 
+window available for off-resonance processes to contaminate the bundle before the cavity 
+releases it. This establishes the F\"orster-coupled excitonic molecule as an experimentally 
+viable platform for high-purity multi-phonon quantum acoustics with current 
+technology~\cite{weig2004,rozas2009,zalalutdinov2021,macCabe2020}.
+
+
+\section{Conclusions}
+\label{sec:conclusions}
+
+We have studied $n$-phonon bundle emission in a F\"orster-coupled excitonic molecule and shown 
+that the collective hybridization into bright and dark states modifies the emission dynamics 
+qualitatively with respect to the single-emitter case. The superradiant factor $\sqrt{2}$ in 
+the effective super-Rabi frequency and the rigid shift $-J$ of the Stokes resonances are 
+structural consequences of the F\"orster coupling that determine both the spectral position of 
+the operating points and the timescale of the phonon emission cascade.
+
+The central result is that three-phonon bundle purity $\Pi_3 > 95\%$ is achievable with 
+cavity quality factors $Q \sim 90$--$130$, compared to $Q \sim 500$ required in the 
+single-emitter scheme. This fivefold relaxation originates from the superradiant amplification 
+of $\Omega_\mathrm{eff}^{(n)}$: the faster cascade reduces the time window available for 
+off-resonance contamination, rendering the system inherently more robust against cavity losses. 
+The F\"orster constant $J$ acts as a spectroscopic handle that shifts the operating frequency 
+without altering the purity landscape, a feature exploitable for frequency multiplexing in 
+phononic quantum networks. The bundle statistics are tunable across the $n$-phonon gun, 
+$n$-phonon laser, and thermal bundle regimes by adjusting $\gamma/\kappa$, and the predicted 
+parameters are consistent with state-of-the-art semiconductor QD-nanocavity platforms.
 
 
 \section*{Acknowledgments}
@@ -209,6 +483,7 @@ E.A.G. thanks financial support from the ‘Ampliación del uso de la mecánica 
 %
 %
 \section*{References}
+
 \begin{thebibliography}{0}
 	
 	\bibitem{balandin2005}
@@ -223,66 +498,142 @@ E.A.G. thanks financial support from the ‘Ampliación del uso de la mecánica 
 	\bibitem{gustafsson2014}
 	M. V. Gustafsson et al., {\it Science} {\bf346}, 207 (2014).
 	%5
+	\bibitem{noguchi2017}
+	A. Noguchi et al., {\it Phys. Rev. Lett.} {\bf119}, 180505 (2017).
+	
+	\bibitem{arrangoiz2018}
+	P. Arrangoiz-Arriola et al., {\it Phys. Rev. X} {\bf8}, 031007 (2018).
+	
+	\bibitem{kuzyk2018}
+	M. C. Kuzyk and H. Wang, {\it Phys. Rev. X} {\bf8}, 041027 (2018).
+	
 	\bibitem{weig2004}
 	E. M. Weig et al., {\it Phys. Rev. Lett.} {\bf92}, 046804 (2004).
 	
 	\bibitem{rozas2009}
 	G. Rozas et al., {\it Phys. Rev. Lett.} {\bf102}, 015502 (2009).
-	
+	%10
 	\bibitem{oconnell2010}
 	A. D. O'Connell et al., {\it Nature} {\bf464}, 697 (2010).
 	
 	\bibitem{macCabe2020}
 	G. S. MacCabe et al., {\it Science} {\bf370}, 840 (2020).
 	
+	\bibitem{bolgar2018}
+	A. N. Bolgar et al., {\it Phys. Rev. Lett.} {\bf120}, 223603 (2018).
+	
+	\bibitem{chu2017}
+	Y. Chu et al., {\it Science} {\bf358}, 199 (2017).
+	
 	\bibitem{zalalutdinov2021}
 	M. K. Zalalutdinov et al., {\it Nat. Commun.} {\bf12}, 3267 (2021).
-	%10
-	\bibitem{calajo2019}
-	G. Calaj\'o et al., {\it Phys. Rev. A} {\bf99}, 053852 (2019).
+	%15
+	\bibitem{soykal2011}
+	\"O. O. Soykal, R. Ruskov and C. Tahan, {\it Phys. Rev. Lett.} {\bf107}, 235502 (2011).
+	
+	\bibitem{fainstein2013}
+	A. Fainstein et al., {\it Phys. Rev. Lett.} {\bf110}, 037403 (2013).
+	
+	\bibitem{kharel2018}
+	P. Kharel et al., {\it APL Photon.} {\bf3}, 066101 (2018).
+	
+	\bibitem{gokhale2020}
+	V. J. Gokhale et al., {\it Nat. Commun.} {\bf11}, 2314 (2020).
+	
+	\bibitem{toyoda2015}
+	K. Toyoda et al., {\it Nature} {\bf527}, 74 (2015).
+	%20
+	\bibitem{zhang2018}
+	J. Zhang et al., {\it Phys. Rev. Lett.} {\bf121}, 160502 (2018).
+	
+	\bibitem{chu2018}
+	Y. Chu et al., {\it Nature} {\bf563}, 666 (2018).
+	
+	\bibitem{satzinger2018}
+	K. J. Satzinger et al., {\it Nature} {\bf563}, 661 (2018).
 	
 	\bibitem{habraken2012}
 	S. J. M. Habraken et al., {\it New J. Phys.} {\bf14}, 115004 (2012).
 	
-	\bibitem{arrangoiz2018}
-	P. Arrangoiz-Arriola et al., {\it Phys. Rev. X} {\bf8}, 031007 (2018).
+	\bibitem{calajo2019}
+	G. Calaj\'o et al., {\it Phys. Rev. A} {\bf99}, 053852 (2019).
+	%25
+	\bibitem{lemonde2018}
+	M.-A. Lemonde et al., {\it Phys. Rev. Lett.} {\bf120}, 213603 (2018).
 	
-	\bibitem{toyoda2015}
-	K. Toyoda et al., {\it Nature} {\bf527}, 74 (2015).
+	\bibitem{bienfait2019}
+	A. Bienfait et al., {\it Science} {\bf364}, 368 (2019).
 	
-	\bibitem{zhang2018}
-	J. Zhang et al., {\it Phys. Rev. Lett.} {\bf121}, 160502 (2018).
-	%15
-	\bibitem{borri2001}
-	P. Borri et al., {\it Phys. Rev. Lett.} {\bf87}, 157401 (2001).
+	\bibitem{kubanek2008}
+	A. Kubanek et al., {\it Phys. Rev. Lett.} {\bf101}, 203602 (2008).
 	
-	\bibitem{bin2020}
-	Q. Bin, X.-Y. L\"u, F. P. Laussy, F. Nori and Y. Wu, {\it Phys. Rev. Lett.} {\bf124}, 053601 (2020).
+	\bibitem{ota2011}
+	Y. Ota et al., {\it Phys. Rev. Lett.} {\bf107}, 233602 (2011).
 	
-	\bibitem{forster1948}
-	Th. F\"orster, {\it Ann. Phys.} {\bf437}, 55 (1948).
-	
-	\bibitem{tiranov2023}
-	A. Tiranov et al., {\it Science} {\bf379}, 389 (2023).
-	
-	\bibitem{kagan1996}
-	C. R. Kagan, C. B. Murray and M. G. Bawendi, {\it Phys. Rev. B} {\bf54}, 8633 (1996).
-	%20
-	\bibitem{crooker2002}
-	S. A. Crooker et al., {\it Phys. Rev. Lett.} {\bf89}, 186802 (2002).
-	
-	\bibitem{lowdin1951}
-	P.-O. L\"owdin, {\it J. Chem. Phys.} {\bf19}, 1396 (1951).
-	
+	\bibitem{gonzaleztudela2013}
+	A. Gonz\'alez-Tudela et al., {\it New J. Phys.} {\bf15}, 033036 (2013).
+	%30
 	\bibitem{munoz2014}
 	C. S\'anchez Mu\~noz et al., {\it Nat. Photon.} {\bf8}, 550 (2014).
 	
 	\bibitem{munoz2018}
 	C. S\'anchez Mu\~noz et al., {\it Optica} {\bf5}, 14 (2018).
 	
+	\bibitem{chang2016}
+	Y. Chang et al., {\it Phys. Rev. Lett.} {\bf117}, 203602 (2016).
+	
+	\bibitem{bin2020}
+	Q. Bin, X.-Y. L\"u, F. P. Laussy, F. Nori and Y. Wu, {\it Phys. Rev. Lett.} {\bf124}, 053601 (2020).
+	
+	\bibitem{strekalov2014}
+	D. V. Strekalov, {\it Nat. Photon.} {\bf8}, 500 (2014).
+	%35
 	\bibitem{vargas2022}
 	V. Vargas-Calder\'on, H. Vinck-Posada and J. M. Villas-Boas, {\it Phys. Rev. B} {\bf106}, 035305 (2022).
-	%25
+	
+	\bibitem{wigger2021}
+	D. Wigger et al., {\it Phys. Rev. Res.} {\bf3}, 033197 (2021).
+	
+	\bibitem{kettler2021}
+	J. Kettler et al., {\it Nat. Nanotechnol.} {\bf16}, 283 (2021).
+	
+	\bibitem{forster1948}
+	Th. F\"orster, {\it Ann. Phys.} {\bf437}, 55 (1948).
+	
+	\bibitem{kagan1996}
+	C. R. Kagan, C. B. Murray and M. G. Bawendi, {\it Phys. Rev. B} {\bf54}, 8633 (1996).
+	%40
+	\bibitem{crooker2002}
+	S. A. Crooker et al., {\it Phys. Rev. Lett.} {\bf89}, 186802 (2002).
+	
+	\bibitem{hall2025}
+	L. M. J. Hall et al., {\it Phys. Rev. B} {\bf112}, 045303 (2025).
+	
+	\bibitem{tiranov2023}
+	A. Tiranov et al., {\it Science} {\bf379}, 389 (2023).
+	
+	\bibitem{kockum2014}
+	A. F. Kockum, P. Delsing and G. Johansson, {\it Phys. Rev. A} {\bf90}, 013837 (2014).
+	
+	\bibitem{kabuss2012}
+	J. Kabuss et al., {\it Phys. Rev. Lett.} {\bf109}, 054301 (2012).
+	%45
+	\bibitem{droenner2017}
+	L. Droenner et al., {\it Phys. Rev. A} {\bf96}, 043805 (2017).
+	
+	\bibitem{lowdin1951}
+	P.-O. L\"owdin, {\it J. Chem. Phys.} {\bf19}, 1396 (1951).
+	
+	\bibitem{johansson2011}
+	N. Lambert et al., {\it Phys. Rep.} {\bf1153}, 1 (2026).
+	
+	\bibitem{glauber1963}
+	R. J. Glauber, {\it Phys. Rev.} {\bf130}, 2529 (1963).
+	
+	\bibitem{borri2001}
+	P. Borri et al., {\it Phys. Rev. Lett.} {\bf87}, 157401 (2001).
+	%50
+	
 \end{thebibliography}
 
 \end{document}
