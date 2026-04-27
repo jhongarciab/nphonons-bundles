@@ -575,7 +575,7 @@ print("Imágenes guardadas")
 # -----------------------------------------------------------------------------
 # VISUALIZACIÓN — Cortes 1D
 # -----------------------------------------------------------------------------
-fig, (ax_a, ax_b) = plt.subplots(1, 2, figsize=(5.10, 2.20), sharey=True)
+fig, (ax_a, ax_b) = plt.subplots(1, 2, figsize=(4.80, 1.90), sharey=True)
 
 colors_n = {2: 'C3', 3: 'C0', 4: 'C2'}
 
