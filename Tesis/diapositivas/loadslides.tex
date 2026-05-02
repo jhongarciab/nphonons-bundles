@@ -9,9 +9,9 @@
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 % Fonts
-% \RequirePackage{palatino} % for serif slides
-% \usefonttheme{serif}
-\RequirePackage[scaled]{helvet} % for sans-serif slides
+% \RequirePackage{palatino} % optional serif alternative
+\usefonttheme{serif}
+% \RequirePackage[scaled]{helvet} % sans-serif slides
 
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[T1]{fontenc}
@@ -53,6 +53,14 @@
 \RequirePackage{wrapfig}
 \RequirePackage{pgfplots}
 \RequirePackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{calc, decorations.pathmorphing, decorations.markings}
+\usepackage{pgf}
+\usepgflibrary{plotmarks}
+\newcommand{\mathdefault}[1]{#1}
+\graphicspath{
+	{../../codes/results/oficial/pgf/}
+}
 \RequirePackage{adjustbox}
 \RequirePackage{environ}
 \pgfplotsset{compat=1.18}

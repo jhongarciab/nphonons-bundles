@@ -21,15 +21,17 @@
 ]{Emisión de paquetes de $n$-fonones en una molécula excitónica mediante procesos de Stokes}
 
 
-\author[
-% Text entered here will appear in the bottom left corner
-]{
-    Jhon S. García Barrera
+\author[Jhon S. García Barrera]{
+	Jhon S. García Barrera \\[0.5em]
 }
 
 \institute{
-    Programa de Física, \\
-    Universidad del Quindío}
+	\textit{Directores:} \\
+	Edgar A. Gómez G. \\ Santiago Echeverri Arteaga  \\[1.5em]
+	Facultad de Ciencias Básicas y Tecnologías, \\
+	Programa de Física, \\
+	Universidad del Quindío
+}
 \date{\today}
 
 \begin{document}
@@ -44,262 +46,847 @@
 \addtocounter{framenumber}{-1}
 
 % You can declare different parts as a parentof sections
-\begin{frame}{Part I: Demo Presentation Part}
-    \tableofcontents[part=1]
-\end{frame}
-\begin{frame}{Part II: Demo Presentation Part 2}
-    \tableofcontents[part=2]
+\begin{frame}{Contenido}
+	\tableofcontents
 \end{frame}
 
-\makepart{Demo Part}
+\section{Introducción}
 
-\section{Introduction}
-\begin{frame}
-\begin{itemize}
-    \item This template provides an elegant and minimalistic layout for beamer slides. Hence the name \emphasize{\textbf{Elegant Slides}}.
-    \item I created Elegant Slides because I wasn't satisfied with any of the existing Beamer templates, which look slightly different than Elegant Slides.
-    \item My goal was to create a layout that is \alert{\textbf{simplistic but beautiful}} and focuses on the content, rather than crowding each slide with lots of different coloured boxes.
-    \item I designed Elegant Slides for \example{\textbf{lecture notes and technical presentations}} but it can be used for any kind of talk. 
-\end{itemize}
+
+\section{Objetivos}
+
+\begin{frame}{Objetivos}
+	
+	\textbf{Objetivo general}\\[4pt]
+	Analizar la emisión multifonónica en una molécula excitónica acoplada a una cavidad acústica bajo resonancia de Stokes, determinando cómo la hibridación excitónica modifica la pureza y la estabilidad paramétrica de los paquetes de fonones generados.
+	
+	\vspace{8pt}
+	\textbf{Objetivos específicos}
+	\begin{itemize}
+		\item Formular el modelo teórico y derivar las condiciones de resonancia de Stokes y las frecuencias super-Rabi efectivas del sistema 2QD.
+		\item Implementar la ecuación maestra de Lindblad en \textsc{QuTiP} y calcular $g^{(n)}(0)$ y las purezas de emisión $\Pi_n$ ($n=2,3,4$), caracterizando la estadística de los paquetes de fonones emitidos.
+		\item Comparar sistemáticamente con el esquema de un único punto cuántico, identificando efectos emergentes del acoplamiento excitónico coherente.
+	\end{itemize}
+	
 \end{frame}
 
-\subsection{Colors}
-\begin{frame}[fragile]
-	\centering
-	The template provides different color themes.\\
-	Set \verb+\usetheme[style=lecture]{elegant}+ in loadslides.tex\\[0.8cm]
-	\newcommand{\colorRow}[1]{
-	\begin{tabular}{p{4cm}cccc}
-	#1 & \cellcolor{primary}\hspace*{1cm} &\cellcolor{secondary}\hspace*{1cm}&\cellcolor{tertiary}\hspace*{1cm}\\
- 	\end{tabular}
- 	}
- 	\colorRow{Lecture}\\[0.3cm]
-	\definecolor{primary}{HTML}{08457E}
-    \definecolor{secondary}{HTML}{B8860B}
-    \definecolor{tertiary}{HTML}{B22222}
- 	\colorRow{Gold}\\[0.3cm]
-    \definecolor{primary}{HTML}{08457E}
-    \definecolor{secondary}{HTML}{B02A30}
-    \definecolor{tertiary}{HTML}{006400}
- 	\colorRow{Red}\\[0.3cm]
-    \definecolor{primary}{HTML}{08457E}
-    \definecolor{secondary}{HTML}{CC5500}
-    \definecolor{tertiary}{HTML}{008B8B}
- 	\colorRow{Orange}\\[0.3cm]
-	\definecolor{primary}{HTML}{08457E}
-    \definecolor{secondary}{HTML}{E60073} 
-    \definecolor{tertiary}{HTML}{33CCCC}
- 	\colorRow{Gray}\\[0.3cm]
+\section{Modelo}
+\begin{frame}{Modelo y Hamiltoniano}
+	
+			{\small
+		\begin{equation*}
+			H_{\mathrm{lab}}
+			= \omega_b b^\dagger b
+			+ \omega_\sigma \!\left(\sigma_1^\dagger\sigma_1+\sigma_2^\dagger\sigma_2\right)
+			+ \lambda\!\left(\sigma_1^\dagger\sigma_1+\sigma_2^\dagger\sigma_2\right)\!(b^\dagger+b)
+			+ J\!\left(\sigma_1^\dagger\sigma_2+\sigma_2^\dagger\sigma_1\right)
+			+ \Omega\!\sum_{i=1,2}\!\left(e^{i\omega_L t}\sigma_i+e^{-i\omega_L t}\sigma_i^\dagger\right)
+		\end{equation*}
+	}
+	
+	\vspace{6pt}
+	\rule{\textwidth}{0.4pt}
+	\vspace{2pt}
+	
+	\begin{columns}[T]
+		
+		% ── Columna izquierda: marco rotante ──────────────────────────
+		\begin{column}{0.42\textwidth}
+			\vspace{6pt}
+			\textbf{Marco rotante}\\[6pt]
+			Operador unitario:
+			\begin{equation*}
+				U(t) = \exp\!\left(i\omega_L t \left(\sigma_1^\dagger\sigma_1
+				+ \sigma_2^\dagger\sigma_2\right)\right)
+			\end{equation*}
+			\begin{equation*}
+				H = U\,H_{\mathrm{lab}}\,U^\dagger + i\,\dot{U}\,U^\dagger
+			\end{equation*}
+			\vspace{4pt}
+	
+		\end{column}
+		
+		% ── Columna derecha: TikZ ─────────────────────────────────────
+		\begin{column}{0.45\textwidth}
+			\vspace{-6pt}
+			\begin{tikzpicture}[>=stealth, thick, font=\small,
+				scale=0.72, transform shape,
+				diss/.style={->, thick, decorate,
+					decoration={snake, amplitude=2pt, segment length=6pt,
+						post length=4pt}},
+				coup/.style={<->, thick}]
+				
+				\draw[gray!50!black, thick, rounded corners=6pt, fill=gray!4]
+				(-3.5,-1.0) rectangle (3.5,3.6);
+				
+				\def\CH{1.2}\def\QDY{1.3}\def\QDX{1.5}\def\QDR{0.75}
+				
+				% QD1
+				\draw[red!70!black, thick, fill=red!5]
+				(-\QDX,\QDY) circle (\QDR);
+				\draw[red!80!black, thick]
+				(-\QDX-0.50,\QDY-0.25) -- (-\QDX+0.01,\QDY-0.25)
+				node[right,font=\tiny]{$|v\rangle$};
+				\draw[red!80!black, thick]
+				(-\QDX-0.50,\QDY+0.25) -- (-\QDX+0.01,\QDY+0.25)
+				node[right,font=\tiny]{$|c\rangle$};
+				
+				% QD2
+				\draw[red!80!black, thick, fill=red!5]
+				(\QDX,\QDY) circle (\QDR);
+				\draw[red!80!black, thick]
+				(\QDX-0.50,\QDY-0.25) -- (\QDX+0.01,\QDY-0.25)
+				node[right,font=\tiny]{$|v\rangle$};
+				\draw[red!80!black, thick]
+				(\QDX-0.50,\QDY+0.25) -- (\QDX+0.01,\QDY+0.25)
+				node[right,font=\tiny]{$|c\rangle$};
+				
+				% Förster
+				\draw[coup, purple!70!black]
+				(-\QDX+\QDR+0.05,\QDY) -- (\QDX-\QDR-0.05,\QDY)
+				node[midway,above,purple!80!black,font=\small]{$J$};
+				
+				% λ
+				\draw[coup,purple!80!black]
+				(-\QDX,\QDY-\QDR-1.00) -- (-\QDX,\CH/2-0.1)
+				node[midway,left=3pt,font=\small]{$\lambda$};
+				\draw[coup,purple!80!black]
+				(\QDX,\QDY-\QDR-1.00) -- (\QDX,\CH/2-0.1)
+				node[midway,right=3pt,font=\small]{$\lambda$};
+				
+				% Láser
+				\draw[->,orange!60!black,very thick,decorate,
+				decoration={snake,amplitude=2pt,segment length=12pt,post length=4pt}]
+				(-\QDX-\QDR-2.2,\QDY) -- (-\QDX-\QDR-0.08,\QDY)
+				node[near start,above=3pt,font=\small]{$\Omega$};
+				\draw[->,orange!70!black,very thick,decorate,
+				decoration={snake,amplitude=2pt,segment length=12pt,post length=4pt}]
+				(\QDX+\QDR+2.2,\QDY) -- (\QDX+\QDR+0.08,\QDY)
+				node[near start,above=3pt,font=\small]{$\Omega$};
+				
+				% κ
+				\draw[diss,blue!60!black]
+				(0,-\CH/2-0.05) -- (0,-\CH/2-1.0)
+				node[below,font=\small]{$\kappa$};
+				
+				% γ, γ_φ QD1
+				\draw[diss,blue!60!black]
+				(-\QDX+0.3,\QDY+\QDR+0.05) -- (-\QDX+0.6,\QDY+\QDR+0.75)
+				node[above,font=\small]{$\gamma$};
+				\draw[diss,blue!60!black]
+				(-\QDX-0.3,\QDY+\QDR+0.05) -- (-\QDX-0.5,\QDY+\QDR+0.55)
+				node[left,font=\small]{$\gamma_\varphi$};
+				
+				% γ, γ_φ QD2
+				\draw[diss,blue!60!black]
+				(\QDX+0.3,\QDY+\QDR+0.05) -- (\QDX+0.6,\QDY+\QDR+0.75)
+				node[above,font=\small]{$\gamma$};
+				\draw[diss,blue!60!black]
+				(\QDX-0.3,\QDY+\QDR+0.05) -- (\QDX-0.5,\QDY+\QDR+0.55)
+				node[right,font=\small]{$\gamma_\varphi$};
+				
+			\end{tikzpicture}
+		\end{column}
+		
+	\end{columns}
 
- \centering Gray is a slightly more subtle version of the default \textit{Lecture} theme with gray, rather than pink, subtitles. 
+	\vspace{2pt}
+	% ── Hamiltonianos ─────────────────────────────────────────────────
+	{\small
+		\begin{equation*}
+			\boxed{
+				H = \omega_b b^\dagger b
+				+ \Delta\!\left(\sigma_1^\dagger\sigma_1+\sigma_2^\dagger\sigma_2\right)
+				+ \lambda\!\left(\sigma_1^\dagger\sigma_1+\sigma_2^\dagger\sigma_2\right)\!(b^\dagger+b)
+				+ J\!\left(\sigma_1^\dagger\sigma_2+\sigma_2^\dagger\sigma_1\right)
+				+ \Omega\!\sum_{i=1,2}\!\left(\sigma_i+\sigma_i^\dagger\right)
+			}
+		\end{equation*}
+	}
+	
 \end{frame}
 
-\subsection{Frames}
-\begin{frame}
-    Unless the user enters their own custom frame titles and subtitles, Elegant Slides automatically inserts the section title and, if specified, the subsection title as frame titles and frame subtitles.
+\begin{frame}{Base colectiva de Dicke}
+	
+	\textbf{Diagonalización del término de Förster}\\[6pt]
+	El operador $J(\sigma_1^\dagger\sigma_2 + \sigma_2^\dagger\sigma_1)$
+	actúa en $\{|cv\rangle, |vc\rangle\}$:
+	\begin{align*}
+		|\Psi_+\rangle &= \tfrac{1}{\sqrt{2}}\left(|cv\rangle+|vc\rangle\right),
+		\quad E_+=+J \\[4pt]
+		|\Psi_-\rangle &= \tfrac{1}{\sqrt{2}}\left(|cv\rangle-|vc\rangle\right),
+		\quad E_-=-J
+	\end{align*}
+	
+		
+	\begin{columns}[T]
+		
+		% ── Columna izquierda ─────────────────────────────────────────
+		\begin{column}{0.50\textwidth}
+			\vspace{6pt}
+			\textbf{Acoplamiento al láser}\\[6pt]
+			\begin{equation*}
+				\Omega\!\left(\sigma_1^\dagger+\sigma_2^\dagger\right)|vv\rangle
+				= \sqrt{2}\,\Omega\,|\Psi_+\rangle
+			\end{equation*}
+			\vspace{4pt}
+			$|\Psi_-\rangle$ no se acopla al láser \\[4pt]
+			$\Rightarrow$ espacio efectivo $\{|vv\rangle,\,|\Psi_+\rangle\}$
+		\end{column}
+		
+		% ── Columna derecha ───────────────────────────────────────────
+		\begin{column}{0.46\textwidth}
+			\vspace{6pt}
+			\textbf{Operadores colectivos}\\[6pt]
+			\vspace{-8pt}
+			\begin{align*}
+				S^\dagger &= |\Psi_+\rangle\langle vv|
+				= \frac{1}{\sqrt{2}}\!\left(\sigma_1^\dagger + \sigma_2^\dagger\right)\\[6pt]
+				S &= |vv\rangle\langle\Psi_+|
+				= \frac{1}{\sqrt{2}}\!\left(\sigma_1 + \sigma_2\right)
+			\end{align*}
+		\end{column}
+		
+	\end{columns}
+	
+	\vspace{12pt}
+
+	% ── Hamiltoniano efectivo + correspondencia ────────────────────
+	{\small
+		\begin{equation*}
+			\boxed{
+				H_{\mathrm{eff}} = \omega_b b^\dagger b
+				+ (\Delta+J)\,S^\dagger S
+				+ \lambda\,S^\dagger S\,(b^\dagger+b)
+				+ \sqrt{2}\,\Omega\left(S+S^\dagger\right)
+			}
+		\end{equation*}
+	}\\
+	
+	
+	\vspace{6pt}
+	{\small
+		\textbf{Resonancia de Stokes de $n$ fonones:}
+		\begin{equation*}
+			E_{|0,vv\rangle} = E_{|n,\Psi_+\rangle} \Rightarrow \Delta_n = -n\omega_b - J
+		\end{equation*}
+	}
+	
 \end{frame}
 
-\begin{frame}{}{Custom Subsection}
-    This frame has a custom subtitle. The frame title is automatically inserted and corresponds to the section title.
+\begin{frame}{Régimen I: acoplamiento débil \texorpdfstring{$\widetilde{\Omega},\,\lambda \ll \omega_b$}{}}
+	
+	\textbf{Espacio truncado en resonancia} $\widetilde{\Delta} = -n\omega_b$:
+	\begin{equation*}
+		H^{(n)} = \begin{pmatrix}
+			\mathbf{H}^{(n)} & X^{(n)} \\[4pt]
+			X^{(n)T} & R^{(n)}
+		\end{pmatrix},
+		\qquad
+		X^{(1)} = \begin{pmatrix}
+			\widetilde\Omega & 0 \\ \lambda & \widetilde\Omega
+		\end{pmatrix},
+		\quad
+		R^{(1)} = \begin{pmatrix}
+			-\omega_b & 0 \\ 0 & \omega_b
+		\end{pmatrix}
+	\end{equation*}
+	
+	\vspace{4pt}
+	\rule{\textwidth}{0.4pt}
+	\vspace{2pt}
+	
+	\textbf{Partición de Löwdin} — elimina estados intermedios:
+	\begin{equation*}
+		H_\mathrm{eff}^{(n)} = X^{(n)}\!\left(-R^{(n)}\right)^{-1}\!X^{(n)T}
+		\quad\Rightarrow\quad
+		\Omega_\mathrm{eff}^{(n)}
+		= -\frac{\sqrt{n}\,\lambda}{\Delta+(n-1)\omega_b}\,\Omega_\mathrm{eff}^{(n-1)}
+	\end{equation*}
+	
+	\vspace{4pt}
+	\rule{\textwidth}{0.4pt}
+	\vspace{2pt}
+	
+	\textbf{Iterando la recurrencia} con $\widetilde\Omega = \sqrt{2}\,\Omega$:
+	\begin{equation*}
+		\boxed{
+			\Omega_\mathrm{eff}^{(n)}
+			= \sqrt{2}\left(\frac{\lambda}{\omega_b}\right)^{\!n}
+			\frac{\Omega}{\sqrt{n!}}
+		}
+	\end{equation*}
+	
 \end{frame}
 
-\begin{frame}{Custom Title}{Custom Subsection with Footnote}
-    This frame has a custom title and a custom subtitle.\footnote{This is a footnote. See also \citet{example_2022}. }
+\begin{frame}{Régimen II: acoplamiento fuerte electrón-fonón \texorpdfstring{$\lambda \sim \omega_b$}{}}
+	
+	\textbf{Transformación de desplazamiento colectivo} — elimina $\lambda$ exactamente:
+	\begin{equation*}
+		\widetilde{D} = \exp\!\left[
+		\frac{\lambda}{\omega_b}\,S^\dagger S\,(b^\dagger - b)
+		\right]
+		\quad\Rightarrow\quad
+		\widetilde{D}\,H_\mathrm{eff}\,\widetilde{D}^\dagger
+		= \omega_b b^\dagger b
+		+ \widetilde\omega_\sigma\,S^\dagger S
+		+ \widetilde\Omega\!\left[
+		S^\dagger e^{(\lambda/\omega_b)(b^\dagger-b)} + \mathrm{H.c.}
+		\right]
+	\end{equation*}
+	
+	\vspace{4pt}
+	\rule{\textwidth}{0.4pt}
+	\vspace{2pt}
+	
+	\textbf{Expansión en orden normal} — identifica procesos de $n$ fonones:
+	\begin{equation*}
+		e^{(\lambda/\omega_b)(b^\dagger-b)}
+		= e^{-\frac{1}{2}(\lambda/\omega_b)^2}
+		\sum_{k,l}
+		\frac{(-1)^l(\lambda/\omega_b)^{k+l}}{k!\,l!}\,b^{\dagger k}b^l
+		\quad\Rightarrow\quad
+		\Delta_n = \frac{\lambda^2}{\omega_b} - n\omega_b - J
+	\end{equation*}
+	
+	\vspace{4pt}
+	\rule{\textwidth}{0.4pt}
+	\vspace{2pt}
+	
+	\textbf{Elemento de matriz de Franck-Condon}:
+	\begin{equation*}
+		\boxed{
+			\Omega_\mathrm{eff}^{(n)}
+			= \sqrt{2}\,\Omega\,
+			\exp\!\left[-\frac{1}{2}\!\left(\frac{\lambda}{\omega_b}\right)^{\!2}\right]
+			\left(\frac{\lambda}{\omega_b}\right)^{\!n}
+			\frac{1}{\sqrt{n!}}
+		}
+	\end{equation*}
+	
 \end{frame}
 
-\subsection{Fonts}
-\begin{frame}[fragile]
-\begin{itemize}
-\item Font types can be changed in loadslides.tex.
-    \item For lecture notes or reports, the \textit{Lecture} theme together with \verb +\RequirePackage{palatino}+ and \verb+\usefonttheme{serif}+ works well. 
-    \item For talks and other presentations, \verb+\RequirePackage[scaled]{helvet}+ with any of the other themes, such as \textit{Gold}, works better.
-    \item Text can be highlighted as follows:
-    \begin{itemize}
-        \item Regular
-        \item \emphasize{Emphasize}
-        \item \alert{Alert}
-        \item \example{Example}
-        \item \textit{Italic}
-        \item \textbf{Bold}
-    \end{itemize}
-\end{itemize}
-    
+\begin{frame}{Régimen III: conducción fuerte \texorpdfstring{$\widetilde{\Omega} \sim \omega_b$}{}}
+	
+	\textbf{Diagonalización de la parte electrónica} — estados vestidos:
+	\begin{equation*}
+		H_\sigma = \widetilde\Delta\,S^\dagger S + \widetilde\Omega(S+S^\dagger)
+		\quad\Rightarrow\quad
+		E_\pm = \frac{\widetilde\Delta \pm \tilde{r}}{2},
+		\qquad
+		\tilde{r} = \sqrt{\widetilde\Delta^2 + 8\Omega^2}
+	\end{equation*}
+	\begin{equation*}
+		|{+}\rangle = \tilde{c}_+|vv\rangle + \tilde{c}_-|\Psi_+\rangle,
+		\qquad
+		|{-}\rangle = \tilde{c}_-|vv\rangle - \tilde{c}_+|\Psi_+\rangle
+	\end{equation*}
+	
+	\vspace{4pt}
+	\rule{\textwidth}{0.4pt}
+	\vspace{2pt}
+	
+	\textbf{Proceso resonante} $|0,{+}\rangle \leftrightarrow |n,{-}\rangle$
+	vía estados intermedios con $H_\mathrm{e\text{-}ph} = \lambda\,S^\dagger S(b^\dagger+b)$:
+	\begin{equation*}
+		E_{|0,+\rangle} = E_{|n,-\rangle}
+		\quad\Rightarrow\quad
+		\tilde{r} = n\omega_b
+		\quad\Rightarrow\quad
+		\boxed{\Delta_n = -\sqrt{n^2\omega_b^2 - 8\Omega^2} - J}
+	\end{equation*}
+	
+	\vspace{4pt}
+	\rule{\textwidth}{0.4pt}
+	\vspace{2pt}
+	
+	\textbf{Löwdin iterado} en la escalera de Mollow:
+	\begin{equation*}
+		\boxed{
+			\Omega_\mathrm{eff}^{(n)}
+			= (-1)^n\,\frac{\sqrt{2}\,\widetilde\Omega}{(n-1)!\,\sqrt{n!}}
+			\left(\frac{\lambda}{\omega_b}\right)^{\!n}
+			\prod_{k=1}^{n-1}\!\bigl(n\,\tilde{c}_-^2 - k\bigr)
+		}
+	\end{equation*}
+	
 \end{frame}
 
-\subsection{Lists}
-
-\begin{frame}
-    \begin{columns}[T,onlytextwidth]
-    \column{0.33\textwidth}
-      \textbf{Items}
-      \begin{itemize}
-        \item Cats 
-        \begin{itemize}
-            \item British Shorthair
-        \end{itemize}
-        \item Dogs \item Birds
-      \end{itemize}
-
-    \column{0.33\textwidth}
-      \textbf{Enumerations}
-      \begin{enumerate}
-        \item First 
-        \begin{enumerate}
-            \item First subpoint
-        \end{enumerate}
-        \item Second \item Last
-      \end{enumerate}
-
-    \column{0.33\textwidth}
-      \textbf{Descriptions}
-      \begin{description}
-        \item[Apples] Yes \item[Oranges] No \item[Grappes] No
-      \end{description}
-\end{columns}
+\begin{frame}{Diagrama de niveles de energía}
+	
+	\begin{figure}[htb]
+		\centering
+		\begin{minipage}[t]{0.26\textwidth}
+			\centering
+			\resizebox{\textwidth}{!}{%
+				\begin{tikzpicture}[>=stealth, thick, font=\small, baseline=(current bounding box.north)]
+					\def\wMain{0.9}
+					\def\wFon{0.8}
+					\def\yGnd{0.0}
+					\def\yExc{3.8}
+					\def\yTop{5.0}
+					\def\yFon{2.0}
+					
+					% Nivel base |0,vv⟩
+					\draw[black, very thick] (-\wMain, \yGnd) -- (\wMain, \yGnd);
+					\node[right] at (\wMain+0.08, \yGnd) [red!80!black] {$|0,vv\rangle$};
+					\draw[->, red!80!black, very thick]
+					(-\wMain-0.5, \yGnd) -- (-\wMain-0.05, \yGnd);
+					
+					% Niveles fonónicos arriba
+					\foreach \k in {1,2}{
+						\pgfmathsetmacro{\yy}{\yGnd + \k*0.5}
+						\draw[gray!60, dashed, thick] (-\wFon,\yy) -- (\wFon,\yy);
+					}
+					\node[black!70] at (0, \yGnd + 2.25) {$\vdots$};
+					
+					% Nivel |0,Ψ+⟩
+					\draw[black, very thick] (-\wMain, \yExc) -- (\wMain, \yExc);
+					\node[right] at (\wMain+0.08, \yExc) [red!80!black]  {$|0,\Psi_+\rangle$};
+					\draw[->, red!80!black, very thick]
+					(-\wMain-0.5, \yExc) -- (-\wMain-0.05, \yExc);
+					
+					% Niveles fonónicos encima de |0,\Psi+⟩
+					\foreach \k in {1,2}{
+						\pgfmathsetmacro{\yy}{\yExc + 0.25 + (\k-1)*0.25}
+						\draw[gray!60, dashed, thick] (-\wFon,\yy) -- (\wFon,\yy);
+					}
+					\pgfmathsetmacro{\yvdots}{\yTop - 0.2}
+					\node[black!70] at (0,\yvdots) {$\vdots$};
+					
+					% Nivel |n,Ψ+⟩
+					\draw[black, very thick] (-\wMain, \yTop) -- (\wMain, \yTop);
+					\node[right] at (\wMain+0.08, \yTop) {$|n,\Psi_+\rangle$};
+					
+					% Flecha nω_b
+					\draw[<->, purple!80!black, very thick]
+					(\wMain-0.45, \yExc+0.05) -- (\wMain-0.45, \yTop-0.05)
+					node[right] at (1, {(\yExc+\yTop)/2}) {$n\omega_b$};
+					
+					% Flechas verdes proceso Stokes
+					% Coordenada del corte
+					\pgfmathsetmacro{\ybreak}{(\yGnd+\yTop)/2}
+					% Línea inferior
+					\draw[<-, green!70!black, very thick]
+					(-0.45, \yGnd+0.08) -- (-0.45, \ybreak-0.01);
+					% Línea superior
+					\draw[->, green!70!black, very thick]
+					(-0.45, \ybreak+0.09) -- (-0.45, \yTop-0.08);
+					% Las dos rayitas //
+					\draw[green!70!black, very thick]
+					(-0.52, \ybreak-0.05) -- (-0.38, \ybreak+0.05);
+					\draw[green!70!black, very thick]
+					(-0.52, \ybreak+0.05) -- (-0.38, \ybreak+0.15);
+					\node at (-0.45, \ybreak) [left=4pt] {$\omega_L$};
+					\draw[<->, green!70!black, very thick]
+					(0.45, \yExc-0.08) -- (0.45, \yGnd+0.08);
+					\node at (+2.10, \ybreak) [left=4pt] {$\omega_{\sigma} + J$};
+					% Espacio inferior fantasma para igualar (b): línea + label de lambda
+					\path[draw=none] (0, \yGnd-0.5) -- (1.2, \yGnd-0.5);
+					\node at (0.6, \yGnd-0.5) [below=2pt] {$\phantom{\lambda^2/\omega_b}$};
+					
+					% Etiqueta panel
+					\node at (-\wMain-0.3, \yTop+0.5) {I};
+					
+				\end{tikzpicture}
+			}
+		\end{minipage}%
+		\begin{minipage}[t]{0.325\textwidth}
+			\centering
+			\resizebox{\textwidth}{!}{%
+				\begin{tikzpicture}[>=stealth, thick, font=\small, baseline=(current bounding box.north)]
+					
+					\def\wMain{0.9}
+					\def\wFon{0.8}
+					\def\yGnd{0.0}
+					\def\yExc{4.6}
+					\def\yTop{5.8}
+					\def\dx{1.2}
+					\def\dy{0}  % El estado base |0,vv⟩ no se mueve
+					\def\dyExc{-0.6}  % Solo los estados excitados se desplazan
+					\def\xlabel{\wMain+\dx+0.08}
+					\def\xlabelBase{\dx+0.12}
+					
+					% ── BASE (no se mueve) ─────────────────────────────────────────────
+					\draw[black, very thick] (-\wMain, \yGnd) -- (\wMain, \yGnd);
+					\node[right] at (\xlabelBase, \yGnd) [red!80!black] {$|0,vv\rangle$};
+					
+					\draw[->, red!80!black, very thick]
+					(-\wMain-0.5, \yGnd) -- (-\wMain-0.05, \yGnd);
+					
+					\foreach \k in {1,2}{
+						\pgfmathsetmacro{\yy}{\yGnd + \k*0.5}
+						\draw[gray!60, dashed, thick] (-\wFon,\yy) -- (\wFon,\yy);
+					}
+					\node[black!70] at (0.2, \yGnd+1.5) {$\vdots$};
+					
+					% ── COLUMNA SUPERIOR (con desplazamiento dx y dy) ──────────────────
+					\draw[black, very thick] (-\wMain+\dx, \yExc+\dyExc) -- (\wMain+\dx, \yExc+\dyExc);
+					\node[right] at (\wMain+\dx+0.08, \yExc+\dyExc) [red!80!black]
+					{$|\widetilde{0},\Psi_+\rangle$};
+					
+					\draw[->, red!80!black, very thick]
+					(-\wMain+\dx-0.5, \yExc+\dyExc) -- (-\wMain+\dx-0.05, \yExc+\dyExc);
+					
+					\foreach \k in {1,2}{
+						\pgfmathsetmacro{\yy}{\yExc+\dyExc + 0.25 + (\k-1)*0.25}
+						\draw[gray!60, dashed, thick] (-\wFon+\dx,\yy) -- (\wFon+\dx,\yy);
+					}
+					
+					\pgfmathsetmacro{\yvdots}{\yTop+\dyExc-0.2}
+					\node[black!70] at (\dx, \yvdots) {$\vdots$};
+					
+					\draw[black, very thick] (-\wMain+\dx, \yTop+\dyExc) -- (\wMain+\dx, \yTop+\dyExc);
+					\node[right] at (\xlabel, \yTop+\dyExc)
+					{$|\widetilde{n},\Psi_+\rangle$};
+					
+					% ── nω_b ───────────────────────────────────────────────────────────
+					\draw[<->, purple!80!black, very thick]
+					(\wMain+\dx-0.45, \yExc+\dyExc+0.05) --
+					(\wMain+\dx-0.45, \yTop+\dyExc-0.05)
+					node[right] at (\wMain+\dx+0.05, {(\yExc+\yTop)/2+\dyExc})
+					{$n\omega_b$};
+					
+					% ── Desplazamiento λ²/ω_b ──────────────────────────────────────────
+					\draw[<->, black!60, thick]
+					(0, \yGnd-0.5) -- (\dx, \yGnd-0.5)
+					node[midway, below=2pt] {$\lambda^2/\omega_b$};
+					
+					\draw[black!60, dashed, thick]
+					(\dx, \yGnd-0.5+0.08) -- (\dx, \yExc+\dyExc-0.08);
+					
+					% ── ω_L con corte // ───────────────────────────────────────────────
+					
+					% Punto central (solo para las rayitas y label)
+					\coordinate (C) at ($(-0.45, \yGnd+0.08)!0.5!(-0.45+\dx, \yTop+\dyExc-0.08)$);
+					
+					% Dos puntos separados para crear el corte real
+					\coordinate (C1) at ($(-0.45, \yGnd+0.08)!0.50!(-0.45+\dx, \yTop+\dyExc-0.08)$);
+					\coordinate (C2) at ($(-0.45, \yGnd+0.08)!0.53!(-0.45+\dx, \yTop+\dyExc-0.08)$);
+					
+					% Línea inferior
+					\draw[green!70!black, very thick, <-]
+					(-0.45, \yGnd+0.08) -- (C1);
+					
+					% Línea superior
+					\draw[green!70!black, very thick, ->]
+					(C2) -- (-0.45+\dx, \yTop+\dyExc-0.08);
+					
+					% Rayitas //
+					\draw[green!70!black, very thick]
+					($(C)+(-0.06,-0.05)$) -- ($(C)+(0.08,0.05)$);
+					
+					\draw[green!70!black, very thick]
+					($(C)+(-0.06,0.05)$) -- ($(C)+(0.08,0.15)$);
+					
+					% Label
+					\node[left=2pt] at (C) {$\omega_L$};
+					
+					% ── Emisión ────────────────────────────────────────────────────────
+					\draw[<->, green!70!black, very thick, bend left=25]
+					(0.45+\dx, \yExc+\dyExc-0.08) to (0.45, \yGnd+0.08);
+					\node[anchor=west, text=black] at ($(C)+(1.75,0)$) {$\widetilde{\omega}_{\sigma}$};
+					
+					% ── Panel label ────────────────────────────────────────────────────
+					\node at (-\wMain-0.3, \yTop+\dyExc+0.5) {II};
+					
+				\end{tikzpicture}
+			}
+		\end{minipage}%
+		\begin{minipage}[t]{0.40\textwidth}
+			\centering
+			\resizebox{\textwidth}{!}{%
+				\begin{tikzpicture}[>=stealth, thick, font=\small, baseline=(current bounding box.north)]
+					
+					\def\xL{-1.40}
+					\def\xR{1.40}
+					\def\wV{0.70}
+					\def\wR{1.15}
+					\def\xDashed{-2.55}
+					\def\xBoxL{-2.60}
+					\def\xBoxR{-0.65}
+					\def\xGreenOffset{0.95}
+					
+					\def\yGnd{0.00}
+					\pgfmathsetmacro{\yOneMb}{\yGnd + 0.455}
+					\pgfmathsetmacro{\yZeroP}{\yGnd + 0.910}
+					\pgfmathsetmacro{\yOneP}{\yGnd + 1.356}
+					\pgfmathsetmacro{\yTwoP}{\yGnd + 2.25}
+					\pgfmathsetmacro{\yZeroM}{\yGnd + 4.74}
+					\pgfmathsetmacro{\yOneM}{\yZeroM + 0.455}
+					\pgfmathsetmacro{\yTwoM}{\yZeroM + 0.910}
+					\pgfmathsetmacro{\yThreeM}{\yZeroM + 1.365}
+					\def\xLPivot{\xL}
+					\def\yLPivot{3.05}
+					\def\sL{0.65}
+					
+					% ── Columna izquierda: ladder fonónico + ventana punteada ───────────
+					\foreach \yy in {1.4,1.2,1.0,0.8}{
+						\draw[black, very thick] (\xL-\wV,{\yy*\sL}) -- (\xL+\wV,{\yy*\sL});
+					}
+					\node at (\xL,{2.15*\sL}) {$\vdots$};
+					
+					\foreach \yy in {3.5,3.3,3.1,2.9}{
+						\draw[black, very thick] (\xL-\wV,{\yy*\sL}) -- (\xL+\wV,{\yy*\sL});
+					}
+					\node at (\xL,{4.25*\sL}) {$\vdots$};
+					
+					\foreach \yy in {5.6,5.4,5.2,5.0}{
+						\draw[black, very thick] (\xL-\wV,{\yy*\sL}) -- (\xL+\wV,{\yy*\sL});
+					}
+					\node at (\xL,{6.35*\sL}) {$\vdots$};
+					
+					\foreach \yy in {7.7,7.5,7.3,7.1}{
+						\draw[black, very thick] (\xL-\wV,{\yy*\sL}) -- (\xL+\wV,{\yy*\sL});
+					}
+					\node at (\xL,{8.45*\sL}) {$\vdots$};
+					
+					\draw[gray!70, dashed, thick] (\xL-\wV-0.1,{3.25*\sL-0.35}) rectangle (\xL+\wV+0.1,{6.35*\sL+0.20});
+					\def\gap{0.04}
+					\draw[black!80, dashed, very thick, <->] (\xL-\wV-0.24,{3.2*\sL-\gap}) -- (\xL-\wV-0.24,{1.1*\sL+\gap});
+					\draw[black!80, dashed, very thick, <->] (\xL-\wV-0.24,{5.3*\sL-\gap}) -- (\xL-\wV-0.24,{3.2*\sL+\gap});
+					\draw[black!80, dashed, very thick, <->] (\xL-\wV-0.24,{7.4*\sL-\gap}) -- (\xL-\wV-0.24,{5.3*\sL+\gap});
+					\node[left=2pt] at (\xL-\wV-0.15,{4.25*\sL}) {$\omega_L$};
+					
+					\draw[gray!70, very thick, ->] (\xBoxR+0.10, {(3.25*\sL-0.35 + 6.35*\sL+0.20)/2}) -- (\xBoxR+0.02+0.525, {(3.25*\sL-0.35 + 6.35*\sL+0.20)/2});
+					
+					% ── Columna derecha: niveles dressed ────────────────────────────────
+					\draw[black, very thick] (\xR-\wR,\yThreeM) -- (\xR+\wR,\yThreeM);
+					\draw[black, very thick] (\xR-\wR,\yTwoM) -- (\xR+\wR,\yTwoM);
+					\draw[black, very thick] (\xR-\wR,\yOneM) -- (\xR+\wR,\yOneM);
+					\draw[black, very thick] (\xR-\wR,\yZeroM) -- (\xR+\wR,\yZeroM);
+					\node[black] at (\xR,\yTwoP-0.3) {$\vdots$};
+					\node[black] at (\xR,\yThreeM+0.5) {$\vdots$};
+					\draw[black, very thick] (\xR-\wR,\yOneP) -- (\xR+\wR,\yOneP);
+					\draw[black, very thick] (\xR-\wR,\yZeroP) -- (\xR+\wR,\yZeroP);
+					\draw[black, very thick] (\xR-\wR,\yOneMb) -- (\xR+\wR,\yOneMb);
+					\draw[black, very thick] (\xR-\wR,\yGnd) -- (\xR+\wR,\yGnd);
+					\node[right] at (\xR+\wR+0.08,\yThreeM) {$|3,-\rangle$};
+					\node[right, red!80!black] at (\xR+\wR+0.08,\yTwoM) {$|2,-\rangle$};
+					\node[right] at (\xR+\wR+0.08,\yOneM) {$|1,-\rangle$};
+					\node[right, red!80!black] at (\xR+\wR+0.08,\yZeroM) {$|0,-\rangle$};
+					\node[right] at (\xR+\wR+0.08,\yOneP) {$|1,+\rangle$};
+					\node[right, red!80!black] at (\xR+\wR+0.08,\yZeroP) {$|0,+\rangle$};
+					\node[right] at (\xR+\wR+0.08,\yOneMb) {$|1,-\rangle$};
+					\node[right, red!80!black] at (\xR+\wR+0.08,\yGnd) {$|0,-\rangle$};
+					
+					\foreach \yy in {\yTwoM,\yZeroM,\yZeroP,\yGnd}{
+						\draw[->, red!80!black, very thick] (\xR-\wR-0.55,\yy) -- (\xR-\wR-0.06,\yy);
+					}
+					
+					% ── Flecha izquierda: ω_L con corte // ─────────────────────────────
+					\pgfmathsetmacro{\ybreakC}{(\yZeroP+\yTwoM)/2}
+					\draw[<-, green!70!black, very thick]
+					(\xR-0.45, \yZeroP+0.08) -- (\xR-0.45, \ybreakC-0.01);
+					\draw[->, green!70!black, very thick]
+					(\xR-0.45, \ybreakC+0.09) -- (\xR-0.45, \yTwoM-0.08);
+					\draw[green!70!black, very thick]
+					(\xR-0.52, \ybreakC-0.05) -- (\xR-0.38, \ybreakC+0.05);
+					\draw[green!70!black, very thick]
+					(\xR-0.52, \ybreakC+0.05) -- (\xR-0.38, \ybreakC+0.15);
+					\node[left=4pt] at (\xR-0.45, \ybreakC) {$\omega_L$};
+					\node[left=4pt] at (\xR+1.20, \ybreakC) {$\tilde{r}$};
+					
+					\draw[<->, green!70!black, very thick]
+					(\xR+0.45, \yZeroM-0.08) -- (\xR+0.45, \yZeroP+0.08);
+					
+					\draw[<->, purple!80!black, thin]
+					(\xR+0.45, \yZeroM+0.05) -- (\xR+0.45, \yOneM-0.05)
+					node[right=2pt, midway] {$\omega_b$};
+					\draw[<->, purple!80!black, thin]
+					(\xR+0.45, \yOneM+0.05) -- (\xR+0.45, \yTwoM-0.05)
+					node[right=2pt, midway] {$\omega_b$};
+					
+					% Etiqueta panel
+					\node at (\xBoxL-0.75,\yThreeM+0.45) {\fontsize{14}{16}\selectfont III};
+					
+				\end{tikzpicture}
+			}
+		\end{minipage}
+	\end{figure}
+	
 \end{frame}
 
-\subsection{Table}
-\begin{frame}
-    \begin{table}
-        \caption{Largest cities in the world (source: Wikipedia)}
-        \begin{tabular}{@{} lr @{}}
-          \toprule
-          City & Population\\
-          \midrule
-          Mexico City & 20,116,842\\
-          Shanghai & 19,210,000\\
-          Peking & 15,796,450\\
-          Istanbul & 14,160,467\\
-          \bottomrule
-        \end{tabular}
-        \hspace*{1cm}
-            \setlength\extrarowheight{3pt}
-        \begin{tabular}{|lr|}
-          \hline
-          \rowcolor{primary}\color{white}City & \color{white}Population\\
-          \hline
-          Mexico City & 20,116,842\\
-          Shanghai & 19,210,000\\
-          Peking & 15,796,450\\
-          Istanbul & 14,160,467\\
-          \hline
-        \end{tabular}
-    \end{table}
+\section{Resultados y discusión}
+
+\begin{frame}{Oscilaciones super-Rabi}
+	
+	\vspace{-15pt}
+	
+	\begin{center}
+		\resizebox{0.70\textwidth}{!}{%
+			\input{../../codes/results/oficial/pgf/rabi_allreg.pgf}%
+		}
+	\end{center}
+	
+	\vspace{-6pt}
+	
+	{\footnotesize
+		Poblaciones $P_{jk}(t) = |\langle j,k|\psi(t)\rangle|^2$ en ausencia de disipación.
+		Líneas: solución exacta en el subespacio $\{|0,vv\rangle, |n,\Psi_+\rangle\}$.
+		Puntos: expresiones analíticas $\Omega_\mathrm{eff}^{(n)}$.
+		Paneles interiores: $n=3$. Parámetros del sistema:
+		(a) $\lambda/\omega_b = 0.08$, $\Omega/\omega_b = 0.01$;
+		(b) $\lambda/\omega_b = 0.20$, $\Omega/\omega_b = 0.01$;
+		(c) $\lambda/\omega_b = 0.08$, $\Omega/\omega_b = 0.50$.
+		En todos los paneles $J/\omega_b = 0.5$.
+	}
+	
 \end{frame}
 
-\subsection{Figures}
-\begin{frame}
-    \begin{figure}[htbp]
-        \centering
-        \caption{Plot of $y=x^2$}
-        \begin{tikzpicture}
-            \begin{axis}[
-            legend columns=3,
-            legend style={at={(0.5,-0.3)},anchor=north},
-            width = \textwidth,
-            height = 2.5in,
-            xmin = -3, 
-            xmax = 3,
-            ymin = 0,
-            ymax = 10,
-            ]
-                \addplot[primary] {x^2};
-                        \addlegendentry{$x^2$}
-            \end{axis}
-        \end{tikzpicture}
-    \end{figure}
+\begin{frame}{Estadística de emisión: $g^{(n)}(0)$}
+	
+	\vspace{-25pt}
+	
+	{\small
+		\begin{equation*}
+			\dot{\rho} = -i[H,\rho]
+			+ \kappa\,\mathcal{D}[b]\,\rho
+			+ \gamma\sum_{i=1,2}\mathcal{D}[\sigma_i]\,\rho
+			+ \gamma_\varphi\sum_{i=1,2}\mathcal{D}[\sigma_i^\dagger\sigma_i]\,\rho
+		\end{equation*}
+	}
+	
+	\vspace{12pt}
+	
+	\begin{columns}[T]
+		
+		% ── Columna izquierda: ecuación maestra ───────────────────────
+		\begin{column}{0.38\textwidth}
+			\vspace{15pt}
 
+			{\small
+				Las resonancias de $g^{(n)}(0)$ están asociadas a las resonancias de Stokes
+				$\Delta_n = -n\omega_b - J$, con desplazamiento  $-J$ 
+				y separación $\omega_b$ entre órdenes consecutivos.
+				
+				\vspace{6pt}
+				En la resonancia de $n$ fonones, $g^{(n)}(0)$ pierde capacidad de capturar
+				la estadística relevante: los fonones se emiten como unidad indivisible.
+			}
+		\end{column}
+		
+		% ── Columna derecha: figuras ───────────────────────────────────
+		\begin{column}{0.58\textwidth}
+			\vspace{-4pt}
+			\begin{columns}[T]
+				\begin{column}{0.48\textwidth}
+					\centering
+					\resizebox{\textwidth}{!}{%
+						\input{../../codes/results/oficial/pgf/g_n_orders_stacked.pgf}%
+					}\\[2pt]
+				\end{column}
+				\begin{column}{0.41\textwidth}
+					\centering
+					\resizebox{\textwidth}{!}{%
+						\input{../../codes/results/oficial/pgf/corr_2qds_combined_heatmap.pgf}%
+					}\\[2pt]
+				\end{column}
+			\end{columns}
+		\end{column}
+		
+	\end{columns}
+	
+	\vspace{20pt}
+	
+	{\scriptsize
+		Parámetros del sistema: $\lambda/\omega_b = 0.08$ (fijo en panel inferior), $\Omega/\omega_b = 0.01$ (fijo en panel superior), $\kappa/\omega_b = 0.003$, $\gamma/\omega_b = 0.0002$, $\gamma_\varphi/\omega_b = 0.0004$, $J/\omega_b = 0.5$
+	}
+	
 \end{frame}
 
-\subsection{Blocks}
-\begin{frame}
-
-   \centering
-	\begin{minipage}[b]{0.5\textwidth}
-
-	  \begin{block}{Default}
-        Block content.
-      \end{block}
-
-      \begin{alertblock}{Alert}
-        Block content.
-      \end{alertblock}
-
-      \begin{exampleblock}{Example}
-        Block content.
-      \end{exampleblock}      
-      
-	\end{minipage}	
+\begin{frame}{Función de correlación de $m$-paquetes}
+	
+	\vspace{-25pt}
+	
+	$g^{(n)}(0)$ cuantifica correlaciones entre fonones individuales
+	pero no captura la estadística de los paquetes como unidades.\\[10pt]
+	
+	\textbf{Función de $m$-paquetes de orden $n$:}
+	\begin{equation*}
+		g_m^{(n)}(t_1,\ldots,t_n) =
+		\frac{\left\langle T_-\!\left\{\prod_{i=1}^n
+			(\hat{b}^\dagger)^m(t_i)\right\}
+			T_+\!\left\{\prod_{i=1}^n \hat{b}^m(t_i)\right\}\right\rangle}
+		{\prod_{i=1}^n \langle(\hat{b}^\dagger)^m\hat{b}^m\rangle(t_i)}
+	\end{equation*}
+	
+	$m$: fonones por paquete \quad $n$: orden de correlación entre paquetes
+	\quad $m=1$: $g^{(n)}$ estándar de Glauber.\\[8pt]
+	
+	\begin{columns}[T]
+		\begin{column}{0.48\textwidth}
+			\textbf{En tiempo cero:}
+			\begin{equation*}
+				g_m^{(n)}(0) =
+				\frac{\langle(\hat{b}^\dagger)^{mn}\hat{b}^{mn}\rangle}
+				{\langle(\hat{b}^\dagger)^m\hat{b}^m\rangle^n}
+			\end{equation*}
+		\end{column}
+		\begin{column}{0.48\textwidth}
+			\textbf{Caso $g_2^{(2)}(\tau)$:}
+			\begin{equation*}
+				g_2^{(2)}(\tau) =
+				\frac{\langle b^{\dagger 2}(0)\,b^{\dagger 2}(\tau)\,
+					b^2(\tau)\,b^2(0)\rangle}
+				{\langle b^{\dagger 2}b^2\rangle(0)\,
+					\langle b^{\dagger 2}b^2\rangle(\tau)}
+			\end{equation*}
+		\end{column}
+	\end{columns}
+	
 \end{frame}
 
-\section{Maths}
-\subsection{Equations}
-\begin{frame}
-    \begin{itemize}
-        \item A numbered equation:
-        \begin{equation}
-            y_t = \beta x_t + \varepsilon_t
-        \end{equation}
-         \item Another equation:
-        \begin{equation*}
-            \mathbf{Y} = \boldsymbol{\beta} \mathbf{X} + \boldsymbol{\varepsilon}_t
-        \end{equation*}
-    \end{itemize}
+\begin{frame}{Correlaciones de 2-paquetes: $g_2^{(2)}(\tau)$}
+	
+	\vspace{-8pt}
+	
+	\begin{center}
+		\resizebox{0.85\textwidth}{!}{%
+			\input{../../codes/results/oficial/pgf/g2_decay_2qds.pgf}%
+		}
+	\end{center}
+	
+	\vspace{-4pt}
+	\rule{\textwidth}{0.4pt}
+	\vspace{2pt}
+	
+	\begin{columns}[T]
+		\begin{column}{0.32\textwidth}
+			{\small
+				$\gamma \ll \kappa$:\\
+				antibunching $g_2^{(2)} \approx 0.35$\\
+				\textbf{$n$-phonon gun}
+			}
+		\end{column}
+		\begin{column}{0.32\textwidth}
+			{\small
+				$\gamma \sim \kappa$:\\
+				$g_2^{(2)}(\tau\to\infty) \to 1$\\
+				\textbf{$n$-phonon laser}
+			}
+		\end{column}
+		\begin{column}{0.32\textwidth}
+			{\small
+				$\gamma \gg \kappa$:\\
+				bunching fuerte\\
+				\textbf{estado térmico de paquetes}
+			}
+		\end{column}
+	\end{columns}
+	
+	\vspace{4pt}
+	{\scriptsize
+		$\lambda/\omega_b=0.1$, $\Omega/\omega_b=0.2$,
+		$\gamma_\varphi/\omega_b=0.0004$, $J/\omega_b=0.5$.
+		(a) $\kappa/\omega_b=0.001$, (b) $\kappa/\omega_b=0.01$.
+	}
+	
 \end{frame}
 
-\subsection{Theorem}
-\begin{frame}
-    \begin{itemize}
-        \item Theorems are numbered consecutively.
-    \end{itemize}
-    \begin{theorem}[Example Theorem]
-         Given a discrete random variable X, which takes values in the alphabet $\mathcal{X}$ and is distributed according to  $p:{\mathcal {X}}\to [0,1]$:
-            \begin{equation}
-                \mathrm {H} (X):=-\sum _{x\in {\mathcal {X}}}p(x)\log p(x)=\mathbb {E} [-\log p(X)]
-            \end{equation}
-    \end{theorem}
-\end{frame}
+\section{Conclusiones}
 
-\begin{frame}{}{Definitions}
-    \begin{itemize}
-        \item Definition numbers are prefixed by the section number in the respective part.
-    \end{itemize}
-     \begin{definition}[Example Definition]
-         Given a discrete random variable X, which takes values in the alphabet $\mathcal{X}$ and is distributed according to  $p:{\mathcal {X}}\to [0,1]$:
-            \begin{equation}
-                \mathrm {H} (X):=-\sum _{x\in {\mathcal {X}}}p(x)\log p(x)=\mathbb {E} [-\log p(X)]
-            \end{equation}
-    \end{definition}
-\end{frame}
 
-\begin{frame}{}{Examples}
-    \begin{itemize}
-        \item Examples are numbered as definitions.
-    \end{itemize}
-    \begin{examp}[Example Theorem]
-         Given a discrete random variable X, which takes values in the alphabet $\mathcal{X}$ and is distributed according to  $p:{\mathcal {X}}\to [0,1]$:
-            \begin{equation}
-                \mathrm {H} (X):=-\sum _{x\in {\mathcal {X}}}p(x)\log p(x)=\mathbb {E} [-\log p(X)]
-            \end{equation}
-    \end{examp}
-\end{frame}
-
-\makepart{Demo Presentation Part 2}
-
-\section{Section}
-\subsection{Subsection}
-\subsubsection{Subsubsection}
-\subsubsection{Subsubsection}
-\subsection{Subsection}
-\subsubsection{Subsubsection}
-\subsubsection{Subsubsection}
-\section{Section}
-\subsection{Subsection}
-\subsubsection{Subsubsection}
-\subsubsection{Subsubsection}
-\subsection{Subsection}
-\subsubsection{Subsubsection}
-\subsubsection{Subsubsection}
 
 \begin{frame}[allowframebreaks]{References}
     \printbibliography
