@@ -50,8 +50,150 @@
 	\tableofcontents
 \end{frame}
 
-\section{Introducción}
 
+\section{Introducción}
+\begin{frame}{Motivación}
+	
+	\begin{columns}[T]
+		
+		\begin{column}{0.52\textwidth}
+			\vspace{6pt}
+			Los \textbf{estados cuánticos de $n$ fotones} son recursos
+			fundamentales para tecnologías cuánticas:\\[8pt]
+			\begin{itemize}
+				\item \textbf{Metrología:} interferometría sub-Heisenberg
+				con estados de Fock ópticos
+				\item \textbf{Criptografía:} protocolos QKD basados en
+				fuentes de fotón único
+				\item \textbf{Computación:} puertas cuánticas lineales
+				ópticas (KLM) con estados de $n$ fotones
+				\item \textbf{Sensado:} superresolución en microscopía
+				NOON y litografía cuántica
+			\end{itemize}
+			
+			\vspace{8pt}
+			{\small
+				Sin embargo, obtener estados de $n$ fotones de forma
+				\textbf{determinista y con alta pureza} es técnicamente
+				difícil: los métodos actuales son probabilísticos o
+				requieren post-selección con eficiencia exponencialmente
+				decreciente en $n$.
+			}
+		\end{column}
+		
+		\begin{column}{0.44\textwidth}
+			\vspace{10pt}
+			\begin{center}
+				\includegraphics[width=0.85\textwidth]{img/QD.png}\\[6pt]
+				{\scriptsize Imagen STM de un punto cuántico
+					de InAs/GaAs \cite{eisele2008}.}
+			\end{center}
+		\end{column}
+		
+	\end{columns}
+	
+\end{frame}
+
+\begin{frame}{Antecedentes: emisión de paquetes de fotones}
+	
+	\begin{columns}[T]
+		
+		% ── Columna izquierda: Muñoz 2014 ────────────────────────────
+		\begin{column}{0.48\textwidth}
+			\textbf{Emitters of $N$-photon bundles}\\
+			{\footnotesize Muñoz et al., \textit{Nat. Photonics} \textbf{8}, 550 (2014) \cite{munoz2014}}
+			
+			\vspace{8pt}
+			{\small
+				\begin{itemize}
+					\item \textbf{Qué:} fuente continua de paquetes de $N$
+					fotones con $N$ sintonizable por la frecuencia
+					del láser.
+					\item \textbf{Cómo:} un sistema de dos niveles en una
+					cavidad excitado coherentemente en régimen
+					dispersivo; la disipación de Purcell induce la
+					emisión en grupos de $N$ fotones correlacionados.
+					\item \textbf{Resultado:} $\pi_2 \approx 98.8\%$
+					en condiciones óptimas; ${\sim}85\%$ en
+					semiconductores y ${\sim}90\%$ de tres fotones
+					en circuit QED. Introduce la pureza $\pi_N$ y
+					las funciones $g_N^{(n)}$ como observables
+					de paquetes.
+				\end{itemize}
+			}
+		\end{column}
+		
+		\hfill
+		% ── Columna derecha: Muñoz 2018 ───────────────────────────────
+		\begin{column}{0.48\textwidth}
+			\textbf{Filtering multiphoton emission from state-of-the-art cavity QED}\\
+			{\footnotesize Muñoz et al., \textit{Optica} \textbf{5}, 14 (2018) \cite{munoz2018}}
+			
+			\vspace{8pt}
+			{\small
+				\begin{itemize}
+					\item \textbf{Qué:} mejora de la pureza de emisión
+					multifonónica mediante filtrado espectral.
+					\item \textbf{Cómo:} los fotones espurios y los paquetes
+					de $N$ fotones se emiten en ventanas espectrales
+					distintas; el filtrado en frecuencia suprime
+					la contaminación de fotón único. Expresiones
+					analíticas para tasas, pureza y distribución
+					espectral.
+					\item \textbf{Resultado:} el filtrado relaja el
+					requisito de acoplamiento fuerte
+					($g > \gamma_{a,\sigma}$) al régimen
+					\textit{bad-cavity} con cooperatividad $C > 1$,
+					abriendo implementaciones en semiconductores
+					y átomos en nanofotónica.
+				\end{itemize}
+			}
+		\end{column}
+		
+	\end{columns}
+	
+\end{frame}
+
+\begin{frame}{Antecedentes: ¿por qué fonones?}
+	
+	\textbf{$N$-Phonon Bundle Emission via Stokes Process}\\
+	{\footnotesize Bin et al., \textit{Phys. Rev. Lett.} \textbf{124}, 053601 (2020) \cite{bin2020}}
+	
+	\vspace{12pt}
+	
+	{\small
+		\begin{itemize}\setlength{\itemsep}{12pt}
+			
+			\item \textbf{Velocidad de propagación:} las ondas acústicas
+			se propagan significativamente más lento que la luz,
+			lo que las hace idóneas para comunicaciones cuánticas
+			en chip sobre distancias de unos pocos cientos de
+			micrómetros o menos \cite{gustafsson2014,kuzyk2018}.
+			
+			\item \textbf{Sin pérdidas por radiación:} dado que los
+			fonones solo pueden propagarse en un medio material,
+			no sufren las pérdidas radiativas que afectan a los
+			fotones en guías de onda ópticas.
+			
+			\item \textbf{Alta sintonizabilidad:} las cavidades
+			fonónicas han sido demostradas experimentalmente
+			en un rango que va desde GHz hasta THz
+			\cite{weig2004,rozas2009,oconnell2010,macCabe2020,zalalutdinov2021},
+			cubriendo un espectro de frecuencias amplio y
+			experimentalmente accesible.
+			
+			\item \textbf{Compatibilidad con técnicas de estado
+				sólido:} las numerosas herramientas desarrolladas
+			por la física de estado sólido
+			\cite{ask2019,kharel2018,xu2018,akimov2017}
+			se vuelven directamente disponibles para tareas
+			de procesamiento de información cuántica con
+			fonones \cite{manenti2017,wan2021}.
+			
+		\end{itemize}
+	}
+	
+\end{frame}
 
 \section{Objetivos}
 
@@ -230,8 +372,8 @@
 				= \sqrt{2}\,\Omega\,|\Psi_+\rangle
 			\end{equation*}
 			\vspace{4pt}
-			$|\Psi_-\rangle$ no se acopla al láser \\[4pt]
-			$\Rightarrow$ espacio efectivo $\{|vv\rangle,\,|\Psi_+\rangle\}$
+			$|\Psi_-\rangle$ No se acopla al láser \\[4pt]
+			$\Rightarrow$ Espacio efectivo $\{|vv\rangle,\,|\Psi_+\rangle\}$
 		\end{column}
 		
 		% ── Columna derecha ───────────────────────────────────────────
@@ -296,7 +438,7 @@
 	\rule{\textwidth}{0.4pt}
 	\vspace{2pt}
 	
-	\textbf{Partición de Löwdin} — elimina estados intermedios:
+	\textbf{Partición de Löwdin} — Elimina estados intermedios:
 	\begin{equation*}
 		H_\mathrm{eff}^{(n)} = X^{(n)}\!\left(-R^{(n)}\right)^{-1}\!X^{(n)T}
 		\quad\Rightarrow\quad
@@ -321,7 +463,7 @@
 
 \begin{frame}{Régimen II: acoplamiento fuerte electrón-fonón \texorpdfstring{$\lambda \sim \omega_b$}{}}
 	
-	\textbf{Transformación de desplazamiento colectivo} — elimina $\lambda$ exactamente:
+	\textbf{Transformación de desplazamiento colectivo} — Elimina $\lambda$ exactamente:
 	\begin{equation*}
 		\widetilde{D} = \exp\!\left[
 		\frac{\lambda}{\omega_b}\,S^\dagger S\,(b^\dagger - b)
@@ -339,14 +481,14 @@
 	\rule{\textwidth}{0.4pt}
 	\vspace{2pt}
 	
-	\textbf{Expansión en orden normal} — identifica procesos de $n$ fonones:
+	\textbf{Expansión en orden normal} — Identifica procesos de $n$ fonones:
 	\begin{equation*}
 		e^{(\lambda/\omega_b)(b^\dagger-b)}
 		= e^{-\frac{1}{2}(\lambda/\omega_b)^2}
 		\sum_{k,l}
 		\frac{(-1)^l(\lambda/\omega_b)^{k+l}}{k!\,l!}\,b^{\dagger k}b^l
 		\quad\Rightarrow\quad
-		\Delta_n = \frac{\lambda^2}{\omega_b} - n\omega_b - J
+		\boxed{\Delta_n = \frac{\lambda^2}{\omega_b} - n\omega_b - J}
 	\end{equation*}
 	
 	\vspace{4pt}
@@ -368,7 +510,7 @@
 
 \begin{frame}{Régimen III: conducción fuerte \texorpdfstring{$\widetilde{\Omega} \sim \omega_b$}{}}
 	
-	\textbf{Diagonalización de la parte electrónica} — estados vestidos:
+	\textbf{Diagonalización de la parte electrónica} — Estados vestidos:
 	\begin{equation*}
 		H_\sigma = \widetilde\Delta\,S^\dagger S + \widetilde\Omega(S+S^\dagger)
 		\quad\Rightarrow\quad
@@ -725,7 +867,8 @@
 		Poblaciones $P_{jk}(t) = |\langle j,k|\psi(t)\rangle|^2$ en ausencia de disipación.
 		Líneas: solución exacta en el subespacio $\{|0,vv\rangle, |n,\Psi_+\rangle\}$.
 		Puntos: expresiones analíticas $\Omega_\mathrm{eff}^{(n)}$.
-		Paneles interiores: $n=3$. Parámetros del sistema:
+		Paneles interiores: $n=3$. \\
+		Parámetros del sistema:
 		(a) $\lambda/\omega_b = 0.08$, $\Omega/\omega_b = 0.01$;
 		(b) $\lambda/\omega_b = 0.20$, $\Omega/\omega_b = 0.01$;
 		(c) $\lambda/\omega_b = 0.08$, $\Omega/\omega_b = 0.50$.
@@ -799,9 +942,6 @@
 	
 	\vspace{-25pt}
 	
-	$g^{(n)}(0)$ cuantifica correlaciones entre fonones individuales
-	pero no captura la estadística de los paquetes como unidades.\\[10pt]
-	
 	\textbf{Función de $m$-paquetes de orden $n$:}
 	\begin{equation*}
 		g_m^{(n)}(t_1,\ldots,t_n) =
@@ -811,8 +951,18 @@
 		{\prod_{i=1}^n \langle(\hat{b}^\dagger)^m\hat{b}^m\rangle(t_i)}
 	\end{equation*}
 	
-	$m$: fonones por paquete \quad $n$: orden de correlación entre paquetes
-	\quad $m=1$: $g^{(n)}$ estándar de Glauber.\\[8pt]
+	{\small
+		\begin{itemize}\setlength{\itemsep}{12pt}
+			
+			\item $m$: fonones por paquete. 
+			
+			\item $n$: orden de correlación entre paquetes.
+			
+			\item $m=1$: $g^{(n)}$ estándar de Glauber.
+			
+		\end{itemize}
+	}
+	\vspace{8pt}
 	
 	\begin{columns}[T]
 		\begin{column}{0.48\textwidth}
@@ -839,7 +989,7 @@
 
 \begin{frame}{Correlaciones de 2-paquetes: $g_2^{(2)}(\tau)$}
 	
-	\vspace{-8pt}
+	\vspace{-25pt}
 	
 	\begin{center}
 		\resizebox{0.85\textwidth}{!}{%
@@ -847,39 +997,301 @@
 		}
 	\end{center}
 	
-	\vspace{-4pt}
-	\rule{\textwidth}{0.4pt}
-	\vspace{2pt}
-	
 	\begin{columns}[T]
 		\begin{column}{0.32\textwidth}
 			{\small
-				$\gamma \ll \kappa$:\\
-				antibunching $g_2^{(2)} \approx 0.35$\\
+				$\gamma \ll \kappa$\\
+				$g_2^{(2)}(\tau\to\infty) \approx 0.35$\\[6pt]
+				Paquetes antibuncheados,
+				emitidos bajo demanda.\\
 				\textbf{$n$-phonon gun}
 			}
 		\end{column}
 		\begin{column}{0.32\textwidth}
 			{\small
-				$\gamma \sim \kappa$:\\
+				$\gamma \sim \kappa$\\
 				$g_2^{(2)}(\tau\to\infty) \to 1$\\
+				Emisión continua con
+				estadística Poissoniana.\\
 				\textbf{$n$-phonon laser}
 			}
 		\end{column}
 		\begin{column}{0.32\textwidth}
 			{\small
-				$\gamma \gg \kappa$:\\
-				bunching fuerte\\
-				\textbf{estado térmico de paquetes}
+				$\gamma \gg \kappa$\\
+				$g_2^{(2)}(0) \gg 1$\\
+				Bunching fuerte,
+				estadística super-Poissoniana.\\
+				\textbf{Estado térmico de paquetes}
+			}
+		\end{column}
+	\end{columns}
+	
+	\vspace{10pt}
+	{\scriptsize
+		Parámetros del sistema: $\lambda/\omega_b=0.1$, $\Omega/\omega_b=0.2$,
+		$\gamma_\varphi/\omega_b=0.0004$, $J/\omega_b=0.5$.
+		(a) $\kappa/\omega_b=0.001$, (b) $\kappa/\omega_b=0.01$.
+	}
+	
+\end{frame}
+
+\begin{frame}{Trayectorias cuánticas de Monte Carlo}
+	
+	\vspace{-15pt}
+	
+	\begin{center}
+		\resizebox{0.63\textwidth}{!}{%
+			\input{../../codes/results/oficial/pgf/trayectoria_2qd.pgf}%
+		}
+	\end{center}
+	
+	\vspace{-6pt}
+	
+	\begin{columns}[T]
+		\begin{column}{0.55\textwidth}
+			{\small
+				Sistema en $|vv,0\rangle$ el $97\%$ del tiempo.
+				Las oscilaciones super-Rabi construyen población en
+				$|\Psi_+,2\rangle$ hasta $\sim 4\%$.
+				Dos clicks en ventana $\Delta\tau \approx 169\,\omega_b^{-1}
+				\approx 0.08\,\kappa^{-1}$: emisión en cascada de dos fonones
+				fuertemente correlacionados.
+			}
+		\end{column}
+		\begin{column}{0.42\textwidth}
+			{\small
+				Tras la emisión, fotón óptico en
+				$|\Psi_+,0\rangle \to |vv,0\rangle$ anuncia el evento
+				$\Rightarrow$ \textbf{Señal de heraldo}.\\
+				$|\Psi_-\rangle$ desocupado ($P_{\Psi_-}^{\max} \approx 9\times10^{-3}$):
+				dinámica confinada al subespacio brillante.
 			}
 		\end{column}
 	\end{columns}
 	
 	\vspace{4pt}
 	{\scriptsize
-		$\lambda/\omega_b=0.1$, $\Omega/\omega_b=0.2$,
+		Parámetros del sistema: $\lambda/\omega_b=0.1$, $\Omega/\omega_b=0.2$,
+		$\kappa/\omega_b=0.0005$, $\gamma/\omega_b=0.0002$,
 		$\gamma_\varphi/\omega_b=0.0004$, $J/\omega_b=0.5$.
-		(a) $\kappa/\omega_b=0.001$, (b) $\kappa/\omega_b=0.01$.
+	}
+	
+\end{frame}
+
+\begin{frame}{Pureza de emisión $\Pi_n$}
+	
+	{\small\textbf{Problema:} $g^{(n)}(0)$ no cuantifica la fracción
+		de emisión en paquetes de exactamente $n$ fonones
+		$\Rightarrow$ Muñoz et al.\ \cite{munoz2014,munoz2018}
+		introducen la pureza $\Pi_n$.}
+	
+	\vspace{8pt}
+	\rule{\textwidth}{0.4pt}
+	\vspace{6pt}
+	
+	\begin{columns}[T]
+		
+		\begin{column}{0.30\textwidth}
+			\textbf{Paso 1}\\[6pt]
+			{\small
+				Resolver $\mathcal{L}[\rho_{ss}]=0$
+				en espacio completo
+				($N_\mathrm{cut}$ estados):
+				\begin{equation*}
+					n_b = \langle\hat{n}_b\rangle_\mathrm{full}
+				\end{equation*}
+			}
+		\end{column}
+		
+		\begin{column}{0.30\textwidth}
+			\textbf{Paso 2}\\[6pt]
+			{\small
+				Resolver en espacio truncado
+				a $n$ estados (bloquea
+				procesos de orden $\geq n$):
+				\begin{equation*}
+					n_b^\mathrm{trunc} =
+					\langle\hat{n}_b\rangle_\mathrm{trunc}
+				\end{equation*}
+			}
+		\end{column}
+		
+		\begin{column}{0.35\textwidth}
+			\textbf{Paso 3}\\[6pt]
+			{\small
+				La diferencia aísla la
+				contribución del proceso
+				resonante de $n$ fonones:
+				\begin{equation*}
+					\boxed{
+						\Pi_n =
+						\frac{n_b - n_b^\mathrm{trunc}}
+						{n_b}
+					}
+				\end{equation*}
+			}
+		\end{column}
+		
+	\end{columns}
+	
+	\vspace{6pt}
+	\rule{\textwidth}{0.4pt}
+	\vspace{4pt}
+	
+	\begin{columns}[T]
+		\begin{column}{0.48\textwidth}
+			{\small
+				$\Pi_n = 1$: emisión perfectamente pura\\
+				$\Pi_n \to 0$: proceso resonante despreciable
+			}
+		\end{column}
+		\begin{column}{0.48\textwidth}
+			{\small
+				$\Pi_n$ y $g^{(n)}(0)$ son \textbf{anticorrelados}:
+				el máximo de $g^{(n)}(0)$ no coincide con
+				el máximo de $\Pi_n$ \cite{munoz2014}.
+			}
+		\end{column}
+	\end{columns}
+	
+\end{frame}
+
+\begin{frame}{Mapas de pureza $\Pi_n$}
+	
+	\vspace{-8pt}
+	
+	\begin{center}
+		\resizebox{0.65\textwidth}{!}{%
+			\input{../../codes/results/oficial/pgf/purity_2qd_heatmap.pgf}%
+		}
+	\end{center}
+	
+	{\small
+		Región de alta pureza se estrecha con $n$:
+		$\Omega_\mathrm{eff}^{(n)} \propto (\lambda/\omega_b)^n$
+		exige mayor $\lambda$ para órdenes superiores.\\[6pt]
+		En $\lambda/\omega_b \approx 0.22$, $\kappa/\omega_b \sim 10^{-3}$:
+		\begin{equation*}
+			\Pi_2 \approx 98.6\%,\quad
+			\Pi_3 \approx 98.9\%,\quad
+			\Pi_4 \approx 92.5\%
+		\end{equation*}
+		accesibles simultáneamente.
+	}
+	
+	\vspace{4pt}
+	{\scriptsize
+		Parámetros del sistema: $\Omega/\omega_b=0.2$, $\gamma/\omega_b=0.0002$,
+		$\gamma_\varphi/\omega_b=0.0004$, $J/\omega_b=0.5$.
+	}
+	
+\end{frame}
+
+\begin{frame}{Factibilidad experimental}
+	
+	\begin{columns}[T]
+		
+		% ── Columna izquierda: parámetros ─────────────────────────────
+		\begin{column}{0.42\textwidth}
+			\vspace{4pt}
+			\textbf{Sistema de referencia}\\[4pt]
+			{\small
+				2 QDs en nanocavidad acústica de THz
+				\cite{weig2004,rozas2009}:\\[6pt]
+				\begin{tabular}{ll}
+					$\omega_b/2\pi$ $\Rightarrow$ & $1\,\mathrm{THz}$ \\[3pt]
+					$\Omega/2\pi$ $\Rightarrow$ & $0.2\,\mathrm{THz}$ \\[3pt]
+					$\gamma/2\pi$ $\Rightarrow$ & $0.2\,\mathrm{GHz}$ \\[3pt]
+					$\gamma_\varphi/2\pi$ $\Rightarrow$ & $0.4\,\mathrm{GHz}$
+				\end{tabular}
+				
+				\vspace{8pt}
+				$\lambda/\omega_b = 0.22$: plausible dado que
+				sistemas QD-fonón exhiben $S = (\lambda/\omega)^2
+				\sim 1.7$--$2.5$ \cite{weig2004}.
+			}
+		\end{column}
+		
+		% ── Columna derecha: figura ────────────────────────────────────
+		\begin{column}{0.55\textwidth}
+			\vspace{-4pt}
+			\begin{center}
+				\resizebox{\textwidth}{!}{%
+					\input{../../codes/results/oficial/pgf/purity_2qd_cuts.pgf}%
+				}
+			\end{center}
+			{\scriptsize
+				Parámetros del sistema: $\Omega/\omega_b=0.2$, $\gamma/\omega_b=0.0002$,
+				$\gamma_\varphi/\omega_b=0.0004$, $J/\omega_b=0.5$.
+			}
+		\end{column}
+		
+	\end{columns}
+	
+	\vspace{15pt}
+	
+	\textbf{Resultado principal}\\[4pt]
+	{\small
+		\begin{center}
+			\begin{tabular}{lll}
+			& 1QD \cite{bin2020} & 2QD \\[3pt]
+			$\Pi_3 > 95\%$ & $Q \sim 500$ & $Q \sim 90$
+			\end{tabular}
+		\end{center}
+		
+		\vspace{6pt}
+		Origen: factor $\sqrt{2}$ superradiante acelera la cascada,
+		reduciendo la contaminación por procesos fuera de resonancia.
+	}
+	
+\end{frame}
+
+\begin{frame}{Efecto del desfase puro sobre $\Pi_n$}
+	
+	\begin{columns}[T]
+		
+		% ── Columna izquierda: figura ─────────────────────────────────
+		\begin{column}{0.50\textwidth}
+			\vspace{-4pt}
+			\begin{center}
+				\resizebox{\textwidth}{!}{%
+					\input{../../codes/results/oficial/pgf/deph_purity.pgf}%
+				}
+			\end{center}
+			{\scriptsize
+				Parámetros del sistema: $\lambda/\omega_b=0.1$, $\Omega/\omega_b=0.2$,
+				$\kappa/\omega_b=0.002$, $\gamma/\omega_b=0.0002$,
+				$J/\omega_b=0.5$.
+			}
+		\end{column}
+		
+		% ── Columna derecha: discusión ────────────────────────────────
+		\begin{column}{0.47\textwidth}
+			\vspace{4pt}
+			En $\gamma_\varphi/\omega_b = 0.0004$:\\[4pt]
+			{\small
+				$\Pi_2 \approx 99.6\%$,\quad $\Pi_3 \approx 95.0\%$\\[8pt]
+				$\Pi_2 > 95\%$ hasta
+				$\gamma_\varphi/\omega_b \approx 1.4\times10^{-2}$
+				— más de un orden de magnitud sobre el valor
+				de referencia.\\[8pt]
+				$\Pi_3$ más sensible: se degrada por debajo
+				de $95\%$ para $\gamma_\varphi/\omega_b \gtrsim
+				5\times10^{-4}$.
+			}
+		\end{column}
+		
+	\end{columns}
+	
+	\vspace{15pt}
+	
+	\textbf{Mecanismo:}\\[4pt]
+	{\small
+		La cascada de emisión ocurre en escala $\kappa^{-1}$,
+		blindando el paquete del desfase puro. Solo cuando
+		$\gamma_\varphi \sim \kappa$ la pureza se degrada
+		significativamente.\\[6pt]
 	}
 	
 \end{frame}
@@ -888,7 +1300,7 @@
 
 
 
-\begin{frame}[allowframebreaks]{References}
+\begin{frame}[allowframebreaks]{Referencias}
     \printbibliography
 \end{frame}
 \end{document}

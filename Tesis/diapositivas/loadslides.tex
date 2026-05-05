@@ -24,7 +24,8 @@
 \newcommand{\makepart}[1]{ % For convenience
 \part{#1} \frame{\partpage}
 }
-
+\uselanguage{Spanish}
+\languagepath{Spanish}
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -40,9 +41,9 @@
 \RequirePackage{array}
 \RequirePackage{multirow}
 \RequirePackage[%
-  natbib=true, backend=biber,%
-  style=apa, isbn=false,url=false,uniquename=false%, useprefix=true%
-  ]{biblatex}
+natbib=true, backend=biber,%
+style=numeric-comp, sorting=none, isbn=false, url=false, uniquename=false
+]{biblatex}
 \addbibresource{references.bib}
 \newcolumntype{Y}{>{\centering\arraybackslash}X}
 
