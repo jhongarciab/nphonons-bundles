@@ -281,3 +281,36 @@ fig.subplots_adjust(
 plt.savefig("results/oficial/g_n_orders_stacked.pdf", bbox_inches="tight")
 plt.savefig("results/oficial/pgf/g_n_orders_stacked.pgf")
 plt.close()
+
+
+# -----------------------------------------------------------------------------
+# Figura extra: zoom en el dip de g^(3)(0)
+# -----------------------------------------------------------------------------
+fig_zoom, ax_zoom = plt.subplots(figsize=(3.65, 2.6))
+
+mask_zoom = (Delta_list >= -3.62) & (Delta_list <= -3.42)
+Delta_zoom = Delta_list[mask_zoom]
+g3_zoom = results[3]["g_vals"][mask_zoom]
+
+ax_zoom.plot(Delta_zoom, g3_zoom, lw=1.1, color=color_by_order[3])
+ax_zoom.set_xlim(-3.42, -3.57)
+ax_zoom.set_ylim(3e10, 9e11)
+ax_zoom.set_yscale("log")
+ax_zoom.set_facecolor("white")
+ax_zoom.grid(False)
+ax_zoom.tick_params(labelsize=11)
+ax_zoom.set_xticks([-3.45, -3.50, -3.55])
+ax_zoom.set_xticklabels([r"$-3.45$", r"$-3.50$", r"$-3.55$"])
+
+ax_zoom.set_yticks([1e11])
+ax_zoom.set_yticklabels([r"$10^{11}$"])
+
+fig_zoom.subplots_adjust(
+    left=0.18,
+    right=0.95,
+    top=0.94,
+    bottom=0.20,
+)
+plt.savefig("results/oficial/g3_dip_zoom.pdf", bbox_inches="tight")
+plt.savefig("results/oficial/pgf/g3_dip_zoom.pgf")
+plt.close(fig_zoom)

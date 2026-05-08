@@ -50,7 +50,6 @@
 	\tableofcontents
 \end{frame}
 
-
 \section{Introducción}
 \begin{frame}{Motivación}
 	
@@ -879,7 +878,7 @@
 
 \begin{frame}{Estadística de emisión: $g^{(n)}(0)$}
 	
-	\vspace{-25pt}
+	\vspace{-15pt}
 	
 	{\small
 		\begin{equation*}
@@ -890,34 +889,52 @@
 		\end{equation*}
 	}
 	
-	\vspace{12pt}
+	\vspace{20pt}
 	
 	\begin{columns}[T]
 		
 		% ── Columna izquierda: ecuación maestra ───────────────────────
-		\begin{column}{0.38\textwidth}
-			\vspace{15pt}
-
-			{\small
-				Las resonancias de $g^{(n)}(0)$ están asociadas a las resonancias de Stokes
-				$\Delta_n = -n\omega_b - J$, con desplazamiento  $-J$ 
-				y separación $\omega_b$ entre órdenes consecutivos.
-				
-				\vspace{6pt}
-				En la resonancia de $n$ fonones, $g^{(n)}(0)$ pierde capacidad de capturar
-				la estadística relevante: los fonones se emiten como unidad indivisible.
+		\begin{column}{0.30\textwidth}
+			\vspace{2pt}
+			\centering
+			\hfill
+			\begin{tikzpicture}[remember picture]
+				\node[inner sep=0] (zoomfig) {%
+					\resizebox{0.88\textwidth}{!}{%
+						\input{../../codes/results/oficial/pgf/g3_dip_zoom.pgf}%
+					}%
+				};
+			\end{tikzpicture}
+			\hfill\null
+			
+			\vspace{4pt}
+			{\small\justifying
+			En la resonancia de $n$ fonones, $g^{(n)}(0)$ pierde capacidad de capturar
+			la estadística relevante: los fonones se emiten como unidad indivisible.
 			}
 		\end{column}
 		
 		% ── Columna derecha: figuras ───────────────────────────────────
-		\begin{column}{0.58\textwidth}
+		\begin{column}{0.65\textwidth}
 			\vspace{-4pt}
 			\begin{columns}[T]
 				\begin{column}{0.48\textwidth}
 					\centering
-					\resizebox{\textwidth}{!}{%
-						\input{../../codes/results/oficial/pgf/g_n_orders_stacked.pgf}%
-					}\\[2pt]
+					\begin{tikzpicture}[remember picture]
+						\node[inner sep=0] (stackedfig) {%
+							\resizebox{\textwidth}{!}{%
+								\input{../../codes/results/oficial/pgf/g_n_orders_stacked.pgf}%
+							}%
+						};
+						\begin{scope}[shift={(stackedfig.south west)},
+							x={($(stackedfig.south east)-(stackedfig.south west)$)},
+							y={($(stackedfig.north west)-(stackedfig.south west)$)}]
+							\coordinate (dipUL) at (0.60,0.47);
+							\coordinate (dipLR) at (0.78,0.39);
+							\coordinate (dipLL) at (0.60,0.39);
+							\draw[gray!50, line width=0.35pt] (dipUL) rectangle (dipLR);
+						\end{scope}
+					\end{tikzpicture}\\[2pt]
 				\end{column}
 				\begin{column}{0.41\textwidth}
 					\centering
@@ -930,7 +947,12 @@
 		
 	\end{columns}
 	
-	\vspace{20pt}
+	\begin{tikzpicture}[remember picture,overlay]
+		\draw[gray!70, line width=0.35pt]
+			(dipUL) -- ([yshift=7mm]zoomfig.east);
+		\draw[gray!70, line width=0.35pt]
+			(dipLL) -- ([yshift=-7mm]zoomfig.east);
+	\end{tikzpicture}
 	
 	{\scriptsize
 		Parámetros del sistema: $\lambda/\omega_b = 0.08$ (fijo en panel inferior), $\Omega/\omega_b = 0.01$ (fijo en panel superior), $\kappa/\omega_b = 0.003$, $\gamma/\omega_b = 0.0002$, $\gamma_\varphi/\omega_b = 0.0004$, $J/\omega_b = 0.5$
@@ -1297,8 +1319,40 @@
 \end{frame}
 
 \section{Conclusiones}
+\begin{frame}{Conclusiones}
+	
+	\begin{itemize}\setlength{\itemsep}{8pt}
+		
+		\item El factor superradiante $\sqrt{2}$ y el corrimiento $-J$ en las
+		resonancias de Stokes son efectos estructurales que determinan
+		la posición de las resonancias y la escala temporal de la cascada
+		de emisión — no correcciones perturbativas menores.
+		
+		\item $\Pi_3 > 95\%$ es accesible con $Q \sim 90$--$130$, frente a
+		$Q \sim 500$ requeridos por el 1QD \cite{bin2020}. La cascada
+		más rápida reduce la ventana temporal para contaminación por
+		procesos fuera de resonancia.
+		
+		\item La estadística de los paquetes es sintonizable entre
+		\textit{$n$-phonon gun}, \textit{$n$-phonon laser} y estado
+		térmico de paquetes mediante el ajuste de $\gamma/\kappa$.
+		El fotón heraldo habilita protocolos de información cuántica
+		fonónica.
+		
+		\item Los parámetros empleados son consistentes con sistemas
+		experimentales de QDs acoplados a nanocavidades acústicas de THz
+		\cite{weig2004,rozas2009}, situando las predicciones dentro del
+		alcance de la tecnología actual.
+		
+		\item \textbf{Perspectivas:} extender a $N > 2$ QDs; estudiar el
+		impacto de asimetría entre emisores; incorporar $\gamma_\varphi$
+		mediante trayectorias cuánticas exactas de Monte Carlo.
+		
+	\end{itemize}
+	
+\end{frame}
 
-
+\makepart{Gracias}
 
 \begin{frame}[allowframebreaks]{Referencias}
     \printbibliography

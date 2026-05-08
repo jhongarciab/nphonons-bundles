@@ -21,11 +21,28 @@
 \usefolder{styles}
 \usetheme[style=lecture]{elegant}
 
-\newcommand{\makepart}[1]{ % For convenience
-\part{#1} \frame{\partpage}
+\newcommand{\makepart}[1]{%
+{%
+\setbeamertemplate{headline}{}
+\setbeamertemplate{footline}{}
+\setbeamertemplate{frametitle}{}
+\begin{frame}[plain,noframenumbering]
+  \centering
+  \vfill
+  {\usebeamerfont{title}\usebeamercolor[fg]{title}#1\par}
+  \vspace{0.8em}
+  {\usebeamerfont{subtitle}\color{black!65}\rule{0.35\textwidth}{0.6pt}\par}
+  \vfill
+\end{frame}
+}
+}
+
+\AtBeginSection[]{
+  \makepart{\insertsectionhead}
 }
 \uselanguage{Spanish}
 \languagepath{Spanish}
+\setcounter{secnumdepth}{0}
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
