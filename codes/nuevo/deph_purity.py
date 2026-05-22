@@ -212,10 +212,11 @@ colors = {2: '#1f77b4', 3: '#d62728'}   # azul / rojo
 labels = {2: r'$\Pi_2$', 3: r'$\Pi_3$'}
 
 fig, ax = plt.subplots(figsize=(FIG_W, FIG_H))
+ls_styles = {2: '-', 3: '-.'}
 
 for n_b in n_bundle_list:
     ax.semilogx(gphi_arr, results[n_b],
-                color=colors[n_b], lw=0.9, label=labels[n_b])
+                color=colors[n_b], lw=0.9, label=labels[n_b], ls=ls_styles[n_b])
 
 # Línea de referencia γ_φ usado en mapas de pureza
 ax.axvline(gamma_phi_ref, ls='--', color='gray', lw=0.9,
@@ -231,7 +232,7 @@ ax.tick_params(labelsize=12)
 ax.set_facecolor('white')
 ax.legend(fontsize=10, frameon=False)
 
-fig.subplots_adjust(left=0.11, right=0.98, top=0.95, bottom=0.22)
+fig.subplots_adjust(left=0.11, right=0.95, top=0.95, bottom=0.22)
 fig.savefig("results/oficial/deph_purity.pdf", bbox_inches='tight')
 fig.savefig("results/oficial/pgf/deph_purity.pgf")
 print("Imágenes guardadas")
