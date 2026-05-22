@@ -929,10 +929,10 @@
 						\begin{scope}[shift={(stackedfig.south west)},
 							x={($(stackedfig.south east)-(stackedfig.south west)$)},
 							y={($(stackedfig.north west)-(stackedfig.south west)$)}]
-							\coordinate (dipUL) at (0.60,0.47);
-							\coordinate (dipLR) at (0.78,0.39);
-							\coordinate (dipLL) at (0.60,0.39);
-							\draw[gray!50, line width=0.35pt] (dipUL) rectangle (dipLR);
+							\coordinate (dipUL) at (0.605,0.465);
+							\coordinate (dipLR) at (0.63,0.445);
+							\coordinate (dipLL) at (0.605,0.445);
+							\draw[black!50, line width=0.35pt] (dipUL) rectangle (dipLR);
 						\end{scope}
 					\end{tikzpicture}\\[2pt]
 				\end{column}
@@ -949,9 +949,9 @@
 	
 	\begin{tikzpicture}[remember picture,overlay]
 		\draw[gray!70, line width=0.35pt]
-			(dipUL) -- ([yshift=7mm]zoomfig.east);
+		(dipUL) -- ([xshift=-2.4mm, yshift=14mm]zoomfig.east);
 		\draw[gray!70, line width=0.35pt]
-			(dipLL) -- ([yshift=-7mm]zoomfig.east);
+		(dipLL) -- ([xshift=-2.4mm, yshift=-9.5mm]zoomfig.east);
 	\end{tikzpicture}
 	
 	{\scriptsize
