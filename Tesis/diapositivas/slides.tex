@@ -26,8 +26,8 @@
 }
 
 \institute{
-	%\textit{Directores:} \\
-	%Edgar A. Gómez G. \\ Santiago Echeverri Arteaga  \\[1.5em]
+	\textit{Directores:} \\
+	Edgar A. Gómez G. \\ Santiago Echeverri Arteaga  \\[1.5em]
 	Facultad de Ciencias Básicas y Tecnologías, \\
 	Programa de Física, \\
 	Universidad del Quindío
@@ -860,81 +860,6 @@
 
 \section{Resultados y discusión}
 
-\begin{frame}{Oscilaciones de Rabi}
-	\vspace{-20pt}
-	Un TLS conducido coherentemente oscila entre
-	$|g\rangle$ y $|e\rangle$ con probabilidad
-	\begin{equation*}
-		P_e(t) = \frac{\Omega^2}{\Omega_R^2}
-		\sin^2\!\left(\frac{\Omega_R\, t}{2}\right),
-		\qquad
-		\Omega_R = \sqrt{\Omega^2 + \Delta^2}.
-	\end{equation*}
-	
-	\vspace{10pt}
-	\begin{center}
-		\begin{tikzpicture}[>=stealth, thick, font=\tiny, scale=0.60]
-			
-			\def\W{10}
-			\def\H{4}
-			\def\xmax{6.0}
-			
-			\draw[->] (0,0) -- (\W+0.35, 0) node[right] {$\Omega t$};
-			\draw[->] (0,0) -- (0, \H+0.35) node[above] {$P_e(t)$};
-			
-			\pgfmathsetmacro{\sx}{\W/\xmax}
-			\pgfmathsetmacro{\sy}{\H}
-			
-			\foreach \k in {1,2,3,4,5,6}{
-				\pgfmathsetmacro{\xpos}{\k*\sx}
-				\draw (\xpos, 0.06) -- (\xpos, -0.06);
-				\ifnum\k=1
-				\node[below] at (\xpos, -0.06) {$\pi$};
-				\else
-				\node[below] at (\xpos, -0.06) {$\k\pi$};
-				\fi
-			}
-			\node[below left] at (0,0) {$0$};
-			
-			\foreach \yv/\lbl in {0.5/0.5, 1/1}{
-				\draw (0.06, \yv*\sy) -- (-0.06, \yv*\sy);
-				\node[left] at (-0.06, \yv*\sy) {$\lbl$};
-			}
-			
-			\draw[blue!80!black, very thick, domain=0:\xmax, samples=400, smooth]
-			plot ({\x*\sx}, {\sy * sin(90*1.0000*\x)*sin(90*1.0000*\x)});
-			\draw[blue!30!gray!40, thin] (1.6000, 4.0500) -- (2.5500, 4.5500);
-			\node[right, blue!80!black] at (2.4500, 4.5500) {$\Delta=0$};
-			
-			\draw[teal!80!black, thick, domain=0:\xmax, samples=400, smooth]
-			plot ({\x*\sx}, {\sy * 0.8000 * sin(90*1.1180*\x)*sin(90*1.1180*\x)});
-			\draw[teal!30!gray!40, thin] (1.4500, 3.2500) -- (2.5500, 4.0500);
-			\node[right, teal!80!black] at (2.4500, 4.0500) {$\Delta=\Omega/2$};
-			
-			\draw[orange!80!black, thick, domain=0:\xmax, samples=400, smooth]
-			plot ({\x*\sx}, {\sy * 0.5000 * sin(90*1.4142*\x)*sin(90*1.4142*\x)});
-			\draw[orange!30!gray!40, thin] (1.2000, 2.0500) -- (2.5500, 3.5500);
-			\node[right, orange!80!black] at (2.4500, 3.5500) {$\Delta=\Omega$};
-			
-			\draw[red!70!black, thick, domain=0:\xmax, samples=500, smooth]
-			plot ({\x*\sx}, {\sy * 0.2000 * sin(90*2.2361*\x)*sin(90*2.2361*\x)});
-			\draw[red!30!gray!40, thin] (0.7000, 0.8500) -- (2.5500, 3.0500);
-			\node[right, red!70!black] at (2.4500, 3.0500) {$\Delta=2\Omega$};
-			
-			\draw[purple!70!black, thick, domain=0:\xmax, samples=800, smooth]
-			plot ({\x*\sx}, {\sy * 0.0385 * sin(90*5.0990*\x)*sin(90*5.0990*\x)});
-			\draw[purple!30!gray!40, thin] (0.9900, 0.1600) -- (2.5500, 2.5500);
-			\node[right, purple!70!black] at (2.4500, 2.5500) {$\Delta=5\Omega$};
-			
-		\end{tikzpicture}
-	\end{center}
-	
-	\vspace{20pt}
-	{\small
-		En resonancia ($\Delta=0$) la inversión es completa. Fuera de resonancia, la amplitud se suprime como $(\Omega/\Delta)^2$ y el periodo se acorta. La desintonía $\Delta$ \textbf{selecciona} qué estados intercambian energía coherentemente.}
-	
-\end{frame}
-
 \begin{frame}{Oscilaciones super-Rabi}
 	
 	\vspace{-15pt}
@@ -1464,6 +1389,30 @@
 \end{frame}
 
 \makepart{Gracias}
+
+\begin{frame}{Implementación experimental: fonones SAW en chip}
+	
+	\begin{columns}[T]
+		\begin{column}{0.48\textwidth}
+			\hspace{15pt}
+			\includegraphics[width=0.70\textwidth]{img/fig_gustafsson}
+		\end{column}
+		\begin{column}{0.48\textwidth}
+			\vspace{25pt}
+			¿Por qué fonones SAW en lugar de fotones de microondas? \cite{gustafsson2014}
+			\vspace{6pt}
+			\begin{itemize}
+				\item A $5\,\text{GHz}$: $\lambda_\text{fotón} \sim 6\,\text{cm}$,\;
+				$\lambda_\text{fonón} \sim 600\,\text{nm}$
+				\item Infraestructura acústica de la \emph{misma escala} que el qubit
+				\item Sin \textit{crosstalk} electromagnético entre líneas vecinas
+				\item Retardo de tránsito $\sim 33\,\text{ns}$ sobre $100\,\mu\text{m}$: 
+				controlable con puertas cuánticas de $\sim 1\,\text{ns}$
+			\end{itemize}
+		\end{column}
+	\end{columns}
+	
+\end{frame}
 
 \begin{frame}[allowframebreaks]{Referencias}
     \printbibliography
