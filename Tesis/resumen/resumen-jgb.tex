@@ -1,0 +1,61 @@
+\documentclass[12pt, letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage[margin=2.5cm]{geometry}
+
+\begin{document}
+
+{\noindent\large\bfseries Emisión de paquetes de $n$-fonones en una molécula excitónica mediante procesos de Stokes}\\[2pt]
+{\noindent Jhon Sebastian García Barrera}
+
+\bigskip
+
+Este trabajo estudia la generación de paquetes de $n$ fonones en una molécula excitónica formada
+por dos puntos cuánticos semiconductores idénticos acoplados coherentemente mediante interacción de
+Förster de constante $J$ a un modo fonónico confinado de una nanocavidad acústica de THz. El
+sistema extiende el esquema propuesto por Bin et al.\ (PRL 124, 053601, 2020) para un único punto
+cuántico al caso de dos emisores colectivos, determinando cómo la hibridación excitónica modifica
+las resonancias de Stokes, las oscilaciones super-Rabi y la pureza estadística de los paquetes
+emitidos, así como las ventajas que ofrece frente al emisor único en cuanto a los requisitos
+experimentales sobre la calidad de la cavidad.
+
+La diagonalización del Hamiltoniano de Förster en el subespacio de una excitación electrónica
+produce dos modos colectivos: el estado brillante $|\Psi_+\rangle$, que acopla al láser con momento
+dipolar amplificado por $\sqrt{2}$ respecto al de un emisor individual, y el estado oscuro
+$|\Psi_-\rangle$, desacoplado de la dinámica de emisión en el límite de emisores idénticos, que
+adquiere población únicamente a través del desfase puro. La dinámica disipativa se modela con la
+ecuación maestra de Lindblad (GKLS), incorporando el decaimiento fonónico $\kappa$, el decaimiento
+excitónico $\gamma$ y el desfase puro $\gamma_\varphi$ en el régimen
+$\gamma, \gamma_\varphi \ll \kappa \ll \omega_b$. El acoplamiento de Förster introduce dos efectos
+estructurales: un corrimiento rígido $-J$ en las resonancias de Stokes,
+$\Delta_n = -n\omega_b - J$, y un factor superradiante $\sqrt{2}$ en la frecuencia super-Rabi
+efectiva, que escala como $\sqrt{2}\,\Omega\,(\lambda/\omega_b)^n/\sqrt{n!}$. Estas expresiones se
+derivan analíticamente en tres regímenes de parámetros ---acoplamiento débil, acoplamiento fuerte
+electrón-fonón y conducción fuerte--- mediante la partición de Löwdin, con excelente acuerdo frente
+a la solución numérica exacta en cada caso.
+
+La solución numérica en QuTiP confirma que las resonancias de $g^{(n)}(0)$ se desplazan en $-J$
+respecto al caso de un único emisor, en acuerdo con la predicción analítica, y se mantienen robustas
+en un amplio rango de $\lambda$ y $\Omega$. La función $g_2^{(2)}(\tau)$ muestra que la estadística
+es sintonizable entre los regímenes \textit{n-phonon gun} (sub-Poissoniano), \textit{n-phonon laser}
+(Poissoniano) y estado térmico de paquetes, ajustando la relación $\gamma/\kappa$. Las trayectorias
+de Monte Carlo confirman el carácter correlacionado de la cascada: en la resonancia de dos fonones,
+los dos \textit{clicks} se producen en una ventana $\Delta\tau \approx 0{,}08\,\kappa^{-1}$, con el
+estado oscuro prácticamente desocupado y el sistema retornando al estado base mediante la emisión de
+un fotón heraldo detectable en un canal independiente.
+
+Los mapas de pureza $\Pi_n$ para $n = 2, 3, 4$ muestran que para $\lambda/\omega_b \approx 0{,}22$
+se obtienen $\Pi_2 \approx 98{,}6\%$ y $\Pi_3 \approx 98{,}9\%$, con $\Pi_3 > 95\%$ sostenido
+hasta $Q \sim 90$--$130$, frente a $Q \sim 500$ requeridos por el caso de un único punto cuántico:
+una relajación de un factor aproximado de cinco en el requisito sobre la cavidad. Esta ventaja
+proviene directamente del factor superradiante, que acelera la cascada de emisión y reduce la
+ventana temporal disponible para que los procesos fuera de resonancia contaminen el paquete, haciendo
+al sistema inherentemente más robusto frente a pérdidas moderadas. El desfase puro resulta negligible
+para valores realistas de $\gamma_\varphi$, aunque el método de Muñoz introduce un error sistemático
+creciente que trayectorias de Monte Carlo exactas permitirían superar. Los parámetros empleados son
+consistentes con sistemas experimentales de puntos cuánticos en nanocavidades acústicas de THz,
+situando las predicciones dentro del alcance de la tecnología actual.
+
+\end{document}
