@@ -1,0 +1,34 @@
+g_eff=0.36, eps=0.72, Gamma2/kappa=0.51840, tau_max=77.1605, ventana=[28.935,77.160]
+n_puntos=131  tau_max_real=76.7805
+
+Corriendo COMPLETO g_z/omega_m=0.015 (g_z=15.000, g_x=12.000, delta_1=-1.9200e-01, omega_q_case=1999.6160)...
+... listo.
+  Validacion mineig [0,mitad,final]: [0.0, -4.420169516998283e-09, -2.728735607855077e-09]  oks=[True, True, True]
+  -dP/dt full=1.15763e-03  -dP/dt eff=8.28031e-04  diff=3.29599e-04  |<a^2>|_full=1.9971  |<a^2>|_eff=2.6165
+
+Corriendo COMPLETO g_z/omega_m=0.03 (g_z=30.000, g_x=6.000, delta_1=-4.8000e-02, omega_q_case=1999.9040)...
+... listo.
+  Validacion mineig [0,mitad,final]: [0.0, -3.844437149523341e-09, -3.914260271112166e-09]  oks=[True, True, True]
+  -dP/dt full=3.58357e-04  -dP/dt eff=1.64022e-04  diff=1.94335e-04  |<a^2>|_full=1.9930  |<a^2>|_eff=2.0366
+
+Corriendo COMPLETO g_z/omega_m=0.06 (g_z=60.000, g_x=3.000, delta_1=-1.2000e-02, omega_q_case=1999.9760)...
+... listo.
+  Validacion mineig [0,mitad,final]: [0.0, -6.789586220126721e-08, -6.715891823410224e-08]  oks=[True, False, False]
+  -dP/dt full=1.10404e-03  -dP/dt eff=4.05233e-05  diff=1.06352e-03  |<a^2>|_full=1.9519  |<a^2>|_eff=2.0023
+
+Corriendo COMPLETO g_z/omega_m=0.12 (g_z=120.000, g_x=1.500, delta_1=-3.0000e-03, omega_q_case=1999.9940)...
+... listo.
+  Validacion mineig [0,mitad,final]: [0.0, -4.918787341946702e-09, -3.79193540066427e-09]  oks=[True, True, True]
+  -dP/dt full=5.53547e-04  -dP/dt eff=1.01356e-05  diff=5.43411e-04  |<a^2>|_full=1.8112  |<a^2>|_eff=2.0001
+
+=== TABLA RESUMEN (Tarea 17) ===
+  gz/wm    delta_1  -dP/dt full  -dP/dt eff        diff  |a^2|full  |a^2|eff
+  0.015 -1.9200e-01  1.15763e-03 8.28031e-04 3.29599e-04     1.9971    2.6165
+  0.030 -4.8000e-02  3.58357e-04 1.64022e-04 1.94335e-04     1.9930    2.0366
+  0.060 -1.2000e-02  1.10404e-03 4.05233e-05 1.06352e-03     1.9519    2.0023
+  0.120 -3.0000e-03  5.53547e-04 1.01356e-05 5.43411e-04     1.8112    2.0001
+
+Ajuste: diff = 1.32162e-02 (+/-4.00e-02) * (g_z/omega_m)^2 + 4.69526e-04 (+/-2.97e-04)   R^2=0.05178
+Canal de patada polaronica confirmado (intercepto ~0): SI
+
+Guardado: tarea17_resultados.npz
