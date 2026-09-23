@@ -1,0 +1,36 @@
+
+=== g_z x0.125 (Nb=20, n_puntos_pedidos=50) ===
+  g_eff=0.09000  eps=0.18000  Gamma2=0.03240  delta_1=-4.800e-02  tau_max=308.642  n_puntos=51
+  SIN Lamb: F_min=0.72110  F_int=0.75352  t90f/t90e=0.3866
+  CON Lamb: F_min=0.99100  F_int=0.99228  t90f/t90e=0.8876
+  Validacion mineig [0,mitad,final]: [0.0, 1.9682782544121485e-17, 2.259656296654377e-17]  oks=[True, True, True]
+
+=== g_z x0.25 (Nb=25, n_puntos_pedidos=80) ===
+  g_eff=0.18000  eps=0.36000  Gamma2=0.12960  delta_1=-4.800e-02  tau_max=77.160  n_puntos=81
+  SIN Lamb: F_min=0.96275  F_int=0.96582  t90f/t90e=0.9636
+  CON Lamb: F_min=0.96862  F_int=0.99099  t90f/t90e=1.0134
+  Validacion mineig [0,mitad,final]: [0.0, 7.275330487436058e-20, 7.30048488623723e-20]  oks=[True, True, True]
+
+=== g_z x0.5 (Nb=25, n_puntos_pedidos=100) ===
+  g_eff=0.36000  eps=0.72000  Gamma2=0.51840  delta_1=-4.800e-02  tau_max=19.290  n_puntos=103
+  SIN Lamb: F_min=0.89136  F_int=0.95445  t90f/t90e=1.3517
+  CON Lamb: F_min=0.89152  F_int=0.95868  t90f/t90e=1.3560
+  Validacion mineig [0,mitad,final]: [0.0, -5.697594756274335e-12, -2.528480627567021e-09]  oks=[True, True, True]
+
+=== g_z x1.0 (Nb=25, n_puntos_pedidos=120) ===
+  g_eff=0.72000  eps=1.44000  Gamma2=2.07360  delta_1=-4.800e-02  tau_max=4.823  n_puntos=129
+  SIN Lamb: F_min=0.75974  F_int=0.84759  t90f/t90e=1.9377
+  CON Lamb: F_min=0.75980  F_int=0.84943  t90f/t90e=1.9380
+  Validacion mineig [0,mitad,final]: [0.0, 1.0419114967209572e-19, 7.452507290989451e-18]  oks=[True, True, True]
+
+=== TABLA RESUMEN (Tarea 14) ===
+  gz_x  Gamma2/k |  Fmin_sin  Fint_sin  t90rat_sin |  Fmin_con  Fint_con  t90rat_con
+ 0.125   0.03240 |   0.72110   0.75352      0.3866 |   0.99100   0.99228      0.8876
+ 0.250   0.12960 |   0.96275   0.96582      0.9636 |   0.96862   0.99099      1.0134
+ 0.500   0.51840 |   0.89136   0.95445      1.3517 |   0.89152   0.95868      1.3560
+ 1.000   2.07360 |   0.75974   0.84759      1.9377 |   0.75980   0.84943      1.9380
+
+Ajuste ley de potencia (con Lamb): 1-F_min = 0.15344 * (Gamma2/kappa)^0.8003
+F_min>0.99 se alcanza desde Gamma2/kappa <= 0.03240
+
+Guardado: tarea14_resultados.npz
