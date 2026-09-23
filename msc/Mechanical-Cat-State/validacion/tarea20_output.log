@@ -1,0 +1,85 @@
+g_eff=2g=0.72000, eps=1.44000, Nb=20
+Calculando propagador de Floquet...
+... listo. shape=(1600, 1600)
+
+=== Primeros 8 modos: overlaps y clasificacion ===
+
+Modo 0: mu=1.000000-0.000000j  |mu|=1.000000  lambda=0.000000e+00+0.000000e+00j
+    overlap P (paridad)                = 5.23893e-02
+    overlap n (numero)                 = 1.96025e+00
+    overlap a (bit-flip/coherencia)    = 5.96673e-02
+    overlap a^2 (confinamiento)        = 1.95348e+00
+    overlap sigma_z (qubit)            = 9.96529e-01
+    --> Clasificacion: trivial (mu=1)
+
+Modo 1: mu=0.999997+0.000044j  |mu|=0.999997  lambda=4.821775e-04-6.929157e-03j
+    overlap P (paridad)                = 6.37516e-03
+    overlap n (numero)                 = 1.63354e-01
+    overlap a (bit-flip/coherencia)    = 1.34144e+00
+    overlap a^2 (confinamiento)        = 1.60459e-01
+    overlap sigma_z (qubit)            = 1.37739e-03
+    --> Clasificacion: a (bit-flip/coherencia)
+
+Modo 2: mu=0.999997-0.000044j  |mu|=0.999997  lambda=4.821775e-04+6.929157e-03j
+    overlap P (paridad)                = 6.37516e-03
+    overlap n (numero)                 = 1.63354e-01
+    overlap a (bit-flip/coherencia)    = 1.39348e+00
+    overlap a^2 (confinamiento)        = 1.66627e-01
+    overlap sigma_z (qubit)            = 1.37739e-03
+    --> Clasificacion: a (bit-flip/coherencia)
+
+Modo 3: mu=0.999996-0.000000j  |mu|=0.999996  lambda=6.912044e-04+5.052757e-14j
+    overlap P (paridad)                = 9.92471e-01
+    overlap n (numero)                 = 7.54940e-02
+    overlap a (bit-flip/coherencia)    = 8.22180e-05
+    overlap a^2 (confinamiento)        = 2.51635e-03
+    overlap sigma_z (qubit)            = 1.13903e-03
+    --> Clasificacion: P (paridad)
+
+Modo 4: mu=0.999377-0.000000j  |mu|=0.999377  lambda=9.911095e-02+5.426334e-12j
+    overlap P (paridad)                = 4.40032e-02
+    overlap n (numero)                 = 2.94410e+00
+    overlap a (bit-flip/coherencia)    = 5.60587e-02
+    overlap a^2 (confinamiento)        = 8.93774e-01
+    overlap sigma_z (qubit)            = 4.69565e-01
+    --> Clasificacion: n (numero)
+
+Modo 5: mu=0.898228-0.437270j  |mu|=0.999009  lambda=1.578280e-01+7.210408e+01j
+    overlap P (paridad)                = 8.97210e-07
+    overlap n (numero)                 = 1.14830e-06
+    overlap a (bit-flip/coherencia)    = 5.70592e-07
+    overlap a^2 (confinamiento)        = 4.20779e-07
+    overlap sigma_z (qubit)            = 1.10397e-06
+    --> Clasificacion: n (numero)
+
+Modo 6: mu=0.898228+0.437270j  |mu|=0.999009  lambda=1.578280e-01-7.210408e+01j
+    overlap P (paridad)                = 8.97210e-07
+    overlap n (numero)                 = 1.14830e-06
+    overlap a (bit-flip/coherencia)    = 6.12756e-07
+    overlap a^2 (confinamiento)        = 1.09773e-04
+    overlap sigma_z (qubit)            = 1.10397e-06
+    --> Clasificacion: a^2 (confinamiento)
+
+Modo 7: mu=0.898228+0.437226j  |mu|=0.998990  lambda=1.608790e-01-7.209782e+01j
+    overlap P (paridad)                = 1.04116e-06
+    overlap n (numero)                 = 3.49404e-07
+    overlap a (bit-flip/coherencia)    = 4.17184e-06
+    overlap a^2 (confinamiento)        = 5.61314e-06
+    overlap sigma_z (qubit)            = 7.04295e-08
+    --> Clasificacion: a^2 (confinamiento)
+
+=== TABLA RESUMEN (Tarea 20) ===
+  k   lambda_real                clasificacion
+  0  0.000000e+00               trivial (mu=1)
+  1  4.821775e-04      a (bit-flip/coherencia)
+  2  4.821775e-04      a (bit-flip/coherencia)
+  3  6.912044e-04                  P (paridad)
+  4  9.911095e-02                   n (numero)
+  5  1.578280e-01                   n (numero)
+  6  1.578280e-01          a^2 (confinamiento)
+  7  1.608790e-01          a^2 (confinamiento)
+
+Modo 4: lambda=9.911095e-02, clasificado como 'n (numero)'
+Confirmacion 'modo 4 es la brecha de confinamiento': SI
+
+Guardado: tarea20_resultados.npz
