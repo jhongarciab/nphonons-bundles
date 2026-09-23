@@ -1,0 +1,33 @@
+n_puntos=102  tau_max_real=29.8263
+
+=== Parte 1: escaneo de tolerancia y Nb (H completo, gx y gz ambos activos) ===
+  [completo] Nb=16 atol=1e-10 rtol=1e-08  n_final=6.19667e-03  pendiente(2da mitad)=2.9743e-04  validacion=OK
+  [completo] Nb=16 atol=1e-12 rtol=1e-10  n_final=6.19013e-03  pendiente(2da mitad)=2.9721e-04  validacion=OK
+  [completo] Nb=16 atol=1e-14 rtol=1e-12  n_final=6.19010e-03  pendiente(2da mitad)=2.9721e-04  validacion=OK
+  [completo] Nb=24 atol=1e-10 rtol=1e-08  n_final=6.19694e-03  pendiente(2da mitad)=2.9743e-04  validacion=OK
+  [completo] Nb=24 atol=1e-12 rtol=1e-10  n_final=6.19014e-03  pendiente(2da mitad)=2.9721e-04  validacion=OK
+  [completo] Nb=24 atol=1e-14 rtol=1e-12  n_final=6.19010e-03  pendiente(2da mitad)=2.9721e-04  validacion=OK
+
+=== TABLA (Parte 1) ===
+  Nb     atol     rtol      n_final    pendiente    ok
+  16    1e-10    1e-08  6.19667e-03   2.9743e-04  True
+  16    1e-12    1e-10  6.19013e-03   2.9721e-04  True
+  16    1e-14    1e-12  6.19010e-03   2.9721e-04  True
+  24    1e-10    1e-08  6.19694e-03   2.9743e-04  True
+  24    1e-12    1e-10  6.19014e-03   2.9721e-04  True
+  24    1e-14    1e-12  6.19010e-03   2.9721e-04  True
+
+Variacion relativa de la pendiente entre configuraciones = 0.08%
+Diagnostico: FISICO (la pendiente no cambia apreciablemente con la tolerancia/Nb)
+
+=== Parte 2: aislar termino (g_x=0 vs g_z=0), atol=1e-14 rtol=1e-12, Nb=24 ===
+  [solo g_z (longitudinal)] Nb=24 atol=1e-14 rtol=1e-12  n_final=1.76465e-08  pendiente(2da mitad)=8.9563e-10  validacion=OK
+  [solo g_x (transversal)] Nb=24 atol=1e-14 rtol=1e-12  n_final=1.26957e-04  pendiente(2da mitad)=3.9829e-06  validacion=OK
+
+=== TABLA (Parte 2) ===
+                     caso      n_final    pendiente
+  solo g_z (longitudinal)  1.76465e-08   8.9563e-10
+   solo g_x (transversal)  1.26957e-04   3.9829e-06
+    completo (referencia)  6.19010e-03
+
+Guardado: tarea16_resultados.npz
