@@ -1,0 +1,28 @@
+
+=== g_z x0.25 (Nb=40) ===
+  g_eff=0.18000  eps=0.36000  Gamma2=0.12960  tau_max=77.160  n_puntos=121
+  t90_full=13.7836  t90_eff=12.2317  razon=1.1269
+  F_min=0.90147  F_integrada=0.95948
+  Validacion mineig en [0, mitad, final]: [0.0, -2.7978946869484523e-25, -6.934182383610902e-26]  oks=[True, True, True]
+
+=== g_z x0.5 (Nb=25) ===
+  g_eff=0.36000  eps=0.72000  Gamma2=0.51840  tau_max=19.290  n_puntos=123
+  t90_full=6.1496  t90_eff=3.0575  razon=2.0113
+  F_min=0.73185  F_integrada=0.92336
+  Validacion mineig en [0, mitad, final]: [0.0, 3.480662072663377e-18, 1.5047046454643716e-18]  oks=[True, True, True]
+
+=== g_z x1.0 (Nb=25) ===
+  g_eff=0.72000  eps=1.44000  Gamma2=2.07360  tau_max=4.823  n_puntos=129
+  t90_full=2.4246  t90_eff=0.7640  razon=3.1735
+  F_min=0.49868  F_integrada=0.75833
+  Validacion mineig en [0, mitad, final]: [0.0, 1.0772601979898222e-18, 1.3716426821734884e-17]  oks=[True, True, True]
+
+=== TABLA RESUMEN (Tarea 11) ===
+  gz_x    g_eff   Gamma2  Gamma2/k  t90f/t90e    F_min    F_int
+ 0.250  0.18000  0.12960   0.12960     1.1269  0.90147  0.95948
+ 0.500  0.36000  0.51840   0.51840     2.0113  0.73185  0.92336
+ 1.000  0.72000  2.07360   2.07360     3.1735  0.49868  0.75833
+
+Ninguno de los casos escaneados alcanza F_min > 0.99
+
+Guardado: tarea11_resultados.npz
