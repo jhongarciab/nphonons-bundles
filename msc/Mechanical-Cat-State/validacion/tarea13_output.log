@@ -1,0 +1,36 @@
+Prediccion piso (qubit excitado) = (2*g_z/omega_m)^2 = 0.014400
+T_m=6.283185e-03  n_puntos=102  tau_max_real=29.8263
+
+Corriendo eps=0, qubit inicial = BASE fisico...
+... listo.
+  Validacion (umbral -1e-8):
+    t=  0.0000  osc: mineig=0.000e+00  qubit: mineig=0.000e+00  OK
+    t=  7.3827  osc: mineig=-8.147e-12  qubit: mineig=2.989e-06  OK
+    t= 15.0608  osc: mineig=-3.168e-11  qubit: mineig=3.987e-06  OK
+    t= 22.4435  osc: mineig=-1.954e-10  qubit: mineig=4.076e-06  OK
+    t= 29.8263  osc: mineig=-2.967e-10  qubit: mineig=4.075e-06  OK
+  Resultado global: OK (umbral -1e-8)
+  <n> final = 6.196673e-03   dn/dt final = 3.388e-04   p_e_ss = 4.149e-06
+
+Corriendo eps=0, qubit inicial = EXCITADO fisico...
+... listo.
+  Validacion (umbral -1e-8):
+    t=  0.0000  osc: mineig=0.000e+00  qubit: mineig=0.000e+00  OK
+    t=  7.3827  osc: mineig=-3.444e-09  qubit: mineig=3.342e-03  OK
+    t= 15.0608  osc: mineig=-2.730e-09  qubit: mineig=3.763e-04  OK
+    t= 22.4435  osc: mineig=-3.232e-09  qubit: mineig=1.896e-05  OK
+    t= 29.8263  osc: mineig=-3.485e-09  qubit: mineig=4.893e-06  OK
+  Resultado global: OK (umbral -1e-8)
+  <n> final = 2.218857e-02   dn/dt final = -1.059e-04   p_e_ss = 5.396e-06
+
+=== TABLA RESUMEN (Tarea 13) ===
+                        <n> final    dn/dt final     p_e_ss
+                BASE    6.197e-03      3.388e-04  4.149e-06
+            EXCITADO    2.219e-02     -1.059e-04  5.396e-06
+
+Prediccion piso (excitado) = (2 g_z/omega_m)^2 = 0.014400
+<n>final(excitado)/prediccion = 1.5409
+
+Hipotesis BASE (<n><1e-4): NO CONFIRMADA (n_final=6.197e-03)
+
+Guardado: tarea13_resultados.npz
