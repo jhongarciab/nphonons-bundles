@@ -1,0 +1,22 @@
+g_eff=2g = 0.720000, eps = 1.440000, eps/g_eff = 2.000000
+Corriendo modelo completo hasta estado estacionario...
+... listo.
+
+Validacion estado estacionario del oscilador: tr=1.000e+00 herm=0.000e+00 mineig=-9.264e-25  OK
+
+=== ESTACIONARIO (eps=1.44) ===
+p_e_ss           = 2.236485e-03
+|<sigma_->|_ss    = 3.673407e-02
+<n>_ss            = 1.904686
+<a^2>_ss          = 1.960051+0.024984j   (|<a^2>|=1.960210, fase=0.012746 rad)
+Paridad_ss        = 0.872460
+
+Prediccion |alpha^2| = eps/g_eff = 2.000000
+|<a^2>|_ss medido    = 1.960210
+Razon medido/prediccion (magnitud) = 0.9801
+
+alpha (deducido de <a^2>_ss) = 1.400047+0.008923j
+Fidelidad con gato par |C+> de amplitud alpha (alpha^2=<a^2>_ss) = 0.966923
+(control, deberia ser igual) F_cat_alt = 0.966923
+
+Guardado: tarea12_resultados.npz
