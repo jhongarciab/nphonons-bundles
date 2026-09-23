@@ -1,0 +1,54 @@
+eps = Omega_full = 4g = 1.440000,  g_eff=2g = 0.720000
+n_puntos estroboscopicos = 101, tau_max_real=38.956
+
+Corriendo modelo EFECTIVO B (g_eff=2g)...
+... listo.
+
+Corriendo modelo COMPLETO, qubit inicial = BASE fisico (basis(Na,1))...
+... listo.
+  Validacion (umbral -1e-9):
+    t=  0.000  osc: mineig=0.000e+00  qubit: mineig=0.000e+00  OK
+    t=  9.739  osc: mineig=-9.882e-09  qubit: mineig=2.650e-02  FALLA
+    t= 19.478  osc: mineig=-4.965e-09  qubit: mineig=2.721e-03  FALLA
+    t= 29.217  osc: mineig=-4.979e-09  qubit: mineig=1.034e-03  FALLA
+    t= 38.956  osc: mineig=-7.379e-09  qubit: mineig=9.052e-04  FALLA
+  Resultado global: FALLA
+
+Corriendo modelo COMPLETO, qubit inicial = EXCITADO fisico (basis(Na,0), = fig2 original)...
+... listo.
+  Validacion (umbral -1e-9):
+    t=  0.000  osc: mineig=0.000e+00  qubit: mineig=0.000e+00  OK
+    t=  9.739  osc: mineig=1.653e-24  qubit: mineig=3.880e-02  OK
+    t= 19.478  osc: mineig=6.809e-25  qubit: mineig=3.534e-03  OK
+    t= 29.217  osc: mineig=-1.179e-24  qubit: mineig=1.075e-03  OK
+    t= 38.956  osc: mineig=-5.240e-24  qubit: mineig=8.993e-04  OK
+  Resultado global: OK (umbral -1e-9)
+
+=== TABLA COMPARATIVA ===
+     kt    n_eff |  n_full(base)   F(base) |  n_full(exc)    F(exc)
+   0.00   0.0000 |        0.0000    1.0000 |       0.0000    1.0000
+   2.34   1.9279 |        2.1645    0.8053 |       1.2701    0.7992
+   4.67   1.9281 |        1.3767    0.9120 |       1.5097    0.8630
+   7.01   1.9281 |        1.7968    0.9448 |       1.7339    0.9165
+   9.35   1.9281 |        1.8170    0.9644 |       1.7806    0.9507
+  11.69   1.9282 |        1.8286    0.9743 |       1.8514    0.9638
+  14.02   1.9282 |        1.8676    0.9801 |       1.8701    0.9718
+  16.36   1.9282 |        1.8661    0.9828 |       1.8875    0.9760
+  18.70   1.9283 |        1.8786    0.9845 |       1.8944    0.9782
+  21.04   1.9283 |        1.8753    0.9853 |       1.8991    0.9795
+  23.37   1.9283 |        1.8828    0.9858 |       1.9012    0.9802
+  25.71   1.9283 |        1.8795    0.9860 |       1.9023    0.9806
+  28.05   1.9284 |        1.8827    0.9862 |       1.9034    0.9809
+  30.39   1.9284 |        1.8820    0.9863 |       1.9034    0.9810
+  32.72   1.9284 |        1.8825    0.9863 |       1.9039    0.9812
+  35.06   1.9285 |        1.8829    0.9863 |       1.9040    0.9812
+  37.40   1.9285 |        1.8829    0.9863 |       1.9041    0.9813
+
+F_min (base)     = 0.7693  en kt=0.779
+F_min (excitado) = 0.5088  en kt=1.169
+F_final (base)     = 0.9863
+F_final (excitado) = 0.9813
+
+Pregunta: la caida de F en kt~1 desaparece con qubit en estado base? -> NO desaparece (sigue habiendo dip)
+
+Guardado: tarea10_resultados.npz
