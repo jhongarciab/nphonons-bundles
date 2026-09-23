@@ -160,7 +160,80 @@ descartar: la fila "compensado" de la Tabla de la Tarea 22 (comparación
 bf con/sin compensación, columna "completo"), y cualquier resultado de
 `tarea22_cache/*_comp1.npz` con `modelo=full`.
 
-## 3. Tarea 24 (SIGUIENTE): Floquet conmensurable y resonancia vestida
+## 3. Tarea 24 — ESTADO: paso 0 y rejilla principal COMPLETOS; 3 rejillas de la Tarea 25 A MEDIAS
+
+**Esta sección se actualizó a mitad de ejecución** (se interrumpió el
+procesamiento local para reorganizar y subir al remoto — continuar desde
+aquí en otra máquina). Resumen de lo que YA está hecho y verificado:
+
+- ✅ **Paso 0 (verificación)**: `tarea24_verificacion.py` — PASA.
+  Diferencia relativa máxima 4.0e-10 contra la Tarea 18(ii) (umbral
+  pedido: <1e-6). Resultado en `tarea24_verificacion.npz`.
+- ✅ **Rejilla principal 9×9** (Γ₂/κ=0.52, \|α\|²=3, gz_scale=0.5):
+  **81/81 celdas completas** en `tarea24_cache/dm*_dq*.npz`. Analizada
+  en `tarea24_grid_analisis.npz` y `tarea24_resultados.md`.
+  **Hallazgo clave**: la resonancia vestida es una CRESTA en
+  δ_m≈+0.06 (Im(λ_bf)≈0 a precisión de máquina en TODA esa fila,
+  independiente de Δ_q), muy lejos de la predicción ingenua (δ_1,0)=
+  (−0.048, 0). Mejor punto dentro de la rejilla pedida (±3\|δ_1\|):
+  **(δ_m, Δ_q) = (0.06, 0.144)**, γ_bf=1.177e-4. Hay 4 puntos extra en
+  `tarea24_cache/dm0.060000_dq*_ext.npz` (Δ_q=0.18, 0.216, 0.288, 0.36)
+  que muestran que γ_bf sigue bajando muy lentamente más allá del
+  borde de la rejilla (mejora marginal, ~7% en 2.5× más rango) — no se
+  seguirá extendiendo, se usa (0.06, 0.144) como punto de trabajo para
+  la Tarea 25.
+- ⏳ **Rejillas 5×5 (más gruesas) para los otros 3 Γ₂/κ de la Tarea 25**
+  (0.03, 0.13, 2.07 — usando el mismo rango ±3\|δ_1\| pero 5 puntos por
+  eje en vez de 9, ver sección 4): **PARCIAL**. Estado exacto en
+  `tarea24_cache/`:
+  - `Γ₂/κ=0.03` (gz_scale=0.12028): **18/25 celdas**. Faltan:
+    `(δ_m=0.024, Δ_q=0.072)`, `(δ_m=0.024, Δ_q=0.144)`, y las 5 celdas
+    de `δ_m=0.096` (Δ_q=−0.144,−0.072,0,0.072,0.144). Archivos existentes
+    con prefijo `gz0.12028_dm*_dq*.npz`.
+  - `Γ₂/κ=0.13` (gz_scale=0.25039): **0/25**, no iniciada.
+  - `Γ₂/κ=2.07` (gz_scale=0.99913): **0/25**, no iniciada.
+
+  El comando exacto para retomar (bucle worker, patrón de proceso por
+  celda, ya con las celdas existentes protegidas por `if [ ! -f ]` así
+  que es seguro re-ejecutar tal cual):
+
+  ```bash
+  cd msc/Mechanical-Cat-State/validacion
+  source ../.venv/bin/activate
+  DM_LIST="-0.192000 -0.120000 -0.048000 0.024000 0.096000"
+  DQ_LIST="-0.144000 -0.072000 0.000000 0.072000 0.144000"
+  for gz in 0.12028 0.25039 0.99913; do
+    for dm in ${=DM_LIST}; do   # bash: quitar el ${=...}, usar $DM_LIST normal
+      for dq in ${=DQ_LIST}; do
+        out="tarea24_cache/gz${gz}_dm${dm}_dq${dq}.npz"
+        if [ ! -f "$out" ]; then
+          python tarea24_worker.py $gz 3 $dm $dq "$out"
+        fi
+      done
+    done
+  done
+  ```
+
+  Ritmo observado en esta máquina: ~100-180s/celda (Nb=24, alpha2=3
+  fijo en las 3 rejillas). Total restante: 7 + 25 + 25 = 57 celdas
+  (~1.6-2.8h estimadas). **Advertencia de infraestructura**: en esta
+  máquina, correr el bucle completo como UN SOLO proceso de shell largo
+  (muchas invocaciones seguidas) mostró throttling intermitente
+  impredecible (duty cycle 3-15% en tandas largas, sin relación clara
+  con batería/AC/térmico — ver Tarea 22). El patrón de proceso-fresco-
+  por-celda ya mitiga esto parcialmente, pero si vuelve a colgarse,
+  matar el proceso y relanzar el mismo bucle (los `if [ ! -f ]` retoman
+  donde quedó) suele bastar.
+
+Una vez completas las 3 rejillas 5×5 restantes, analizar cada una igual
+que `tarea24_grid_analisis.npz` (buscar la fila/columna con
+Im(λ_bf)≈0 y mínimo γ_bf) para obtener el punto de resonancia vestida
+de cada Γ₂/κ, y proceder a la Tarea 25 (sección 4), para la cual **ya
+existe el script** `tarea25_ab_worker.py` (no ejecutado aún — toma
+`gz_scale, alpha2, delta_m, Delta_q, outfile` y calcula tanto el
+completo en el marco conmensurable como el efectivo resonante).
+
+### Especificación original de la Tarea 24 (para referencia)
 
 Implementar el modelo completo con una única frecuencia de referencia
 ω_r (resuelve el problema de conmensurabilidad de la Tarea 22-23):
@@ -197,10 +270,23 @@ resonancia vestida real está desplazada de (δ_1, 0).
 
 ## 4. Tarea 25: con la resonancia vestida
 
-En el punto óptimo (resonancia vestida hallada en la Tarea 24) de cada
-Γ₂/κ ∈ {0.03, 0.13, 0.52, 2.07} (rejilla más gruesa si el costo lo
-exige — usar buen criterio, el patrón worker permite paralelizar/acotar
-fácilmente), repetir:
+**Script ya escrito y listo para usar**: `tarea25_ab_worker.py`
+(uso: `python tarea25_ab_worker.py <gz_scale> <alpha2> <delta_m> <Delta_q> <outfile>`).
+Para cada llamada calcula, en el punto (δ_m, Δ_q) dado: el modelo
+COMPLETO en el marco conmensurable (γ_pf, γ_bf, brecha de confinamiento,
+Im(λ) y overlaps P/n/a del modo de confinamiento) y el modelo EFECTIVO
+RESONANTE (sin δ_1·a†a, con Δ_2₋=0 — la variante "compensar" válida del
+efectivo). Guarda todo en un `.npz` por celda.
+
+Para Γ₂/κ=0.52 el punto de resonancia ya está determinado: **(δ_m,
+Δ_q) = (0.06, 0.144)** (ver sección 3). Para los otros 3 valores de
+Γ₂/κ, primero hay que terminar sus rejillas 5×5 (sección 3) y ubicar el
+mínimo de γ_bf / Im(λ_bf)≈0 en cada una, tal como se hizo para 0.52 en
+`tarea24_grid_analisis.npz`.
+
+En el punto óptimo (resonancia vestida) de cada
+Γ₂/κ ∈ {0.03, 0.13, 0.52, 2.07}, repetir (bucle sobre α² con
+`tarea25_ab_worker.py <gz_scale> <alpha2> <delta_m_opt> <Delta_q_opt> <outfile>`):
 
 (a) γ_bf y γ_pf frente a |α|² ∈ {1,...,5}, con el ajuste de pendiente de
     ln(γ_bf) vs α² (comparar con los valores ya obtenidos en la Tarea 22
