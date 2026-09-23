@@ -1,0 +1,54 @@
+
+=== CASO (i): eps=0, parametros del paper: Nb=16, eps=0.0 ===
+Calculando propagador de un periodo...
+... listo. U shape=(1024, 1024)
+Autovalor de mayor modulo: 1.00000000+0.00000000j  (esperado ~1)
+Punto fijo: tr=1.000000  herm_err=0.000e+00  mineig=-4.636e-13  OK
+<n> del punto fijo = 0.023602
+
+Primeros 6 autovalores y tasas lambda=-ln(mu)/T_m:
+  mu_0 = 1.000000+0.000000j   |mu|=1.000000   lambda=-4.947530e-13-2.062865e-13j  (Re=-4.947530e-13, Im=-2.062865e-13)
+  mu_1 = 0.999999+0.000298j   |mu|=0.999999   lambda=9.877583e-05-4.748231e-02j  (Re=9.877583e-05, Im=-4.748231e-02)
+  mu_2 = 0.999999-0.000298j   |mu|=0.999999   lambda=9.877583e-05+4.748231e-02j  (Re=9.877583e-05, Im=4.748231e-02)
+  mu_3 = 0.999999-0.000000j   |mu|=0.999999   lambda=1.971846e-04+7.729503e-14j  (Re=1.971846e-04, Im=7.729503e-14)
+  mu_4 = 0.935692+0.352534j   |mu|=0.999900   lambda=1.597813e-02-5.734591e+01j  (Re=1.597813e-02, Im=-5.734591e+01)
+  mu_5 = 0.935692-0.352534j   |mu|=0.999900   lambda=1.597813e-02+5.734591e+01j  (Re=1.597813e-02, Im=5.734591e+01)
+
+Comparacion caso (i):
+  <n>_fijo (Floquet)        = 0.023602
+  (g_z/omega_m)^2           = 0.003600
+  Piso medido Tarea 16      = 0.006190
+  Razon n_fijo/(gz/wm)^2    = 6.5562
+  Razon n_fijo/piso_T16     = 3.8129
+  Diagnostico: El piso es CALENTAMIENTO con un estacionario caliente (n_fijo >> (gz/wm)^2)
+
+=== CASO (ii): eps=1.44 (punto del paper): Nb=20, eps=1.4400000000000004 ===
+Calculando propagador de un periodo...
+... listo. U shape=(1600, 1600)
+Autovalor de mayor modulo: 1.00000000-0.00000000j  (esperado ~1)
+Punto fijo: tr=1.000000  herm_err=0.000e+00  mineig=-1.428e-12  OK
+<n> del punto fijo = 1.960251
+
+Primeros 6 autovalores y tasas lambda=-ln(mu)/T_m:
+  mu_0 = 1.000000-0.000000j   |mu|=1.000000   lambda=-5.300924e-13+2.475064e-14j  (Re=-5.300924e-13, Im=2.475064e-14)
+  mu_1 = 0.999997+0.000044j   |mu|=0.999997   lambda=4.821775e-04-6.929157e-03j  (Re=4.821775e-04, Im=-6.929157e-03)
+  mu_2 = 0.999997-0.000044j   |mu|=0.999997   lambda=4.821775e-04+6.929157e-03j  (Re=4.821775e-04, Im=6.929157e-03)
+  mu_3 = 0.999996-0.000000j   |mu|=0.999996   lambda=6.912044e-04+5.052757e-14j  (Re=6.912044e-04, Im=5.052757e-14)
+  mu_4 = 0.999377-0.000000j   |mu|=0.999377   lambda=9.911095e-02+5.426334e-12j  (Re=9.911095e-02, Im=5.426334e-12)
+  mu_5 = 0.898228-0.437270j   |mu|=0.999009   lambda=1.578280e-01+7.210408e+01j  (Re=1.578280e-01, Im=7.210408e+01)
+
+Caso (ii) -- punto fijo:
+  Paridad (oscilador reducido) = 0.052389
+  <a^2> = 1.953352+0.022806j   |<a^2>|=1.953485
+
+Proyeccion de los modos sobre el operador de paridad (Tr[P^dagger X_k]):
+  modo 1: mu=0.999997+0.000044j  |overlap con P|=6.5281e-03  lambda=4.821775e-04
+  modo 2: mu=0.999997-0.000044j  |overlap con P|=6.5281e-03  lambda=4.821775e-04
+  modo 3: mu=0.999996-0.000000j  |overlap con P|=1.4044e+00  lambda=6.912044e-04
+  modo 4: mu=0.999377-0.000000j  |overlap con P|=1.1890e-01  lambda=9.911095e-02
+  modo 5: mu=0.898228-0.437270j  |overlap con P|=8.9834e-07  lambda=1.578280e-01
+
+Modo identificado como decaimiento de paridad: k=3, mu=0.999996-0.000000j
+gamma_phase-flip = 6.912044e-04  (unidades de kappa)
+
+Guardado: tarea18_resultados.npz
