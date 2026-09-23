@@ -1,0 +1,68 @@
+delta_1 = -4.80000e-02,  G1m_gx=3.60000e-05,  G1p_gx=4.00000e-06
+
+=== Barrido principal: |alpha|^2=2, g_z x{0.125,0.25,0.5,1} ===
+
+--- g_z x0.125 ---
+  Gamma2/kappa = 0.03240
+  Confinamiento: completo=5.24391e-02  efectivo=6.94148e-02
+  Phase-flip:    completo=3.68117e-04  efectivo=1.07704e-04  formula=1.60000e-04
+  Coherencia logica: completo=6.88981e-03  efectivo=8.22040e-03
+
+--- g_z x0.25 ---
+  Gamma2/kappa = 0.12960
+  Confinamiento: completo=1.62748e-01  efectivo=3.26213e-01
+  Phase-flip:    completo=6.21690e-04  efectivo=1.62612e-04  formula=1.60000e-04
+  Coherencia logica: completo=2.05913e-03  efectivo=1.61433e-03
+
+--- g_z x0.5 ---
+  Gamma2/kappa = 0.51840
+  Confinamiento: completo=1.17131e-01  efectivo=1.32367e+00
+  Phase-flip:    completo=6.84681e-04  efectivo=1.67754e-04  formula=1.60000e-04
+  Coherencia logica: completo=7.86660e-04  efectivo=4.35481e-04
+
+--- g_z x1.0 ---
+  Gamma2/kappa = 2.07360
+  Confinamiento: completo=9.91110e-02  efectivo=5.29941e+00
+  Phase-flip:    completo=6.91204e-04  efectivo=1.68084e-04  formula=1.60000e-04
+  Coherencia logica: completo=4.82178e-04  efectivo=1.71768e-04
+
+=== TABLA RESUMEN (Tarea 21, barrido principal) ===
+  gz_x  Gamma2/k | confin_full confin_eff | pflip_full  pflip_eff pflip_form |  coh_full   coh_eff
+ 0.125   0.03240 |  5.2439e-02 6.9415e-02 | 3.6812e-04 1.0770e-04 1.6000e-04 | 6.8898e-03 8.2204e-03
+ 0.250   0.12960 |  1.6275e-01 3.2621e-01 | 6.2169e-04 1.6261e-04 1.6000e-04 | 2.0591e-03 1.6143e-03
+ 0.500   0.51840 |  1.1713e-01 1.3237e+00 | 6.8468e-04 1.6775e-04 1.6000e-04 | 7.8666e-04 4.3548e-04
+ 1.000   2.07360 |  9.9111e-02 5.2994e+00 | 6.9120e-04 1.6808e-04 1.6000e-04 | 4.8218e-04 1.7177e-04
+
+Guardado: tarea21_principal.npz
+
+
+=== BONUS: g_z x0.25, |alpha|^2 en {1,2,3,4} ===
+
+--- |alpha|^2=1.0 (Nb=20) ---
+  Gamma2/kappa = 0.12960
+  Confinamiento: completo=1.39632e-01  efectivo=1.79982e-01
+  Phase-flip:    completo=3.26431e-04  efectivo=8.41862e-05  formula=8.00000e-05
+
+--- |alpha|^2=2.0 (Nb=20) ---
+  Gamma2/kappa = 0.12960
+  Confinamiento: completo=1.62748e-01  efectivo=3.26213e-01
+  Phase-flip:    completo=6.21690e-04  efectivo=1.62612e-04  formula=1.60000e-04
+
+--- |alpha|^2=3.0 (Nb=22) ---
+  Gamma2/kappa = 0.12960
+  Confinamiento: completo=1.60349e-01  efectivo=4.25493e-01
+  Phase-flip:    completo=9.53210e-04  efectivo=2.44965e-04  formula=2.40000e-04
+
+--- |alpha|^2=4.0 (Nb=26) ---
+  Gamma2/kappa = 0.12960
+  Confinamiento: completo=1.41821e-01  efectivo=5.34727e-01
+  Phase-flip:    completo=1.28409e-03  efectivo=3.26051e-04  formula=3.20000e-04
+
+=== TABLA RESUMEN (Bonus) ===
+alpha^2 confin_full confin_eff | pflip_full  pflip_eff pflip_form
+    1.0  1.3963e-01 1.7998e-01 | 3.2643e-04 8.4186e-05 8.0000e-05
+    2.0  1.6275e-01 3.2621e-01 | 6.2169e-04 1.6261e-04 1.6000e-04
+    3.0  1.6035e-01 4.2549e-01 | 9.5321e-04 2.4497e-04 2.4000e-04
+    4.0  1.4182e-01 5.3473e-01 | 1.2841e-03 3.2605e-04 3.2000e-04
+
+Guardado: tarea21_bonus.npz
