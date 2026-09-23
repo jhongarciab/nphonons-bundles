@@ -201,6 +201,10 @@ Pendiente / abierto: revisar `clasificar()` en `tarea25_ab_worker.py` (modo de c
 espurio en 4 celdas del completo, ver caveat en el resumen); no-suspender el PC en corridas largas
 (scripts `run_t24_*.sh`, `run_t25.sh`: xargs -P 4-6, un proceso por celda).
 
+## 3b. Ronda 10 (Tareas 26-27) COMPLETA
+
+Ver `RESUMEN_FINAL_RONDA10.md`. Sin piso numérico en γ_bf; brecha robusta: máximo en 0.13 y subida en 3.0 persisten en el completo; el efectivo (Δ_2−=Δ_q) es monótono.
+
 ## 5. Convenciones y valores de referencia a reutilizar
 
 ```
