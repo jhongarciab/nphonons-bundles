@@ -7,6 +7,34 @@ metodológicos ya encontrados y corregidos que no hay que repetir, y un
 patrón de infraestructura obligatorio para evitar que las corridas se
 cuelguen.
 
+## EMPEZAR AQUÍ (mismo repo, sin clonar)
+
+Ya estás en el repo `trabajo` (remoto `jhongarciab/nphonons-bundles`),
+en esta misma máquina/filesystem — no hay que clonar nada. Pasos:
+
+1. `cd msc/Mechanical-Cat-State` y verifica si existe `.venv/`. Si no
+   existe (está en `.gitignore`, no viaja con git), créalo:
+   ```bash
+   brew install python@3.11   # si no está instalado
+   /opt/homebrew/bin/python3.11 -m venv .venv
+   source .venv/bin/activate
+   pip install "qutip==4.7.6" numpy scipy matplotlib "cython<3.0"
+   ```
+2. Verifica que corre: `cd validacion && python tarea24_verificacion.py`
+   — debe imprimir `VERIFICACION: OK` con diferencia ~4e-10.
+3. Ve directo a la **sección 3** de este documento ("Tarea 24 — ESTADO")
+   para el estado exacto (celda por celda) de dónde quedó la ejecución
+   y el comando exacto para retomarla. Ve a la **sección 4** para el
+   script de la Tarea 25 (`tarea25_ab_worker.py`, ya escrito, sin
+   correr) y qué falta ejecutar.
+4. Usa **siempre** el patrón de proceso fresco por celda (worker +
+   bucle de shell, ver sección 6) — correr todo en un solo proceso
+   largo cuelga esta clase de barridos (Tarea 22).
+5. Commit por hito (no todo junto al final) y push a `origin main`
+   cuando termines cada pieza (rejillas completas, análisis de
+   resonancia, tabla (a), tabla (b), resumen final) — así si se corta
+   de nuevo, queda igual de fácil retomar.
+
 ## 0. Entorno
 
 - Repo del paper original clonado en `msc/Mechanical-Cat-State/`
