@@ -71,7 +71,7 @@ print(f"... listo. shape={U.shape}")
 
 evals, evecs = U.eigenstates()
 orden = np.argsort(-np.abs(evals))
-evals_nuevo = evals[orden][:6]
+evals_nuevo = evals[orden][:8]
 
 d = np.load("tarea18_resultados.npz")
 evals_ref = d["evals_ii"]
@@ -81,7 +81,9 @@ print(f"{'k':>3} {'mu_ref (Tarea18)':>28} {'mu_nuevo (marco w_r)':>28} {'dif_rel
 max_dif = 0.0
 for k in range(6):
     mu_ref = evals_ref[k]
-    mu_new = evals_nuevo[k]
+    # empareja por vecino mas cercano: pares conjugados con igual |mu| salen
+    # en orden arbitrario segun LAPACK/plataforma
+    mu_new = evals_nuevo[np.argmin(np.abs(evals_nuevo - mu_ref))]
     dif = abs(mu_new - mu_ref) / max(abs(mu_ref), 1e-30)
     max_dif = max(max_dif, dif)
     print(f"{k:>3} {mu_ref:>28.10f} {mu_new:>28.10f} {dif:>14.3e}")

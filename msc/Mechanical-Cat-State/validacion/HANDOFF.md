@@ -15,11 +15,15 @@ en esta misma máquina/filesystem — no hay que clonar nada. Pasos:
 1. `cd msc/Mechanical-Cat-State` y verifica si existe `.venv/`. Si no
    existe (está en `.gitignore`, no viaja con git), créalo:
    ```bash
-   brew install python@3.11   # si no está instalado
-   /opt/homebrew/bin/python3.11 -m venv .venv
-   source .venv/bin/activate
-   pip install "qutip==4.7.6" numpy scipy matplotlib "cython<3.0"
+   # Linux (sin python3.11 en el sistema): uv baja un Python 3.11 standalone
+   pip install --user uv && export PATH=$HOME/.local/bin:$PATH
+   uv python install 3.11
+   uv venv --python 3.11 .venv
+   uv pip install --python .venv/bin/python -r requirements.txt
+   # (macOS: brew install python@3.11; python3.11 -m venv .venv; pip install -r requirements.txt)
    ```
+   Chequeo: `.venv/bin/python -c "import qutip;print(qutip.__version__)"` -> 4.7.6
+   (si sale 5.x, el venv esta mal: QuTiP5 rompe los scripts).
 2. Verifica que corre: `cd validacion && python tarea24_verificacion.py`
    — debe imprimir `VERIFICACION: OK` con diferencia ~4e-10.
 3. Ve directo a la **sección 3** de este documento ("Tarea 24 — ESTADO")
