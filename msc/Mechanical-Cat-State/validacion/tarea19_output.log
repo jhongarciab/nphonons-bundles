@@ -1,0 +1,40 @@
+
+=== g_z/omega_m=0.015 (g_z=15.000, g_x=24.000, g_z*g_x=360.000) ===
+  Punto fijo: tr=1.000000 herm=0.000e+00 mineig=-6.495e-13  OK
+  <n>_fijo = 0.070342
+  Modo dominante de calentamiento: k=3, mu=0.999994-0.000000j, lambda=9.132873e-04 (+/-1.766e-13j)
+
+=== g_z/omega_m=0.03 (g_z=30.000, g_x=12.000, g_z*g_x=360.000) ===
+  Punto fijo: tr=1.000000 herm=0.000e+00 mineig=-9.063e-11  OK
+  <n>_fijo = 0.047665
+  Modo dominante de calentamiento: k=3, mu=0.999998+0.000000j, lambda=3.409881e-04 (+/--1.966e-13j)
+
+=== g_z/omega_m=0.06 (g_z=60.000, g_x=6.000, g_z*g_x=360.000) ===
+  Punto fijo: tr=1.000000 herm=0.000e+00 mineig=-4.662e-13  OK
+  <n>_fijo = 0.023602
+  Modo dominante de calentamiento: k=3, mu=0.999999+0.000000j, lambda=1.971846e-04 (+/--1.511e-14j)
+
+=== g_z/omega_m=0.12 (g_z=120.000, g_x=3.000, g_z*g_x=360.000) ===
+  Punto fijo: tr=1.000000 herm=0.000e+00 mineig=-1.469e-10  OK
+  <n>_fijo = 0.020273
+  Modo dominante de calentamiento: k=3, mu=0.999999+0.000000j, lambda=1.612418e-04 (+/--5.683e-14j)
+
+=== TABLA RESUMEN (Tarea 19) ===
+  gz/wm      g_z      g_x    n_fijo  lambda_heat
+  0.015   15.000   24.000   0.07034  9.13287e-04
+  0.030   30.000   12.000   0.04767  3.40988e-04
+  0.060   60.000    6.000   0.02360  1.97185e-04
+  0.120  120.000    3.000   0.02027  1.61242e-04
+
+--- Ajuste 1: lambda_heat vs (g_z/omega_m)^2 ---
+  Ajuste vs (gz/wm)^2: lambda_heat = -3.21152e-02*x + 5.56726e-04   R^2=0.36656
+--- Ajuste 2: lambda_heat vs g_x^2 ---
+  Ajuste vs gx^2: lambda_heat = 1.32610e-06*x + 1.49558e-04   R^2=1.00000
+
+Mejor descriptor: g_x^2  (R^2: (gz/wm)^2=0.36656 vs gx^2=1.00000)
+
+Comparacion con gamma_phase-flip de la Tarea 18(ii) (eps=1.44, con drive) = 6.9120e-04
+lambda_heat en g_z/omega_m=0.06 (eps=0, sin drive) = 1.9718e-04
+Razon = 0.2853
+
+Guardado: tarea19_resultados.npz
