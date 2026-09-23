@@ -1,0 +1,38 @@
+g_eff=0.36, eps=0.72, Gamma2/kappa=0.51840, tau_max=28.9352
+n_puntos=101  tau_max_real=28.9027
+
+Modelo EFECTIVO (referencia): paridad_ss=0.995570  |<a^2>|=1.999963
+
+Corriendo g_z/omega_m=0.015  (g_z=15.0000, g_x=12.0000, g_z*g_x=180.0000)...
+... listo.
+  Validacion: tr=1.000e+00 herm=0.000e+00 mineig=7.838e-22  OK
+  paridad=0.981443  poblacion_impar=0.009279  |<a^2>|=1.299181  F_cat=0.970718
+
+Corriendo g_z/omega_m=0.03  (g_z=30.0000, g_x=6.0000, g_z*g_x=180.0000)...
+... listo.
+  Validacion: tr=1.000e+00 herm=0.000e+00 mineig=-9.618e-09  OK
+  paridad=0.966795  poblacion_impar=0.016602  |<a^2>|=1.927638  F_cat=0.988901
+
+Corriendo g_z/omega_m=0.06  (g_z=60.0000, g_x=3.0000, g_z*g_x=180.0000)...
+... listo.
+  Validacion: tr=1.000e+00 herm=0.000e+00 mineig=-6.949e-09  OK
+  paridad=0.919168  poblacion_impar=0.040416  |<a^2>|=1.947305  F_cat=0.979124
+
+Corriendo g_z/omega_m=0.12  (g_z=120.0000, g_x=1.5000, g_z*g_x=180.0000)...
+... listo.
+  Validacion: tr=1.000e+00 herm=0.000e+00 mineig=-4.683e-09  OK
+  paridad=0.755873  poblacion_impar=0.122064  |<a^2>|=1.810356  F_cat=0.935460
+
+=== TABLA RESUMEN (Tarea 15) ===
+  gz/wm  (2gz/wm)^2   paridad  1-paridad  pob_impar   |<a^2>|    F_cat
+  0.015     0.00090   0.98144    0.01856    0.00928   1.29918  0.97072
+  0.030     0.00360   0.96680    0.03320    0.01660   1.92764  0.98890
+  0.060     0.01440   0.91917    0.08083    0.04042   1.94731  0.97912
+  0.120     0.05760   0.75587    0.24413    0.12206   1.81036  0.93546
+
+Paridad modelo EFECTIVO (referencia, sin dependencia de g_z/omega_m) = 0.995570  (1-paridad_eff = 4.430e-03)
+
+Ajuste lineal: 1-paridad = 15.71838 * (g_z/omega_m)^2 + 0.01903
+Prediccion de la hipotesis (pendiente=4, sin intercepto): 1-paridad = 4*(g_z/omega_m)^2
+
+Guardado: tarea15_resultados.npz
