@@ -22,15 +22,16 @@ def gz_scale_from_Gamma2(G2):
     return 0.5 * np.sqrt(G2 / 0.5184)
 
 
-def params(gz_scale, alpha2):
+def params(gz_scale, alpha2, Nb=None):
     gz = gz_scale * gz_baseline
     g_eff = 2 * gz * gx / om_m
     return dict(gz=gz, g_eff=g_eff, eps=alpha2 * g_eff, Gamma2=4 * g_eff**2 / kap,
-                Nb=max(20, int(4 * alpha2 + 12)))
+                Nb=(max(20, int(4 * alpha2 + 12)) if Nb is None else Nb))
 
 
-def full_propagator(gz_scale, alpha2, delta_m, Delta_q, atol=1e-12, rtol=1e-10):
-    p = params(gz_scale, alpha2); Nb, gz, eps = p['Nb'], p['gz'], p['eps']
+def full_propagator(gz_scale, alpha2, delta_m, Delta_q, atol=1e-12, rtol=1e-10, gam_m=None, nq=0.0, Nb=None):
+    gam_m = Gam_m if gam_m is None else gam_m
+    p = params(gz_scale, alpha2, Nb); Nb, gz, eps = p['Nb'], p['gz'], p['eps']
     b = tensor(qeye(Na), destroy(Nb)); bd = b.dag()
     sm = tensor(sigmam(), qeye(Nb)); sp = tensor(sigmap(), qeye(Nb)); sz = tensor(sigmaz(), qeye(Nb))
     H = [delta_m * bd * b + (Delta_q / 2) * sz + eps * (sp + sm),
@@ -42,15 +43,17 @@ def full_propagator(gz_scale, alpha2, delta_m, Delta_q, atol=1e-12, rtol=1e-10):
          [gz * sz * bd, lambda t, _: np.exp(1j * wr * t)],
          [eps * sp, lambda t, _: np.exp(4j * wr * t)],
          [eps * sm, lambda t, _: np.exp(-4j * wr * t)]]
-    c_ops = [np.sqrt(kap) * sm, np.sqrt((n_th + 1) * Gam_m) * b, np.sqrt(n_th * Gam_m) * bd]
+    c_ops = [np.sqrt(kap) * sm, np.sqrt((n_th + 1) * gam_m) * b, np.sqrt(n_th * gam_m) * bd]
+    if nq > 0:
+        c_ops.append(np.sqrt(kap * nq) * sp)   # qubit termico: kappa*nq*D[sigma_+]
     opts = Options(atol=atol, rtol=rtol, nsteps=2_000_000)
     return propagator(H, T_r, c_ops, options=opts), p
 
 
-def effective_liouvillian(gz_scale, alpha2, Delta_2m):
+def effective_liouvillian(gz_scale, alpha2, Delta_2m, Nb=None):
     """Efectivo SIN delta_1 a^dag a (compensado por delta_m=-delta_1), con Delta_2- = Delta_2m.
     Delta_2+ = 4 om_m + Delta_2m."""
-    p = params(gz_scale, alpha2); Nb, g_eff, eps = p['Nb'], p['g_eff'], p['eps']
+    p = params(gz_scale, alpha2, Nb); Nb, g_eff, eps = p['Nb'], p['g_eff'], p['eps']
     x = kap / 2.0
     D2m, D2p = Delta_2m, 4 * om_m + Delta_2m
     ReS = lambda D: x / (x**2 + D**2)
@@ -67,7 +70,7 @@ def effective_liouvillian(gz_scale, alpha2, Delta_2m):
     return liouvillian(H_eff, c), p
 
 
-def modos_ordenados(evals, evecs, Nb, es_completo, T_eff, n=12):
+def modos_ordenados(evals, evecs, Nb, es_completo, T_eff, n=12, qubit_ops=False):
     """Devuelve lista de modos ordenados por Re(lambda) ascendente (k=0 estacionario)."""
     if es_completo:
         lam_all = -np.log(evals.astype(complex)) / T_eff
@@ -77,12 +80,19 @@ def modos_ordenados(evals, evecs, Nb, es_completo, T_eff, n=12):
     P = Qobj(np.diag((-1.0) ** np.arange(Nb))); nop = destroy(Nb).dag() * destroy(Nb); aop = destroy(Nb)
     if es_completo:
         P, nop, aop = tensor(qeye(Na), P), tensor(qeye(Na), nop), tensor(qeye(Na), aop)
+    if qubit_ops:   # solo completo: sz, sm, sm(x)a^2, sp(x)a^2
+        a2 = aop * aop
+        qo = dict(sz=tensor(sigmaz(), qeye(Nb)), sm=tensor(sigmam(), qeye(Nb)),
+                  sma2=tensor(sigmam(), destroy(Nb) * destroy(Nb)), spa2=tensor(sigmap(), destroy(Nb) * destroy(Nb)))
     out = []
     for k, i in enumerate(orden):
         X = vector_to_operator(evecs[i]); nx = X.norm()
         out.append(dict(k=k, lam=lam_all[i], mu=(evals[i] if es_completo else np.nan),
                         ov_P=abs((P.dag() * X).tr()) / nx, ov_n=abs((nop.dag() * X).tr()) / nx,
                         ov_a=abs((aop.dag() * X).tr()) / nx))
+        if qubit_ops:
+            for nm, O in qo.items():
+                out[-1]['ov_' + nm] = abs((O.dag() * X).tr()) / nx
     return out
 
 

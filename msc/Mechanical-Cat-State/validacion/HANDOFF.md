@@ -205,6 +205,11 @@ espurio en 4 celdas del completo, ver caveat en el resumen); no-suspender el PC 
 
 Ver `RESUMEN_FINAL_RONDA10.md`. Sin piso numérico en γ_bf; brecha robusta: máximo en 0.13 y subida en 3.0 persisten en el completo; el efectivo (Δ_2−=Δ_q) es monótono.
 
+## 3c. Ronda 11 (Tareas 31-34) COMPLETA; 29-bis INCOMPLETA
+
+Ver `RESUMEN_FINAL_RONDA11.md`. Conclusión: el máximo en Γ₂/κ≈0.13 solo aparece con Floquet (dependencia temporal), no con ningún ingrediente estático.
+29-bis (buffer 2 niveles vs armónico, y compuerta Z A/B/C) quedó a medias: `modelo_buffer.py`, `tarea29bis_*worker.py`, `run_t29bis.sh`, `run_gate.sh`; caches parciales. Problema conocido: para la brecha de B (buffer armónico, dim ~22500) ni shift-invert cerca de 0 ni ARPACK 'LR' sirven; el método que validó contra denso es la unión de shift-invert complejos σ=0.05+iω (ω=0..12) quitando los 4 modos lógicos (código sin integrar en `modelo_buffer.py` aún).
+
 ## 5. Convenciones y valores de referencia a reutilizar
 
 ```
