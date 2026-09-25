@@ -29,7 +29,7 @@ def params(gz_scale, alpha2, Nb=None):
                 Nb=(max(20, int(4 * alpha2 + 12)) if Nb is None else Nb))
 
 
-def full_propagator(gz_scale, alpha2, delta_m, Delta_q, atol=1e-12, rtol=1e-10, gam_m=None, nq=0.0, Nb=None):
+def full_propagator(gz_scale, alpha2, delta_m, Delta_q, atol=1e-12, rtol=1e-10, gam_m=None, nq=0.0, Nb=None, nm=None, qcons=False):
     gam_m = Gam_m if gam_m is None else gam_m
     p = params(gz_scale, alpha2, Nb); Nb, gz, eps = p['Nb'], p['gz'], p['eps']
     b = tensor(qeye(Na), destroy(Nb)); bd = b.dag()
@@ -43,7 +43,8 @@ def full_propagator(gz_scale, alpha2, delta_m, Delta_q, atol=1e-12, rtol=1e-10, 
          [gz * sz * bd, lambda t, _: np.exp(1j * wr * t)],
          [eps * sp, lambda t, _: np.exp(4j * wr * t)],
          [eps * sm, lambda t, _: np.exp(-4j * wr * t)]]
-    c_ops = [np.sqrt(kap) * sm, np.sqrt((n_th + 1) * gam_m) * b, np.sqrt(n_th * gam_m) * bd]
+    nmech = n_th if nm is None else nm
+    c_ops = [np.sqrt(kap * ((nq + 1) if qcons else 1.0)) * sm, np.sqrt((nmech + 1) * gam_m) * b, np.sqrt(nmech * gam_m) * bd]
     if nq > 0:
         c_ops.append(np.sqrt(kap * nq) * sp)   # qubit termico: kappa*nq*D[sigma_+]
     opts = Options(atol=atol, rtol=rtol, nsteps=2_000_000)

@@ -214,6 +214,10 @@ Ver `RESUMEN_FINAL_RONDA11.md`. Conclusión: el máximo en Γ₂/κ≈0.13 solo 
 
 Ver `RESUMEN_FINAL_RONDA12.md`. **El cuádruplete de Floquet (Im 7-37) es un artefacto de truncamiento (|Im|∝N); el máximo de la brecha del completo no es físico.** Pendiente: recalcular la brecha física excluyendo modos de borde de Fock / con N mayor; revisar Tareas 21, 23, 27, 28, 33. Umbral térmico (Tarea 36): tabla de n_q* y f_min en el resumen.
 
+## 3e. Ronda 13 (Tareas 37-38) COMPLETA
+
+Ver `RESUMEN_FINAL_RONDA13.md`. La brecha física del Floquet completo es monótona y satura en ~0.23 (sin máximo en 0.13): se retiran los resultados de máximo/óptimo de Tareas 21, 23, 27, 28. Umbral térmico con baños consistentes: η≥100 requiere hf/kT≳4.8.
+
 ## 5. Convenciones y valores de referencia a reutilizar
 
 ```

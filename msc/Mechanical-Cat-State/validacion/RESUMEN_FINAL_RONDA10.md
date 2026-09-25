@@ -1,3 +1,5 @@
+> **CORREGIDO en la Ronda 13 (Tarea 38):** el máximo en Γ₂/κ≈0.13, la caída y la subida en 3.0 (brecha 'robusta' de Tarea 27) eran modos de borde de Fock; la brecha física es monótona. γ_bf (Tarea 26) no cambia. Ver `RESUMEN_FINAL_RONDA13.md`.
+
 # Ronda 10 — Tareas 26-27: resumen
 
 Código: `modelo_comun.py` (completo + efectivo), `tarea26_worker.py`, `tarea27_worker.py`, `run_t26_t27.sh`,

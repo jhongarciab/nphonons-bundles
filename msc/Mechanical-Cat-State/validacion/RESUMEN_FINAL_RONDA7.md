@@ -1,3 +1,5 @@
+> **CORREGIDO en la Ronda 13 (Tarea 38):** la brecha 'completa' de la Tarea 21 en Γ₂/κ ≳ 0.24 era un modo de borde de Fock; el cociente efectivo/completo en 2.07 es ~23×, no 53.5× (la divergencia del efectivo se mantiene). Ver `RESUMEN_FINAL_RONDA13.md`.
+
 # Resumen final — Ronda 7 de validación (Tareas 20-21)
 
 Continúa de `RESUMEN_FINAL_RONDA6.md`. Usa Floquet (`qutip.propagator`,

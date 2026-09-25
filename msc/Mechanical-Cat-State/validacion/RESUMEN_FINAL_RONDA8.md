@@ -1,3 +1,5 @@
+> **CORREGIDO en la Ronda 13 (Tarea 38):** el 'óptimo Γ₂/κ≈0.126 con brecha 0.161', la no monotonía y la subida en Γ₂/κ=3 de la Tarea 23 eran modos de borde de Fock. La brecha física es monótona y satura en ~0.23. Ver `RESUMEN_FINAL_RONDA13.md`.
+
 # Resumen final — Ronda 8 de validación (Tareas 22-23)
 
 Continúa de `RESUMEN_FINAL_RONDA7.md`. Corrección de bug: el modelo

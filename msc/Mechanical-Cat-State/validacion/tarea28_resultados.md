@@ -1,3 +1,5 @@
+> **CORREGIDO en la Ronda 13 (Tarea 38):** las ramas con Im creciente (par Im≈7-18 y 'cuádruplete') son modos de borde de Fock; ver `RESUMEN_FINAL_RONDA13.md`.
+
 # Tarea 28 — ramas espectrales (α²=2, (δ_m,Δ_q)=(0.048,0.144))
 
 Ramas (por continuidad); Re λ, Im λ y overlaps dominantes en cada Γ₂/κ. Rama 0 = estacionario.
