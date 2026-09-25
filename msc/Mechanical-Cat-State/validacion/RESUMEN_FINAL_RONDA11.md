@@ -3,6 +3,8 @@
 Tablas completas: `tarea31_34_resultados.md`; gráfico: `tarea32_escalera.png`. Código: `modelo_ladder.py`, `ladder_worker.py`,
 `tarea33_worker.py`, `tarea34_worker.py`, `tarea31_34_analisis.py`, `run_ladder.sh`, `run_t33_34.sh`.
 
+> **CORREGIDO en la Ronda 12:** el cuádruplete de Floquet de esta ronda resultó ser un modo espurio del borde de Fock (|Im|∝N, no converge, sin peso en estados físicos). La conclusión de abajo ("origen = dependencia temporal") queda reemplazada por `RESUMEN_FINAL_RONDA12.md`.
+
 ## Conclusión en una línea
 **Ningún ingrediente estático (Δ_q, δ_m, Lamb, 1 fonón, Kerr, no resonantes) produce el máximo ni la saturación en 0.10-0.17: solo el propagador de Floquet lo reproduce, así que el origen es la dependencia temporal (términos contrarrotantes/no resonantes del Hamiltoniano completo) que el efectivo no captura; no es un efecto de la definición de brecha.**
 

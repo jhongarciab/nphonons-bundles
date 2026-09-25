@@ -210,6 +210,10 @@ Ver `RESUMEN_FINAL_RONDA10.md`. Sin piso numérico en γ_bf; brecha robusta: má
 Ver `RESUMEN_FINAL_RONDA11.md`. Conclusión: el máximo en Γ₂/κ≈0.13 solo aparece con Floquet (dependencia temporal), no con ningún ingrediente estático.
 29-bis (buffer 2 niveles vs armónico, y compuerta Z A/B/C) quedó a medias: `modelo_buffer.py`, `tarea29bis_*worker.py`, `run_t29bis.sh`, `run_gate.sh`; caches parciales. Problema conocido: para la brecha de B (buffer armónico, dim ~22500) ni shift-invert cerca de 0 ni ARPACK 'LR' sirven; el método que validó contra denso es la unión de shift-invert complejos σ=0.05+iω (ω=0..12) quitando los 4 modos lógicos (código sin integrar en `modelo_buffer.py` aún).
 
+## 3d. Ronda 12 (Tareas 35-36) COMPLETA
+
+Ver `RESUMEN_FINAL_RONDA12.md`. **El cuádruplete de Floquet (Im 7-37) es un artefacto de truncamiento (|Im|∝N); el máximo de la brecha del completo no es físico.** Pendiente: recalcular la brecha física excluyendo modos de borde de Fock / con N mayor; revisar Tareas 21, 23, 27, 28, 33. Umbral térmico (Tarea 36): tabla de n_q* y f_min en el resumen.
+
 ## 5. Convenciones y valores de referencia a reutilizar
 
 ```
