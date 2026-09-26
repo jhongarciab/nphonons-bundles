@@ -226,6 +226,10 @@ Ver `../validacion_ma/RESUMEN_FINAL_RONDA14.md`. Entorno QuTiP 5 aparte en `../v
 
 Ver `../validacion_ma/RESUMEN_FINAL_RONDA15.md`. **Importante:** la brecha de Floquet a Γ₂/κ≳0.25 quedó NO determinada (rama interior sin converger hasta N=38); rebaja lo dicho en las Rondas 13 y 14. Origen de la caída de P_c en Ma: el acoplamiento g_z σ_z a. Ancho de la resonancia ∝ κ₂^0.54.
 
+## 3h. Ronda 16 (Tarea 47)
+
+Ver `../validacion_ma/RESUMEN_FINAL_RONDA16.md`. La rama interior es irrelevante para la dinámica (pesos ~1e-14); Liu: α²=ε_p/g_eff=2.5 (α=1.58), coseno de la Ec. (9) debe ser 2ε_p; con eso la Ec. (9) completa tampoco forma gato a κ/ω≈0.9; FWHM = c·G con c=2.87±0.25.
+
 ## 5. Convenciones y valores de referencia a reutilizar
 
 ```

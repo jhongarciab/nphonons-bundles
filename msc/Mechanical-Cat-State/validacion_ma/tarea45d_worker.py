@@ -5,6 +5,7 @@ import sys, numpy as np, scipy.linalg as sl, ma2
 w, gx, gzk, N, var, out = float(sys.argv[1]), float(sys.argv[2]), float(sys.argv[3]), int(sys.argv[4]), sys.argv[5], sys.argv[6]
 opts = dict(counter='nocounter' not in var, gz_direct='nogz' not in var, pair='pair' in var)
 kappa = 0.03; p = ma2.params(w=w, gx=gx, gz=gzk * kappa, kappa=kappa, alpha2=4.0)
+if 'retuned' in var: p['wp'] = 2 * (w - gx**2 / w); p['d'] = p['wp']     # delta_osc=-gx^2/w (sin el 1/3 contrarrotante)
 U, T = ma2.floquet(p, N, **opts)
 o = ma2.ops(N); v0 = ma2.initial(N).ravel(order='F')
 # --- espectro: modos ordenados por Re(lambda), peso de borde, gap fisico

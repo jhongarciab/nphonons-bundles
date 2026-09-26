@@ -18,10 +18,10 @@ delta_osc = gx**2 * (ImS(w) + ImS(3 * w))
 Gexch = 2 * gx * gz / w; alpha2_an = (epsp / 2) / abs(Gexch)
 
 
-def simulate(version, wp, N, gts):
+def simulate(version, wp, N, gts, dscale=1.0):
     a = tensor(qeye(2), destroy(N)); sz = tensor(sigmaz(), qeye(N)); sxq = tensor(sigmax(), qeye(N)); n = a.dag() * a
     H0 = nu / 2 * sz + Dm * n + gz * (a + a.dag()) * sz + gx * (a + a.dag()) * sxq
-    H = [H0, [epsp * sxq, 'cos(wp*t)']]
+    H = [H0, [dscale * epsp * sxq, 'cos(wp*t)']]
     sm = tensor(sigmam(), qeye(N)); sp = sm.dag()
     L = np.sqrt(gam) * sm if version == 'i' else np.sqrt(gam) * (((np.cos(th) - 1) / 2) * sp + ((np.cos(th) + 1) / 2) * sm + (np.sin(th) / 2) * sz)
     psi0 = tensor(basis(2, 1), basis(N, 0)); ts = np.asarray(gts) / gam
