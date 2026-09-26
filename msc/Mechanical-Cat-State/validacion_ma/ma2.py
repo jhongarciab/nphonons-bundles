@@ -15,15 +15,16 @@ def params(w=6.0, gx=0.05, gz=0.15, kappa=0.03, alpha2=4.0, retune=True, wp=None
                 kappa2=4 * G**2 / kappa)
 
 
-def hamiltonian(p, N, filt=None):
+def hamiltonian(p, N, filt=None, counter=True, gz_direct=True, pair=False):
     """filt=None: kappa D[s-]. filt=dict(kf, J, Nf): filtro f (2w) acoplado J(s+ f + s- f^dag), decae kf; qubit sin decaimiento directo."""
     Nf = 1 if filt is None else filt['Nf']; ids = qeye(Nf)
     a = tensor(qeye(2), destroy(N), ids); sp = tensor(sigmap(), qeye(N), ids); sm = sp.dag(); sz = tensor(sigmaz(), qeye(N), ids); n = a.dag() * a
     wp, w, d = p['wp'], p['w'], p['d']; gx, gz = p['gx'], p['gz']
     H0 = (w - wp / 2) * n + 0.5 * (d - wp) * sz + p['Om'] * (sp + sm)
-    H = [H0, [gx * sp * a, 'exp(1j*wp*t/2)'], [gx * sm * a.dag(), 'exp(-1j*wp*t/2)'],
-         [gx * sp * a.dag(), 'exp(3j*wp*t/2)'], [gx * sm * a, 'exp(-3j*wp*t/2)'],
-         [gz * sz * a, 'exp(-1j*wp*t/2)'], [gz * sz * a.dag(), 'exp(1j*wp*t/2)']]
+    if pair: H0 = H0 - p['G'] * (sp * a * a + sm * a.dag() * a.dag())     # intercambio de pares explicito (estatico en el marco rotante)
+    H = [H0, [gx * sp * a, 'exp(1j*wp*t/2)'], [gx * sm * a.dag(), 'exp(-1j*wp*t/2)']]
+    if counter: H += [[gx * sp * a.dag(), 'exp(3j*wp*t/2)'], [gx * sm * a, 'exp(-3j*wp*t/2)']]
+    if gz_direct: H += [[gz * sz * a, 'exp(-1j*wp*t/2)'], [gz * sz * a.dag(), 'exp(1j*wp*t/2)']]
     if filt is None: c = [np.sqrt(p['kappa']) * sm]
     else:
         f = tensor(qeye(2), qeye(N), destroy(Nf))
@@ -32,8 +33,8 @@ def hamiltonian(p, N, filt=None):
     return H, c, dict(wp=wp)
 
 
-def floquet(p, N, filt=None, atol=1e-13, rtol=1e-11):
-    H, c, args = hamiltonian(p, N, filt); T = 4 * np.pi / p['wp']
+def floquet(p, N, filt=None, atol=1e-13, rtol=1e-11, **hopts):
+    H, c, args = hamiltonian(p, N, filt, **hopts); T = 4 * np.pi / p['wp']
     return qt.propagator(H, T, c, args=args, options={'atol': atol, 'rtol': rtol, 'nsteps': 500000}).full(), T
 
 

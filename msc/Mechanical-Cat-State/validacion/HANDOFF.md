@@ -222,6 +222,10 @@ Ver `RESUMEN_FINAL_RONDA13.md`. La brecha física del Floquet completo es monót
 
 Ver `../validacion_ma/RESUMEN_FINAL_RONDA14.md`. Entorno QuTiP 5 aparte en `../validacion_ma/.venv` (`requirements.txt`). Tarea 43 (baño filtrado) al final del resumen.
 
+## 3g. Ronda 15 (Tareas 45-46)
+
+Ver `../validacion_ma/RESUMEN_FINAL_RONDA15.md`. **Importante:** la brecha de Floquet a Γ₂/κ≳0.25 quedó NO determinada (rama interior sin converger hasta N=38); rebaja lo dicho en las Rondas 13 y 14. Origen de la caída de P_c en Ma: el acoplamiento g_z σ_z a. Ancho de la resonancia ∝ κ₂^0.54.
+
 ## 5. Convenciones y valores de referencia a reutilizar
 
 ```

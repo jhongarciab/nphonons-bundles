@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 """Tarea 43: baño filtrado. Uso: tarea43_worker.py <kappa_f (0 = baño plano)> <N> <outfile>
-Ma re-sintonizado con g_x=g_z=0.3/sqrt2 (Fig. 2), kappa=0.03, alpha^2=2 (dimension reducida: N=16, filtro Nf=2).
+Ma re-sintonizado con g_x=g_z=0.3/sqrt2 (Fig. 2), kappa=0.03, alpha^2=2 (dimension reducida: N=16, filtro Nf=Nfarg).
 Filtro f a 2w acoplado J(s+ f + s- f^dag), decae kf; 4J^2/kf = kappa. kappa1 se mide de la tasa de paridad
 (modo de Floquet con mayor overlap con la paridad) y por evolucion temporal de |0>|g>; kappa2 = brecha fisica."""
 import sys, numpy as np, scipy.linalg as sl, ma2
 kf, N, out = float(sys.argv[1]), int(sys.argv[2]), sys.argv[3]
+Nfarg = int(sys.argv[4]) if len(sys.argv) > 4 else 2; noevo = len(sys.argv) > 5 and sys.argv[5] == "noevo"
 kappa, a2 = 0.03, 2.0; g = 0.3
 p = ma2.params(w=6.0, gx=g * np.sin(np.pi / 4), gz=g * np.cos(np.pi / 4), kappa=kappa, alpha2=a2)
-filt = None if kf == 0 else dict(kf=kf, J=np.sqrt(kappa * kf / 4), Nf=2)
-Nf = 1 if filt is None else 2; d = 2 * N * Nf
+filt = None if kf == 0 else dict(kf=kf, J=np.sqrt(kappa * kf / 4), Nf=Nfarg)
+Nf = 1 if filt is None else Nfarg; d = 2 * N * Nf
 U, T = ma2.floquet(p, N, filt)
 o = ma2.ops(N, Nf, a2); v0 = ma2.initial(N, Nf).ravel(order='F')
 ev, V = sl.eig(U); lam = -np.log(ev.astype(complex)) / T; od = np.argsort(lam.real)[:60]
@@ -28,6 +29,7 @@ else:
     ke = lambda dl: 4 * filt['J']**2 * kf / (4 * dl**2 + kf**2)
     kpred = gx**2 * (ke(w) / w**2 + ke(3 * w) / (9 * w**2))
 rate_pred = 2 * a2 * kpred; nmax = int(min(4.0 / rate_pred, 3e8) / T) + 1; kmax = int(np.ceil(np.log2(nmax))) + 1
+if noevo: nmax = 4; kmax = 3
 E = ma2.Evolver(U, kmax); ns = np.unique(np.round(np.geomspace(1, nmax, 200)).astype(int)); rows = []
 for n in ns:
     r = ma2.measure(E.vec(int(n), v0).reshape(d, d, order='F'), o); r['t'] = n * T; rows.append(r)
