@@ -30,8 +30,22 @@ Código: `ma_model.py`, `ma2.py`, `tarea39_worker.py`, `tarea40_worker.py`, `tar
 - Nota metodológica: el umbral de peso de borde de la Tarea 38 (1e-3) es demasiado estricto para |α|²=4 (los modos físicos llegan a ~2e-2); aquí se usó 0.1 (los espurios de Naseem pesaban ~1).
 **Una línea:** κ₁/κ₂=(5/72)(κ/g_z)² es válida al 4% en todo el rango probado, independiente de g_x y w, y la brecha (no κ₂) es la que se satura.
 
-## Tarea 43 — baño filtrado
-(ver `tarea43_resultados.md`; sección añadida al terminar la corrida)
+## Tarea 43 — baño filtrado (α²=2, N=16, filtro de 2 niveles a 2w, 4J²/κ_f=κ=0.03)
+**Expresión usada** (autoenergía del qubit Σ(ω)=J²/(ω−ω_f+iκ_f/2)): κ_eff(δ)=4J²κ_f/(4δ²+κ_f²)=κκ_f²/(4δ²+κ_f²), y
+**κ₁^filt = g_x²[κ_eff(w)/w² + κ_eff(3w)/(9w²)]** (canales D=w y D=3w evaluados a δ=w y 3w del filtro; el enunciado daba el primer término).
+| κ_f | κ₁ previsto | κ₁ medido (espectral) | medido/previsto | κ₁/κ₂ (κ₂=4G²/κ=0.03) | brecha física | κ₁/brecha | mejora medida | mejora prevista |
+|---|---|---|---|---|---|---|---|---|
+| plano | 4.17e-5 | 4.32e-5 | 1.04 | 1.44e-3 (plano previsto 1.39e-3) | 4.2e-3 | 1.0e-2 | 1 | 1 |
+| 3 | 2.24e-6 | 2.22e-6 | 0.99 | 7.4e-5 | 3.6e-3 | 6.1e-4 | 19.5 | 18.6 |
+| 1 | 2.62e-7 | 2.59e-7 | 0.99 | 8.6e-6 | 3.1e-3 | 8.4e-5 | 166 | 159 |
+| 0.3 | 2.37e-8 | 2.35e-8 | 0.99 | 7.8e-7 | 2.2e-3 | 1.1e-5 | 1.8e3 | 1.8e3 |
+| 0.1 | 2.64e-9 | 2.62e-9 | 0.99 | 8.7e-8 | 9.8e-4 | 2.7e-6 | 1.65e4 | 1.58e4 |
+- La expresión filtrada predice κ₁ al 1% en los 4 casos; el factor de mejora sigue ≈(κ_f²+4δ²)/κ_f² (≈4w²/κ_f² para κ_f≪w): 19×, 166×, 1.8e3×, 1.6e4× para κ_f=3, 1, 0.3, 0.1. (El 4% de más en la mejora medida viene de que el control plano mide 4% sobre su predicción.)
+- **Coste:** la brecha física (κ₂ efectivo) cae al estrechar el filtro: 4.2e-3 (plano) → 3.6e-3 (κ_f=3) → 3.1e-3 (1) → 2.2e-3 (0.3) → 9.8e-4 (0.1) (÷4), porque con κ_f≲κ₂·O(1) el baño deja de ser markoviano (memoria 1/κ_f=10 comparable a 1/κ₂≈33). κ₁/brecha mejora igualmente (1e-2 → 2.7e-6, ×4e3). Con κ_f=0.3–1 se obtiene casi toda la mejora perdiendo <50% de brecha.
+- La medida temporal de κ₁ (ajuste de la paridad, P_c>0.99) queda ~20% por debajo de la espectral (incluido el control plano); se usa la espectral. P_c máx=0.9988 con filtro.
+- Validaciones: autovalores ≥−1.3e-15; **|Tr ρ−1| ≤ 6.9e-8 y ‖ρ−ρ†‖ ≤ 1.9e-9 exceden la tolerancia 1e-10** (acumulación en potencias de U hasta ~3e8 períodos); los κ₁ espectrales no dependen de esas potencias.
+- No se hizo convergencia en N para la Tarea 43 (dimensión reducida N=16, α²=2; el control plano a N=16 queda 4% sobre la predicción).
+**Una línea:** un filtro Lorentziano de ancho κ_f reduce κ₁ en ≈(κ_f²+4w²)/κ_f² (19× a 1.6e4× para κ_f=3…0.1) con la expresión derivada, a costa de perder hasta ×4 de brecha cuando κ_f→0.1.
 
 ## Tarea 44 — reconciliación con Gautier et al. (buffer de dos niveles, baño térmico)
 - Piso numérico: con n_th=0 y κ₁=0 el bit-flip es exactamente 0, pero el truncamiento deja γ_bf~5e-9…1e-4 (∝g₂²); los valores a <3× de ese piso están marcados † en la tabla.
