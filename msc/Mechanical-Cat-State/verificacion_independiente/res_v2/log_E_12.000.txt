@@ -1,0 +1,6 @@
+wp=12.0 N=22 Γt=60.0 (estrob. t=nT_p) Pc=0.80015 Pe=0.12126 |a2|=2.4518 a2=-2.443-0.210i par=+0.5537
+   micro Pc: prom=0.80038 min=0.79991 max=0.80088
+   micro Pe: prom=0.12284 min=0.12123 max=0.12574
+   micro a2: prom=2.45271 min=2.45174 max=2.45469
+   micro par: prom=0.55833 min=0.55233 max=0.56374
+   peor |Tr-1|=7.4e-12 ||ρ-ρ†||=1.9e-13 min eig=0.0e+00; t_prop=1905s

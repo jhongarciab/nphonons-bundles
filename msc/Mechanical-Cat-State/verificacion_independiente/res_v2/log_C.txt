@@ -1,0 +1,24 @@
+wp=11.96 N=22 Γt=60.0 (estrob. t=nT_p) Pc=0.13049 Pe=0.26895 |a2|=1.9938 a2=+1.558+1.244i par=+0.0169
+   micro Pc: prom=0.13054 min=0.13044 max=0.13065
+   micro Pe: prom=0.26843 min=0.26737 max=0.26904
+   micro a2: prom=1.98335 min=1.96771 max=1.99683
+   micro par: prom=0.01657 min=0.01618 max=0.01697
+   peor |Tr-1|=7.9e-13 ||ρ-ρ†||=6.6e-14 min eig=0.0e+00; t_prop=866s
+wp=11.965 N=22 Γt=60.0 (estrob. t=nT_p) Pc=0.17528 Pe=0.23644 |a2|=2.8812 a2=-2.511+1.414i par=-0.0084
+   micro Pc: prom=0.17513 min=0.17489 max=0.17538
+   micro Pe: prom=0.23780 min=0.23556 max=0.24012
+   micro a2: prom=2.89098 min=2.87879 max=2.90204
+   micro par: prom=-0.00876 min=-0.00923 max=-0.00830
+   peor |Tr-1|=1.3e-12 ||ρ-ρ†||=5.5e-14 min eig=0.0e+00; t_prop=748s
+wp=11.97 N=22 Γt=60.0 (estrob. t=nT_p) Pc=0.70327 Pe=0.08208 |a2|=5.8651 a2=-5.840+0.538i par=-0.0003
+   micro Pc: prom=0.70132 min=0.69947 max=0.70332
+   micro Pe: prom=0.08750 min=0.08208 max=0.09069
+   micro a2: prom=5.88427 min=5.86515 max=5.90144
+   micro par: prom=-0.00022 min=-0.00031 max=-0.00014
+   peor |Tr-1|=1.3e-11 ||ρ-ρ†||=1.1e-13 min eig=0.0e+00; t_prop=662s
+wp=11.975 N=22 Γt=60.0 (estrob. t=nT_p) Pc=0.96101 Pe=0.01549 |a2|=4.7075 a2=-4.705+0.141i par=+0.0582
+   micro Pc: prom=0.96032 min=0.95955 max=0.96105
+   micro Pe: prom=0.01985 min=0.01549 max=0.02342
+   micro a2: prom=4.71888 min=4.70744 max=4.73006
+   micro par: prom=0.05852 min=0.05706 max=0.05945
+   peor |Tr-1|=1.5e-11 ||ρ-ρ†||=2.5e-13 min eig=0.0e+00; t_prop=658s
