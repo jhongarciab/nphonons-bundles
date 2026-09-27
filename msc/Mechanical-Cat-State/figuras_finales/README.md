@@ -14,9 +14,9 @@ Estructura:
 - **Marco de laboratorio, muestreo estroboscópico t = nT_p** (T_p = 2π/ω_p, fase 0 del drive). El estado estacionario es el autovector con λ = 1 del propagador de Floquet de un período.
   En este marco y en estos instantes el desplazamiento polarónico del oscilador vale +g_z/ω, con el qubit en |g⟩ y σ_z|g⟩ = −|g⟩.
   En el marco rotante a ω_p/2 ese mismo desplazamiento aparecería con signo alternante, (g_z/ω)e^{iω_pt/2}. Ver `C6_polaron.md`.
-- **Código (C6, decisión aprobada):** {D(d)|±α_eff⟩}, con d = g_z/ω analítico y α_eff² = ⟨(a − d)²⟩ del estado estacionario (medido, no optimizado).
-  El mismo α_eff² se usa en la tasa de phase-flip (C1).
-- **Código fijo:** para anchos de resonancia se usa D(d)|±α_nom⟩, con α_nom² = Ω/G. Ver la Fig. 2(b) para la razón.
+- **Código (C6, decisión final):** P_c y todas las curvas de confinamiento o resonancia usan el **código fijo {D(d)|±α_nom⟩}**, con d = g_z/ω analítico y α_nom² = Ω/G.
+- **α_eff² = ⟨(a − d)²⟩** del estado estacionario (medido, no optimizado) se usa **solo** en la tasa de phase-flip (C1), evaluada en la resonancia.
+  No sirve para P_c: el código adaptado sigue al estado, incluso lejos de la resonancia (en ω_p = 12 daría P_c = 0.967 con α_eff² = −2.48, sin gato).
 - **Validaciones:** en toda ρ, |Tr ρ − 1| < 1e-10, ‖ρ − ρ†‖ < 1e-10 y mínimo autovalor > −1e-9.
 - Tolerancias del integrador: atol 1e-12, rtol 1e-10.
 
@@ -25,15 +25,16 @@ Estructura:
 ## Fig. 2 — Resonancia vestida (`fig2.py`, `calc_fig2.py`, `run_fig2.sh`)
 **Modelo:** H completo de Ma en el laboratorio (sin RWA), ω = 6, g = 0.3, θ = π/4 (g_x = −0.2121, g_z = 0.2121), κ = 0.03 (κD[σ₋]). Unidades 2π·GHz.
 
-**(a)** Ω = 0.06, ω_q = 12 fijo, ω_p ∈ [11.955, 12.015] con paso 0.0025 (25 puntos), N = 20.
-- Curvas: P_c con el código polarónico (α_eff), con el código viejo (sin desplazamiento, α nominal = 2i) y con el código polarónico de α nominal.
-- La línea punteada es 2(ω − 4g_x²/3ω) = 11.980 y la de trazo y punto es 2ω. La franja verde es la ventana con P_c > 0.99 (código α_eff): [11.9753, 11.9880].
-- Recuadro: 1 − P_c en escala logarítmica.
-- **Datos:** `data/fig2a.csv`. Caché: `data/fig2/gx-0.212132_wp*_wq12.000000_Om0.060000_N20.npz`.
+**(a)** Ω = 0.06, ω_q = 12 fijo, ω_p ∈ [11.955, 12.015] con paso 0.0025 (25 puntos), **N = 22**.
+- Curva principal: P_c con el código fijo polarónico. Curva discontinua: código viejo sin desplazar (α nominal = 2i).
+- La línea punteada es 2(ω − 4g_x²/3ω) = 11.980 y la de trazo y punto es 2ω. La franja es la ventana con P_c > 0.99 (código fijo). Recuadro: 1 − P_c.
+- Interpolación PCHIP.
+- El CSV incluye además P_c con α_eff, α_eff², y P_e y paridad promediados sobre un período (C5; 40 muestras con mesolve desde el estado estroboscópico), además de P_e estroboscópico.
+- **Datos:** `data/fig2a.csv`. Caché: `data/fig2/gx-0.212132_wp*_wq12.000000_Om0.060000_N22.npz` (los N20 de la primera versión se conservan).
 
 **(b)** ω_q = ω_p (el qubit sigue al drive), |α|² = 4 (Ω = 4|G|, α = 2i), κ₂/κ ∈ {0.03, 0.1, 0.3, 1, 2}, obtenidos variando g_x = −√(κ₂/κ)·ωκ/(4g_z) con g_z fijo.
 - 17 valores de ω_p por serie, en ω_p* + |G|·{−4, −2.5, −1.5, −1.2, −1.0, −0.8, −0.6, −0.3, 0, 0.3, 0.8, 1.1, 1.5, 2.0, 2.5, 4, 6}. La serie κ₂/κ = 1 tiene además el punto ω_p = 12 de (a).
-- FWHM por spline cúbica a P_c = P_max/2 (misma definición que la Tarea 40), con el **código fijo** D(g_z/ω)|±α_nom⟩.
+- FWHM por interpolación **PCHIP** (monótona por tramos) a P_c = P_max/2 (misma definición que la Tarea 40), con el **código fijo** D(g_z/ω)|±α_nom⟩.
 - Ajuste por el origen: **FWHM = cG, c = 2.93** (media 2.92 ± 0.25).
 - **Datos:** `data/fig2b.csv` (FWHM y c por serie) y `data/fig2b_curvas.csv` (curvas crudas). Caché: `data/fig2/*wq==wp*.npz`.
 

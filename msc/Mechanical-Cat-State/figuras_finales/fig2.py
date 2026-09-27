@@ -6,7 +6,7 @@ Para cambiar el estilo basta con volver a correr este script (no recalcula nada)
 import sys, glob, os
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.interpolate import CubicSpline
+from scipy.interpolate import CubicSpline, PchipInterpolator
 from scipy.optimize import brentq
 import comun as C
 import estilo as E
@@ -29,7 +29,7 @@ def cargar():
 
 def fwhm(wp, pc):
     o = np.argsort(wp); wp, pc = wp[o], pc[o]
-    cs = CubicSpline(wp, pc)
+    cs = PchipInterpolator(wp, pc)      # monótona por tramos: sin sobrepasos
     x = np.linspace(wp[0], wp[-1], 20001); y = cs(x)
     k = np.argmax(y); pmax, wmax = y[k], x[k]
     h = pmax / 2
@@ -50,15 +50,17 @@ def main():
             calc_fig2.punto(gx, wp, wq, Om, int(N))
     F = cargar()
     # ---- (a) Ma, wq = 12, N = 20
-    A = sorted([f for f in F if abs(f['gx'] - GXMA) < 1e-6 and float(f['wq']) == 12.0 and int(f['N']) == 20],
+    A = sorted([f for f in F if abs(f['gx'] - GXMA) < 1e-6 and float(f['wq']) == 12.0 and int(f['N']) == 22],
                key=lambda f: float(f['wp']))
     wpa = np.array([float(f['wp']) for f in A])
     pcn = np.array([float(f['Pc_nuevo']) for f in A]); pcv = np.array([float(f['Pc_viejo']) for f in A])
     pcf = np.array([float(f['Pc_fijo']) for f in A])
-    pe = np.array([float(f['Pe']) for f in A]); al2 = np.array([complex(f['al2eff']) for f in A])
-    np.savetxt(os.path.join(C.DATA, 'fig2a.csv'), np.c_[wpa, pcn, pcv, pcf, pe, al2.real, al2.imag], delimiter=',',
-               header='omega_p [2pi GHz], P_c polaron code {D(gz/w)|+-alpha_eff>}, P_c old code {|+-alpha_nom>}, P_c fixed polaron code {D(gz/w)|+-alpha_nom>}, '
-                      'P_e (stroboscopic t=nT_p), Re alpha_eff^2, Im alpha_eff^2', comments='')
+    pe = np.array([float(f['Pe']) for f in A]); pep = np.array([float(f['Pe_prom']) for f in A])
+    parp = np.array([float(f['par_prom']) for f in A]); al2 = np.array([complex(f['al2eff']) for f in A])
+    np.savetxt(os.path.join(C.DATA, 'fig2a.csv'), np.c_[wpa, pcf, pcv, pcn, pep, pe, parp, al2.real, al2.imag], delimiter=',',
+               header='omega_p [2pi GHz], P_c fixed polaron code {D(gz/w)|+-alpha_nom>} (main), P_c old bare code {|+-alpha_nom>}, '
+                      'P_c adaptive code {D(gz/w)|+-alpha_eff>} (not used for P_c), P_e period-averaged, P_e stroboscopic t=nT_p, '
+                      'parity period-averaged, Re alpha_eff^2=<(a-d)^2>, Im alpha_eff^2', comments='')
     wpred = 2 * (W - 4 * GXMA**2 / (3 * W))
     # ---- (b) wq = wp, cinco κ₂/κ
     series = {}
@@ -87,12 +89,11 @@ def main():
     E.aplicar()
     fig, (ax, bx) = plt.subplots(2, 1, figsize=(E.COL1, 4.4), gridspec_kw=dict(hspace=0.38))
     x = np.linspace(wpa[0], wpa[-1], 800)
-    xs99 = x[CubicSpline(wpa, pcn)(x) > 0.99]
+    xs99 = x[PchipInterpolator(wpa, pcf)(x) > 0.99]
     ax.axvspan(xs99[0], xs99[-1], color=E.OKABE[2], alpha=0.15, lw=0)
-    ax.plot(x, CubicSpline(wpa, pcn)(x), color=E.OKABE[0], label=r'polaron code, $\alpha_{\rm eff}$')
-    ax.plot(wpa, pcn, 'o', ms=2.5, color=E.OKABE[0])
-    ax.plot(x, CubicSpline(wpa, pcv)(x), '--', color=E.OKABE[1], label=r'bare code, nominal $\alpha$')
-    ax.plot(x, CubicSpline(wpa, pcf)(x), ':', color=E.OKABE[3], label=r'polaron code, nominal $\alpha$')
+    ax.plot(x, PchipInterpolator(wpa, pcf)(x), color=E.OKABE[0], label=r'polaron code $D(g_z/\omega)|\pm\alpha\rangle$')
+    ax.plot(wpa, pcf, 'o', ms=2.5, color=E.OKABE[0])
+    ax.plot(x, PchipInterpolator(wpa, pcv)(x), '--', color=E.OKABE[1], label=r'bare code $|\pm\alpha\rangle$')
     ax.axvline(wpred, color='k', lw=0.7, ls=':')
     ax.axvline(2 * W, color='0.5', lw=0.7, ls='-.')
     ax.text(wpred, 0.02, r' $2(\omega-4g_x^2/3\omega)$', fontsize=7, rotation=90, va='bottom', ha='right')
@@ -100,11 +101,12 @@ def main():
     ax.set_xlabel(r'$\omega_p/2\pi$ (GHz)'); ax.set_ylabel(r'$P_c$')
     ax.set_ylim(0, 1.02); ax.legend(loc='lower center', bbox_to_anchor=(0.5, 1.0), ncol=2, fontsize=6.3, handlelength=1.8, columnspacing=1.0)
     E.etiqueta(ax, '(a)')
-    ins = ax.inset_axes([0.64, 0.1, 0.33, 0.36])
+    ins = ax.inset_axes([0.60, 0.1, 0.30, 0.36]); ins.set_zorder(5); ins.set_facecolor('white')
     m = (wpa > 11.972) & (wpa < 11.99)
-    ins.plot(wpa[m], 1 - pcn[m], 'o-', ms=2, color=E.OKABE[0]); ins.plot(wpa[m], 1 - pcv[m], 's--', ms=2, color=E.OKABE[1]); ins.plot(wpa[m], 1 - pcf[m], '^:', ms=2, color=E.OKABE[3])
+    ins.plot(wpa[m], 1 - pcf[m], 'o-', ms=2, color=E.OKABE[0]); ins.plot(wpa[m], 1 - pcv[m], 's--', ms=2, color=E.OKABE[1])
     ins.set_yscale('log'); ins.axvline(wpred, color='k', lw=0.6, ls=':')
-    ins.set_ylabel(r'$1-P_c$', fontsize=6.5, labelpad=1); ins.tick_params(labelsize=5.5)
+    ins.yaxis.tick_right(); ins.yaxis.set_label_position('right')
+    ins.text(0.3, 0.97, r'$1-P_c$', transform=ins.transAxes, ha='center', va='top', fontsize=6.5); ins.tick_params(labelsize=5.5)
     ins.set_xticks([11.975, 11.985])
     for i, (G, k2, fw, cc) in enumerate(Bf[:, [1, 2, 7, 8]]):
         bx.loglog(G, fw, 'o', color=E.OKABE[i % 7], ms=4, label=rf'$\kappa_2/\kappa={k2:.2g}$')
@@ -120,10 +122,9 @@ def main():
         fig.savefig(os.path.join(C.AQUI, f'fig2.{ext}'))
     # resumen en consola
     ka = np.argmax(pcn)
-    print(f"    fijo (polarón, α nominal): máx {pcf.max():.6f} en wp={wpa[np.argmax(pcf)]}; en 11.98 {np.interp(11.98, wpa, pcf):.6f}")
-    print(f"(a) máx P_c nuevo = {pcn.max():.6f} en wp={wpa[ka]}; viejo máx = {pcv.max():.6f} en wp={wpa[np.argmax(pcv)]}; pred {wpred:.5f}")
-    xs = x[CubicSpline(wpa, pcn)(x) > 0.99]
-    print(f"    ventana P_c>0.99 (nuevo): [{xs[0]:.5f}, {xs[-1]:.5f}]; en 11.98: nuevo {np.interp(11.98, wpa, pcn):.6f} viejo {np.interp(11.98, wpa, pcv):.6f}")
+    print(f"(a) fijo (polarón, α nominal): máx {pcf.max():.6f} en wp={wpa[np.argmax(pcf)]}; ventana P_c>0.99 [{xs99[0]:.5f}, {xs99[-1]:.5f}]")
+    print(f"    máx P_c α_eff = {pcn.max():.6f} en wp={wpa[ka]}; viejo máx = {pcv.max():.6f} en wp={wpa[np.argmax(pcv)]}; pred {wpred:.5f}")
+    print(f"    en 11.98: fijo {np.interp(11.98, wpa, pcf):.6f} viejo {np.interp(11.98, wpa, pcv):.6f} α_eff {np.interp(11.98, wpa, pcn):.6f}")
     print("(b) κ₂/κ, G, P_max, FWHM, c:")
     for r in Bf:
         print(f"    {r[2]:.3f}  {r[1]:.4e}  {r[4]:.5f}  {r[7]:.4e}  {r[8]:.3f}")

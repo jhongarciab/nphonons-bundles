@@ -32,6 +32,15 @@ def punto(gx, wp, wq, Om, N, rerun=False):
                Pc_nuevo=C.Pc(M, N, np.sqrt(al2eff), d), Pc_viejo=C.Pc(M, N, al_nom, 0.0),
                Pe=np.real(np.trace((sm.dag() * sm).full() @ M)), a2=np.trace((a * a).full() @ M),
                val=np.array(C.validar(M)), tprop=tprop, rho=M)
+    # C5: P_e y paridad promediados sobre un período (invariantes al pasar al marco rotante)
+    import qutip as qt
+    H = C.hamiltoniano(N, W, wq, gx, GZ, Om, wp)
+    ts = np.linspace(0, 2 * np.pi / wp, 41)
+    par = qt.tensor((1j * np.pi * qt.num(N)).expm(), qt.qeye(2))
+    r = qt.mesolve(H, qt.Qobj(M, dims=[[N, 2], [N, 2]]), ts, [np.sqrt(KAP) * sm],
+                   e_ops={'Pe': sm.dag() * sm, 'par': par}, options=C.OPTS)
+    res['Pe_prom'] = np.mean(np.real(r.e_data['Pe'][:-1])); res['par_prom'] = np.mean(np.real(r.e_data['par'][:-1]))
+    res['Pe_rango'] = np.array([np.min(np.real(r.e_data['Pe'])), np.max(np.real(r.e_data['Pe']))])
     np.savez(f, **res)
     return res
 
