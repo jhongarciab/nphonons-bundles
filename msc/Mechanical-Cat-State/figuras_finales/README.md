@@ -44,3 +44,26 @@ Estructura:
 N = 20 subestima P_c en 1.4e-4 en el pico. V2 mostró que N = 22 ya coincide con N = 28 a <1e-5. No altera la forma de la curva ni el FWHM.
 
 **Validaciones (111 ρ):** |Tr ρ − 1| ≤ 4.4e-16, ‖ρ − ρ†‖ = 0, mínimo autovalor ≥ 1.2e-13.
+
+---
+
+## Fig. 3 — Figura de mérito (`fig3.py`, `calc_fig3.py`, `run_fig3.sh`)
+**Modelo:** H completo en el laboratorio, con la convención de la Tarea 42: ω_q = ω_p = 2(ω − 4g_x²/3ω), κ = 0.03, Ω = |α|²_nom·G, G = 2g_xg_z/ω (gato real).
+**Método:** espectral. Propagador de un período T_p y tasa del modo de paridad γ_pf (λ real ≈ +1, mayor |Tr(PR)|, peso de borde < 0.5; C4 y C9).
+El estado estacionario es el autovector λ ≈ 1. α_eff² = ⟨(a − g_z/ω)²⟩, y P_c con el código fijo.
+
+**(a)** 15 puntos con |α|²_nom = 4 y N = 22:
+- ω ∈ {4, 5, 6, 7, 8}, g_x ∈ {0.03, …, 0.15}, g_z/κ ∈ {2, …, 12}. Son los 10 puntos de V4 más 5 nuevos: (0.04, 8, 3), (0.08, 4, 6), (0.06, 8, 8), (0.1, 5, 2) y (0.05, 6, 4).
+- κ₁ se obtiene invirtiendo C1 con |α|² = |α_eff²| y r = Γ₁⁺/Γ₁⁻: κ₁ = γ_pf(1+r)/(2[|α|²(1+r) + r]). κ₂ = 4G²/κ.
+- Marcadores por ω; relleno si κ₂/κ ≤ 0.25, hueco si es mayor (C3).
+- Subpanel: cociente medido/predicho; la franja gris marca ±0.4%.
+- **Datos:** `data/fig3a.csv`.
+
+**(b)** Punto (g_x, ω, g_z/κ) = (0.05, 6, 4) con |α|²_nom = 2, 4 y 6 (N = 22, 22 y 26).
+- γ_pf medido/predicho, con C1 y sin el +1.
+- La curva punteada es la predicción analítica del cociente sin el +1: [Γ₁⁻x + Γ₁⁺(x+1)]/[x(Γ₁⁻+Γ₁⁺)].
+- **Datos:** `data/fig3b.csv`.
+
+**Convergencia:** (0.05, 6, 12), N = 22 → 28: γ_pf cambia 1.6e-5 relativo y P_c 1e-6.
+**Validaciones (18 ρ):** |Tr ρ − 1| ≤ 2.2e-16, ‖ρ − ρ†‖ = 0, mínimo autovalor ≥ −7.2e-13. Peso de borde del modo de paridad ≤ 2.6e-6.
+Caché: `data/fig3/*.npz`, con la ρ estacionaria y los 12 modos más lentos.
