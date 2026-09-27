@@ -18,7 +18,8 @@ import numpy as np
 import qutip as qt
 from scipy.optimize import curve_fit
 
-KAP, AL2 = 0.03, 4.0
+import os
+KAP, AL2 = 0.03, float(os.environ.get("AL2", "4.0"))  # |α|² nominal (V4b lo varía)
 OPTS = dict(atol=1e-12, rtol=1e-10, nsteps=10**6)
 
 
