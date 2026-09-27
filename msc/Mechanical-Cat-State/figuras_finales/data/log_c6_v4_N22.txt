@@ -1,0 +1,7 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /home/jhon/GitHub/trabajo-grado/msc/Mechanical-Cat-State/verificacion_independiente/.venv, got /home/jhon/GitHub/trabajo-grado/msc/Mechanical-Cat-State/figuras_finales/../verificacion_independiente/.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /home/jhon/GitHub/trabajo-grado/msc/Mechanical-Cat-State/verificacion_independiente/.venv, got /home/jhon/GitHub/trabajo-grado/msc/Mechanical-Cat-State/figuras_finales/../verificacion_independiente/.venv
+caso=v4 N=22 α=2.000+0.000j d_pred=+gz/w=0.06000  t_prop=646s
+  P_c(d=0)=0.995044  P_c(d_pred)=0.998682  P_c(-d_pred)=0.984188
+  óptimo d=+0.05992-0.00000i (d/d_pred=0.9986)  P_c=0.998682
+  óptimo con |α| libre: d=+0.05992-0.00000i |α|=1.9671 (|α|²=3.8694) P_c=0.999787
+  validación: |Tr-1|=1.1e-16 ‖ρ-ρ†‖=0.0e+00 mín eig=4.9e-12
