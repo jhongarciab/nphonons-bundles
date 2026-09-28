@@ -109,3 +109,21 @@ Caché: `data/fig3/*.npz`, con la ρ estacionaria y los 12 modos más lentos.
 - **Convergencia con filtro** (κ_f = 1, N = 16 → 18; N = 20 no cabe en memoria): γ_pf cambia −1.5e-4 y el confinamiento 0.2–0.5%.
 - **Validaciones:** todas las ρ con |Tr ρ − 1| ≤ 2e-16 y mínimo autovalor ≥ −2e-11.
 - **Datos:** `data/fig4a.csv`, `data/fig4b.csv`, caché `data/fig4/`.
+
+---
+
+## Figura principal 2 (nueva) — regla de operación universal (`principal_fig2.py`, `calc_principal_fig2.py`, `run_principal_fig2.sh`)
+**Estado:** cálculos completos (157 puntos nuevos más la caché anterior). Análisis en `data/principal_fig2_resumen.csv` y todas las curvas en `data/principal_fig2.csv`. **Figura pendiente de pulir** tras la revisión.
+- **Variable:** x = (ω_p − ω_p*)/G, con ω_p* = 2(ω − 4g_x²/3ω) y G = |2g_xg_z/ω|. P_c con el código fijo polarónico; ω_q = ω_p salvo en Ma (ω_q = 12).
+- **Curvas:** serie 1 (ω = 6, cinco κ₂/κ, N = 20, caché de la Fig. 2 de validación); ω = 4 y 8 con g_z/κ = 7 y κ₂/κ = 0.1 y 1 (N = 16); ω = 6 con g_z/κ = 4 y 20 y κ₂/κ = 0.1 (N = 16);
+  |α|² = 2 (N = 14); Naseem en unidades de κ (ω = 1000, g_z = 60, g_x = 6, κ₂/κ = 2.07, y g_x reducido hasta κ₂/κ = 0.1; N = 14); Ma con ω_q fijo (N = 22).
+  ω/κ = 1000 no encarece el propagador en el marco de laboratorio, porque cada integración cubre un período del drive.
+- **Máximo:** parábola sobre |x| ≤ 0.6. Queda en |x| < 0.1 en todas las curvas salvo ω = 8, κ₂/κ = 1 (+0.15). Las curvas son asimétricas, lo que sesga la parábola, y la rejilla tiene paso 0.3 cerca del pico.
+- **FWHM en x:** 2.5–3.25 con |α|² = 4 y 3.7–4.2 con |α|² = 2 (incluido Naseem). El ancho depende de |α|².
+- **Asimetría:** crece con κ₂/κ. El semiancho izquierdo baja de ~1.3 (κ₂/κ = 0.03–0.1) a ~0.6–0.75 (κ₂/κ = 1–2) y el derecho sube a ~2.2.
+- **Convergencia:**
+  - ω = 4, κ₂/κ = 1, N = 16 → 22: P_c en el pico sube 3.7e-3 (0.9945 → 0.9983); en el flanco x = 1.5 cambia 9e-5.
+  - Naseem κ₂/κ = 2.07, N = 14 → 20: 1.5e-4 en el pico y −3.0e-3 en x = 1.5.
+  - **N = 16 subestima el P_max de las curvas con |α|² = 4** (ω = 4, 8 y g_z/κ = 4, 20), pero apenas mueve los flancos ni el FWHM.
+- **Validaciones (157 ρ):** |Tr ρ − 1| ≤ 4.4e-16, ‖ρ − ρ†‖ = 0, mínimo autovalor ≥ 6.5e-15.
+- La versión anterior (Wigner + transitorio) se movió a `apendice_fig2_estados.py` (sección de apéndice).

@@ -58,6 +58,8 @@ def sistemas(filas):
 
 def analiza(x, p):
     o = np.argsort(x); x, p = np.asarray(x)[o], np.asarray(p)[o]
+    if len(x) < 4 or not np.all(np.isfinite(p)):
+        return np.nan, np.nan, np.nan, np.nan, np.nan
     ip = PchipInterpolator(x, p)
     xx = np.linspace(x[0], x[-1], 40001); yy = ip(xx)
     k = np.argmax(yy); pmax, xmax = yy[k], xx[k]
@@ -70,8 +72,10 @@ def analiza(x, p):
         xl = xr = np.nan
     # máximo sub-rejilla: parábola por los puntos con |x| ≤ 0.6 (PCHIP solo puede tener el máximo en un nodo)
     m = np.abs(x) <= 0.61
-    c2, c1, c0 = np.polyfit(x[m], p[m], 2)
-    xpar = -c1 / (2 * c2) if c2 < 0 else np.nan
+    xpar = np.nan
+    if m.sum() >= 3:
+        c2, c1, c0 = np.polyfit(x[m], p[m], 2)
+        xpar = -c1 / (2 * c2) if c2 < 0 else np.nan
     return xmax, pmax, xl, xr, xpar
 
 
