@@ -84,7 +84,7 @@ def main():
     ax.loglog(Aa[m, 0], Aa[m, 2], 's', color=E.OKABE[1], ms=4, label=r'$\Gamma_1^+$')
     ax.axhline(Aa[~m, 1][0], color=E.OKABE[0], ls=':', lw=0.8)
     ax.axhline(Aa[~m, 2][0], color=E.OKABE[1], ls=':', lw=0.8)
-    ax.text(0.06, Aa[~m, 1][0] * 1.4, 'flat bath', fontsize=6.5, color=E.OKABE[0])
+    ax.text(0.3, Aa[~m, 1][0] * 0.45, 'flat bath', fontsize=6.5, color=E.OKABE[0])
     ax.set_xlabel(r'$\kappa_f/2\pi$ (GHz)'); ax.set_ylabel(r'rate$/2\pi$ (GHz)')
     ax.legend(loc='lower right'); E.etiqueta(ax, '(a)')
     mb = Bb[:, 0] > 0
@@ -99,7 +99,7 @@ def main():
     cx.semilogx(Bb[mb, 0], Bb[mb, 8], 'D--', color=E.OKABE[2], ms=3.5, lw=0.8)
     cx.set_ylabel('confinement rate / flat', color=E.OKABE[2]); cx.set_ylim(0, 1.2)
     cx.tick_params(axis='y', colors=E.OKABE[2])
-    bx.legend(loc='upper right', fontsize=6.3); E.etiqueta(bx, '(b)'); bx.texts[-1].set_position((0.03, 0.2))
+    bx.legend(loc='lower left', fontsize=6.3); E.etiqueta(bx, '(b)'); bx.texts[-1].set_position((0.9, 0.96))
     for ext in ('pdf', 'png'):
         fig.savefig(os.path.join(C.AQUI, f'fig4.{ext}'))
     print("(a) κ_f Γ⁻ razón Γ⁺ razón")

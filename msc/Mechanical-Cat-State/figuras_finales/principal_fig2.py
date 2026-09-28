@@ -1,98 +1,103 @@
-"""Figura principal 2 — resonancia vestida con estados. Solo lee cachés (no propaga):
-  data/fig2/gx-0.212132_wp*_wq12.000000_Om0.060000_N22.npz  (estados estacionarios de Floquet, t = nT_p)
-  data/principal_fig2d.npz                                     (opcional: gato transitorio, calc_principal_fig2d.py)
-Paneles: (a) Wigner del oscilador (qubit trazado) en wp = 2w = 12; (b) en wp* = 11.98; (c) P_c(wp) con el código
-fijo polarónico, marcando (a) y (b); (d) gato par transitorio en el máximo de fidelidad (si existe la caché).
-Marco de laboratorio, t = nT_p: los lóbulos están en ±2i desplazados en +gz/w (real).
-Escribe data/principal_fig2_wigner.npz (rejillas W) y data/principal_fig2c.csv.
+"""Figura principal 2 — regla de operación universal: P_c (código fijo polarónico) frente a x = (ω_p − ω_p*)/G,
+ω_p* = 2(ω − 4g_x²/3ω), G = |2g_xg_z/ω|, para sistemas distintos (ω_q = ω_p salvo Ma).
+Solo lee cachés (no propaga):
+  data/fig2/*_N20.npz con ω_q = ω_p  -> serie 1 (ω = 6, g_z = 0.2121, κ₂/κ ∈ {0.03, 0.1, 0.3, 1, 2}, |α|² = 4)
+                                        P_e promediado en data/fig2/pe_*.npz (calc_pe_fig2viejas.py)
+  data/pfig2/*.npz                   -> series 2–5 (calc_principal_fig2.py / run_principal_fig2.sh)
+  data/fig2/*wq12*_N22.npz           -> Ma con ω_q = 12 fijo (línea distinta)
+Recuadro: Wigner de Ma en ω_p = 2ω y ω_p* (de apendice_fig2_estados / data/principal_fig2_wigner.npz).
+Escribe data/principal_fig2.csv (todas las curvas) y data/principal_fig2_resumen.csv (máximo, FWHM, asimetría).
 """
 import os, glob
 import numpy as np
-import qutip as qt
 import matplotlib.pyplot as plt
 from scipy.interpolate import PchipInterpolator
+from scipy.optimize import brentq
 import comun as C
 import estilo as E
 
-W_, GZ = 6.0, 0.3 * np.cos(np.pi / 4)
-GXMA = -0.3 * np.sin(np.pi / 4)
-N = 22
-X = np.linspace(-3.2, 3.2, 241)
+
+def cargar():
+    filas = []
+    # serie 1 (caché de la Fig. 2 de validación)
+    for f in glob.glob(os.path.join(C.DATA, 'fig2', 'gx*_N20.npz')):
+        z = np.load(f)
+        if abs(float(z['wq']) - float(z['wp'])) > 1e-9:
+            continue
+        fp = os.path.join(C.DATA, 'fig2', 'pe_' + os.path.basename(f))
+        pe = float(np.load(fp)['Pe_prom']) if os.path.exists(fp) else np.nan
+        w, gx, gz, kap = 6.0, float(z['gx']), 0.3 * np.cos(np.pi / 4), 0.03
+        al = np.sqrt(complex(float(z['Om']) / float(z['G'])))
+        filas.append(dict(w=w, gx=gx, gz=gz, kap=kap, Om=float(z['Om']), wq=float(z['wq']), wp=float(z['wp']), N=20,
+                          Pc=C.Pc(z['rho'], 20, al, float(z['d'])), Pe=pe))
+    for f in glob.glob(os.path.join(C.DATA, 'pfig2', '*.npz')):
+        z = np.load(f)
+        filas.append(dict(w=float(z['w']), gx=float(z['gx']), gz=float(z['gz']), kap=float(z['kap']), Om=float(z['Om']),
+                          wq=float(z['wq']), wp=float(z['wp']), N=int(z['N']), Pc=float(z['Pc_fijo']), Pe=float(z['Pe_prom']),
+                          val=z['val']))
+    # Ma con ω_q fijo
+    for f in glob.glob(os.path.join(C.DATA, 'fig2', 'gx*_wq12.000000_Om0.060000_N22.npz')):
+        z = np.load(f)
+        filas.append(dict(w=6.0, gx=float(z['gx']), gz=0.3 * np.cos(np.pi / 4), kap=0.03, Om=0.06, wq=12.0, wp=float(z['wp']), N=22,
+                          Pc=C.Pc(z['rho'], 22, 2j, float(z['d'])), Pe=float(z['Pe_prom']), ma=True))
+    return filas
 
 
-def cache(wp):
-    f = os.path.join(C.DATA, 'fig2', f'gx{GXMA:.6f}_wp{wp:.6f}_wq12.000000_Om0.060000_N{N}.npz')
-    return np.load(f)
+def sistemas(filas):
+    S = {}
+    for r in filas:
+        G = abs(2 * r['gx'] * r['gz'] / r['w']); al2 = r['Om'] / G
+        k2 = 4 * G**2 / r['kap'] / r['kap']
+        ma = r.get('ma', False)
+        key = ('Ma (ω_q fixed)' if ma else f"w{r['w']:g}_gz{r['gz']/r['kap']:.3g}_k2{k2:.3g}_a{al2:.3g}", r['N'])
+        r.update(G=G, al2=al2, k2k=k2, wps=2 * (r['w'] - 4 * r['gx']**2 / (3 * r['w'])))
+        r['x'] = (r['wp'] - r['wps']) / G
+        S.setdefault(key, []).append(r)
+    return S
 
 
-def wigner_osc(M, n):
-    rho = qt.Qobj(M, dims=[[n, 2], [n, 2]]).ptrace(0)
-    return qt.wigner(rho, X, X, g=2)          # g=2: ejes en β = Re β + i Im β
+def analiza(x, p):
+    o = np.argsort(x); x, p = np.asarray(x)[o], np.asarray(p)[o]
+    ip = PchipInterpolator(x, p)
+    xx = np.linspace(x[0], x[-1], 40001); yy = ip(xx)
+    k = np.argmax(yy); pmax, xmax = yy[k], xx[k]
+    h = pmax / 2
+    try:
+        il = [i for i in range(k) if (yy[i] - h) * (yy[i + 1] - h) <= 0][-1]
+        ir = [i for i in range(k, len(xx) - 1) if (yy[i] - h) * (yy[i + 1] - h) <= 0][0]
+        xl = brentq(lambda t: ip(t) - h, xx[il], xx[il + 1]); xr = brentq(lambda t: ip(t) - h, xx[ir], xx[ir + 1])
+    except IndexError:
+        xl = xr = np.nan
+    # máximo sub-rejilla: parábola por los puntos con |x| ≤ 0.6 (PCHIP solo puede tener el máximo en un nodo)
+    m = np.abs(x) <= 0.61
+    c2, c1, c0 = np.polyfit(x[m], p[m], 2)
+    xpar = -c1 / (2 * c2) if c2 < 0 else np.nan
+    return xmax, pmax, xl, xr, xpar
 
 
 def main():
-    d = GZ / W_
-    wpred = 2 * (W_ - 4 * GXMA**2 / (3 * W_))
-    za, zb = cache(12.0), cache(11.98)
-    Wa, Wb = wigner_osc(za['rho'], N), wigner_osc(zb['rho'], N)
-    # (c) curva P_c con el código fijo desde la caché
-    wps, pcs = [], []
-    for f in sorted(glob.glob(os.path.join(C.DATA, 'fig2', f'gx{GXMA:.6f}_wp*_wq12.000000_Om0.060000_N{N}.npz'))):
-        z = np.load(f); wps.append(float(z['wp'])); pcs.append(C.Pc(z['rho'], N, 2j, d))
-    o = np.argsort(wps); wps, pcs = np.array(wps)[o], np.array(pcs)[o]
-    np.savetxt(os.path.join(C.DATA, 'principal_fig2c.csv'), np.c_[wps, pcs], delimiter=',', comments='',
-               header='omega_p [2pi GHz], P_c fixed polaron code D(gz/w)|+-2i> (steady state, t=nT_p, N=22)')
-    fd = os.path.join(C.DATA, 'principal_fig2d.npz')
-    zd = np.load(fd) if os.path.exists(fd) else None
-    Wd = wigner_osc(zd['rho'], N) if zd is not None else None
-    np.savez(os.path.join(C.DATA, 'principal_fig2_wigner.npz'), x=X, Wa=Wa, Wb=Wb, **({'Wd': Wd} if Wd is not None else {}))
-
-    E.aplicar()
-    npan = 4 if zd is not None else 3
-    fig = plt.figure(figsize=(E.COL2, 2.05))
-    gs = fig.add_gridspec(1, npan + 2, width_ratios=[1] * (npan - 1) + [0.06, 0.42, 1.35], wspace=0.12)
-    vmax = max(abs(Wa).max(), abs(Wb).max())
-    paneles = [(Wa, '(a)', rf'$\omega_p=2\omega$'), (Wb, '(b)', rf'$\omega_p=\omega_p^*$')]
-    if zd is not None:
-        paneles.append((Wd, '(d)', rf'transient, $\Gamma t={0.015 * zd["t"][int(zd["kmax"])]:.0f}$'))
-    axs = []
-    for i, (Wm, lab, tit) in enumerate(paneles):
-        ax = fig.add_subplot(gs[i]); axs.append(ax)
-        vm = vmax if lab != '(d)' else abs(Wm).max()
-        im = ax.pcolormesh(X, X, Wm, cmap='RdBu_r', vmin=-vm, vmax=vm, shading='auto', rasterized=True)
-        ax.set_aspect('equal'); ax.set_xticks([-2, 0, 2]); ax.set_yticks([-2, 0, 2])
-        ax.set_xlabel(r'Re $\beta$')
-        if i == 0:
-            ax.set_ylabel(r'Im $\beta$')
-        else:
-            ax.set_yticklabels([])
-        ax.plot([d, d], [2, -2], 'k+', ms=4, mew=0.6)
-        ax.text(0.04, 0.96, lab, transform=ax.transAxes, va='top', fontsize=9)
-        ax.text(0.5, 1.03, tit, transform=ax.transAxes, ha='center', fontsize=7.5)
-    cax = fig.add_subplot(gs[npan - 1])
-    cb = fig.colorbar(plt.cm.ScalarMappable(norm=plt.Normalize(-vmax, vmax), cmap='RdBu_r'), cax=cax)
-    cb.ax.set_title(r'$W(\beta)$', fontsize=7.5, pad=3); cb.ax.tick_params(labelsize=6.5)
-    cx = fig.add_subplot(gs[npan + 1])
-    x = np.linspace(wps[0], wps[-1], 600)
-    cx.plot(x, PchipInterpolator(wps, pcs)(x), color=E.OKABE[0])
-    cx.plot(wps, pcs, 'o', ms=2, color=E.OKABE[0])
-    for wp, lab in [(12.0, '(a)'), (11.98, '(b)')]:
-        p = pcs[np.argmin(abs(wps - wp))]
-        cx.plot(wp, p, 's', ms=5, mfc='none', mec='k', mew=0.8)
-        cx.annotate(lab, (wp, p), xytext=(4, -10), textcoords='offset points', fontsize=7.5)
-    cx.axvline(wpred, color='k', ls=':', lw=0.7); cx.axvline(2 * W_, color='0.5', ls='-.', lw=0.7)
-    cx.set_xlabel(r'$\omega_p/2\pi$ (GHz)'); cx.set_ylabel(r'$P_c$', labelpad=1); cx.set_ylim(0, 1.03)
-    cx.text(0.04, 0.96, '(c)', transform=cx.transAxes, va='top', fontsize=9)
-    for ext in ('pdf', 'png'):
-        fig.savefig(os.path.join(C.AQUI, f'principal_fig2.{ext}'))
-    for nom, z in [('(a) wp=12.00', za), ('(b) wp=11.98', zb)]:
-        print(f"{nom}: P_c(fijo)={C.Pc(z['rho'], N, 2j, d):.5f}  P_e(prom)={float(z['Pe_prom']):.5f}  "
-              f"α_eff²={complex(z['al2eff']):.3f}  paridad(prom)={float(z['par_prom']):+.4f}  W mín={(Wa if nom[1]=='a' else Wb).min():+.4f}  val={z['val']}")
-    if zd is not None:
-        k = int(zd['kmax'])
-        print(f"(d) F={zd['F'][k]:.4f} Γt={0.015 * zd['t'][k]:.2f} P_c={zd['Pc'][k]:.5f} paridad={zd['par'][k]:.4f} W mín={Wd.min():+.4f} val={zd['val']}")
-    else:
-        print("(d) sin caché (calc_principal_fig2d.py no ha terminado): figura con 3 paneles")
+    S = sistemas(cargar())
+    filas_csv, resumen = [], []
+    for (nom, N), L in sorted(S.items()):
+        for r in L:
+            filas_csv.append([nom, N, r['w'], r['gx'], r['gz'], r['kap'], r['al2'], r['k2k'], r['wq'], r['wp'], r['x'], r['Pc'], r['Pe']])
+        xmax, pmax, xl, xr, xpar = analiza([r['x'] for r in L], [r['Pc'] for r in L])
+        resumen.append([nom, N, L[0]['w'], L[0]['gz'] / L[0]['kap'], L[0]['k2k'], L[0]['al2'], len(L), xmax, pmax, xr - xl, xmax - xl, xr - xmax, xpar])
+    import csv
+    with open(os.path.join(C.DATA, 'principal_fig2.csv'), 'w', newline='') as fh:
+        wr = csv.writer(fh)
+        wr.writerow(['system', 'N', 'omega [kappa-units or 2pi GHz]', 'g_x', 'g_z', 'kappa', '|alpha|^2', 'kappa_2/kappa', 'omega_q', 'omega_p',
+                     'x=(omega_p-omega_p*)/G', 'P_c fixed polaron code', 'P_e period-averaged'])
+        wr.writerows(filas_csv)
+    with open(os.path.join(C.DATA, 'principal_fig2_resumen.csv'), 'w', newline='') as fh:
+        wr = csv.writer(fh)
+        wr.writerow(['system', 'N', 'omega', 'g_z/kappa', 'kappa_2/kappa', '|alpha|^2', 'n_points', 'x at max', 'P_c max', 'FWHM in x',
+                     'left half-width', 'right half-width', 'x at max (parabola |x|<=0.6)'])
+        wr.writerows(resumen)
+    print(f"{'sistema':38s} {'N':>3} {'n':>3} {'x_max':>7} {'P_max':>8} {'FWHM':>6} {'izq':>6} {'der':>6} {'x_par':>7}")
+    for r in resumen:
+        print(f"{r[0]:38s} {r[1]:3d} {r[6]:3d} {r[7]:+7.3f} {r[8]:8.5f} {r[9]:6.3f} {r[10]:6.3f} {r[11]:6.3f} {r[12]:+7.3f}")
+    return S, resumen
 
 
 if __name__ == '__main__':

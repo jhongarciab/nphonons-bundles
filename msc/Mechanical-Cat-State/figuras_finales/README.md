@@ -94,3 +94,18 @@ Caché: `data/fig3/*.npz`, con la ρ estacionaria y los 12 modos más lentos.
 
 **Validaciones:** (a) y (b) cumplen con |Tr ρ − 1| = 0 y mínimo autovalor ≥ 4e-15. (d): |Tr ρ − 1| = 2.6e-12, ‖ρ − ρ†‖ = 1.1e-13, mínimo autovalor 5e-9.
 **Convergencia:** la de (b) está en la Fig. 2 de validación (N = 22 coincide con N = 28 a <1e-5 en V2).
+
+---
+
+## Apéndice / validación — Fig. 4: baño filtrado (`fig4.py`, `calc_fig4.py`, `run_fig4.sh`)
+- **Modelo:** Ma con ω_q = ω_p = 2(ω − 4g_x²/3ω), |α|² = 2, filtro a 2ω con 4J²/κ_f = κ.
+- **(a) Método estático** (sin drive, g_z = 0, N = 8, N_f = 3): Γ₁⁻ y Γ₁⁺ coinciden con g_x²κ_eff(ω)/ω² y g_x²κ_eff(3ω)/(9ω²) al 0.1–0.25% para κ_f ∈ {0.1, 0.3, 1, 3} y en el baño plano.
+  N_f = 2 frente a 3: ≤ 4e-6. N = 8 frente a 12: ≤ 2e-6.
+- **(b) Floquet** (N = 16, N_f = 2): mejora de γ_pf medida frente a la predicha con C1: 19.5/19.5, 166.5/166.1, 1838/1833 y 16528/16487 (≤ 0.3%).
+- **Tasa de confinamiento (C9):** el 5.º modo espectral es espurio. En el baño plano su |Im λ| crece con N (0.040, 0.054 y 0.061 para N = 16, 22 y 28) y su tasa cambia un 2.2% entre N = 16 y 22.
+  Se usa la tasa **dinámica**: retorno de P_c(t) desde |0⟩|g⟩ y D(d)|1.3α⟩|g⟩, ajustando la cola exponencial por encima del piso de paridad.
+  Baño plano: 6.98e-3 / 7.13e-3 (los dos estados iniciales), idéntico para N = 22 y 28.
+  Relativa al baño plano: 0.965 (κ_f = 3), 0.967 (1), 0.90 (0.3) y 0.53 (0.1). Es una pérdida menor que la ×0.23 de la Tarea 43, que usaba el modo espectral espurio.
+- **Convergencia con filtro** (κ_f = 1, N = 16 → 18; N = 20 no cabe en memoria): γ_pf cambia −1.5e-4 y el confinamiento 0.2–0.5%.
+- **Validaciones:** todas las ρ con |Tr ρ − 1| ≤ 2e-16 y mínimo autovalor ≥ −2e-11.
+- **Datos:** `data/fig4a.csv`, `data/fig4b.csv`, caché `data/fig4/`.
