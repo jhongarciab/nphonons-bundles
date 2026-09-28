@@ -127,3 +127,25 @@ Caché: `data/fig3/*.npz`, con la ρ estacionaria y los 12 modos más lentos.
   - **N = 16 subestima el P_max de las curvas con |α|² = 4** (ω = 4, 8 y g_z/κ = 4, 20), pero apenas mueve los flancos ni el FWHM.
 - **Validaciones (157 ρ):** |Tr ρ − 1| ≤ 4.4e-16, ‖ρ − ρ†‖ = 0, mínimo autovalor ≥ 6.5e-15.
 - La versión anterior (Wigner + transitorio) se movió a `apendice_fig2_estados.py` (sección de apéndice).
+
+---
+
+## Figura principal 3 — espacio de diseño (`principal_fig3.py`, `calc_minimo.py`, `calc_pfig3.py`, `run_pfig3.sh`)
+- **Mapa:** ε = κ₁/κ₂^eff en el plano (g_z/κ, κ₂/κ), con κ₁ = (10/9)g_x²κ/ω² y (g_x/ω)² = (κ₂/κ)/(16(g_z/κ)²).
+  κ₂^eff = Δ(κ₂)/c, donde Δ es la tasa de confinamiento **dinámica** del modelo mínimo (|α|² = 4, retorno de P_c desde |0⟩|g⟩).
+  c = lim Δ/κ₂ = **4.14** (extrapolación lineal de los tres κ₂/κ más pequeños).
+  - Curvas de nivel: ε = 1/220 (continua) y ε = 1e-3 (discontinua).
+  - Rayado: g_z/ω > 0.1 o g_x/ω > 0.1 para ω/κ = 200.
+- **Modelo mínimo:** 30 valores de κ₂/κ entre 1e-3 y 10 con N = 24 (`data/minimo/`, `data/principal_fig3_minimo.csv`).
+  - Dinámica exacta por descomposición espectral completa del Liouvilliano estático.
+  - La tasa dinámica desde |0⟩|g⟩ coincide con la espectral al 1e-3 hasta κ₂/κ ≈ 0.2.
+  - **C9:** en 8 valores con N = 24, 30 y 36, la tasa dinámica es estable (≤ 2e-4). La espectral no converge en el régimen saturado (0.216 → 0.231 → 0.238 en κ₂/κ = 0.57): es la rama interior no convergida.
+  - κ₂^eff/κ₂ = 0.98 (1e-3), 0.84 (0.01), 0.50 (0.045), 0.24 (0.16) y 0.058 (1). Δ satura en ≈ 0.28κ.
+- **Verificación adiabática:** ε·(g_z/κ)² = 0.0707 en κ₂/κ = 1e-3, frente a 5/72 = 0.0694 (κ₂^eff/κ₂ = 0.983). Es exacta en el límite κ₂ → 0.
+- **Puntos del modelo completo** (15, N = 22, `data/principal_fig3_puntos.csv`):
+  - γ_pf espectral y confinamiento dinámico reconstruido exactamente a tiempos estroboscópicos, P_c(n) = Σ λⁿ c p.
+  - κ₁ se obtiene de γ_pf invirtiendo C1 con |α_eff²|. Los puntos van coloreados con la misma escala.
+  - ε_completo/ε_mapa va de **0.97 a 1.55**; ver `PENDIENTES_Y_HALLAZGOS.md`, punto P9.
+- **Validaciones (15 ρ):** |Tr ρ − 1| ≤ 2.2e-16, ‖ρ − ρ†‖ = 0, mínimo autovalor ≥ −7.2e-13.
+- **Pie de figura:** el mapa usa la fórmula de orden dominante para κ₁. La corrección no adiabática de γ_pf es ~1% en κ₂/κ ≈ 0.2 y ~2% en κ₂/κ ≈ 1.
+  Naseem (ω/κ = 1000) cae en la zona rayada, que se calculó con ω/κ = 200; con su ω/κ real, g_z/ω = 0.06 < 0.1.
