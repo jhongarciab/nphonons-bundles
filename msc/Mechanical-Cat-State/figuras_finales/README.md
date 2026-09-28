@@ -213,4 +213,7 @@ Caché: `data/fig3/*.npz`, con la ρ estacionaria y los 12 modos más lentos.
   - Con κ_f = 1000κ se recupera el plano (1.0015).
   - N = 20 → 26 cambia < 0.1%.
   - N_f = 2 → 3 cambia 1.2%; se usa N_f = 3.
-- **Verificación con el modelo completo con filtro:** en curso. Son dos puntos, (κ₂/κ, g_z/κ) = (0.03, 4) y (0.3, 12), con ω/κ = 200, κ_f = 0.3 y χ|α|²/κ = 0.25 y 0.28.
+- **Verificación con el modelo completo con filtro** (`verif_figura_central.py`, N = 16, N_f = 2, ω/κ = 200, κ_f = 0.3):
+  - (κ₂/κ, g_z/κ) = (0.03, 4): ε_completo/ε_mapa = **1.03**; κ₁ = 1.03 veces el predicho y confinamiento 1.04 veces el del plano.
+  - (0.3, 12): ε_completo/ε_mapa = **2.29**. El confinamiento sí coincide (0.94 frente a 0.955 del mapa), pero **κ₁ = 2.26 veces el filtrado predicho** (ver P10).
+  - Validaciones: |Tr ρ − 1| ≤ 2e-16 y mínimo autovalor ≥ −1e-12.
