@@ -187,3 +187,30 @@ Caché: `data/fig3/*.npz`, con la ρ estacionaria y los 12 modos más lentos.
 - **Validaciones (15 ρ):** |Tr ρ − 1| ≤ 2.2e-16, ‖ρ − ρ†‖ = 0, mínimo autovalor ≥ −7.2e-13.
 - **Pie de figura:** el mapa usa la fórmula de orden dominante para κ₁. La corrección no adiabática de γ_pf es ~1% en κ₂/κ ≈ 0.2 y ~2% en κ₂/κ ≈ 1.
   Naseem (ω/κ = 1000) cae en la zona rayada, que se calculó con ω/κ = 200; con su ω/κ real, g_z/ω = 0.06 < 0.1.
+
+---
+
+## Figura central — mapa de diseño con baño plano y filtrado (`codigo/figura_central.py`, `calc_minimo_filtro.py`, `calc_filtro_completo.py`)
+**Pie (borrador):** ε = κ₁/κ₂^eff en el plano (g_z/κ, κ₂/κ), |α|² = 4, κ₂^eff = Δ/c con Δ la tasa de confinamiento dinámica del modelo mínimo y c = 4.14 (pendiente adiabática del baño plano).
+- Curva blanca: umbral del código de repetición κ₂/κ₁ = 220 (ε = 1/220).
+- Región aclarada: χ|α|² > 0.3κ, con χ = (8/3)g_x²/ω y ω/κ = 200.
+- **(a)** Baño plano: κ₁ = (10/9)g_x²κ/ω².
+- **(b)** Qubit acoplado a un filtro centrado en 2ω con κ_f/ω = 0.05 (κ_f/κ = 10 con ω/κ = 200): κ₁ = g_x²[κ_eff(ω)/ω² + κ_eff(3ω)/(9ω²)], con κ_eff(δ) = κκ_f²/(4δ² + κ_f²).
+  **El costo en confinamiento del filtro está incluido:** Δ_filtro se calcula con el modelo mínimo más el modo filtro, J(σ₊b + h.c.), κ_f D[b], 4J²/κ_f = κ, sin decaimiento directo del qubit, N = 20, N_f = 3.
+  Por encima de κ₂/κ = 1.5 (gris) el retorno de P_c no es monótono (sobrepaso) y la tasa no está definida.
+- **(c)** Colapso del modelo completo: (κ₁/κ₂)(g_z/κ)²/(5/72) frente a κ₂/κ (19 puntos con gato estable).
+
+**Resultados:**
+- **Desplazamiento del umbral en g_z/κ:** en el régimen adiabático pasa de 3.94 (plano) a 0.094 (filtro), un factor 0.0238. La predicción es √(f/(10/9)) = 0.0239, con f = κ_eff(ω)/κ + κ_eff(3ω)/(9κ) = 6.32e-4; κ_f/(2ω) = 0.025.
+  El factor se mantiene en 0.023–0.024 hasta κ₂/κ ≈ 0.3 y sube a 0.034 en κ₂/κ = 1, donde el filtro frena el confinamiento.
+
+  | κ₂/κ | 1e-3 | 0.01 | 0.03 | 0.1 | 0.3 | 1 |
+  |---|---|---|---|---|---|---|
+  | Δ_filtro/Δ_plano | 1.002 | 1.014 | 1.037 | 1.051 | 0.955 | 0.480 |
+
+- **Δ_filtro/Δ_plano:** con κ₂ pequeño el filtro confina algo **más rápido** (hasta +5%); en saturación, la mitad.
+- **Controles del modelo mínimo con filtro:**
+  - Con κ_f = 1000κ se recupera el plano (1.0015).
+  - N = 20 → 26 cambia < 0.1%.
+  - N_f = 2 → 3 cambia 1.2%; se usa N_f = 3.
+- **Verificación con el modelo completo con filtro:** en curso. Son dos puntos, (κ₂/κ, g_z/κ) = (0.03, 4) y (0.3, 12), con ω/κ = 200, κ_f = 0.3 y χ|α|²/κ = 0.25 y 0.28.

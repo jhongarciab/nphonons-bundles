@@ -1,0 +1,61 @@
+"""Verificación del panel (b) de la figura central: modelo completo con filtro en un punto genérico.
+H(t) = w a†a + (wq/2)σz + (a+a†)(gx σx + gz σz) + w_f b†b + J(σ+ b + σ- b†) + Ω(σ+ e^{-i wp t} + h.c.), κ_f D[b],
+w_f = 2w, 4J²/κ_f = κ, wq = wp = 2(w − 4gx²/3w), Ω = |α|²G. Propagador de un período (laboratorio), descomposición
+espectral completa: γ_pf (modo de paridad) y P_c(t) exacto a t = nT_p desde |0>|g>|0_f> (código fijo polarónico).
+Guarda data/filtro_completo/<clave>.npz. Uso: python calc_filtro_completo.py gx w gz kap kf al2 N Nf [--rerun]
+"""
+import sys, os, time
+import numpy as np
+import qutip as qt
+import comun as C
+
+
+def punto(gx, w, gz, kap, kf, al2, N, Nf, rerun=False):
+    f = os.path.join(C.DATA, 'filtro_completo', f'gx{gx:.6g}_w{w:g}_gz{gz:.6g}_kf{kf:g}_al{al2:g}_N{N}_Nf{Nf}.npz')
+    if os.path.exists(f) and not rerun:
+        return dict(np.load(f))
+    I = [qt.qeye(N), qt.qeye(2), qt.qeye(Nf)]
+    op = lambda k, o: qt.tensor(*[o if i == k else I[i] for i in range(3)])
+    a, sm, sz, sx, b = op(0, qt.destroy(N)), op(1, qt.sigmam()), op(1, qt.sigmaz()), op(1, qt.sigmax()), op(2, qt.destroy(Nf))
+    wp = 2 * (w - 4 * gx**2 / (3 * w)); G = 2 * gx * gz / w; Om = al2 * G; J = np.sqrt(kap * kf) / 2
+    H0 = w * a.dag() * a + 0.5 * wp * sz + (a + a.dag()) * (gx * sx + gz * sz) + 2 * w * b.dag() * b + J * (sm.dag() * b + sm * b.dag())
+    H = [H0, [Om * sm.dag(), lambda t: np.exp(-1j * wp * t)], [Om * sm, lambda t: np.exp(1j * wp * t)]]
+    Tp = 2 * np.pi / wp
+    t0 = time.time()
+    U = qt.propagator(H, Tp, [np.sqrt(kf) * b], options=C.OPTS).full()
+    tprop = time.time() - t0
+    lam, R = np.linalg.eig(U); Linv = np.linalg.inv(R)
+    D = 2 * N * Nf; d = gz / w; al = np.sqrt(complex(Om / G))
+    Dd = qt.displace(N, d)
+    ca, cb = Dd * qt.coherent(N, al), Dd * qt.coherent(N, -al)
+    Pc_op = qt.tensor((ca + cb).unit().proj() + (ca - cb).unit().proj(), qt.qeye(2), qt.qeye(Nf)).full()
+    p = np.einsum('ij,jik->k', Pc_op, R.reshape(D, D, -1, order='F'))
+    k0 = np.argmin(abs(lam - 1))
+    M = R[:, k0].reshape(D, D, order='F'); M = M / np.trace(M); M = (M + M.conj().T) / 2
+    rate = -np.log(np.abs(lam)) / Tp
+    P = qt.tensor((1j * np.pi * qt.num(N)).expm(), qt.qeye(2), qt.qeye(Nf)).full()
+    borde = np.repeat(np.arange(N), 2 * Nf) > N - 6
+    cand = []
+    for k in np.argsort(rate)[:12]:
+        Mk = R[:, k].reshape(D, D, order='F'); nrm = np.linalg.norm(Mk)
+        pb = 1 - np.linalg.norm(Mk[np.ix_(~borde, ~borde)])**2 / nrm**2
+        if rate[k] > 1e-12 and lam[k].real > 0 and pb < 0.5:
+            cand.append((abs(np.trace(P @ Mk)) / nrm, rate[k]))
+    gpf = max(cand)[1]
+    kap2 = 4 * G**2 / kap
+    ns = np.unique(np.round(np.geomspace(1, max(60 / kap2, 2e3) / Tp, 1500)).astype(np.int64))
+    c = Linv @ qt.ket2dm(qt.tensor(qt.basis(N, 0), qt.basis(2, 1), qt.basis(Nf, 0))).full().reshape(-1, order='F')
+    serie = np.real(np.exp(np.outer(ns, np.log(lam.astype(complex)))) @ (c * p))
+    A = a.full() - d * np.eye(D)
+    res = dict(gx=gx, w=w, gz=gz, kap=kap, kf=kf, al2=al2, N=N, Nf=Nf, kap2=kap2, gpf=gpf, t=ns * Tp, Pc_din=serie,
+               Pc_ss=np.real(np.trace(Pc_op @ M)), al2eff=np.trace(A @ A @ M), val=np.array(C.validar(M)), tprop=tprop)
+    os.makedirs(os.path.dirname(f), exist_ok=True)
+    np.savez(f, **res)
+    return res
+
+
+if __name__ == '__main__':
+    gx, w, gz, kap, kf, al2 = map(float, sys.argv[1:7]); N, Nf = int(sys.argv[7]), int(sys.argv[8])
+    r = punto(gx, w, gz, kap, kf, al2, N, Nf, '--rerun' in sys.argv)
+    print(f"gx={gx} w={w} gz={gz} kf={kf}: κ₂/κ={float(r['kap2'])/kap:.4f} γ_pf={float(r['gpf']):.5e} P_c={float(r['Pc_ss']):.5f} "
+          f"val={r['val']} t={float(r['tprop']):.0f}s")
