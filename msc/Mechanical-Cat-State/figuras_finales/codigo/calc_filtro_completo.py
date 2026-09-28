@@ -10,22 +10,28 @@ import qutip as qt
 import comun as C
 
 
-def punto(gx, w, gz, kap, kf, al2, N, Nf, rerun=False):
-    f = os.path.join(C.DATA, 'filtro_completo', f'gx{gx:.6g}_w{w:g}_gz{gz:.6g}_kf{kf:g}_al{al2:g}_N{N}_Nf{Nf}.npz')
+def punto(gx, w, gz, kap, kf, al2, N, Nf, rerun=False, variante='full', espectro=False):
+    suf = '' if variante == 'full' else f'_{variante}'
+    f = os.path.join(C.DATA, 'filtro_completo', f'gx{gx:.6g}_w{w:g}_gz{gz:.6g}_kf{kf:g}_al{al2:g}_N{N}_Nf{Nf}{suf}.npz')
     if os.path.exists(f) and not rerun:
         return dict(np.load(f))
     I = [qt.qeye(N), qt.qeye(2), qt.qeye(Nf)]
     op = lambda k, o: qt.tensor(*[o if i == k else I[i] for i in range(3)])
     a, sm, sz, sx, b = op(0, qt.destroy(N)), op(1, qt.sigmam()), op(1, qt.sigmaz()), op(1, qt.sigmax()), op(2, qt.destroy(Nf))
     wp = 2 * (w - 4 * gx**2 / (3 * w)); G = 2 * gx * gz / w; Om = al2 * G; J = np.sqrt(kap * kf) / 2
-    H0 = w * a.dag() * a + 0.5 * wp * sz + (a + a.dag()) * (gx * sx + gz * sz) + 2 * w * b.dag() * b + J * (sm.dag() * b + sm * b.dag())
+    if variante == 'nogz_pair':
+        # P10(1): sin g_z σ_z (a+a†); intercambio de pares explícito −G(σ₊a² + h.c.) (signo de R1)
+        H0 = w * a.dag() * a + 0.5 * wp * sz + gx * (a + a.dag()) * sx - G * (sm.dag() * a * a + sm * a.dag() * a.dag())
+    else:
+        H0 = w * a.dag() * a + 0.5 * wp * sz + (a + a.dag()) * (gx * sx + gz * sz)
+    H0 = H0 + 2 * w * b.dag() * b + J * (sm.dag() * b + sm * b.dag())
     H = [H0, [Om * sm.dag(), lambda t: np.exp(-1j * wp * t)], [Om * sm, lambda t: np.exp(1j * wp * t)]]
     Tp = 2 * np.pi / wp
     t0 = time.time()
     U = qt.propagator(H, Tp, [np.sqrt(kf) * b], options=C.OPTS).full()
     tprop = time.time() - t0
     lam, R = np.linalg.eig(U); Linv = np.linalg.inv(R)
-    D = 2 * N * Nf; d = gz / w; al = np.sqrt(complex(Om / G))
+    D = 2 * N * Nf; d = gz / w if variante == 'full' else 0.0; al = np.sqrt(complex(Om / G))
     Dd = qt.displace(N, d)
     ca, cb = Dd * qt.coherent(N, al), Dd * qt.coherent(N, -al)
     Pc_op = qt.tensor((ca + cb).unit().proj() + (ca - cb).unit().proj(), qt.qeye(2), qt.qeye(Nf)).full()
@@ -47,7 +53,21 @@ def punto(gx, w, gz, kap, kf, al2, N, Nf, rerun=False):
     c = Linv @ qt.ket2dm(qt.tensor(qt.basis(N, 0), qt.basis(2, 1), qt.basis(Nf, 0))).full().reshape(-1, order='F')
     serie = np.real(np.exp(np.outer(ns, np.log(lam.astype(complex)))) @ (c * p))
     A = a.full() - d * np.eye(D)
-    res = dict(gx=gx, w=w, gz=gz, kap=kap, kf=kf, al2=al2, N=N, Nf=Nf, kap2=kap2, gpf=gpf, t=ns * Tp, Pc_din=serie,
+    # P_e promediado en un período (C5)
+    rr = qt.mesolve(H, qt.Qobj(M, dims=[[N, 2, Nf], [N, 2, Nf]]), np.linspace(0, Tp, 41), [np.sqrt(kf) * b],
+                    e_ops={'Pe': sm.dag() * sm}, options=C.OPTS)
+    Pe_prom = np.mean(np.real(rr.e_data['Pe'][:-1]))
+    extra = {}
+    if espectro:
+        # P10(2): S(ν) = FT <σ₊(τ)σ₋(0)> desde el estacionario en fase 0 del drive (regresión cuántica)
+        taus = np.arange(0, 400, 0.05)
+        X0 = qt.Qobj(sm.full() @ M, dims=[[N, 2, Nf], [N, 2, Nf]])
+        rs = qt.mesolve(H, X0, taus, [np.sqrt(kf) * b], e_ops={'c': sm.dag()}, options=dict(atol=1e-10, rtol=1e-8, nsteps=10**7))
+        corr = np.array(rs.e_data['c'])
+        nu = np.fft.fftfreq(len(taus), taus[1] - taus[0]) * 2 * np.pi
+        S = 2 * np.real(np.fft.fft(corr * np.hanning(2 * len(taus))[len(taus):])) * (taus[1] - taus[0])
+        extra = dict(taus=taus, corr=corr, nu=nu, S=S)
+    res = dict(variante=variante, Pe_prom=Pe_prom, **extra,gx=gx, w=w, gz=gz, kap=kap, kf=kf, al2=al2, N=N, Nf=Nf, kap2=kap2, gpf=gpf, t=ns * Tp, Pc_din=serie,
                Pc_ss=np.real(np.trace(Pc_op @ M)), al2eff=np.trace(A @ A @ M), val=np.array(C.validar(M)), tprop=tprop)
     os.makedirs(os.path.dirname(f), exist_ok=True)
     np.savez(f, **res)
@@ -56,6 +76,7 @@ def punto(gx, w, gz, kap, kf, al2, N, Nf, rerun=False):
 
 if __name__ == '__main__':
     gx, w, gz, kap, kf, al2 = map(float, sys.argv[1:7]); N, Nf = int(sys.argv[7]), int(sys.argv[8])
-    r = punto(gx, w, gz, kap, kf, al2, N, Nf, '--rerun' in sys.argv)
-    print(f"gx={gx} w={w} gz={gz} kf={kf}: κ₂/κ={float(r['kap2'])/kap:.4f} γ_pf={float(r['gpf']):.5e} P_c={float(r['Pc_ss']):.5f} "
+    var = next((x.split('=')[1] for x in sys.argv if x.startswith('--variante=')), 'full')
+    r = punto(gx, w, gz, kap, kf, al2, N, Nf, '--rerun' in sys.argv, var, '--espectro' in sys.argv)
+    print(f"gx={gx} w={w} gz={gz} kf={kf}: κ₂/κ={float(r['kap2'])/kap:.4f} γ_pf={float(r['gpf']):.5e} P_c={float(r['Pc_ss']):.5f} P_e={float(r['Pe_prom']):.5f} var={var} "
           f"val={r['val']} t={float(r['tprop']):.0f}s")
