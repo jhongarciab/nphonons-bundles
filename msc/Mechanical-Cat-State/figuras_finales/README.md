@@ -113,7 +113,13 @@ Caché: `data/fig3/*.npz`, con la ρ estacionaria y los 12 modos más lentos.
 ---
 
 ## Figura principal 2 (nueva) — regla de operación universal (`principal_fig2.py`, `calc_principal_fig2.py`, `run_principal_fig2.sh`)
-**Estado:** cálculos completos (157 puntos nuevos más la caché anterior). Análisis en `data/principal_fig2_resumen.csv` y todas las curvas en `data/principal_fig2.csv`. **Figura pendiente de pulir** tras la revisión.
+**Estado: figura terminada** (`principal_fig2.pdf/png`). Análisis en `data/principal_fig2_resumen.csv` y todas las curvas en `data/principal_fig2.csv`.
+- **Presentación (decisión P1):** colores por |α|² (azul = 4, naranja = 2) y estilos por plataforma (ver leyenda). Ma con ω_q fijo en punteado negro.
+  Recuadro: Wigner de Ma en x = 0 y en ω_p = 2ω (x = 1.33, marcado con una flecha).
+- **P2 (hecho):** los puntos con |x| ≤ 1 de las curvas con |α|² = 4 que tenían N = 16 se recalcularon con N = 22 (48 puntos). Si un ω_p está repetido, se usa el N mayor.
+  P_max pasa a 0.9983–0.9999 en todas las curvas salvo ω = 6, g_z/κ = 20 (0.9905). Allí g_z/ω = 0.1, en el límite de validez del polarón a primer orden.
+- **Texto (P1 aceptado):** pico universal en x = 0 y ancho ≈ 3G (|α|² = 4) a ≈ 4G (|α|² = 2), con asimetría que crece con κ₂/κ.
+  Con N = 22, el pico parabólico queda en |x| ≤ 0.09 salvo ω = 8, κ₂/κ = 1: x = +0.16, con semianchos 0.68/2.18, la curva más asimétrica.
 - **Variable:** x = (ω_p − ω_p*)/G, con ω_p* = 2(ω − 4g_x²/3ω) y G = |2g_xg_z/ω|. P_c con el código fijo polarónico; ω_q = ω_p salvo en Ma (ω_q = 12).
 - **Curvas:** serie 1 (ω = 6, cinco κ₂/κ, N = 20, caché de la Fig. 2 de validación); ω = 4 y 8 con g_z/κ = 7 y κ₂/κ = 0.1 y 1 (N = 16); ω = 6 con g_z/κ = 4 y 20 y κ₂/κ = 0.1 (N = 16);
   |α|² = 2 (N = 14); Naseem en unidades de κ (ω = 1000, g_z = 60, g_x = 6, κ₂/κ = 2.07, y g_x reducido hasta κ₂/κ = 0.1; N = 14); Ma con ω_q fijo (N = 22).

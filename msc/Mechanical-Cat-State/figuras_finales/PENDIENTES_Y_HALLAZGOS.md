@@ -6,8 +6,8 @@ Detalle en `../verificacion_independiente/V*_reporte.md`, `C6_polaron.md` y `REA
 ## 1. Pendiente de decisión o revisión
 | # | Tema | Estado | Dónde |
 |---|---|---|---|
-| P1 | **Regla universal (nueva Fig. 2):** el pico cae en \|x\| < 0.1 salvo ω = 8, κ₂/κ = 1 (x = +0.15, posible sesgo de la parábola por asimetría y paso 0.3). El FWHM depende de \|α\|² (≈3 para \|α\|² = 4, ≈3.7–4.2 para \|α\|² = 2) y la asimetría crece con κ₂/κ: **no hay colapso total de la forma**. | Espera revisión antes de pulir la figura | `data/principal_fig2_resumen.csv` |
-| P2 | Curvas nuevas con \|α\|² = 4 calculadas con N = 16: subestiman P_max en ~4e-3 (N = 22 da 0.9983 frente a 0.9945). No afecta a los flancos ni al FWHM (1e-4). ¿Recalcular los picos con N = 22? | Decidir | README, nueva Fig. 2 |
+| P1 | **Regla universal (nueva Fig. 2):** el pico cae en \|x\| < 0.1 salvo ω = 8, κ₂/κ = 1 (x = +0.15, posible sesgo de la parábola por asimetría y paso 0.3). El FWHM depende de \|α\|² (≈3 para \|α\|² = 4, ≈3.7–4.2 para \|α\|² = 2) y la asimetría crece con κ₂/κ: **no hay colapso total de la forma**. | **Aceptado (colapso parcial)**; figura terminada | `data/principal_fig2_resumen.csv` |
+| P2 | Curvas nuevas con \|α\|² = 4 calculadas con N = 16: subestiman P_max en ~4e-3 (N = 22 da 0.9983 frente a 0.9945). No afecta a los flancos ni al FWHM (1e-4). **Hecho:** recalculados con N = 22 (|x| ≤ 1). P_max 0.998–0.9999, salvo g_z/κ = 20 (0.9905; g_z/ω = 0.1). El pico de ω = 8, κ₂/κ = 1 sigue en x = +0.16. | **Resuelto** | README, nueva Fig. 2 |
 | P3 | Panel (d) (gato transitorio): F máx = 0.741 en Γt = 16.9 (el trabajo decía ~0.72 en Γt ≈ 13; F(13) = 0.727, curva plana). Orden de paneles a, b, d, c. | Hoy en apéndice | `apendice_fig2_estados.py` |
 | P4 | Déficit no adiabático de C1/C2: ~1% en κ₂/κ ≈ 0.2 y ~2% en 1. No tiene explicación analítica; solo se describe. Correlaciona con κ₂/κ (r = 0.89), no con P_e. | Abierto | Fig. 3, V4b |
 | P5 | Desplazamiento polarónico óptimo en Ma: 2.4% menor que g_z/ω; el campo medio −g_z⟨σ_z⟩/ω explica un tercio. Efecto en P_c ≤ 1e-6. | Abierto, irrelevante en la práctica | `C6_polaron.md` |

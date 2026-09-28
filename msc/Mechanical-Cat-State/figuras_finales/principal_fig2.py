@@ -49,11 +49,14 @@ def sistemas(filas):
         G = abs(2 * r['gx'] * r['gz'] / r['w']); al2 = r['Om'] / G
         k2 = 4 * G**2 / r['kap'] / r['kap']
         ma = r.get('ma', False)
-        key = ('Ma (ω_q fixed)' if ma else f"w{r['w']:g}_gz{r['gz']/r['kap']:.3g}_k2{k2:.3g}_a{al2:.3g}", r['N'])
+        key = 'Ma (ω_q fixed)' if ma else f"w{r['w']:g}_gz{r['gz']/r['kap']:.3g}_k2{k2:.3g}_a{al2:.3g}"
         r.update(G=G, al2=al2, k2k=k2, wps=2 * (r['w'] - 4 * r['gx']**2 / (3 * r['w'])))
         r['x'] = (r['wp'] - r['wps']) / G
-        S.setdefault(key, []).append(r)
-    return S
+        S.setdefault(key, {})
+        kw = round(r['wp'], 9)
+        if kw not in S[key] or r['N'] > S[key][kw]['N']:
+            S[key][kw] = r
+    return {(k, max(r['N'] for r in d.values())): list(d.values()) for k, d in S.items()}
 
 
 def analiza(x, p):
@@ -101,7 +104,59 @@ def main():
     print(f"{'sistema':38s} {'N':>3} {'n':>3} {'x_max':>7} {'P_max':>8} {'FWHM':>6} {'izq':>6} {'der':>6} {'x_par':>7}")
     for r in resumen:
         print(f"{r[0]:38s} {r[1]:3d} {r[6]:3d} {r[7]:+7.3f} {r[8]:8.5f} {r[9]:6.3f} {r[10]:6.3f} {r[11]:6.3f} {r[12]:+7.3f}")
+    dibujar(S)
     return S, resumen
+
+
+def dibujar(S):
+    E.aplicar()
+    fig, ax = plt.subplots(figsize=(E.COL2 * 0.78, 3.0))
+    col = {4.0: E.OKABE[0], 2.0: E.OKABE[1]}
+    for (nom, N), L in sorted(S.items()):
+        L = sorted(L, key=lambda r: r['x'])
+        x = np.array([r['x'] for r in L]); p = np.array([r['Pc'] for r in L])
+        a2 = round(L[0]['al2']); r0 = L[0]
+        xx = np.linspace(x[0], x[-1], 400); yy = PchipInterpolator(x, p)(xx)
+        if nom.startswith('Ma'):
+            ax.plot(xx, yy, color='k', lw=0.9, ls=(0, (1, 1)), zorder=5, label=r'Ma, $\omega_q$ fixed')
+            continue
+        if r0['w'] == 1000:
+            ls, lab = '-', 'Naseem params.'
+            ax.plot(x, p, 'D', ms=2.5, color=col[a2], alpha=0.8)
+        elif r0['w'] == 6 and abs(r0['gz'] / r0['kap'] - 7.05) < 0.1:
+            ls, lab = '-', r'$\omega/\kappa=200$, $g_z/\kappa=7.1$'
+        elif r0['w'] == 6:
+            ls, lab = '--', r'$\omega/\kappa=200$, $g_z/\kappa\in\{4,7,20\}$'
+        else:
+            ls, lab = '-.', r'$\omega/\kappa\in\{133,267\}$'
+        ax.plot(xx, yy, color=col[a2], lw=0.8, ls=ls, alpha=0.85, label=lab)
+    # leyenda sin duplicados + colores de |α|²
+    from matplotlib.lines import Line2D
+    g = '0.35'
+    hs = [Line2D([], [], color=E.OKABE[0], lw=2, label=r'$|\alpha|^2=4$'), Line2D([], [], color=E.OKABE[1], lw=2, label=r'$|\alpha|^2=2$'),
+          Line2D([], [], color=g, ls='-', label=r'$\omega/\kappa=200$, $g_z/\kappa\approx7$'),
+          Line2D([], [], color=g, ls='--', label=r'$\omega/\kappa=200$, $g_z/\kappa=4,\,20$'),
+          Line2D([], [], color=g, ls='-.', label=r'$\omega/\kappa=133,\,267$'),
+          Line2D([], [], color=g, ls='-', marker='D', ms=3, label=r'Naseem ($\omega/\kappa=1000$)'),
+          Line2D([], [], color='k', ls=(0, (1, 1)), label=r'Ma, $\omega_q$ fixed')]
+    ax.legend(handles=hs, fontsize=6, loc='upper left', bbox_to_anchor=(1.01, 1.0), handlelength=2.4)
+    xma = (12.0 - 2 * (6 - 4 * 0.3**2 / 2 / 18)) / (2 * 0.3**2 / 2 / 6)
+    ax.axvline(0, color='0.4', lw=0.6)
+    ax.annotate(r'Ma, $\omega_p=2\omega$', xy=(xma, 0.814), xytext=(3.0, 0.62), fontsize=6,
+                arrowprops=dict(arrowstyle='->', lw=0.6))
+    ax.set_xlim(-6, 6); ax.set_ylim(0, 1.03)
+    ax.set_xlabel(r'$x=(\omega_p-\omega_p^*)/G$'); ax.set_ylabel(r'$P_c$')
+    # recuadro: Wigner de Ma en ω_p = 2ω y ω_p*
+    fw = os.path.join(C.DATA, 'principal_fig2_wigner.npz')
+    if os.path.exists(fw):
+        z = np.load(fw); vm = max(abs(z['Wa']).max(), abs(z['Wb']).max())
+        for i, (Wm, t) in enumerate([(z['Wb'], r'$x=0$'), (z['Wa'], r'$\omega_p=2\omega$')]):
+            ins = ax.inset_axes([0.03 + 0.15 * i, 0.58, 0.14, 0.36])
+            ins.pcolormesh(z['x'], z['x'], Wm, cmap='RdBu_r', vmin=-vm, vmax=vm, shading='auto', rasterized=True)
+            ins.set_aspect('equal'); ins.set_xticks([]); ins.set_yticks([])
+            ins.set_title(t, fontsize=5.8, pad=1.5)
+    for ext in ('pdf', 'png'):
+        fig.savefig(os.path.join(C.AQUI, f'principal_fig2.{ext}'))
 
 
 if __name__ == '__main__':
