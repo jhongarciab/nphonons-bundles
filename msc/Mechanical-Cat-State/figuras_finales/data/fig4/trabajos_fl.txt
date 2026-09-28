@@ -1,0 +1,9 @@
+floquet 3 16 2 2
+floquet 1 16 2 2
+floquet 0.3 16 2 2
+floquet 0.1 16 2 2
+floquet 1 20 2 2
+floquet 0 16 1 2
+floquet 0 22 1 2
+floquet 0 28 1 2
+floquet 1 18 2 2

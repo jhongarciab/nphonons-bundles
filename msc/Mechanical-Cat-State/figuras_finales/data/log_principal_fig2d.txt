@@ -1,0 +1,3 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /home/jhon/GitHub/trabajo-grado/msc/Mechanical-Cat-State/verificacion_independiente/.venv, got /home/jhon/GitHub/trabajo-grado/msc/Mechanical-Cat-State/figuras_finales/../verificacion_independiente/.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /home/jhon/GitHub/trabajo-grado/msc/Mechanical-Cat-State/verificacion_independiente/.venv, got /home/jhon/GitHub/trabajo-grado/msc/Mechanical-Cat-State/figuras_finales/../verificacion_independiente/.venv
+F máx = 0.7411 en Γt = 16.91; P_c = 0.96549; paridad = 0.5190; val = [2.61447555e-12 1.14860876e-13 5.05369046e-09]

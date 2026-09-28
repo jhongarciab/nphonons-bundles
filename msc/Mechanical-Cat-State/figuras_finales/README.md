@@ -17,6 +17,10 @@ Estructura:
 - **Código (C6, decisión final):** P_c y todas las curvas de confinamiento o resonancia usan el **código fijo {D(d)|±α_nom⟩}**, con d = g_z/ω analítico y α_nom² = Ω/G.
 - **α_eff² = ⟨(a − d)²⟩** del estado estacionario (medido, no optimizado) se usa **solo** en la tasa de phase-flip (C1), evaluada en la resonancia.
   No sirve para P_c: el código adaptado sigue al estado, incluso lejos de la resonancia (en ω_p = 12 daría P_c = 0.967 con α_eff² = −2.48, sin gato).
+- **Precisión de C1/C2 en función de κ₂/κ (C3 revisado, Fig. 3):** las fórmulas de orden dominante son exactas cuando κ₂/κ → 0.
+  El déficit medido/predicho es la corrección no adiabática, que crece de forma suave con κ₂/κ:
+  ≲ 0.4% para κ₂/κ ≲ 0.05, ~1% en κ₂/κ ≈ 0.2 y ~2% en κ₂/κ ≈ 1.
+  Correlaciona con κ₂/κ (r = 0.89) más que con P_e (r = 0.69); a igual κ₂/κ = 0.16, P_e = 3e-4 y 3e-3 dan déficits de 1.3% y 1.0%.
 - **Validaciones:** en toda ρ, |Tr ρ − 1| < 1e-10, ‖ρ − ρ†‖ < 1e-10 y mínimo autovalor > −1e-9.
 - Tolerancias del integrador: atol 1e-12, rtol 1e-10.
 
@@ -55,8 +59,9 @@ El estado estacionario es el autovector λ ≈ 1. α_eff² = ⟨(a − g_z/ω)²
 **(a)** 15 puntos con |α|²_nom = 4 y N = 22:
 - ω ∈ {4, 5, 6, 7, 8}, g_x ∈ {0.03, …, 0.15}, g_z/κ ∈ {2, …, 12}. Son los 10 puntos de V4 más 5 nuevos: (0.04, 8, 3), (0.08, 4, 6), (0.06, 8, 8), (0.1, 5, 2) y (0.05, 6, 4).
 - κ₁ se obtiene invirtiendo C1 con |α|² = |α_eff²| y r = Γ₁⁺/Γ₁⁻: κ₁ = γ_pf(1+r)/(2[|α|²(1+r) + r]). κ₂ = 4G²/κ.
-- Marcadores por ω; relleno si κ₂/κ ≤ 0.25, hueco si es mayor (C3).
-- Subpanel: cociente medido/predicho; la franja gris marca ±0.4%.
+- Marcadores por ω; relleno si κ₂/κ ≤ 0.25, hueco si es mayor.
+- Subpanel: cociente medido/predicho frente a **κ₂/κ** (corrección no adiabática).
+- El CSV incluye P_e promediado en un período (`calc_fig3_pe.py`, caché `data/fig3/pe_*.npz`).
 - **Datos:** `data/fig3a.csv`.
 
 **(b)** Punto (g_x, ω, g_z/κ) = (0.05, 6, 4) con |α|²_nom = 2, 4 y 6 (N = 22, 22 y 26).
@@ -67,3 +72,25 @@ El estado estacionario es el autovector λ ≈ 1. α_eff² = ⟨(a − g_z/ω)²
 **Convergencia:** (0.05, 6, 12), N = 22 → 28: γ_pf cambia 1.6e-5 relativo y P_c 1e-6.
 **Validaciones (18 ρ):** |Tr ρ − 1| ≤ 2.2e-16, ‖ρ − ρ†‖ = 0, mínimo autovalor ≥ −7.2e-13. Peso de borde del modo de paridad ≤ 2.6e-6.
 Caché: `data/fig3/*.npz`, con la ρ estacionaria y los 12 modos más lentos.
+
+---
+
+# Figuras principales (las Figs. 2–4 anteriores quedan como figuras de validación del apéndice)
+
+## Figura principal 2 — Resonancia vestida con estados (`principal_fig2.py`, `calc_principal_fig2d.py`)
+- **(a)–(c):** sin propagación nueva. Se usan las ρ estacionarias de `data/fig2/` (Ma, ω_q = 12, Ω = 0.06, N = 22, t = nT_p).
+- **(a), (b):** Wigner del oscilador con el qubit trazado (QuTiP `wigner(..., g=2)`, ejes en β). (a) ω_p = 2ω = 12; (b) ω_p* = 11.98.
+  Misma escala de color (±máximo común). Las cruces marcan ±2i + g_z/ω.
+- **(c):** P_c(ω_p) con el código fijo polarónico (`data/principal_fig2c.csv`). Los cuadrados son los puntos de (a) y (b).
+- **(d) (opcional):** gato par transitorio desde |0⟩|g⟩ en ω_p*. Propagador de un período (N = 22), evolución estroboscópica hasta Γt = 30 (Γ = κ/2).
+  Se toma el máximo de la fidelidad con el gato par polarónico D(g_z/ω)(|2i⟩ + |−2i⟩): **F = 0.741 en Γt = 16.9**, con P_c = 0.965 y paridad 0.52.
+  Tiene escala de color propia, de amplitud parecida (±0.31). Caché: `data/principal_fig2d.npz`, con la serie completa F(t), P_c(t) y paridad(t).
+- Rejillas de Wigner: `data/principal_fig2_wigner.npz`.
+
+| estado | P_c (código fijo) | P_e (promedio en el período) | α_eff² | paridad (promedio) |
+|---|---|---|---|---|
+| (a) ω_p = 12.00 | 0.8140 | 0.1149 | −2.477 − 0.206i | +0.067 |
+| (b) ω_p = 11.98 | 0.99873 | 0.0060 | −3.975 + 0.012i | +0.0006 |
+
+**Validaciones:** (a) y (b) cumplen con |Tr ρ − 1| = 0 y mínimo autovalor ≥ 4e-15. (d): |Tr ρ − 1| = 2.6e-12, ‖ρ − ρ†‖ = 1.1e-13, mínimo autovalor 5e-9.
+**Convergencia:** la de (b) está en la Fig. 2 de validación (N = 22 coincide con N = 28 a <1e-5 en V2).
