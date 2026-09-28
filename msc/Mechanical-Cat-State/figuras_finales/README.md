@@ -1,14 +1,34 @@
 # Figuras finales (PRA)
 
-Entorno: `../verificacion_independiente/.venv` (Python 3, QuTiP 5.3.1).
-Estructura:
-- `comun.py`: modelo y utilidades.
-- `estilo.py`: estilo común (serif 8.5 pt, paleta Okabe–Ito, ancho de columna PRA 3.375 in).
-- `calc_*.py`: cálculos pesados, con caché `.npz` en `data/`.
-- `figN.py`: solo leen la caché, escriben los CSV y dibujan `figN.pdf` y `figN.png` (300 dpi).
+Entorno: `../verificacion_independiente/.venv` (Python 3, QuTiP 5.3.1). Todo se ejecuta **desde esta carpeta** (`figuras_finales/`).
 
-**Rerun:** para cambiar solo el estilo basta con correr `python figN.py`, que no recalcula nada.
-`python figN.py --rerun` calcula los puntos que falten en la caché, y `calc_*.py ... --rerun` fuerza el recálculo de un punto.
+## Estructura
+```
+figuras_finales/
+├── README.md                    este archivo (métodos, parámetros, validaciones por figura)
+├── PENDIENTES_Y_HALLAZGOS.md    pendientes, discrepancias con el trabajo original, correcciones adoptadas
+├── C6_polaron.md                derivación y verificación de la base polarónica
+├── figuras/                     PDF (vectorial) y PNG (300 dpi) de cada figura
+├── codigo/                      scripts
+│   ├── comun.py, estilo.py      modelo/utilidades y estilo común (serif 8.5 pt, Okabe–Ito, 3.375 in)
+│   ├── calc_*.py, run_*.sh      cálculos pesados → caché .npz en data/
+│   └── *fig*.py, p9_*.py        solo leen la caché, escriben CSV en data/ y la figura en figuras/
+└── data/                        cachés .npz (con ρ) y CSV de cada figura
+```
+
+## Índice de figuras
+| figura (`figuras/`) | script (`codigo/`) | papel |
+|---|---|---|
+| `principal_fig2` | `principal_fig2.py` | **principal**: universalidad de la figura de mérito (borrador) |
+| `principal_fig3` | `principal_fig3.py` | **principal**: mapa de diseño (pendiente de limpieza) |
+| `apendice_resonancia_universal` | `apendice_resonancia_universal.py` | apéndice: colapso de la resonancia vestida |
+| `apendice_fig2_estados` | `apendice_fig2_estados.py` | apéndice: Wigner de Ma y gato transitorio |
+| `fig2`, `fig3`, `fig4` | `fig2.py`, `fig3.py`, `fig4.py` | apéndice/validación: resonancia de Ma, figura de mérito, baño filtrado |
+| `p9_diagnostico` | `p9_diagnostico.py` | diagnóstico de P9 (corrimiento χ) |
+
+**Rerun (solo estilo, sin recalcular):** `python codigo/<script>.py`.
+Con `--rerun`, los `fig*.py` calculan los puntos que falten en la caché. `python codigo/calc_*.py ... --rerun` fuerza el recálculo de un punto.
+Los cálculos masivos se lanzan con `codigo/run_*.sh` (se pueden llamar desde cualquier carpeta).
 
 ## Convenciones comunes (todas las figuras)
 - **Marco de laboratorio, muestreo estroboscópico t = nT_p** (T_p = 2π/ω_p, fase 0 del drive). El estado estacionario es el autovector con λ = 1 del propagador de Floquet de un período.

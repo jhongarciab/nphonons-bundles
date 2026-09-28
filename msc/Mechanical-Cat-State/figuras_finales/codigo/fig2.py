@@ -17,7 +17,7 @@ GXMA = -0.3 * np.sin(np.pi / 4)
 
 def cargar():
     filas = []
-    for f in sorted(glob.glob(os.path.join(C.DATA, 'fig2', '*.npz'))):
+    for f in sorted(glob.glob(os.path.join(C.DATA, 'fig2', 'gx*.npz'))):      # excluye pe_*.npz (post-proceso)
         z = np.load(f)
         r = {k: z[k] for k in z.files if k != 'rho'}
         # código fijo: D(gz/w)|±α_nom> (no se adapta al estado; necesario para anchos de resonancia)

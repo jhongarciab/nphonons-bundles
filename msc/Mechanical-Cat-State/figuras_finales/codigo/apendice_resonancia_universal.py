@@ -156,7 +156,7 @@ def dibujar(S):
             ins.set_aspect('equal'); ins.set_xticks([]); ins.set_yticks([])
             ins.set_title(t, fontsize=5.8, pad=1.5)
     for ext in ('pdf', 'png'):
-        fig.savefig(os.path.join(C.AQUI, f'principal_fig2.{ext}'))
+        fig.savefig(os.path.join(C.AQUI, f'apendice_resonancia_universal.{ext}'))
 
 
 if __name__ == '__main__':

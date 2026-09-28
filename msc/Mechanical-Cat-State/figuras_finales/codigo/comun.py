@@ -10,8 +10,9 @@ import os, time
 import numpy as np
 import qutip as qt
 
-AQUI = os.path.dirname(os.path.abspath(__file__))
-DATA = os.path.join(AQUI, 'data')
+RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))   # figuras_finales/
+AQUI = os.path.join(RAIZ, 'figuras')                                        # salida de figuras (PDF/PNG)
+DATA = os.path.join(RAIZ, 'data')
 OPTS = dict(atol=1e-12, rtol=1e-10, nsteps=10**6)
 
 
