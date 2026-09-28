@@ -135,17 +135,29 @@ Caché: `data/fig3/*.npz`, con la ρ estacionaria y los 12 modos más lentos.
   κ₂^eff = Δ(κ₂)/c, donde Δ es la tasa de confinamiento **dinámica** del modelo mínimo (|α|² = 4, retorno de P_c desde |0⟩|g⟩).
   c = lim Δ/κ₂ = **4.14** (extrapolación lineal de los tres κ₂/κ más pequeños).
   - Curvas de nivel: ε = 1/220 (continua) y ε = 1e-3 (discontinua).
-  - Rayado: g_z/ω > 0.1 o g_x/ω > 0.1 para ω/κ = 200.
+  - **Validez (P9, sin rayado):** curvas naranjas χ|α|²/κ = 0.3 con χ = (8/3)g_x²/ω, para ω/κ = 200 (continua) y 1000 (punteada), es decir κ₂/κ = 0.45(g_z/κ)²/(ω/κ) con |α|² = 4.
+    Vertical g_z/ω = 0.1 para ω/κ = 200 (g_z/κ = 20); para ω/κ = 1000 cae en el borde (g_z/κ = 100) y va en el pie. Línea blanca de trazo y punto: g_x/ω = 0.1, que no depende de ω/κ.
+    Por encima de la curva χ el mapa sobreestima el confinamiento (más del 5%).
 - **Modelo mínimo:** 30 valores de κ₂/κ entre 1e-3 y 10 con N = 24 (`data/minimo/`, `data/principal_fig3_minimo.csv`).
   - Dinámica exacta por descomposición espectral completa del Liouvilliano estático.
   - La tasa dinámica desde |0⟩|g⟩ coincide con la espectral al 1e-3 hasta κ₂/κ ≈ 0.2.
   - **C9:** en 8 valores con N = 24, 30 y 36, la tasa dinámica es estable (≤ 2e-4). La espectral no converge en el régimen saturado (0.216 → 0.231 → 0.238 en κ₂/κ = 0.57): es la rama interior no convergida.
-  - κ₂^eff/κ₂ = 0.98 (1e-3), 0.84 (0.01), 0.50 (0.045), 0.24 (0.16) y 0.058 (1). Δ satura en ≈ 0.28κ.
+  - κ₂^eff/κ₂ = 0.98 (1e-3), 0.84 (0.01), 0.50 (0.045), 0.24 (0.16) y 0.058 (1).
+  - **Saturación:** la tasa dinámica satura en ≈ 0.28κ (0.2784κ en κ₂/κ = 10). **No es un techo estricto en κ/4**: el valor exacto κ/4 corresponde a α = 0 (R6). Con |α|² = 4 la meseta queda algo por encima.
+  - **Inicio de la saturación:** cκ₂ ≈ κ/4, es decir **κ₂/κ ≈ 1/(4c) = 0.060** para c = 4.14 (|α|² = 4). Allí κ₂^eff/κ₂ ≈ 0.43.
 - **Verificación adiabática:** ε·(g_z/κ)² = 0.0707 en κ₂/κ = 1e-3, frente a 5/72 = 0.0694 (κ₂^eff/κ₂ = 0.983). Es exacta en el límite κ₂ → 0.
 - **Puntos del modelo completo** (15, N = 22, `data/principal_fig3_puntos.csv`):
   - γ_pf espectral y confinamiento dinámico reconstruido exactamente a tiempos estroboscópicos, P_c(n) = Σ λⁿ c p.
   - κ₁ se obtiene de γ_pf invirtiendo C1 con |α_eff²|. Los puntos van coloreados con la misma escala.
-  - ε_completo/ε_mapa va de **0.97 a 1.55**; ver `PENDIENTES_Y_HALLAZGOS.md`, punto P9.
+  - ε_completo/ε_mapa va de 0.97 a 1.55. **Causa identificada (P9):** el corrimiento del qubit dependiente de n, χn|e⟩⟨e| con χ = (8/3)g_x²/ω.
+    - Diagnóstico en `p9_diagnostico.py`, `data/p9_diagnostico.csv` y `p9_diagnostico.pdf`.
+    - El modelo efectivo estático **con** χ reproduce el confinamiento del modelo completo al 0.5–4% (0.632 frente a 0.640 en el peor punto).
+    - **Sin** χ reproduce el modelo mínimo (≥ 0.99).
+    - Con ω/κ = 500 (mismos g_x/ω, g_z/κ y κ₂/κ) la desviación crece: conf/Δ = 0.175 (el efectivo con χ da 0.176) y 0.13.
+    - Con ω/κ = 1000 (χ|α|²/κ = 4.3 y 6.7) el gato no se estabiliza: P_c estacionario 0.49 y 0.95, dinámica no monótona, sin ajuste exponencial posible.
+    - Umbral empírico: conf/Δ ≥ 0.98 para χ|α|²/κ ≲ 0.2; 0.91 en 0.45; 0.64 en 1.3. **5% de pérdida en χ|α|²/κ ≈ 0.3.**
+    - **Ma** tiene χ|α|²/κ = 2.7: fuera de la región cuantitativa del mapa, aunque el gato se estabiliza (P_c = 0.9987).
+    - **Naseem** tiene χ|α|²/κ = 0.19 (|α|² = 2): dentro.
 - **Validaciones (15 ρ):** |Tr ρ − 1| ≤ 2.2e-16, ‖ρ − ρ†‖ = 0, mínimo autovalor ≥ −7.2e-13.
 - **Pie de figura:** el mapa usa la fórmula de orden dominante para κ₁. La corrección no adiabática de γ_pf es ~1% en κ₂/κ ≈ 0.2 y ~2% en κ₂/κ ≈ 1.
   Naseem (ω/κ = 1000) cae en la zona rayada, que se calculó con ω/κ = 200; con su ω/κ real, g_z/ω = 0.06 < 0.1.

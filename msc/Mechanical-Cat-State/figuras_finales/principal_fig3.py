@@ -81,9 +81,20 @@ def main():
     lev = np.geomspace(1e-6, 1, 25)
     cs = ax.contourf(GZ, KK, eps, levels=lev, norm=LogNorm(), cmap='cividis')
     ax.contour(GZ, KK, eps, levels=[1e-3, 1 / 220], colors=['w', 'w'], linestyles=['--', '-'], linewidths=0.9)
-    # sombra fuera de validez perturbativa (ω/κ = 200): g_z/ω > 0.1 o g_x/ω > 0.1
-    malo = (GZ / W_OVER_K > 0.1) | (np.sqrt(KK) / (4 * GZ) > 0.1)
-    ax.contourf(GZ, KK, malo.astype(float), levels=[0.5, 1.5], colors='none', hatches=['////'])
+    # validez (P9): χ|α|²/κ = 0.3 con χ = (8/3)g_x²/ω  ->  κ₂/κ = 0.3·6(g_z/κ)²/(|α|²·ω/κ);
+    # g_z/ω = 0.1 -> g_z/κ = 0.1·ω/κ; g_x/ω = 0.1 -> κ₂/κ = 0.16(g_z/κ)² (independiente de ω/κ)
+    UMBRAL_CHI = 0.3
+    for wk, ls in [(200, '-'), (1000, ':')]:
+        ax.plot(gz, UMBRAL_CHI * 6 * gz**2 / (4 * wk), color=E.OKABE[1], ls=ls, lw=1.0)
+        gt = 1.6 if wk == 200 else 3.2
+        ax.text(gt, UMBRAL_CHI * 6 * gt**2 / (4 * wk) * 1.5, rf'$\chi|\alpha|^2=0.3\kappa$ ($\omega/\kappa={wk}$)',
+                fontsize=5.3, color=E.OKABE[1], rotation=33, ha='left', va='bottom')
+        if 0.1 * wk < 100:          # para ω/κ = 1000 cae en el borde (g_z/κ = 100): va en el pie
+            ax.axvline(0.1 * wk, color=E.OKABE[1], ls=ls, lw=0.8)
+            ax.text(0.1 * wk * 1.05, 5.0, rf'$g_z/\omega=0.1$' + '\n' + rf'($\omega/\kappa={wk}$)', fontsize=5.3, color=E.OKABE[1], va='top')
+    ax.plot(gz, 0.16 * gz**2, color='w', ls='-.', lw=0.8)
+    ax.text(1.5, 0.16 * 1.5**2 * 1.3, r'$g_x/\omega=0.1$', fontsize=5.5, color='w', rotation=30)
+    ax.set_xlim(1, 100); ax.set_ylim(1e-3, 10)
     if len(P):
         ax.scatter(P[:, 2], P[:, 3], c=P[:, 9], norm=LogNorm(lev[0], lev[-1]), cmap='cividis', edgecolors='w', s=22, lw=0.7, zorder=5)
     for nom, x, y, mk in [('Ma', 7.1, 1.0, '*'), ('Naseem', 60, 2.07, 'P')]:
@@ -93,7 +104,7 @@ def main():
     ax.legend(handles=[Line2D([], [], color='w', lw=0.9, label=r'$\epsilon=1/220$'),
                        Line2D([], [], color='w', lw=0.9, ls='--', label=r'$\epsilon=10^{-3}$'),
                        Line2D([], [], marker='o', ls='none', mfc='0.6', mec='w', label='full model')],
-              loc='lower right', fontsize=6.3, facecolor='0.35', framealpha=0.8, labelcolor='w')
+              loc='lower right', fontsize=6.0, facecolor='0.35', framealpha=0.8, labelcolor='w')
     ax.set_xscale('log'); ax.set_yscale('log')
     ax.set_xlabel(r'$g_z/\kappa$'); ax.set_ylabel(r'$\kappa_2/\kappa$')
     cb = fig.colorbar(cs, ax=ax, pad=0.02); cb.set_label(r'$\epsilon=\kappa_1/\kappa_2^{\rm eff}$')
