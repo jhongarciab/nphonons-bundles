@@ -60,7 +60,7 @@ Los trabajos citados estudian la preparación del estado. Aquí se estudia el de
 \item El hamiltoniano efectivo publicado para el esquema de Ma et al. omite un corrimiento de la frecuencia del oscilador cuando el qubit está en su estado base. Con los parámetros de su artículo ese corrimiento es un tercio de la tasa de decaimiento del qubit y destruye el estado oscuro si el drive se sintoniza a $2\omega$. El gato solo se forma en la resonancia vestida $\omega_p^{*}=2(\omega-4g_x^2/3\omega)$.
 \item Los mismos términos transversales que producen el corrimiento inducen pérdida y ganancia de un fonón mediadas por el qubit. El estado estacionario no conserva la paridad, a diferencia de lo que da la Ec.~(5) del modelo efectivo de Ma et al. Aquí se deriva el phase-flip que resulta y su cociente con la tasa de pérdida de pares.
 \item Como el acoplamiento transversal abre a la vez el canal de pares y los de un fonón, ambos escalan como $g_x^2/\omega^2$ y su cociente depende solo de $g_z/\kappa$: $\kappa_1/\kappa_2=(5/72)(\kappa/g_z)^2$. La recomendación de aumentar $\kappa$ para suprimir los canales de un fonón~\cite{Naseem2026} es contraria a esta ley.
-\item Un baño estructurado para el qubit (un filtro centrado en $2\omega$) reduce los canales de un fonón sin tocar el de pares, y baja el umbral de tolerancia a fallas en $g_z/\kappa$ en un factor de orden $\kappa_f/2\omega$. El costo en confinamiento es pequeño mientras el filtro no sea demasiado estrecho.
+\item Un baño estructurado para el qubit (un filtro centrado en $2\omega$) reduce los canales de un fonón sin tocar el de pares, y baja el umbral de tolerancia a fallas en $g_z/\kappa$ en un factor de orden $\kappa_f/2\omega$. El costo en confinamiento es pequeño mientras el filtro no sea demasiado estrecho y $\kappa_2/\kappa\lesssim0.3$.
 \end{enumerate}
 
 Además se resuelve de forma exacta la brecha del modelo mínimo, se identifica el corrimiento del qubit dependiente de $n$ como el mecanismo que limita el confinamiento cuando $g_x/\omega$ crece, y se estudia el sesgo térmico con el qubit y el filtro explícitos.
@@ -610,23 +610,23 @@ El signo del término de pares se comprobó reconstruyendo el bloque efectivo $2
 \subsection{Hamiltoniano efectivo y resonancia vestida}
 \label{sec:res_res}
 
-Con los parámetros de Ma et al.\ ($\omega=6$, $g=0.3$, $\theta=\pi/4$, $\kappa=0.03$, $\Omega=0.06$, unidades $2\pi\cdot$GHz), $g_x^2/\omega=0.0075$ y $\delta_{\rm osc}^{(g)}=-0.010$, es decir $2\pi\times10$~MHz, un tercio de $\kappa$. La Tabla~\ref{tab:res} resume la integración del modelo completo (con $N=22$, $\Gamma t=300$, $\Gamma=\kappa/2$) para el drive de Ma y el resintonizado.
+Con los parámetros de Ma et al.\ ($\omega=6$, $g=0.3$, $\theta=\pi/4$, $\kappa=0.03$, $\Omega=0.06$, unidades $2\pi\cdot$GHz), $g_x^2/\omega=0.0075$ y $\delta_{\rm osc}^{(g)}=-0.010$, es decir $2\pi\times10$~MHz, un tercio de $\kappa$. La Tabla~\ref{tab:res} resume el estado estacionario del modelo completo para el drive de Ma y el resintonizado.
 
 \begin{table}[h]
 \centering
 \begin{tabular}{lcccc}
 \toprule
-drive & $P_c$ & $P_e$ (estrobosc.\ / promedio) & $|\ave{a^2}|$ & paridad final\\
+drive & $P_c$ (polarónico / sin desplazar) & $P_e$ (estrobosc.\ / promedio) & $|\alpha_{\rm eff}|^2$ & paridad (promedio)\\
 \midrule
-$\omega_p=2\omega=12$ & 0.8118 & 0.114 / 0.116 & 2.48 & 0.115\\
-$\omega_p=\wps=11.98$ & 0.99754 & 0.0027 / 0.0060 & 3.973 & 0.0016\\
+$\omega_p=2\omega=12$ & 0.8140 / 0.8131 & 0.114 / 0.115 & 2.49 & $+0.067$\\
+$\omega_p=\wps=11.98$ & 0.99873 / 0.99754 & 0.0026 / 0.0060 & 3.975 & $+0.0006$\\
 \bottomrule
 \end{tabular}
-\caption{Modelo completo de Ma et al., $\Gamma t=300$, $N=22$. $P_c$ es la población en $\mathrm{span}\{\ket{\pm2i}\}$ con el código sin desplazar. El máximo del barrido fino está en $\omega_p=11.97993\pm0.0005$ y la predicción es $11.98000$. La ventana con $P_c>0.99$ va de $11.9775$ a $11.9825$. Convergencia $N=22\to28$: $P_c$, $P_e$ y $|\ave{a^2}|$ cambian menos de $10^{-5}$, $10^{-5}$ y $10^{-4}$.}
+\caption{Estado estacionario de Floquet del modelo completo de Ma et al.\ ($N=22$, $t=nT_p$). $P_c$ es la población en el código, con el desplazamiento polarónico y sin él. La evolución temporal hasta $\Gamma t=300$ da $0.8118$ y $0.99754$ (sin desplazar) y paridad $0.115$ y $0.0016$, con $\omega_p=12$ todavía en lento ascenso. El máximo del barrido fino (verificación independiente) está en $\omega_p=11.9799\pm0.0005$ y la predicción es $11.9800$; la ventana con $P_c>0.99$ va de $11.9775$ a $11.9825$. Convergencia $N=22\to28$: $P_c$, $P_e$ y $|\ave{a^2}|$ cambian menos de $10^{-5}$, $10^{-5}$ y $10^{-4}$.}
 \label{tab:res}
 \end{table}
 
-En $\omega_p=2\omega$ (Fig.~\ref{fig:resonancia}(a)) el estado estacionario no es un gato: $P_c$ satura en $0.81$, $P_e\simeq0.11$ y $|\ave{a^2}|=2.48$ en lugar de $4$. Con $\omega_p=\wps$ el oscilador queda en el código ($P_c=0.9975$, $P_e\simeq0.003$, $|\ave{a^2}|=3.97$). La paridad del estado estacionario decae hacia $0$: el estado final es una mezcla de $\ket{\pm2i}$, no un gato par. El estado par existe como transitorio, con fidelidad máxima $F=0.741$ en $\Gamma t=16.9$ frente al gato par polarónico $D(g_z/\omega)(\ket{2i}+\ket{-2i})$.
+En $\omega_p=2\omega$ (Fig.~\ref{fig:resonancia}(a)) el estado estacionario no es un gato: $P_c\simeq0.81$, $P_e\simeq0.11$ y $|\alpha_{\rm eff}|^2=2.49$ en lugar de $4$. Con $\omega_p=\wps$ el oscilador queda en el código ($P_c=0.9987$, $P_e\simeq0.003$ estroboscópico, $|\alpha_{\rm eff}|^2=3.98$). La paridad del estado estacionario decae hacia $0$: el estado final es una mezcla de $\ket{\pm2i}$, no un gato par. El estado par existe como transitorio, con fidelidad máxima $F=0.741$ en $\Gamma t=16.9$ frente al gato par polarónico $D(g_z/\omega)(\ket{2i}+\ket{-2i})$.
 
 
 
@@ -668,59 +668,64 @@ ajuste con piso, con $+1$ y $|\ave{a^2}|=3.973$ & $3.332\times10^{-4}$ & $3.394\
 
 El ajuste logarítmico simple depende de la ventana: la razón baja de $0.992$ a $0.866$ si la ventana llega a tiempos tardíos, por el piso estacionario. Con el piso incluido la razón es $1.000$ en todas las ventanas. El origen físico del piso no se identificó; la explicación plausible es la población fuera del código (componentes vestidas y excitación residual del qubit), no verificada.
 
-Para aislar el término $+1$ (Fig.~\ref{fig:merito}(b)) se calculó $\gamma_{\rm pf}$ espectral en $(g_x,\omega,g_z/\kappa)=(0.05,6,4)$ con $|\alpha|^2_{\rm nom}=2$, $4$ y $6$ ($N=22,22,26$), comparando con $2|\alpha|^2\kappa_1$ (A) y con la Ec.~\eqref{eq:gpf} (B), ambas con $|\alpha|^2=|\ave{a^2}|$ medido:
+Para aislar el término $+1$ (Fig.~\ref{fig:merito}(b)) se calculó $\gamma_{\rm pf}$ espectral en $(g_x,\omega,g_z/\kappa)=(0.05,6,4)$ con $|\alpha|^2_{\rm nom}=2$, $4$ y $6$ ($N=22,22,26$), comparando con $2|\alpha|^2\kappa_1$ (sin el $+1$) y con la Ec.~\eqref{eq:gpf}, ambas con $|\alpha|^2=|\alpha_{\rm eff}|^2$ medido:
 
 \begin{table}[h]
 \centering
 \begin{tabular}{ccccc}
 \toprule
-$|\alpha|^2_{\rm nom}$ & $|\ave{a^2}|$ & A ($|\ave{a^2}|$) & B ($|\ave{a^2}|$) & corrección prevista $1/(10|\alpha|^2)$\\
+$|\alpha|^2_{\rm nom}$ & $|\alpha_{\rm eff}|^2$ & sin $+1$ & con $+1$ & corrección prevista $1/(10|\alpha|^2)$\\
 \midrule
-2 & 1.9945 & 1.0486 & 0.9986 & $+5.0\%$\\
-4 & 3.9819 & 1.0222 & 0.9971 & $+2.5\%$\\
-6 & 5.9607 & 1.0128 & 0.9961 & $+1.7\%$\\
+2 & 1.9941 & 1.0489 & 0.9988 & $+5.0\%$\\
+4 & 3.9815 & 1.0223 & 0.9972 & $+2.5\%$\\
+6 & 5.9603 & 1.0128 & 0.9961 & $+1.7\%$\\
 \bottomrule
 \end{tabular}
-\caption{Razón medido/predicho de $\gamma_{\rm pf}$. Con $|\alpha|^2=6$ y $N=26\to32$ la tasa cambia $2\times10^{-5}$. El exceso de A sigue la forma $1/(10|\alpha|^2)$ que predice B, que se sostiene al $0.4\%$. El residuo de B ($-0.1\%$ a $-0.4\%$) crece ligeramente con $|\alpha|^2$ y no se investigó.}
+\caption{Razón medido/predicho de $\gamma_{\rm pf}$ ($N=22,22,26$). Con $|\alpha|^2=6$ y $N=26\to32$ la tasa cambia $2\times10^{-5}$. El exceso de la columna sin el $+1$ sigue la forma $1/(10|\alpha|^2)$ y la fórmula con el $+1$ se sostiene al $0.4\%$. Su residuo ($-0.1\%$ a $-0.4\%$) crece ligeramente con $|\alpha|^2$ y no se investigó.}
 \label{tab:V4b}
 \end{table}
 
-El exceso de $+1.6\%$ que se observaba a $g_z/\kappa$ pequeño con la forma A es el término $\Gamma_1^{+}(|\alpha|^2+1)$. En los puntos saturados, la caída de la razón A (hasta $0.947$ con $\kappa_2/\kappa=1$) se debe casi por completo a que el gato real es más pequeño que el nominal ($|\ave{a^2}|=3.78$ en lugar de $4$): con el $|\ave{a^2}|$ medido, A pasa a $1.003$ y B a $0.977$.
+El exceso de $+1.6\%$ a $2.4\%$ que se observa a $g_z/\kappa$ pequeño con la predicción sin el $+1$ es el término $\Gamma_1^{+}(|\alpha|^2+1)$. En el punto más saturado ($\kappa_2/\kappa=1$, Tabla~\ref{tab:V4}) la razón con el $+1$ y $|\alpha|^2=4$ nominal es $0.924$. El gato estacionario es más pequeño que el nominal ($|\alpha_{\rm eff}|^2=3.77$) y usar ese valor la sube a $0.979$, es decir que esa causa explica $\simeq5.9\%$. Queda un déficit de $2.1\%$, que es la corrección no adiabática de la Sección~\ref{sec:res_merito}. La razón sin el $+1$ con $|\alpha_{\rm eff}|^2$ da $1.005$: ese valor cercano a $1$ es una compensación, el $+1$ ausente ($\simeq+2.5\%$) oculta el déficit, igual que en la Tabla~\ref{tab:V3}.
 
 \label{sec:res_merito}
 
-La Tabla~\ref{tab:V4} reúne 10 puntos del modelo completo con $\omega\in\{4,5,6,7\}$, $g_x\in\{0.03,\dots,0.15\}$ y $g_z/\kappa\in\{4,\dots,12\}$, todos con $N=22$, en el marco de laboratorio con $\omega_q=\omega_p=\wps$, $|\alpha|^2_{\rm nom}=4$ y $\kappa=0.03$. La tasa del modo de paridad es espectral, $\kappa_1=\gamma_{\rm pf}/(2|\alpha|^2)$ (forma A) y con la Ec.~\eqref{eq:gpf} (forma B, con $|\ave{a^2}|$).
+La Tabla~\ref{tab:V4} reúne 15 puntos del modelo completo con $\omega\in\{4,\dots,8\}$, $g_x\in\{0.03,\dots,0.15\}$ y $g_z/\kappa\in\{2,\dots,12\}$, todos con $N=22$ y $|\alpha|^2_{\rm nom}=4$. La tasa del modo de paridad se obtiene del espectro del propagador de un período y se compara con la predicción sin el $+1$ (con $|\alpha|^2=4$ nominal) y con la Ec.~\eqref{eq:gpf} (con $|\alpha_{\rm eff}|^2$ medido).
 
 \begin{table}[h]
 \centering
-\begin{tabular}{ccccccc}
+\begin{tabular}{cccccccc}
 \toprule
-$g_x$ & $\omega$ & $g_z/\kappa$ & $\kappa_2/\kappa$ & $P_c$ est. & razón A & razón B\\
+$g_x$ & $\omega$ & $g_z/\kappa$ & $\kappa_2/\kappa$ & $P_c$ & $|\alpha_{\rm eff}|^2$ & sin $+1$, $|\alpha|^2=4$ & con $+1$, $|\alpha_{\rm eff}|^2$\\
 \midrule
-0.03 & 6 & 4 & 0.006 & 0.99954 & 1.018 & 0.998\\
-0.05 & 5 & 4 & 0.026 & 0.99932 & 1.015 & 0.996\\
-0.1 & 7 & 4 & 0.052 & 0.99958 & 1.018 & 0.996\\
-0.15 & 6 & 4 & 0.160 & 0.99909 & 1.016 & 0.990\\
-0.05 & 6 & 5 & 0.028 & 0.99929 & 1.014 & 0.996\\
-0.12 & 7 & 7 & 0.230 & 0.99890 & 1.009 & 0.993\\
-0.05 & 7 & 10 & 0.082 & 0.99779 & 0.998 & 0.992\\
-0.08 & 5 & 10 & 0.410 & 0.99498 & 0.973 & 0.984\\
-0.1 & 4 & 10 & 1.000 & 0.99095 & 0.947 & 0.977\\
-0.05 & 6 & 12 & 0.160 & 0.99504 & 0.975 & 0.986\\
+0.04 & 8 & 3 & 0.004 & 0.99993 & 3.99 & 1.022 & 0.999\\
+0.03 & 6 & 4 & 0.006 & 0.99994 & 3.98 & 1.018 & 0.998\\
+0.05 & 6 & 4 & 0.018 & 0.99993 & 3.98 & 1.018 & 0.997\\
+0.05 & 5 & 4 & 0.026 & 0.99990 & 3.97 & 1.015 & 0.996\\
+0.1 & 5 & 2 & 0.026 & 0.99946 & 4.01 & 1.021 & 0.993\\
+0.05 & 6 & 5 & 0.028 & 0.99992 & 3.97 & 1.014 & 0.996\\
+0.1 & 7 & 4 & 0.052 & 0.99987 & 3.99 & 1.018 & 0.996\\
+0.06 & 8 & 8 & 0.058 & 0.99989 & 3.96 & 1.011 & 0.995\\
+0.05 & 7 & 10 & 0.082 & 0.99964 & 3.92 & 0.998 & 0.992\\
+0.05 & 6 & 12 & 0.160 & 0.99868 & 3.85 & 0.975 & 0.987\\
+0.15 & 6 & 4 & 0.160 & 0.99948 & 4.00 & 1.016 & 0.990\\
+0.12 & 7 & 7 & 0.230 & 0.99979 & 3.96 & 1.009 & 0.993\\
+0.08 & 4 & 6 & 0.230 & 0.99941 & 3.92 & 0.992 & 0.988\\
+0.08 & 5 & 10 & 0.410 & 0.99859 & 3.85 & 0.973 & 0.985\\
+0.1 & 4 & 10 & 1.000 & 0.99653 & 3.77 & 0.947 & 0.979\\
 \bottomrule
 \end{tabular}
-\caption{Verificación de la Ec.~\eqref{eq:merito}. Razón A: $(\kappa_1/\kappa_2)_{\rm medido}/[(5/72)(\kappa/g_z)^2]$ con $|\alpha|^2=4$ nominal. Razón B: $\gamma_{\rm pf}$ medido entre la Ec.~\eqref{eq:gpf} con $|\alpha|^2=|\ave{a^2}|$. A $g_z/\kappa=4$ fijo, con $g_x\in\{0.03,0.05,0.1,0.15\}$ y $\omega\in\{5,6,7\}$, la razón A está en $1.015$--$1.018$ (dispersión $0.3\%$): la fórmula captura la dependencia en $g_x$ y $\omega$. Convergencia en $(0.05,6,12)$, $N=22\to28$: $r_{\rm par}$ cambia $10^{-5}$ y $P_c$ menos de $10^{-5}$.}
+\caption{Cociente $\gamma_{\rm pf}$ medido entre predicho en 15 puntos del modelo completo ($N=22$, $\omega_q=\omega_p=\wps$, $|\alpha|^2_{\rm nom}=4$, $\kappa=0.03$, tasa espectral). $P_c$ con el código polarónico fijo y $|\alpha_{\rm eff}|^2=|\ave{(a-d)^2}|$ del estado estacionario. Penúltima columna: predicción $2|\alpha|^2\kappa_1$ con $|\alpha|^2=4$ nominal (la convención sin el $+1$). Última columna: la Ec.~\eqref{eq:gpf} con $|\alpha_{\rm eff}|^2$; es la razón que grafica la Fig.~\ref{fig:merito}(a). Convergencia en $(0.05,6,12)$, $N=22\to28$: $\gamma_{\rm pf}$ cambia $1.6\times10^{-5}$ en valor relativo y $P_c$ menos de $10^{-5}$.}
 \label{tab:V4}
 \end{table}
 
-La independencia de $g_x$ y $\omega$ se sostiene al $0.3\%$ (Fig.~\ref{fig:merito}(a)). La razón depende de $\kappa_2/\kappa$: las fórmulas de las Ecs.~\eqref{eq:k2} y \eqref{eq:k1} son de orden dominante, exactas cuando $\kappa_2/\kappa\to0$, y el déficit medido/predicho es la primera corrección no adiabática, $\lesssim0.4\%$ para $\kappa_2/\kappa\lesssim0.05$, $\sim1\%$ en $0.2$ y $\sim2\%$ en $1$. Correlaciona con $\kappa_2/\kappa$ ($r=0.89$) más que con $P_e$ ($r=0.69$): a igual $\kappa_2/\kappa=0.16$, $P_e=3\times10^{-4}$ y $3\times10^{-3}$ dan déficits de $1.3\%$ y $1.0\%$. No hay una explicación analítica de esta corrección.
+A $g_z/\kappa=4$ y $\kappa_2/\kappa\leq0.05$, con $g_x\in\{0.03,0.05,0.1\}$ y $\omega\in\{5,6,7\}$, la razón con el $+1$ está entre $0.9961$ y $0.9977$ (dispersión $0.2\%$): la fórmula captura la dependencia en $g_x$ y $\omega$. En el conjunto de la Fig.~\ref{fig:merito}(a) el rango es de $2\%$ ($0.979$--$0.999$), y esa variación sigue a $\kappa_2/\kappa$, no a $g_x$ ni a $\omega$. La razón depende de $\kappa_2/\kappa$: las fórmulas de las Ecs.~\eqref{eq:k2} y \eqref{eq:k1} son de orden dominante, exactas cuando $\kappa_2/\kappa\to0$, y el déficit medido/predicho es la primera corrección no adiabática, $\lesssim0.4\%$ para $\kappa_2/\kappa\lesssim0.05$, $\sim1\%$ en $0.2$ y $\sim2\%$ en $1$. Correlaciona con $\kappa_2/\kappa$ ($r=0.89$) más que con $P_e$ ($r=0.69$): a igual $\kappa_2/\kappa=0.16$, $P_e=3\times10^{-4}$ y $3\times10^{-3}$ dan déficits de $1.3\%$ y $1.0\%$. No hay una explicación analítica de esta corrección.
 
 
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\textwidth]{figuras/fig_merito.pdf}
-\caption{Figura de mérito. (a) Cociente $(\kappa_1/\kappa_2)(g_z/\kappa)^2/(5/72)$ frente a $\kappa_2/\kappa$ para 19 puntos del modelo completo con gato estable; el color indica $g_x/\omega$ y el marcador $\omega/\kappa$. El rango es $0.979$--$0.999$ y el déficit crece con $\kappa_2/\kappa$. (b) Cociente $\gamma_{\rm pf}$ medido entre predicho frente a $|\alpha|^2$ en $(g_x,\omega,g_z/\kappa)=(0.05,6,4)$, con la fórmula completa (círculos) y sin el $+1$ (cuadrados); la línea punteada es $1+1/(10|\alpha|^2)$.}
+\caption{Figura de mérito. (a) Cociente $(\kappa_1/\kappa_2)(g_z/\kappa)^2/(5/72)$ frente a $\kappa_2/\kappa$ para 19 puntos del modelo completo con gato estable, con $\kappa_1$ obtenido de $\gamma_{\rm pf}$ medido invirtiendo la Ec.~\eqref{eq:gpf} con $|\alpha_{\rm eff}|^2$ medido (es decir, la razón con el $+1$); el color indica $g_x/\omega$ y el marcador $\omega/\kappa$. El rango es $0.979$--$0.999$ y el déficit crece con $\kappa_2/\kappa$. (b) Cociente $\gamma_{\rm pf}$ medido entre predicho frente a $|\alpha|^2$ en $(g_x,\omega,g_z/\kappa)=(0.05,6,4)$, con la fórmula completa (círculos) y sin el $+1$ (cuadrados); la línea punteada es $1+1/(10|\alpha|^2)$.}
 \label{fig:merito}
 \end{figure}
 
@@ -764,7 +769,7 @@ $\kappa_f$ & mejora medida & predicha con Ec.~\eqref{eq:gpf} & medido/predicho &
 \label{tab:mejora}
 \end{table}
 
-\paragraph{Costo en confinamiento.} Se mide con la tasa dinámica (Sección~\ref{sec:conf}) para no depender del quinto modo espectral, que es espurio en el baño plano ($|\mathrm{Im}\,\lambda|$ crece con $N$: $0.040$, $0.054$ y $0.061$ para $N=16,22,28$, y la tasa cambia un $2.2\%$ entre $N=16$ y $22$). En el baño plano la tasa dinámica es $6.98\times10^{-3}$ y $7.13\times10^{-3}$ desde los dos estados iniciales, idéntica para $N=22$ y $28$. Relativa al plano, es $0.965$ ($\kappa_f=3$), $0.967$ ($1$), $0.90$ ($0.3$) y $0.53$ ($0.1$). Convergencia con filtro ($\kappa_f=1$, $N=16\to18$; $N=20$ no cabe en memoria): $\gamma_{\rm pf}$ cambia $-1.5\times10^{-4}$ y el confinamiento $0.2$--$0.5\%$. Con $\kappa_f=0.3$--$1$ se obtiene casi toda la mejora perdiendo menos del $10\%$ de confinamiento.
+\paragraph{Costo en confinamiento.} Se mide con la tasa dinámica (Sección~\ref{sec:conf}) para no depender del quinto modo espectral, que es espurio en el baño plano ($|\mathrm{Im}\,\lambda|$ crece con $N$: $0.040$, $0.054$ y $0.061$ para $N=16,22,28$, y la tasa cambia un $2.2\%$ entre $N=16$ y $22$). En el baño plano la tasa dinámica es $6.98\times10^{-3}$ y $7.13\times10^{-3}$ desde los dos estados iniciales, idéntica para $N=22$ y $28$. Relativa al plano, es $0.965$ ($\kappa_f=3$), $0.967$ ($1$), $0.90$ ($0.3$) y $0.53$ ($0.1$). Convergencia con filtro ($\kappa_f=1$, $N=16\to18$; $N=20$ no cabe en memoria): $\gamma_{\rm pf}$ cambia $-1.5\times10^{-4}$ y el confinamiento $0.2$--$0.5\%$. Con $\kappa_f=0.3$ y $1$ ($\kappa_f/\kappa=10$ y $33$) la mejora es de $1.8\times10^{3}$ y $1.7\times10^{2}$ y el confinamiento baja un $10\%$ y un $3\%$; con $\kappa_f=0.1$ ($\kappa_f/\kappa=3.3$) la mejora llega a $1.7\times10^{4}$ a costa de casi la mitad del confinamiento. Este $0.90$ (Ma, $|\alpha|^2=2$, modelo completo, $\kappa_2/\kappa=1$, $\kappa_f/\kappa=10$) difiere del $0.48$ del modelo mínimo con filtro de la Sección~\ref{sec:res_conf} (mismo $\kappa_2/\kappa$ y $\kappa_f/\kappa$, pero $|\alpha|^2=4$): cambian $|\alpha|^2$ y el modelo, y la comparación directa no está hecha. Los valores de $\kappa_f$ en unidades de $2\pi\cdot$GHz son $3,1,0.3,0.1$, es decir $\kappa_f/\kappa=100,33,10,3.3$.
 
 \begin{figure}[h]
 \centering
@@ -901,7 +906,7 @@ plano & $2\times10^{-4}$ & 7.18 & 8.00 & 1.50 / 1.67 GHz\\
 \label{tab:term}
 \end{table}
 
-En el modelo efectivo, el filtro sube el requisito en $x$ porque reduce $\gamma_{\rm pf}$ (el numerador de $\eta$), mientras que $\gamma_{\rm bf}/n_q$ apenas cambia ($0.032\kappa$ en el plano frente a $0.041\kappa$ con filtro en la región de referencia). Este último cociente aún no está contrastado con el modelo completo (véase abajo), así que no se extrae de él una conclusión sobre el efecto del filtro en $\gamma_{\rm bf}$. $\eta$ mide sesgo, no calidad. El umbral depende de $\gamma/\kappa$ mientras $\gamma$ domine $\gamma_{\rm pf}$; con $\gamma/\kappa\lesssim10^{-5}$ en el plano se vuelve casi independiente de $\gamma$ ($x^{*}(100)\simeq8.4$, régimen térmico puro); con filtro sigue moviéndose. Como control, si $\Gamma_1^{-}$ usa $n(\omega)$ y $\Gamma_1^{+}$ usa $n(3\omega)$ (las frecuencias reales del fonón), con filtro $\gamma_{\rm pf}$ cambia $\leq10^{-4}$ y $x^{*}(100)$ no cambia ($10.114$); en el plano $\gamma_{\rm pf}$ sube $+1.1\%$ en $x=10$ y $+2.9\%$ en $x=8$, y $x^{*}(100)$ pasa de $8.197$ a $8.173$ ($-0.3\%$).
+En el modelo efectivo, el filtro sube el requisito en $x$ porque reduce $\gamma_{\rm pf}$ (el numerador de $\eta$), mientras que $\gamma_{\rm bf}/n_q$ sube un $28\%$ ($0.032\kappa$ en el plano frente a $0.041\kappa$ con filtro en la región de referencia). Este cociente aún no está contrastado con el modelo completo (véase abajo), así que no se extrae de él una conclusión sobre el efecto del filtro en $\gamma_{\rm bf}$. $\eta$ mide sesgo, no calidad. El umbral depende de $\gamma/\kappa$ mientras $\gamma$ domine $\gamma_{\rm pf}$; con $\gamma/\kappa\lesssim10^{-5}$ en el plano se vuelve casi independiente de $\gamma$ ($x^{*}(100)\simeq8.4$, régimen térmico puro); con filtro sigue moviéndose. Como control, si $\Gamma_1^{-}$ usa $n(\omega)$ y $\Gamma_1^{+}$ usa $n(3\omega)$ (las frecuencias reales del fonón), con filtro $\gamma_{\rm pf}$ cambia $\leq10^{-4}$ y $x^{*}(100)$ no cambia ($10.114$); en el plano $\gamma_{\rm pf}$ sube $+1.1\%$ en $x=10$ y $+2.9\%$ en $x=8$, y $x^{*}(100)$ pasa de $8.197$ a $8.173$ ($-0.3\%$).
 
 \paragraph{Bit-flip térmico.} El ajuste directo de $\gamma_{\rm bf}-\gamma_{\rm bf}(T\to0)=c_{\rm bf}n_q\kappa$ con $n_q\in[10^{-5},10^{-2}]$ da un exponente local $p=1.00$--$1.02$ y
 \begin{center}
@@ -939,7 +944,7 @@ $\gamma_{\rm bf}(T=0)$ & $3.09\times10^{-8}$ & $5.8\times10^{-9}$ & --\\
 \end{center}
 El modelo completo sí presenta un modo lento de pozo. Su piso de $T=0$ es el $2.35\%$ de $\gamma_{\rm bf}$ térmico. $\gamma_{\rm pf}$ coincide con el efectivo al $4.4\%$, pero $\gamma_{\rm bf}$ queda un $20\%$ por debajo, fuera del criterio de $5\%$ que se fijó para la validación. Con estos datos $\eta$ del modelo completo es $20\%$ mayor que el del efectivo en este punto, es decir, el efectivo es conservador en el sesgo, pero un solo punto no basta para trasladar los umbrales de la Tabla~\ref{tab:term}. Validaciones: $|\mathrm{Tr}\rho-1|=1.1\times10^{-16}$, mínimo autovalor $-2.7\times10^{-16}$ y hermiticidad cruda $1.2\times10^{-9}$ (por encima de la tolerancia, véase la Sección~\ref{sec:metodos}). Está en curso un segundo punto ($\kappa_2/\kappa=0.05$, $x=6.86$).
 
-\paragraph{Piso de $\gamma_{\rm bf}$ a $T\to0$.} En el panel (d) de la Fig.~\ref{fig:termica}, el piso del modelo efectivo es $2.1\times10^{-7}\kappa$ con baño plano y $5.8\times10^{-9}\kappa$ con filtro, es decir una razón de $36$. No depende de $\gamma$: al multiplicar $\gamma/\kappa$ por $10$ (de $2\times10^{-5}$ a $2\times10^{-4}$) cambia de $2.114$ a $2.116\times10^{-7}$ (plano) y de $5.82$ a $6.13\times10^{-9}$ (filtro), de modo que no proviene de la pérdida intrínseca. Tampoco sigue el cociente de los canales de un fonón, que sería $\sim10^{3}$. En el modelo completo el piso es $3.09\times10^{-8}\kappa$, $5.3$ veces el del efectivo. Su origen no está identificado. El análisis previo lo asocia al truncamiento en los puntos con $x\gtrsim13$, pero no se estudió su dependencia con $N$ de forma específica, así que se declara como abierto.
+\paragraph{Piso de $\gamma_{\rm bf}$ a $T\to0$.} En el panel (d) de la Fig.~\ref{fig:termica}, el piso del modelo efectivo es $2.1\times10^{-7}\kappa$ con baño plano y $5.8\times10^{-9}\kappa$ con filtro, es decir una razón de $36$. No depende de $\gamma$: al multiplicar $\gamma/\kappa$ por $10$ (de $2\times10^{-5}$ a $2\times10^{-4}$) cambia de $2.114$ a $2.116\times10^{-7}$ (plano) y de $5.82$ a $6.13\times10^{-9}$ (filtro), de modo que no proviene de la pérdida intrínseca. Tampoco sigue el cociente de los canales de un fonón, que sería $\sim10^{3}$. En el modelo completo el piso es $3.09\times10^{-8}\kappa$, $5.3$ veces el del efectivo. Su origen no está identificado. El análisis previo lo asocia al truncamiento en los puntos con $x\gtrsim13$, pero también podría ser un bit-flip físico residual del confinamiento finito. No se estudió su dependencia con $N$ ni con la tolerancia del integrador; repetir el cálculo con otro $N$ y otra tolerancia permitiría distinguir ambos casos. Se declara como abierto.
 
 \paragraph{Convergencia y validaciones.} En la región de referencia, 34 de 160 puntos cambian más del $3\%$ entre $N=22$ y $24$, todos con $x\gtrsim13$ (piso de $T=0$); ningún umbral cae ahí. La región caliente $n_q>0.3$ ($x<1.47$) se excluye. Hermiticidad antes de hermitizar (sin simetrizar por paridad): $\|\rho-\rho^{\dagger}\|\leq1.4\times10^{-11}$; $|\mathrm{Tr}\rho-1|\leq6.7\times10^{-16}$; mínimo autovalor $\geq-8.7\times10^{-17}$. La validación con el modelo completo (filtro y temperatura, $N=22$) está abierta; véase la Sección~\ref{sec:limites}.
 
@@ -968,7 +973,7 @@ veredicto & confinamiento saturado; fuera de la frontera de $\chi$ & falla térm
 \label{tab:plat}
 \end{table}
 
-\paragraph{Ma et al.} Con el $\kappa_2/\kappa=1$ del artículo original el confinamiento está saturado: $\kappa_2^{\rm eff}/\kappa_2\simeq0.06$, de modo que $\epsilon=\kappa_1/\kappa_2^{\rm eff}\simeq0.022$, unas cinco veces el umbral $1/220=4.5\times10^{-3}$, aunque el cociente nominal $\kappa_1/\kappa_2=1.4\times10^{-3}$ lo cumple. Además $\chi|\alpha|^2/\kappa=2.7$ está fuera de la región cuantitativa del mapa, de modo que el valor real de $\epsilon$ es probablemente peor. Según el mapa, con el mismo $g_z/\kappa=7.1$ bajar $g_x$ hasta $\kappa_2/\kappa\simeq0.1$ da $\epsilon\simeq4.3\times10^{-3}$, en el umbral y todavía dentro de la frontera de $\chi$ ($\kappa_2/\kappa\lesssim0.11$ con $\omega/\kappa=200$). Este valor es una predicción del mapa y no se ha verificado con el modelo completo.
+\paragraph{Ma et al.} Con el $\kappa_2/\kappa=1$ del artículo original el confinamiento está saturado: $\kappa_2^{\rm eff}/\kappa_2\simeq0.06$, de modo que $\epsilon=\kappa_1/\kappa_2^{\rm eff}\simeq0.022$, unas cinco veces el umbral $1/220=4.5\times10^{-3}$, aunque el cociente nominal $\kappa_1/\kappa_2=1.4\times10^{-3}$ lo cumple. Además $\chi|\alpha|^2/\kappa=2.7$ está fuera de la región cuantitativa del mapa, de modo que el valor real de $\epsilon$ es probablemente peor. Según el mapa, con el mismo $g_z/\kappa=7.1$ bajar $g_x$ hasta $\kappa_2/\kappa\simeq0.1$ da $\epsilon\simeq4.3\times10^{-3}$, en el umbral y todavía dentro de la frontera de $\chi$ ($\kappa_2/\kappa\lesssim0.11$ con $\omega/\kappa=200$). Este valor es una predicción del mapa, que usa $\kappa_2^{\rm eff}=\Delta/c$ como definición operativa del confinamiento, y no se ha verificado con el modelo completo.
 
 \paragraph{Liu et al.} Con $\kappa/\omega=0.9$ y $g_z/\omega=0.2$ la jerarquía $\kappa\ll\omega$ no se cumple y ninguna fórmula de la Sección~\ref{sec:deriv} aplica. La integración de su Ec.~(9) completa (convención con $2\varepsilon_p\cos(\omega_pt)\tilde\sigma_x$, que reproduce su Ec.~(11) y el $\alpha=1.58$ de su Fig.~2) no forma el gato: $F\leq0.35$ frente a $0.95$ del efectivo, $|\ave{a^2}|$ máximo $0.4$--$1.1$ (analítico $1.25$ o $2.5$), y la fórmula de la paridad falla en $95$--$99\%$. Convergencia $N=20\to28$ $\leq2\times10^{-3}$; validaciones cumplidas ($|\mathrm{Tr}\rho-1|\leq4.4\times10^{-16}$, $\|\rho-\rho^{\dagger}\|\leq1.3\times10^{-15}$, autovalores $\geq-1.5\times10^{-10}$). Se interpreta como que la eliminación adiabática no vale en ese régimen. Es una conclusión numérica propia, pendiente de contrastar con los autores; adicionalmente, la Ec.~(9) con $\varepsilon_p\cos(\omega_pt)\tilde\sigma_x$ da por onda rotante $\varepsilon_p/2$ ($\alpha^2=1.25$), por lo que el coeficiente del coseno debería ser $2\varepsilon_p$ para ser coherente con la Ec.~(11): posible inconsistencia interna, inferida y no verificada contra su derivación.
 
