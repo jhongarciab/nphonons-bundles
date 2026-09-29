@@ -53,13 +53,17 @@ def punto(gx, w, gz, kap, kf, al2, N, Nf, rerun=False, variante='full', espectro
         if rate[k] > 1e-12 and lam[k].real > 0 and pb < 0.5:
             cand.append((abs(np.trace(P @ Mk)) / nrm, rate[k]))
     gpf = max(cand)[1]
-    # γ_bf: modo de pozo (en el laboratorio λ ≈ −1), mayor traslape con a entre los modos lentos
-    A_op = a.full(); candb = []
-    for k in np.argsort(rate)[:12]:
+    # γ_bf: modo de pozo. En el laboratorio |α> -> |-α> en un período, así que λ_bf ≈ −e^{−γ_bf T_p} (real negativo).
+    # Criterio: el MÁS LENTO con Re λ < 0, |Im λ| pequeño y traslape con a significativo (≥ 0.3 del máximo entre los lentos).
+    A_op = a.full(); modos = []
+    for k in np.argsort(rate)[:24]:
         Mk = R[:, k].reshape(D, D, order='F'); nrm = np.linalg.norm(Mk)
-        if rate[k] > 1e-14 and lam[k].real < 0:
-            candb.append((abs(np.trace(A_op @ Mk)) / nrm, rate[k]))
-    gbf = max(candb)[1] if candb else np.nan
+        pb = 1 - np.linalg.norm(Mk[np.ix_(~borde, ~borde)])**2 / nrm**2
+        modos.append([lam[k].real, lam[k].imag, rate[k], abs(np.trace(P @ Mk)) / nrm, abs(np.trace(A_op @ Mk)) / nrm, pb])
+    modos = np.array(modos)
+    amax = modos[:, 4].max()
+    cb = [m for m in modos if m[2] > 1e-14 and m[0] < 0 and abs(m[1]) < 1e-3 * abs(m[0]) and m[4] >= 0.3 * amax and m[5] < 0.5]
+    gbf = min(cb, key=lambda m: m[2])[2] if cb else np.nan
     kap2 = 4 * G**2 / kap
     ns = np.unique(np.round(np.geomspace(1, max(60 / kap2, 2e3) / Tp, 1500)).astype(np.int64))
     c = Linv @ qt.ket2dm(qt.tensor(qt.basis(N, 0), qt.basis(2, 1), qt.basis(Nf, 0))).full().reshape(-1, order='F')
@@ -79,7 +83,7 @@ def punto(gx, w, gz, kap, kf, al2, N, Nf, rerun=False, variante='full', espectro
         nu = np.fft.fftfreq(len(taus), taus[1] - taus[0]) * 2 * np.pi
         S = 2 * np.real(np.fft.fft(corr * np.hanning(2 * len(taus))[len(taus):])) * (taus[1] - taus[0])
         extra = dict(taus=taus, corr=corr, nu=nu, S=S)
-    res = dict(variante=variante, gam=gam, x=x if x else 0.0, nq=nq, gbf=gbf, herm_cruda=np.linalg.norm(R[:, k0].reshape(D, D, order='F') / np.trace(R[:, k0].reshape(D, D, order='F')) - (R[:, k0].reshape(D, D, order='F') / np.trace(R[:, k0].reshape(D, D, order='F'))).conj().T), Pe_prom=Pe_prom, **extra,gx=gx, w=w, gz=gz, kap=kap, kf=kf, al2=al2, N=N, Nf=Nf, kap2=kap2, gpf=gpf, t=ns * Tp, Pc_din=serie,
+    res = dict(modos=modos, variante=variante, gam=gam, x=x if x else 0.0, nq=nq, gbf=gbf, herm_cruda=np.linalg.norm(R[:, k0].reshape(D, D, order='F') / np.trace(R[:, k0].reshape(D, D, order='F')) - (R[:, k0].reshape(D, D, order='F') / np.trace(R[:, k0].reshape(D, D, order='F'))).conj().T), Pe_prom=Pe_prom, **extra,gx=gx, w=w, gz=gz, kap=kap, kf=kf, al2=al2, N=N, Nf=Nf, kap2=kap2, gpf=gpf, t=ns * Tp, Pc_din=serie,
                Pc_ss=np.real(np.trace(Pc_op @ M)), al2eff=np.trace(A @ A @ M), val=np.array(C.validar(M)), tprop=tprop)
     os.makedirs(os.path.dirname(f), exist_ok=True)
     np.savez(f, **res)

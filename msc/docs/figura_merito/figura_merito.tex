@@ -1,0 +1,143 @@
+\documentclass[11pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage{babel}
+\babelprovide[main,import]{spanish}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{booktabs}
+\usepackage{hyperref}
+\renewcommand{\thesection}{\arabic{section}}
+\newcommand{\ket}[1]{\left|#1\right\rangle}
+\newcommand{\bra}[1]{\left\langle#1\right|}
+\newcommand{\spl}{\sigma_{+}}
+\newcommand{\smi}{\sigma_{-}}
+
+\title{Figura de m\'erito de los qubits gato estabilizados\\ por un qubit con simetr\'ia de inversi\'on rota}
+\author{Jhon Sebasti\'an Garc\'ia Barrera}
+\date{Septiembre de 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Para los esquemas en los que un qubit con acoplamientos transversal $g_{x}$ y longitudinal $g_{z}$ estabiliza un gato en un oscilador de frecuencia $\omega$ \cite{Ma2019,Naseem2026}, se deriva el cociente entre la p\'erdida de un fon\'on mediada por el qubit y la disipaci\'on de pares. Como ambos procesos nacen del mismo acoplamiento transversal, $g_{x}$ y $\omega$ se cancelan y el cociente depende solo de $\kappa/g_{z}$: $\kappa_{1}/\kappa_{2}=(5/72)(\kappa/g_{z})^{2}$ en el r\'egimen adiab\'atico. Incluyendo la p\'erdida intr\'inseca del oscilador y la condici\'on de validez del modelo efectivo, se obtiene una cota inferior $\kappa_{1}/\kappa_{2}\geq0.78\,(\epsilon\eta Q)^{-2/3}$, que traduce el umbral de tolerancia a fallas de los c\'odigos de repetici\'on de gatos \cite{GuillaudMirrahimi2021} en un factor de calidad m\'inimo del oscilador. Se discuten los l\'imites de validez y lo que falta verificar.
+\end{abstract}
+
+\section{Ingredientes}
+
+Se parte del Hamiltoniano com\'un a la familia \cite{Ma2019,Naseem2026},
+\begin{equation}
+H=\omega a^{\dagger}a+\frac{\delta}{2}\sigma_{z}+g_{x}(a+a^{\dagger})\sigma_{x}+g_{z}(a+a^{\dagger})\sigma_{z}+\Omega(\spl e^{-i\omega_{p}t}+\mathrm{h.c.}),
+\end{equation}
+con $\delta\simeq\omega_{p}\simeq2\omega$, el qubit decayendo con tasa $\kappa$ y el oscilador con tasa intr\'inseca $\gamma=\omega/Q$. Se supone $\kappa\ll\omega$ y $g_{x},g_{z}\ll\omega$. En el documento previo se mostr\'o que, a segundo orden y con el drive sintonizado a la frecuencia vestida, el intercambio de pares es
+\begin{equation}
+H_{\mathrm{par}}=-G\left(\spl a^{2}+\smi a^{\dagger 2}\right),\qquad G=\frac{2g_{x}g_{z}}{\omega}.
+\end{equation}
+
+\subsection{Disipaci\'on de pares}
+
+Eliminando el qubit con el formalismo de operadores efectivos \cite{ReiterSorensen2012}, en resonancia el Hamiltoniano no herm\'itico del subespacio excitado es $H_{\mathrm{NH}}=-i\kappa/2$ y el operador de salto efectivo es
+\begin{equation}
+L_{2}=\sqrt{\kappa}\,\smi H_{\mathrm{NH}}^{-1}(-G a^{2}\spl)=\sqrt{\kappa}\left(\frac{2i}{\kappa}\right)(-G)a^{2}=-\frac{2iG}{\sqrt{\kappa}}a^{2},
+\end{equation}
+proyectado sobre $\ket{g}$. La tasa de pares es entonces
+\begin{equation}
+\kappa_{2}\equiv\Gamma_{2}=\frac{4G^{2}}{\kappa}=\frac{16g_{x}^{2}g_{z}^{2}}{\omega^{2}\kappa}.
+\label{eq:k2}
+\end{equation}
+Con el drive incluido, el disipador efectivo es $\kappa_{2}\mathcal{D}[a^{2}-\alpha^{2}]$, que es la normalizaci\'on est\'andar de los qubits gato disipativos.
+
+\subsection{P\'erdida y ganancia de un fon\'on mediadas por el qubit}
+
+En la imagen de interacci\'on del documento previo, el t\'ermino $g_{x}\spl a$ oscila con $e^{i\omega t}$ y el t\'ermino $g_{x}\spl a^{\dagger}$ con $e^{3i\omega t}$. Cada uno conecta $\ket{g,n}$ con un estado del qubit excitado desintonizado en $\omega$ y en $3\omega$, respectivamente. Con el mismo formalismo, para una desintonizaci\'on $\Delta$ el Hamiltoniano no herm\'itico es $H_{\mathrm{NH}}=-\Delta-i\kappa/2$ y
+\begin{equation}
+L=\sqrt{\kappa}\,\smi\left(-\Delta-\frac{i\kappa}{2}\right)^{-1}g_{x}\,O\,\spl,\qquad |L|^{2}\text{-tasa}=\frac{g_{x}^{2}\kappa}{\Delta^{2}+\kappa^{2}/4},
+\end{equation}
+con $O=a$ para $\Delta=\omega$ y $O=a^{\dagger}$ para $\Delta=3\omega$. Las tasas son
+\begin{equation}
+\Gamma_{1}^{-}=\frac{g_{x}^{2}\kappa}{\omega^{2}+\kappa^{2}/4}\simeq\frac{g_{x}^{2}\kappa}{\omega^{2}},\qquad
+\Gamma_{1}^{+}=\frac{g_{x}^{2}\kappa}{9\omega^{2}+\kappa^{2}/4}\simeq\frac{g_{x}^{2}\kappa}{9\omega^{2}}.
+\label{eq:G1}
+\end{equation}
+Para un gato de amplitud $\alpha$, ambos canales cambian la paridad con tasa total $\gamma_{\mathrm{pf}}\simeq2|\alpha|^{2}(\Gamma_{1}^{-}+\Gamma_{1}^{+}+\gamma)$. Se define la tasa efectiva de un fon\'on
+\begin{equation}
+\kappa_{1}\equiv\Gamma_{1}^{-}+\Gamma_{1}^{+}+\gamma=\frac{10}{9}\frac{g_{x}^{2}\kappa}{\omega^{2}}+\gamma .
+\label{eq:k1}
+\end{equation}
+
+\paragraph{Estado de la verificaci\'on.} La Ec.~\eqref{eq:k2} con $G=2g_{x}g_{z}/\omega$ se verific\'o en el sistema de Naseem (Tareas 7, 8 y 12) y coincide con Ma et al. La tasa de paridad $2|\alpha|^{2}(\Gamma_{1}^{-}+\Gamma_{1}^{+})$ se verific\'o al 3\% en el modelo completo de Ma et al. y al 15\% en el de Naseem (Tarea 18).
+
+\section{El cociente mediado por el qubit}
+
+Tomando $\gamma=0$ y dividiendo la Ec.~\eqref{eq:k1} entre la Ec.~\eqref{eq:k2},
+\begin{equation}
+r_{q}\equiv\frac{\Gamma_{1}^{-}+\Gamma_{1}^{+}}{\kappa_{2}}
+=\frac{10}{9}\frac{g_{x}^{2}\kappa}{\omega^{2}}\cdot\frac{\omega^{2}\kappa}{16g_{x}^{2}g_{z}^{2}}
+=\frac{10}{144}\frac{\kappa^{2}}{g_{z}^{2}},
+\end{equation}
+es decir,
+\begin{equation}
+\boxed{\frac{\kappa_{1}}{\kappa_{2}}\bigg|_{\mathrm{qubit}}=\frac{5}{72}\left(\frac{\kappa}{g_{z}}\right)^{2}}.
+\label{eq:rq}
+\end{equation}
+En el cociente se cancelan $g_{x}$ y $\omega$, y tampoco aparecen $\Omega$ ni $\alpha$. La raz\'on es que $\Gamma_{1}^{\pm}$ y $\kappa_{2}$ son ambos proporcionales a $g_{x}^{2}/\omega^{2}$: el acoplamiento transversal que abre el canal de pares abre tambi\'en el de un fon\'on, con la misma dependencia. Lo que distingue a ambos procesos es $g_{z}$, que solo entra en el de pares, y $\kappa$, que entra en el numerador de uno y el denominador del otro.
+
+\paragraph{Consecuencia.} Aumentar $g_{x}$ acelera el esquema pero no mejora la calidad del qubit. La calidad la fija $g_{z}/\kappa$: el acoplamiento longitudinal debe ser grande frente a la p\'erdida del qubit auxiliar. Por ejemplo, para $\kappa_{1}/\kappa_{2}=10^{-3}$ se necesita $g_{z}/\kappa\approx8.3$.
+
+\section{Cota con p\'erdida intr\'inseca y validez}
+
+\subsection{Restricciones}
+
+El modelo efectivo es fiable solo si $\kappa_{2}=\epsilon\kappa$ con $\epsilon$ peque\~no. En el sistema de Naseem se encontr\'o num\'ericamente $\epsilon\lesssim0.03$ para fidelidad din\'amica mayor que 0.99. Adem\'as, la transformaci\'on polar\'onica exige $g_{z}=\eta\,\omega$ con $\eta$ peque\~no. Se trata $\epsilon$ y $\eta$ como par\'ametros de dise\~no.
+
+\subsection{Optimizaci\'on en $\kappa$}
+
+Con $\kappa_{2}=\epsilon\kappa$ fijo, el t\'ermino intr\'inseco vale $\gamma/\kappa_{2}=\gamma/(\epsilon\kappa)$, y el cociente total es
+\begin{equation}
+r(\kappa)=A\kappa^{2}+\frac{B}{\kappa},\qquad A=\frac{5}{72g_{z}^{2}},\qquad B=\frac{\gamma}{\epsilon}.
+\end{equation}
+Derivando e igualando a cero, $2A\kappa-B/\kappa^{2}=0$, de donde
+\begin{equation}
+\kappa_{*}^{3}=\frac{B}{2A}=\frac{36}{5}\frac{\gamma g_{z}^{2}}{\epsilon}.
+\end{equation}
+En el \'optimo $B/\kappa_{*}=2A\kappa_{*}^{2}$, as\'i que
+\begin{equation}
+r_{\min}=3A\kappa_{*}^{2}=\frac{15}{72}\frac{1}{g_{z}^{2}}\left(\frac{36}{5}\frac{\gamma g_{z}^{2}}{\epsilon}\right)^{2/3}
+=\frac{5}{24}\left(\frac{36}{5}\right)^{2/3}\left(\frac{\gamma}{\epsilon g_{z}}\right)^{2/3}.
+\end{equation}
+Con $(5/24)(36/5)^{2/3}=0.777$ y sustituyendo $g_{z}=\eta\omega$ y $\gamma=\omega/Q$:
+\begin{equation}
+\boxed{\frac{\kappa_{1}}{\kappa_{2}}\geq r_{\min}=0.777\,\left(\epsilon\,\eta\,Q\right)^{-2/3}}.
+\label{eq:cota}
+\end{equation}
+La cota solo depende del factor de calidad del oscilador y de dos par\'ametros de validez; $\omega$ se cancela.
+
+\subsection{Requisito de tolerancia a fallas}
+
+Para el c\'odigo de repetici\'on de gatos, Guillaud y Mirrahimi obtienen un umbral de phase-flip que corresponde a $\kappa_{2}/\kappa_{1}=220$ \cite{GuillaudMirrahimi2021}. Exigiendo $r_{\min}\leq1/220$ en la Ec.~\eqref{eq:cota},
+\begin{equation}
+Q\geq\frac{1}{\epsilon\eta}\left(\frac{0.777}{1/220}\right)^{3/2}=\frac{2.23\times10^{3}}{\epsilon\eta}.
+\end{equation}
+Con $\epsilon=0.03$ y $\eta=0.1$ se necesita $Q\geq7.4\times10^{5}$; con $\epsilon=0.1$, $Q\geq2.2\times10^{5}$; con $\eta=0.05$, $Q\geq1.5\times10^{6}$. Operar en el umbral no basta para un c\'odigo \'util: hay que estar un orden de magnitud por debajo, lo que multiplica $Q$ por unos 30.
+
+\section{Aplicaci\'on al esquema de Ma et al.}
+
+Con $g_{z}=0.212$, $\kappa=0.03$ y $\gamma=\omega/Q=6\times10^{-7}$ (unidades $2\pi\times$GHz, $Q=10^{7}$), la Ec.~\eqref{eq:rq} da $r_{q}=1.39\times10^{-3}$, que coincide con el cociente directo de las Ecs.~\eqref{eq:G1} y \eqref{eq:k2}. La p\'erdida intr\'inseca aporta $\gamma/\kappa_{2}=2\times10^{-5}$. En total, $\kappa_{1}/\kappa_{2}\approx1.4\times10^{-3}$, por debajo del umbral.
+
+Pero Ma et al. operan en $\kappa_{2}/\kappa\approx1$, fuera del r\'egimen adiab\'atico. Ah\'i la tasa de confinamiento no es $\kappa_{2}$ sino la brecha, que satura en $\kappa/4$. Usando la brecha en lugar de $\kappa_{2}$, el cociente es $\kappa_{1}/(\kappa/4)=5.6\times10^{-3}$, por encima del umbral. Esto indica que la cota adiab\'atica es optimista fuera de su rango y que el r\'egimen de operaci\'on importa.
+
+\section{Alcance y lo que falta verificar}
+
+\begin{enumerate}
+\item La Ec.~\eqref{eq:rq} es exacta a segundo orden y se apoya en dos tasas ya verificadas. Falta comprobar num\'ericamente la dependencia $(\kappa/g_{z})^{2}$ variando $g_{z}/\kappa$ a $g_{x}$ fijo en el modelo completo.
+\item La cota \eqref{eq:cota} depende de $\epsilon$ y $\eta$. El valor $\epsilon\approx0.03$ viene de un criterio de fidelidad din\'amica del modelo efectivo, no de un criterio de desempe\~no l\'ogico. El resultado de Ma et al. re-sintonizado, con $P_{c}=0.996$ en $\kappa_{2}/\kappa\approx1$, muestra que el qubit puede funcionar fuera del r\'egimen adiab\'atico. Hay que reformular la cota con la brecha real en lugar de $\kappa_{2}$ en todo el rango.
+\item No incluye la temperatura. El qubit t\'ermico agrega bit-flips con tasa aproximadamente lineal en $n_{q}$, que requieren $hf_{q}/k_{B}T\gtrsim5$ de forma independiente.
+\item No incluye el desfase puro del qubit ni el Kerr residual.
+\end{enumerate}
+
+\bibliographystyle{unsrt}
+\bibliography{refs_fm}
+\end{document}

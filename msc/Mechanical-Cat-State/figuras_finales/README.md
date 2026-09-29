@@ -1,6 +1,6 @@
 # Figuras finales (PRA)
 
-Entorno: `../verificacion_independiente/.venv` (Python 3, QuTiP 5.3.1). Todo se ejecuta **desde esta carpeta** (`figuras_finales/`).
+Entorno: `../.venv_qutip5` (Python 3, QuTiP 5.3.1). Todo se ejecuta **desde esta carpeta** (`figuras_finales/`).
 
 ## Estructura
 ```
@@ -253,7 +253,7 @@ Caché: `data/fig3/*.npz`, con la ρ estacionaria y los 12 modos más lentos.
 ---
 
 ## Figura térmica (P7) — `codigo/figura_termica.py`, `calc_termico.py`, `run_termico.py`, `run_termico_gamma.py`, `ajuste_cbf.py`
-**Definición (la de la Tarea 37, `validacion/tarea37_worker.py`):** η = γ_pf/γ_bf.
+**Definición (la de la Tarea 37, `validacion/tareas_naseem/tarea37_worker.py`):** η = γ_pf/γ_bf.
 - γ_pf: tasa del modo, entre los modos lentos 1–3, con mayor traslape con P = e^{iπa†a}.
 - γ_bf: tasa del modo con mayor traslape con a (modo de pozo).
 - x = hf_q/(k_BT), con f_q la frecuencia del **qubit**; n_q = 1/(eˣ − 1).

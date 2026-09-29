@@ -1,0 +1,268 @@
+\documentclass[11pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage{babel}
+\babelprovide[main,import]{spanish}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+\renewcommand{\thesection}{\arabic{section}}
+\newtheorem{resultado}{Resultado}
+\newcommand{\ket}[1]{\left|#1\right\rangle}
+\newcommand{\bra}[1]{\left\langle#1\right|}
+\newcommand{\spl}{\sigma_{+}}
+\newcommand{\smi}{\sigma_{-}}
+\newcommand{\Pe}{\ket{e}\!\bra{e}}
+\newcommand{\Pg}{\ket{g}\!\bra{g}}
+
+\title{Corrimiento del oscilador omitido en la teor\'ia efectiva\\ de Ma, Xie y Li (PRA 99, 022302, 2019):\\ derivaci\'on completa a segundo orden y consecuencias}
+\author{Jhon Sebasti\'an Garc\'ia Barrera}
+\date{Septiembre de 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Se rehace, paso a paso, la eliminaci\'on de segundo orden del qubit en el esquema de Ma, Xie y Li \cite{Ma2019}, que es el mismo modelo microsc\'opico usado por Naseem \cite{Naseem2026}. Se incluyen los t\'erminos rotantes y los contrarrotantes. El coeficiente del intercambio de pares, $2g_{x}g_{z}/\omega$, coincide con el de Ma et al. Pero la Ec.~(4) de ese trabajo omite un corrimiento de la frecuencia del oscilador cuando el qubit est\'a en su estado base, $-(g_{x}^{2}/\omega)\,a^{\dagger}a$, al que los t\'erminos contrarrotantes suman $-(g_{x}^{2}/3\omega)\,a^{\dagger}a$. El corrimiento total, $-4g_{x}^{2}/(3\omega)$, se confirma por diagonalizaci\'on exacta. Con los par\'ametros de Ma et al. vale $2\pi\times10$~MHz, un tercio de la tasa de p\'erdida del qubit, y reduce la fidelidad del gato estacionario de $1$ a $0.80$ en el modelo efectivo de segundo orden. La fidelidad se recupera por completo si el drive se sintoniza al doble de la frecuencia vestida del oscilador. Ambos resultados se confirman integrando el modelo completo dependiente del tiempo, que revela adem\'as un segundo efecto omitido: los mismos t\'erminos transversales rompen la conservaci\'on de la paridad y producen un phase-flip intr\'inseco con tasa $2|\alpha|^{2}(g_{x}^{2}\kappa/\omega^{2})(1+1/9)$, que domina sobre la p\'erdida del resonador considerada por Ma et al.
+\end{abstract}
+
+\section{Modelo de partida}
+
+En la base propia del qubit, el Hamiltoniano de Ma et al. [su Ec.~(2)] es
+\begin{equation}
+H = \omega a^{\dagger}a + \frac{\delta}{2}\sigma_{z} + g_{x}(a^{\dagger}+a)\sigma_{x} + g_{z}(a^{\dagger}+a)\sigma_{z},
+\label{eq:H}
+\end{equation}
+con $\sigma_{z}=\Pe-\Pg$, $\sigma_{x}=\spl+\smi$, $\spl=\ket{e}\bra{g}$ y $\smi=\ket{g}\bra{e}$. El qubit se excita con $H_{d}=\Omega(\spl e^{-i\omega_{p}t}+\smi e^{i\omega_{p}t})$ y Ma et al. toman $\omega_{p}=\delta=2\omega$. Sus par\'ametros (Fig.~2 de \cite{Ma2019}) son, en unidades de $2\pi\times$GHz, $\delta=12$, $\omega=6$, $g=0.3$, $\theta=\pi/4$, $\Omega=0.06$ y $\Gamma=0.015$, con $g_{x}=-g\sin\theta$ y $g_{z}=g\cos\theta$. Su disipador es $\Gamma[2\smi\rho\spl-\spl\smi\rho-\rho\spl\smi]$, de modo que la tasa de decaimiento del qubit es $\kappa=2\Gamma$.
+
+\section{Imagen de interacci\'on}
+
+Se pasa a la imagen de interacci\'on respecto a $H_{0}=\omega a^{\dagger}a+\omega\sigma_{z}$, que para $\delta=2\omega$ coincide con la parte libre de la Ec.~\eqref{eq:H}. Con $U_{0}=e^{iH_{0}t}$ los operadores evolucionan como
+\begin{equation}
+a\to a\,e^{-i\omega t},\qquad a^{\dagger}\to a^{\dagger}e^{i\omega t},\qquad \smi\to\smi e^{-2i\omega t},\qquad \spl\to\spl e^{2i\omega t},\qquad \sigma_{z}\to\sigma_{z}.
+\end{equation}
+El acoplamiento transversal se descompone en cuatro t\'erminos:
+\begin{align}
+g_{x}(\spl+\smi)(a+a^{\dagger}) \;\to\;& g_{x}\left[\spl a\,e^{i(2\omega-\omega)t} + \spl a^{\dagger}e^{i(2\omega+\omega)t} + \smi a\,e^{-i(2\omega+\omega)t} + \smi a^{\dagger}e^{-i(2\omega-\omega)t}\right]\nonumber\\
+=\;& g_{x}\left[\spl a\,e^{i\omega t} + \smi a^{\dagger}e^{-i\omega t}\right] + g_{x}\left[\spl a^{\dagger}e^{3i\omega t} + \smi a\,e^{-3i\omega t}\right].
+\label{eq:Vx}
+\end{align}
+El primer corchete oscila con $\omega$ y es el que Ma et al. conservan [su Ec.~(3)]. El segundo oscila con $3\omega$ y es el que descartan como t\'ermino antirrotante. El acoplamiento longitudinal da
+\begin{equation}
+g_{z}\sigma_{z}(a+a^{\dagger}) \;\to\; g_{z}\sigma_{z}\left(a\,e^{-i\omega t}+a^{\dagger}e^{i\omega t}\right),
+\end{equation}
+y el drive, con $\omega_{p}=2\omega$, queda est\'atico: $\Omega(\spl+\smi)$.
+
+\section{Hamiltoniano efectivo de segundo orden}
+
+\subsection{F\'ormula de James y Jerke}
+
+Si $H_{I}(t)=\sum_{n}\left(h_{n}e^{-i\omega_{n}t}+h_{n}^{\dagger}e^{i\omega_{n}t}\right)$ con $\omega_{n}>0$ grandes frente a los acoplamientos, el Hamiltoniano efectivo promediado en el tiempo es \cite{JamesJerke2007}
+\begin{equation}
+H_{\mathrm{ef}} = \sum_{m,n}\frac{1}{\bar\omega_{mn}}\left[h_{m}^{\dagger},h_{n}\right]e^{i(\omega_{m}-\omega_{n})t},\qquad \frac{1}{\bar\omega_{mn}}=\frac{1}{2}\left(\frac{1}{\omega_{m}}+\frac{1}{\omega_{n}}\right),
+\label{eq:JJ}
+\end{equation}
+donde se conservan solo los t\'erminos con $\omega_{m}=\omega_{n}$.
+
+\subsection{Identificaci\'on de los t\'erminos}
+
+De las ecuaciones anteriores hay dos frecuencias. Con frecuencia $\omega$ (factor $e^{-i\omega t}$):
+\begin{equation}
+h_{1} = A + B,\qquad A = g_{x}\smi a^{\dagger},\qquad B = g_{z}\sigma_{z}a,
+\end{equation}
+y con frecuencia $3\omega$ (factor $e^{-3i\omega t}$):
+\begin{equation}
+h_{3} = g_{x}\smi a .
+\end{equation}
+Se verifica que $h_{1}^{\dagger}=g_{x}\spl a+g_{z}\sigma_{z}a^{\dagger}$ acompa\~na a $e^{i\omega t}$ y $h_{3}^{\dagger}=g_{x}\spl a^{\dagger}$ a $e^{3i\omega t}$, en acuerdo con la Ec.~\eqref{eq:Vx}. Los t\'erminos cruzados entre $h_{1}$ y $h_{3}$ oscilan con $2\omega$ y se descartan. Entonces
+\begin{equation}
+H_{\mathrm{ef}} = \frac{1}{\omega}\left[h_{1}^{\dagger},h_{1}\right] + \frac{1}{3\omega}\left[h_{3}^{\dagger},h_{3}\right] + \Omega(\spl+\smi).
+\end{equation}
+
+\subsection{Conmutadores}
+
+Se usan $\spl\smi=\Pe$, $\smi\spl=\Pg$, $[\sigma_{z},\spl]=2\spl$, $[\sigma_{z},\smi]=-2\smi$, $\sigma_{z}^{2}=1$ y $[a,a^{\dagger}]=1$. Se escribe $\hat n=a^{\dagger}a$.
+
+\paragraph{T\'ermino $[A^{\dagger},A]$.} Con $A^{\dagger}=g_{x}\spl a$,
+\begin{equation}
+[A^{\dagger},A] = g_{x}^{2}\left(\spl\smi\,a a^{\dagger} - \smi\spl\,a^{\dagger}a\right) = g_{x}^{2}\left[(\hat n+1)\Pe - \hat n\,\Pg\right].
+\end{equation}
+
+\paragraph{T\'ermino $[B^{\dagger},B]$.} Con $B^{\dagger}=g_{z}\sigma_{z}a^{\dagger}$,
+\begin{equation}
+[B^{\dagger},B] = g_{z}^{2}\sigma_{z}^{2}\left(a^{\dagger}a - a a^{\dagger}\right) = -g_{z}^{2}.
+\end{equation}
+
+\paragraph{T\'erminos cruzados.} Como $a$ conmuta con los operadores del qubit,
+\begin{align}
+[A^{\dagger},B] &= g_{x}g_{z}\,a^{2}\left(\spl\sigma_{z}-\sigma_{z}\spl\right) = g_{x}g_{z}\,a^{2}\left(-[\sigma_{z},\spl]\right) = -2g_{x}g_{z}\,\spl a^{2},\\
+[B^{\dagger},A] &= g_{x}g_{z}\,a^{\dagger 2}\left(\sigma_{z}\smi-\smi\sigma_{z}\right) = g_{x}g_{z}\,a^{\dagger 2}[\sigma_{z},\smi] = -2g_{x}g_{z}\,\smi a^{\dagger 2}.
+\end{align}
+
+\paragraph{T\'ermino contrarrotante.} Con $h_{3}^{\dagger}=g_{x}\spl a^{\dagger}$,
+\begin{equation}
+[h_{3}^{\dagger},h_{3}] = g_{x}^{2}\left(\spl\smi\,a^{\dagger}a - \smi\spl\,a a^{\dagger}\right) = g_{x}^{2}\left[\hat n\,\Pe - (\hat n+1)\Pg\right].
+\end{equation}
+
+\subsection{Resultado}
+
+Sumando, con $[h_{1}^{\dagger},h_{1}]=[A^{\dagger},A]+[A^{\dagger},B]+[B^{\dagger},A]+[B^{\dagger},B]$:
+\begin{align}
+H_{\mathrm{ef}} =\;& \frac{g_{x}^{2}}{\omega}\left[(\hat n+1)\Pe-\hat n\Pg\right] + \frac{g_{x}^{2}}{3\omega}\left[\hat n\Pe-(\hat n+1)\Pg\right]\nonumber\\
+&-\frac{2g_{x}g_{z}}{\omega}\left(\spl a^{2}+\smi a^{\dagger 2}\right) + \Omega(\spl+\smi) - \frac{g_{z}^{2}}{\omega}.
+\end{align}
+Agrupando por estado del qubit:
+\begin{equation}
+\boxed{
+H_{\mathrm{ef}} = \frac{g_{x}^{2}}{\omega}\left[\left(\tfrac{4}{3}\hat n+1\right)\Pe - \left(\tfrac{4}{3}\hat n+\tfrac{1}{3}\right)\Pg\right] - \frac{2g_{x}g_{z}}{\omega}\left(\spl a^{2}+\smi a^{\dagger 2}\right) + \Omega(\spl+\smi)}
+\label{eq:Hef}
+\end{equation}
+salvo la constante $-g_{z}^{2}/\omega$, que no afecta la din\'amica.
+
+\section{Comparaci\'on con la Ec.~(4) de Ma et al.}
+
+Ma et al. publican
+\begin{equation}
+H_{\mathrm{ef}}^{\mathrm{Ma}} = \frac{3g_{x}^{2}}{\omega}\Pe + \frac{2g_{x}^{2}}{\omega}\hat n\,\Pe - \frac{2g_{x}g_{z}}{\omega}\left(\spl a^{2}+\smi a^{\dagger 2}\right) + \Omega(\spl+\smi).
+\label{eq:HMa}
+\end{equation}
+
+\paragraph{Intercambio de pares.} El coeficiente $2g_{x}g_{z}/\omega$ coincide con la Ec.~\eqref{eq:Hef}. Es decir, Ma et al. obtienen $g_{\mathrm{eff}}=2g_{x}g_{z}/\omega$, el valor correcto, que difiere en un factor 2 de la Ec.~(11) de Naseem \cite{Naseem2026}.
+
+\paragraph{Corrimiento del oscilador.} Si en la Ec.~\eqref{eq:Hef} se conservan solo los t\'erminos rotantes, como hacen Ma et al., la parte diagonal es $(g_{x}^{2}/\omega)[(\hat n+1)\Pe-\hat n\Pg]$. Usando $\Pg=1-\Pe$,
+\begin{equation}
+\frac{g_{x}^{2}}{\omega}\left[(\hat n+1)\Pe-\hat n\Pg\right] = \frac{g_{x}^{2}}{\omega}\left[(2\hat n+1)\Pe\right] - \frac{g_{x}^{2}}{\omega}\hat n .
+\end{equation}
+El primer t\'ermino reproduce el $2g_{x}^{2}\hat n\Pe/\omega$ de la Ec.~\eqref{eq:HMa}. El segundo, $-(g_{x}^{2}/\omega)\hat n$, no aparece en la Ec.~\eqref{eq:HMa}: es un corrimiento de la frecuencia del oscilador que act\'ua aunque el qubit est\'e en su estado base, y fue omitido. Los t\'erminos contrarrotantes agregan $-(g_{x}^{2}/3\omega)\hat n$ sobre $\ket{g}$. El corrimiento total del oscilador con el qubit en su estado base es
+\begin{equation}
+\boxed{\delta_{\mathrm{osc}} = -\frac{4}{3}\frac{g_{x}^{2}}{\omega}}.
+\label{eq:dosc}
+\end{equation}
+
+\paragraph{Corrimiento del qubit.} La Ec.~\eqref{eq:Hef} da un corrimiento de la transici\'on del qubit, con el oscilador en el vac\'io, de $(g_{x}^{2}/\omega)(1+\tfrac{1}{3})=\tfrac{4}{3}g_{x}^{2}/\omega$. La Ec.~\eqref{eq:HMa} da $3g_{x}^{2}/\omega$. No logr\'e reproducir el factor 3 de Ma et al.; la diagonalizaci\'on exacta de la Secci\'on 5 respalda $\tfrac{4}{3}$. Este t\'ermino act\'ua solo sobre $\ket{e}$ y no afecta la existencia del estado oscuro, pero s\'i las tasas.
+
+\section{Verificaci\'on por diagonalizaci\'on exacta}
+
+Se diagonaliz\'o la Ec.~\eqref{eq:H} sin drive, con $\omega=1$, $\delta=2$ y truncamiento de 30 fonones, identificando cada autoestado por su m\'aximo overlap con $\ket{n}\otimes\ket{q}$ (desplazado polar\'onicamente cuando $g_{z}\neq0$). Para $n\leq1$ no hay estados degenerados que se mezclen por el intercambio de pares, as\'i que las energ\'ias aislan los corrimientos. La Tabla~\ref{tab:ED} los expresa en unidades de $g_{x}^{2}/\omega$.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{cccccc}
+\toprule
+$g_{x}$ & $g_{z}$ & oscilador, qubit en $\ket{g}$ & oscilador, qubit en $\ket{e}$ & transici\'on del qubit\\
+\midrule
+0.01 & 0 & $-1.3332$ & $+1.3327$ & $+1.3331$\\
+0.02 & 0 & $-1.3326$ & $+1.3310$ & $+1.3326$\\
+0.04 & 0 & $-1.3305$ & $+1.3239$ & $+1.3303$\\
+0.02 & 0.02 & $-1.3310$ & -- & --\\
+0.02 & 0.04 & $-1.3262$ & -- & --\\
+\midrule
+\multicolumn{2}{c}{Ec.~\eqref{eq:Hef}} & $-4/3$ & $+4/3$ & $+4/3$\\
+\multicolumn{2}{c}{Ec.~\eqref{eq:HMa} (Ma et al.)} & $0$ & $+2$ & $+3$\\
+\bottomrule
+\end{tabular}
+\caption{Corrimientos de segundo orden por diagonalizaci\'on exacta de la Ec.~\eqref{eq:H}, en unidades de $g_{x}^{2}/\omega$, con $\omega=1$ y $\delta=2$. Las peque\~nas desviaciones de $4/3$ escalan con $g_{x}^{2}$ y son correcciones de cuarto orden.}
+\label{tab:ED}
+\end{table}
+
+Los tres corrimientos coinciden con la Ec.~\eqref{eq:Hef} y descartan la Ec.~\eqref{eq:HMa}. El acoplamiento longitudinal no modifica el corrimiento del oscilador a segundo orden, como predice la derivaci\'on (su \'unica contribuci\'on diagonal es la constante $-g_{z}^{2}/\omega$).
+
+\section{Consecuencia: el estado oscuro deja de existir}
+
+\subsection{Condici\'on de estado oscuro}
+
+Un estado $\ket{\psi}\otimes\ket{g}$ es estacionario si es aniquilado por el operador de salto $\sqrt{\kappa}\smi$, lo que se cumple, y si $H_{\mathrm{ef}}\ket{\psi,g}=0$. Aplicando la Ec.~\eqref{eq:Hef}, y usando $\Pe\ket{g}=0$, $\Pg\ket{g}=\ket{g}$, $\smi\ket{g}=0$ y $\spl\ket{g}=\ket{e}$,
+\begin{equation}
+H_{\mathrm{ef}}\ket{\psi,g} = -\frac{g_{x}^{2}}{\omega}\left(\tfrac{4}{3}\hat n+\tfrac{1}{3}\right)\ket{\psi}\otimes\ket{g} + \left[-\frac{2g_{x}g_{z}}{\omega}a^{2}+\Omega\right]\ket{\psi}\otimes\ket{e}.
+\end{equation}
+La componente en $\ket{e}$ se anula si $a^{2}\ket{\psi}=\alpha^{2}\ket{\psi}$ con $\alpha^{2}=\Omega\omega/(2g_{x}g_{z})$, que es la condici\'on de Ma et al. La componente en $\ket{g}$ exige adem\'as que $\ket{\psi}$ sea autoestado de $\hat n$, lo que un gato no es. Por lo tanto, con $\omega_{p}=2\omega$ no hay estado oscuro.
+
+\subsection{Recuperaci\'on}
+
+Si el drive se sintoniza a $\omega_{p}=2(\omega+\delta_{\mathrm{osc}})$ y la imagen de interacci\'on se toma respecto a esa frecuencia vestida, al Hamiltoniano efectivo se le suma $-\delta_{\mathrm{osc}}\hat n=+\tfrac{4}{3}(g_{x}^{2}/\omega)\hat n$. La parte de $\ket{g}$ queda entonces constante y el estado oscuro existe de nuevo. La condici\'on de operaci\'on es
+\begin{equation}
+\boxed{\omega_{p} = 2\left(\omega - \frac{4g_{x}^{2}}{3\omega}\right)},
+\end{equation}
+es decir, el drive debe estar al doble de la frecuencia vestida del oscilador, no de la desnuda. Es el an\'alogo, en este esquema, de la resonancia vestida $\delta_{m}=-\delta_{1}$ encontrada num\'ericamente en el sistema de Naseem.
+
+\subsection{Magnitud con los par\'ametros de Ma et al.}
+
+Con $g_{x}=-0.3\sin(\pi/4)=-0.2121$ y $\omega=6$ se obtiene $g_{x}^{2}/\omega=0.0075$ y $\delta_{\mathrm{osc}}=-0.010$, es decir, $2\pi\times10$~MHz. Esto es un tercio de $\kappa=2\pi\times30$~MHz y dos tercios de $g_{\mathrm{eff}}=2\pi\times15$~MHz. No es una correcci\'on peque\~na.
+
+Se integr\'o la ecuaci\'on maestra con $\kappa=2\Gamma$ desde $\ket{0,g}$ hasta $\Gamma t=100$ y $500$, con 26 fonones, y se calcul\'o la fidelidad del estado reducido del oscilador con el gato par de $\alpha=2i$. Validaciones: traza (error $<10^{-15}$), hermiticidad (error nulo) y autovalores de $\rho$ mayores que $-10^{-9}$, l\'imite fijado por la tolerancia de integraci\'on.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lcccc}
+\toprule
+Modelo & $\Gamma t$ & $F$ & $P_{e}$ & $|\langle a^{2}\rangle|$\\
+\midrule
+Ec.~\eqref{eq:HMa}, publicada & 100, 500 & 1.0000 & $\sim10^{-12}$ & 4.000\\
+Ec.~\eqref{eq:Hef}, $\omega_{p}=2\omega$ & 100, 500 & 0.7961 & 0.128 & 2.454\\
+Ec.~\eqref{eq:Hef}, $\omega_{p}=2(\omega+\delta_{\mathrm{osc}})$ & 100, 500 & 1.0000 & $\sim10^{-12}$ & 4.000\\
+\bottomrule
+\end{tabular}
+\caption{Fidelidad del gato estacionario con los par\'ametros de la Fig.~2 de Ma et al. Los resultados a $\Gamma t=100$ y $500$ coinciden en las cifras mostradas.}
+\label{tab:F}
+\end{table}
+
+
+\section{Verificaci\'on con el modelo completo dependiente del tiempo}
+
+\subsection{M\'etodo}
+
+Para descartar que el efecto sea un artefacto del modelo de segundo orden, se integr\'o la ecuaci\'on maestra con el Hamiltoniano completo, Ec.~\eqref{eq:H} m\'as el drive, sin eliminar el qubit y conservando todos los t\'erminos rotantes y contrarrotantes. Se us\'o el marco rotante exacto, con el oscilador a $\omega_{p}/2$ y el qubit a $\omega_{p}$, donde el Hamiltoniano es
+\begin{align}
+H_{R}(t) =\;& \left(\omega-\tfrac{\omega_{p}}{2}\right)\hat n + \tfrac{1}{2}(\delta-\omega_{p})\sigma_{z} + \Omega(\spl+\smi)\nonumber\\
+&+ g_{x}\left[\spl a\,e^{i\omega_{p}t/2} + \spl a^{\dagger}e^{3i\omega_{p}t/2} + \mathrm{h.c.}\right] + g_{z}\sigma_{z}\left(a\,e^{-i\omega_{p}t/2}+\mathrm{h.c.}\right).
+\end{align}
+Se parti\'o de $\ket{0,g}$, con disipaci\'on $\kappa\mathcal{D}[\smi]$, $\kappa=2\Gamma$, 22 fonones y tolerancias $10^{-12}$ (absoluta) y $10^{-10}$ (relativa). Adem\'as de la fidelidad $F$ con el gato par, se reportan la poblaci\'on del oscilador en el espacio del c\'odigo, $P_{\mathrm{c}}=\mathrm{Tr}[\Pi\rho_{\mathrm{osc}}]$ con $\Pi$ el proyector sobre $\{\ket{2i},\ket{-2i}\}$, y la paridad $\langle e^{i\pi\hat n}\rangle$.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lccccccc}
+\toprule
+Drive & $\Gamma t$ & $F$ & $P_{\mathrm{c}}$ & paridad & $P_{e}$ & $|\langle a^{2}\rangle|$\\
+\midrule
+$\omega_{p}=2\omega$ (Ma et al.) & 20 & 0.710 & 0.793 & $+0.798$ & 0.128 & 2.43\\
+ & 30 & 0.682 & 0.796 & $+0.729$ & 0.125 & 2.44\\
+$\omega_{p}=2(\omega+\delta_{\mathrm{osc}})$ & 20 & 0.731 & 0.982 & $+0.487$ & 0.010 & 3.98\\
+ & 30 & 0.692 & 0.996 & $+0.387$ & 0.008 & 3.99\\
+\bottomrule
+\end{tabular}
+\caption{Modelo completo de Ma et al. con sus par\'ametros. Validaciones: error de traza $\leq2\times10^{-16}$, hermiticidad exacta y autovalores de $\rho$ $\geq-10^{-9}$. Con 26 fonones, el punto re-sintonizado en $\Gamma t=20$ coincide en todas las cifras mostradas.}
+\label{tab:full}
+\end{table}
+
+\subsection{Lectura de los resultados}
+
+\paragraph{El corrimiento se confirma.} Con el drive de Ma et al., el modelo completo da $P_{e}\approx0.13$ y $|\langle a^{2}\rangle|\approx2.44$, en acuerdo con el modelo de segundo orden de la Ec.~\eqref{eq:Hef} ($0.128$ y $2.454$, Tabla~\ref{tab:F}) y en desacuerdo con la Ec.~\eqref{eq:HMa}, que predice $P_{e}\approx0$ y $|\langle a^{2}\rangle|=4$. El oscilador no est\'a en el espacio del c\'odigo ($P_{\mathrm{c}}\approx0.79$). Con el drive re-sintonizado, $P_{e}$ cae a $0.008$, $|\langle a^{2}\rangle|$ vuelve a $3.99$ y $P_{\mathrm{c}}$ sube a $0.996$: el confinamiento se recupera.
+
+\paragraph{Aparece un segundo efecto: la paridad no se conserva.} Aun re-sintonizado, $F$ baja con el tiempo, porque la paridad decae de $0.49$ a $0.39$ entre $\Gamma t=20$ y $30$. El estado queda en el espacio del c\'odigo pero como mezcla de los gatos par e impar; en efecto, $F\approx P_{\mathrm{c}}(1+\langle P\rangle)/2=0.691$, que reproduce el $0.692$ de la tabla. La Ec.~(5) de Ma et al. conserva la paridad porque solo contiene t\'erminos pares en $a$. El Hamiltoniano completo no: los mismos t\'erminos $g_{x}$ que producen el corrimiento dan, a segundo orden, p\'erdida y ganancia de un fon\'on mediadas por el qubit.
+
+\paragraph{Estimaci\'on de la tasa.} El proceso $\ket{g,n}\to\ket{e,n-1}$ (t\'ermino $g_{x}\spl a$) est\'a desintonizado en $\omega$ y el qubit excitado decae con $\kappa$. Eliminando el qubit, la tasa de p\'erdida de un fon\'on es $\Gamma_{1}^{-}=g_{x}^{2}\kappa/(\omega^{2}+\kappa^{2}/4)\approx g_{x}^{2}\kappa/\omega^{2}$. El proceso $\ket{g,n}\to\ket{e,n+1}$ (t\'ermino $g_{x}\spl a^{\dagger}$) est\'a desintonizado en $3\omega$ y da $\Gamma_{1}^{+}\approx g_{x}^{2}\kappa/(9\omega^{2})$. Para un gato, la paridad decae con tasa $2|\alpha|^{2}(\Gamma_{1}^{-}+\Gamma_{1}^{+})$. Con los par\'ametros de Ma et al.,
+\begin{equation}
+2|\alpha|^{2}\left(\Gamma_{1}^{-}+\Gamma_{1}^{+}\right) = 2\cdot4\cdot\frac{g_{x}^{2}\kappa}{\omega^{2}}\left(1+\frac{1}{9}\right) = 3.3\times10^{-4},
+\end{equation}
+en unidades de $2\pi\times$GHz. La tasa extra\'ida de la tabla es $\ln(0.487/0.387)/(10/\Gamma)=3.4\times10^{-4}$, en acuerdo dentro del 3\%. Esta tasa corresponde a un tiempo de coherencia de la paridad de unos $0.5~\mu$s. La tasa de p\'erdida de un fon\'on mediada por el qubit, $\Gamma_{1}^{-}\approx3.8\times10^{-5}$, es unas 60 veces mayor que la del resonador con $Q=10^{7}$ que Ma et al. consideran como fuente principal de decoherencia ($\omega/Q\approx6\times10^{-7}$). Su Fig.~3, que muestra $F\approx0.99$ hasta $\Gamma t=100$, no incluye este canal y sobreestima la duraci\'on de la coherencia del gato.
+
+
+\section{Conclusiones}
+
+\begin{enumerate}
+\item El coeficiente del intercambio de pares de Ma et al., $2g_{x}g_{z}/\omega$, es correcto. El error de factor 2 es propio de la Ec.~(11) de Naseem y no de la familia de esquemas.
+\item La Ec.~(4) de Ma et al. omite el corrimiento del oscilador $-(g_{x}^{2}/\omega)\hat n$, que aparece al reescribir $\Pg=1-\Pe$, y los t\'erminos contrarrotantes agregan $-(g_{x}^{2}/3\omega)\hat n$. El corrimiento total, $-4g_{x}^{2}/(3\omega)$, se confirma por diagonalizaci\'on exacta. Su corrimiento del qubit ($3g_{x}^{2}/\omega$) tampoco coincide con el exacto ($\tfrac{4}{3}g_{x}^{2}/\omega$).
+\item Con sus par\'ametros, el corrimiento omitido destruye el estado oscuro: en el modelo de segundo orden la fidelidad cae a $0.80$ y el qubit queda excitado un $13\%$ del tiempo. Se recupera por completo con el drive al doble de la frecuencia vestida del oscilador.
+\item El modelo completo dependiente del tiempo confirma el corrimiento: con el drive de Ma et al. el qubit queda excitado un $13\%$ y $|\langle a^{2}\rangle|=2.44$ en lugar de 4; con el drive re-sintonizado el oscilador vuelve al espacio del c\'odigo ($P_{\mathrm{c}}=0.996$).
+\item La conservaci\'on de la paridad que Ma et al. atribuyen al esquema es un artefacto de su modelo efectivo. Los t\'erminos transversales producen p\'erdida y ganancia de un fon\'on mediadas por el qubit, con un phase-flip de tasa $2|\alpha|^{2}(g_{x}^{2}\kappa/\omega^{2})(1+1/9)$, verificado al 3\% en el modelo completo. Es el mismo canal que domina el phase-flip en el esquema de Naseem.
+\item La omisi\'on del corrimiento del oscilador es com\'un a Ma et al. y a Naseem, que usan el mismo Hamiltoniano. La resonancia vestida es entonces un requisito de toda la familia de esquemas con simetr\'ia de inversi\'on rota, no una particularidad de la plataforma mec\'anica. Queda por verificar que el $\delta_{1}$ de Naseem, que incluye las funciones espectrales del qubit con p\'erdida, se reduce a $-4g_{x}^{2}/(3\omega_{m})$ cuando $\kappa\ll\omega_{m}$.
+\end{enumerate}
+
+\bibliographystyle{unsrt}
+\bibliography{refs_ma}
+
+\end{document}

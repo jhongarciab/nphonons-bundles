@@ -1,7 +1,7 @@
 # Pendientes, discrepancias y hallazgos (verificación independiente y figuras finales)
 
 Registro consolidado de lo que requiere revisión o decisión, de los errores encontrados en el trabajo original y de las correcciones ya adoptadas.
-Detalle en `../verificacion_independiente/V*_reporte.md`, `C6_polaron.md` y `README.md`. Actualizado: 2026-09-28.
+Detalle en `../validacion/independiente/V*_reporte.md`, `C6_polaron.md` y `README.md`. Actualizado: 2026-09-28.
 
 ## 1. Pendiente de decisión o revisión
 | # | Tema | Estado | Dónde |

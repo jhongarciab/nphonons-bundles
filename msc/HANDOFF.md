@@ -3,11 +3,11 @@
 Documento de traspaso para organizar el escrito (PRA, autor único). Consolidado el 2026-09-29 a partir del HANDOFF del chat y del estado real del repositorio.
 Idioma: español. **[VERIFICAR]** marca lo que no se ha podido comprobar contra archivos. La sección 11 (superado) prevalece sobre cualquier documento viejo.
 
-Fuentes vivas en este repositorio (`msc/Mechanical-Cat-State/`):
-- `figuras_finales/README.md`: métodos, parámetros, cifras y validaciones de cada figura.
-- `figuras_finales/PENDIENTES_Y_HALLAZGOS.md`: pendientes, discrepancias y correcciones adoptadas (P1–P10, E1–E8).
-- `verificacion_independiente/V1..V6_reporte.md`, `V4b_reporte.md`: verificación independiente de R1–R6.
-- `figuras_finales/C6_polaron.md`: base polarónica.
+Fuentes vivas en este repositorio (mapa de carpetas en `msc/README.md`):
+- `Mechanical-Cat-State/figuras_finales/README.md`: métodos, parámetros, cifras y validaciones de cada figura.
+- `Mechanical-Cat-State/figuras_finales/PENDIENTES_Y_HALLAZGOS.md`: pendientes, discrepancias y correcciones adoptadas (P1–P10, E1–E8).
+- `Mechanical-Cat-State/validacion/independiente/V1..V6_reporte.md`, `V4b_reporte.md`: verificación independiente de R1–R6.
+- `Mechanical-Cat-State/figuras_finales/C6_polaron.md`: base polarónica.
 
 ---
 
@@ -42,7 +42,7 @@ H(t) = ω a†a + (ω_q/2)σ_z + (a + a†)(g_xσ_x + g_zσ_z) + Ω(σ₊e^{−i
 - Definiciones: G = 2g_xg_z/ω, κ₂ = 4G²/κ, α² = Ω/G (típicamente |α|² = 4), κ₁ = Γ₁⁻ + Γ₁⁺, χ = (8/3)g_x²/ω.
 - Régimen de validez: γ ≪ κ; κ, g ≪ ω (Liu viola κ/ω = 0.9); χ|α|² ≲ 0.3κ (P9).
 
-## 4. Derivaciones (paso a paso en `verificacion_independiente/V1_derivacion.md`)
+## 4. Derivaciones (paso a paso en `validacion/independiente/V1_derivacion.md`)
 
 ### 4.1 Hamiltoniano efectivo (James–Jerke, segundo orden)
 Componentes de la interacción:
@@ -168,15 +168,12 @@ Con el qubit en |g⟩ el oscilador se desplaza d = +g_z/ω (laboratorio, t = nT_
 - No razonar mecanismos físicos con datos no convergidos.
 - Marco de laboratorio con muestreo t = nT_p (desplazamiento polarónico +g_z/ω).
 
-## 10. Inventario de archivos (repositorio `msc/Mechanical-Cat-State/`)
-- `figuras_finales/figuras/`:
-  - principales: `figura_central` y `figura_central_sinpiso` (dos versiones para revisión), `principal_fig2` (universalidad de κ₁/κ₂), `figura_termica` (borrador, sin validar);
-  - apéndice: `apendice_resonancia_universal`, `apendice_fig2_estados`, `fig2`, `fig3` y `fig4` (validación), `p9_diagnostico`.
-- `figuras_finales/codigo/`: scripts de cálculo (`calc_*`, `run_*`) y de figura. `figuras_finales/data/`: cachés y CSV.
-- `verificacion_independiente/`: V1–V6 y V4b (reportes .md, código y datos).
-- `validacion/` (QuTiP 4, Tareas 1–44, Naseem) y `validacion_ma/` (QuTiP 5, Tareas 39–47, Ma).
-- PDFs: `msc/ma2019.pdf` (no subido al remoto por derechos) y `msc/2508.10500v2.pdf` (Naseem).
-- **Fuera de este repositorio (en el entorno del chat):** `documento_completo.tex` v1, `brecha_punto_excepcional.tex`, `lamb_shift_ma2019.tex`, `figura_merito.tex`, `mapa_plataformas.tex` y las .bib (`refs_doc.bib`, etc.).
+## 10. Inventario de archivos
+Ver `msc/README.md` (mapa completo tras la reorganización del 2026-09-29).
+- Papers en `msc/papers/`. Escritos LaTeX del chat en `msc/docs/<nombre>/`: faltan `refs.bib` (brecha) y `refs_mapa.bib` (mapa), y **Hou 2024 no está** (`2407.17299` es Dubovitskii).
+- Código y figuras oficiales en `Mechanical-Cat-State/figuras_finales/` (`figuras/`, `codigo/`, `data/`). Entorno: `Mechanical-Cat-State/.venv_qutip5`.
+- Validación en `Mechanical-Cat-State/validacion/`: `independiente/` (V1–V6), `tareas_ma/` (Tareas 39–47) y `tareas_naseem/` (Tareas 1–44).
+- Código del repositorio original del artículo en `Mechanical-Cat-State/codigo_original/`.
 
 ## 11. Superado y retirado (no usar)
 - "hf_q/kT ≳ 9 para sesgo 100" (régimen Naseem, frecuencia mecánica) → usar §8.

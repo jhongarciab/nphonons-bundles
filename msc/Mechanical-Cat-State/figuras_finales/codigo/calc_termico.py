@@ -1,7 +1,7 @@
 """Figura térmica (P7): sesgo η = γ_pf/γ_bf en función de x = h f_q/(k_B T), con el modelo efectivo estático
 (qubit explícito, validado en P9; filtro explícito como en calc_minimo_filtro) y baños térmicos.
 
-Definición de η (la de la Tarea 37, validacion/tarea37_worker.py): η = γ_pf/γ_bf, con γ_pf la tasa del modo lento
+Definición de η (la de la Tarea 37, validacion/tareas_naseem/tarea37_worker.py): η = γ_pf/γ_bf, con γ_pf la tasa del modo lento
 con mayor traslape con la paridad P = e^{iπa†a} y γ_bf la del modo con mayor traslape con a (modo de pozo).
 
 Marco rotante re-sintonizado (oscilador a ω_p/2, qubit a ω_p = ω_q), unidades κ = 1:
