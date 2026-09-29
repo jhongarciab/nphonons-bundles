@@ -7,3 +7,8 @@ __pycache__/
 
 overleaf_pgf_tmp/
 msc/papers/ma2019_PRA99_022302.pdf
+msc/papers/dematosfilho1996.pdf
+msc/docs/**/*.aux
+msc/docs/**/*.log
+msc/docs/**/*.bbl
+msc/docs/**/*.blg
