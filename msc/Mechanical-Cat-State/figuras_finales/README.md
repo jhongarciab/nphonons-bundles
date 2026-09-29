@@ -41,6 +41,8 @@ Los cálculos masivos se lanzan con `codigo/run_*.sh` (se pueden llamar desde cu
   El déficit medido/predicho es la corrección no adiabática, que crece de forma suave con κ₂/κ:
   ≲ 0.4% para κ₂/κ ≲ 0.05, ~1% en κ₂/κ ≈ 0.2 y ~2% en κ₂/κ ≈ 1.
   Correlaciona con κ₂/κ (r = 0.89) más que con P_e (r = 0.69); a igual κ₂/κ = 0.16, P_e = 3e-4 y 3e-3 dan déficits de 1.3% y 1.0%.
+- **Regla de truncamiento con filtro (lección de P10):** en puntos filtrados con |α|² = 4 usar **N ≥ 20** (con N = 16 aparece un exceso espurio de γ_pf de hasta ×2.9).
+  En **cualquier** punto filtrado, reportar la convergencia en N junto al valor.
 - **Validaciones:** en toda ρ, |Tr ρ − 1| < 1e-10, ‖ρ − ρ†‖ < 1e-10 y mínimo autovalor > −1e-9.
 - Tolerancias del integrador: atol 1e-12, rtol 1e-10.
 
@@ -217,4 +219,10 @@ Caché: `data/fig3/*.npz`, con la ρ estacionaria y los 12 modos más lentos.
   - (κ₂/κ, g_z/κ) = (0.03, 4): ε_completo/ε_mapa = **1.03**; κ₁ = 1.03 veces el predicho y confinamiento 1.04 veces el del plano.
   - (0.3, 12): con N = 16 salía 2.29, pero era un **artefacto de truncamiento** (P10).
   - **Con N = 20:** (0.03, 12) da ε_completo/ε_mapa = 0.987 y (0.3, 12) da 0.975 (γ_pf/predicho = 0.986 y 0.980). El panel (b) queda verificado en los dos regímenes.
+  - Convergencia con N = 22 en curso (N = 24 no cabe en 14 GB: ~13 GB solo en el propagador).
+- **Piso intrínseco en (b):** κ₁ → κ₁^filt + γ, con γ = ω/Q (γ/κ = 200/Q). Curvas naranja (Q = 1e6) y celeste (Q = 1e7); continua para ε = 1/220 y discontinua para ε = 1e-3. Sin piso: líneas blancas finas.
+  - Como ε ≥ γ/κ₂^eff, alcanzar ε = 1/220 exige κ₂^eff/κ ≥ 220γ/κ: 0.044 con Q = 1e6 y 0.0044 con Q = 1e7. Para ε = 1e-3 hace falta ≥ 0.2 y ≥ 0.02.
+  - **Q = 1e6:** ε = 1/220 solo se alcanza en una franja estrecha, κ₂/κ ≈ 0.2–0.35 (donde κ₂^eff es máximo), y con g_z/κ ≳ 1.1, frente a 0.24 sin piso. ε = 1e-3 no se alcanza en ningún punto.
+  - **Q = 1e7:** el umbral de 1/220 se desplaza +44% en κ₂/κ = 0.01, +14% en 0.03, +7% en 0.1, +5% en 0.3 y +8% en 1. En el umbral sin piso, el piso vale 0.52, 0.23, 0.13, 0.10 y 0.15 veces κ₁^filt: **nunca baja del 10%**, así que no llega a ser despreciable. El mejor régimen es κ₂/κ ≈ 0.3.
+  - Escala de color limitada a ε ≥ 1e-5. **Pie:** por debajo de ese valor mandan otros canales (pérdida intrínseca, temperatura, desfase del qubit).
   - Validaciones: |Tr ρ − 1| ≤ 2e-16 y mínimo autovalor ≥ −1e-12.
