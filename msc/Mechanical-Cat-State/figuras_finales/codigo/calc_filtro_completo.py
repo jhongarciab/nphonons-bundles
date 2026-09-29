@@ -10,8 +10,8 @@ import qutip as qt
 import comun as C
 
 
-def punto(gx, w, gz, kap, kf, al2, N, Nf, rerun=False, variante='full', espectro=False, gam=0.0):
-    suf = ('' if variante == 'full' else f'_{variante}') + (f'_gam{gam:g}' if gam else '')
+def punto(gx, w, gz, kap, kf, al2, N, Nf, rerun=False, variante='full', espectro=False, gam=0.0, x=None):
+    suf = ('' if variante == 'full' else f'_{variante}') + (f'_gam{gam:g}' if gam else '') + (f'_x{x:g}' if x else '')
     f = os.path.join(C.DATA, 'filtro_completo', f'gx{gx:.6g}_w{w:g}_gz{gz:.6g}_kf{kf:g}_al{al2:g}_N{N}_Nf{Nf}{suf}.npz')
     if os.path.exists(f) and not rerun:
         return dict(np.load(f))
@@ -28,7 +28,11 @@ def punto(gx, w, gz, kap, kf, al2, N, Nf, rerun=False, variante='full', espectro
     H = [H0, [Om * sm.dag(), lambda t: np.exp(-1j * wp * t)], [Om * sm, lambda t: np.exp(1j * wp * t)]]
     Tp = 2 * np.pi / wp
     t0 = time.time()
-    cops = [np.sqrt(kf) * b] + ([np.sqrt(gam) * a] if gam else [])     # γD[a]: pérdida intrínseca del oscilador
+    # baños térmicos (convención de la Tarea 37): filtro a f_q con n_q; oscilador a f_q/2 con n_m. x = h f_q/(k_B T)
+    nq = 1 / np.expm1(x) if x else 0.0; nm = 1 / np.expm1(x / 2) if x else 0.0
+    cops = [np.sqrt(kf * (nq + 1)) * b] + ([np.sqrt(kf * nq) * b.dag()] if nq else [])
+    if gam:
+        cops += [np.sqrt(gam * (nm + 1)) * a] + ([np.sqrt(gam * nm) * a.dag()] if nm else [])
     U = qt.propagator(H, Tp, cops, options=C.OPTS).full()
     tprop = time.time() - t0
     lam, R = np.linalg.eig(U); Linv = np.linalg.inv(R)
@@ -49,6 +53,13 @@ def punto(gx, w, gz, kap, kf, al2, N, Nf, rerun=False, variante='full', espectro
         if rate[k] > 1e-12 and lam[k].real > 0 and pb < 0.5:
             cand.append((abs(np.trace(P @ Mk)) / nrm, rate[k]))
     gpf = max(cand)[1]
+    # γ_bf: modo de pozo (en el laboratorio λ ≈ −1), mayor traslape con a entre los modos lentos
+    A_op = a.full(); candb = []
+    for k in np.argsort(rate)[:12]:
+        Mk = R[:, k].reshape(D, D, order='F'); nrm = np.linalg.norm(Mk)
+        if rate[k] > 1e-14 and lam[k].real < 0:
+            candb.append((abs(np.trace(A_op @ Mk)) / nrm, rate[k]))
+    gbf = max(candb)[1] if candb else np.nan
     kap2 = 4 * G**2 / kap
     ns = np.unique(np.round(np.geomspace(1, max(60 / kap2, 2e3) / Tp, 1500)).astype(np.int64))
     c = Linv @ qt.ket2dm(qt.tensor(qt.basis(N, 0), qt.basis(2, 1), qt.basis(Nf, 0))).full().reshape(-1, order='F')
@@ -68,7 +79,7 @@ def punto(gx, w, gz, kap, kf, al2, N, Nf, rerun=False, variante='full', espectro
         nu = np.fft.fftfreq(len(taus), taus[1] - taus[0]) * 2 * np.pi
         S = 2 * np.real(np.fft.fft(corr * np.hanning(2 * len(taus))[len(taus):])) * (taus[1] - taus[0])
         extra = dict(taus=taus, corr=corr, nu=nu, S=S)
-    res = dict(variante=variante, gam=gam, Pe_prom=Pe_prom, **extra,gx=gx, w=w, gz=gz, kap=kap, kf=kf, al2=al2, N=N, Nf=Nf, kap2=kap2, gpf=gpf, t=ns * Tp, Pc_din=serie,
+    res = dict(variante=variante, gam=gam, x=x if x else 0.0, nq=nq, gbf=gbf, herm_cruda=np.linalg.norm(R[:, k0].reshape(D, D, order='F') / np.trace(R[:, k0].reshape(D, D, order='F')) - (R[:, k0].reshape(D, D, order='F') / np.trace(R[:, k0].reshape(D, D, order='F'))).conj().T), Pe_prom=Pe_prom, **extra,gx=gx, w=w, gz=gz, kap=kap, kf=kf, al2=al2, N=N, Nf=Nf, kap2=kap2, gpf=gpf, t=ns * Tp, Pc_din=serie,
                Pc_ss=np.real(np.trace(Pc_op @ M)), al2eff=np.trace(A @ A @ M), val=np.array(C.validar(M)), tprop=tprop)
     os.makedirs(os.path.dirname(f), exist_ok=True)
     np.savez(f, **res)
@@ -79,6 +90,7 @@ if __name__ == '__main__':
     gx, w, gz, kap, kf, al2 = map(float, sys.argv[1:7]); N, Nf = int(sys.argv[7]), int(sys.argv[8])
     var = next((x.split('=')[1] for x in sys.argv if x.startswith('--variante=')), 'full')
     gam = float(next((x.split('=')[1] for x in sys.argv if x.startswith('--gam=')), 0.0))
-    r = punto(gx, w, gz, kap, kf, al2, N, Nf, '--rerun' in sys.argv, var, '--espectro' in sys.argv, gam)
-    print(f"gx={gx} w={w} gz={gz} kf={kf}: κ₂/κ={float(r['kap2'])/kap:.4f} γ_pf={float(r['gpf']):.5e} P_c={float(r['Pc_ss']):.5f} P_e={float(r['Pe_prom']):.5f} var={var} "
+    xt = float(next((x.split('=')[1] for x in sys.argv if x.startswith('--x=')), 0.0)) or None
+    r = punto(gx, w, gz, kap, kf, al2, N, Nf, '--rerun' in sys.argv, var, '--espectro' in sys.argv, gam, xt)
+    print(f"gx={gx} w={w} gz={gz} kf={kf}: κ₂/κ={float(r['kap2'])/kap:.4f} γ_pf={float(r['gpf']):.5e} P_c={float(r['Pc_ss']):.5f} P_e={float(r['Pe_prom']):.5f} var={var} γ_bf={float(r['gbf']):.4e} η={float(r['gpf'])/float(r['gbf']):.4g} herm_cruda={float(r['herm_cruda']):.1e} "
           f"val={r['val']} t={float(r['tprop']):.0f}s")
