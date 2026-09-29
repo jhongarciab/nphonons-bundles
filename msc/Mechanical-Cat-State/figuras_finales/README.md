@@ -239,4 +239,9 @@ Caché: `data/fig3/*.npz`, con la ρ estacionaria y los 12 modos más lentos.
   - **γ/κ = 2e-5:** el umbral de 1/220 se desplaza +44% en κ₂/κ = 0.01, +14% en 0.03, +7% en 0.1, +5% en 0.3 y +8% en 1; el piso nunca baja del 10% de κ₁^filt.
   - **Color de (b):** ε **con** el piso γ/κ = 2e-5. Escala limitada a ε ≥ 1e-5; por debajo mandan otros canales (pérdida intrínseca, temperatura, desfase del qubit).
   - La región χ|α|² > 0.3κ (ω/κ = 200) se superpone sombreada sobre las curvas del piso.
+  - **Verificación con piso** (modelo completo con filtro y γ = 2e-4κ como γD[a]; opción `--gam` de `calc_filtro_completo.py`):
+    - (κ₂/κ, g_z/κ) = (0.25, 14), χ|α|²/κ = 0.17, N = 22: γ_pf/predicho = 1.007, confinamiento/mapa = 0.979, **ε_completo/ε_mapa = 1.028**.
+      ε_completo = 4.39e-3 < 1/220: el diseño de la franja verificada funciona.
+    - (0.25, 6), χ|α|²/κ = 0.93 (fuera de la zona), N = 20: γ_pf/predicho = 1.000, pero **confinamiento/mapa = 0.751** y ε_completo/ε_mapa = 1.33.
+      **La frontera de χ vale con filtro**, con una pérdida coherente con P9 (0.91 en 0.45, 0.64 en 1.3).
   - Validaciones: |Tr ρ − 1| ≤ 2e-16 y mínimo autovalor ≥ −1e-12.
