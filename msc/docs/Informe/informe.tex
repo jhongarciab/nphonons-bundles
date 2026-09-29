@@ -71,7 +71,6 @@ Este documento es un borrador interno que ordena lo obtenido hasta ahora; de él
 \section{Modelo}
 \label{sec:modelo}
 
-\subsection{Hamiltoniano y ecuación maestra}
 
 El modelo común a la familia es
 \begin{equation}
@@ -90,7 +89,6 @@ donde $\kappa$ es la tasa de decaimiento del qubit y $\gamma$ la pérdida intrí
 \end{equation}
 con $n_q=[e^{x}-1]^{-1}$, $x=hf_q/k_BT$ y $f_q$ la frecuencia del qubit, y con $n_m=[e^{x/2}-1]^{-1}$, la ocupación a la frecuencia del oscilador $f_q/2$.
 
-\subsection{Cantidades y notación}
 
 Se usan las siguientes cantidades, definidas en la Sección~\ref{sec:deriv}:
 \begin{align}
@@ -101,7 +99,6 @@ G&=\frac{2g_xg_z}{\omega}, & \kappa_2&=\frac{4G^2}{\kappa}=\frac{16g_x^2g_z^2}{\
 \end{align}
 Además, $P=e^{i\pi a^{\dagger}a}$ es el operador de paridad, $\ket{\pm\alpha}$ son estados coherentes, $P_c$ es la población del oscilador (con el qubit trazado) en el código y $P_e$ la población del qubit excitado.
 
-\subsection{Régimen de validez}
 
 La teoría efectiva exige la jerarquía $\kappa,\,g_x,\,g_z,\,\Omega\ll\omega$. Se explicitan cuatro condiciones:
 \begin{itemize}
@@ -111,7 +108,6 @@ La teoría efectiva exige la jerarquía $\kappa,\,g_x,\,g_z,\,\Omega\ll\omega$. 
 \item $\chi|\alpha|^2\lesssim0.3\,\kappa$ para que el corrimiento del qubit dependiente de $n$ no frene el confinamiento (Sección~\ref{sec:chi}).
 \end{itemize}
 
-\subsection{Parámetros de las plataformas}
 
 Las plataformas estudiadas y sus parámetros publicados se resumen en la Tabla~\ref{tab:param}. En el esquema de Ma et al.\ el disipador es $\Gamma[2\smi\rho\spl-\spl\smi\rho-\rho\spl\smi]$, es decir $\kappa=2\Gamma$, y las constantes de acoplamiento son $g_x=-g\sin\theta$ y $g_z=g\cos\theta$ con $g/2\pi=0.3$~GHz y $\theta=\pi/4$.
 
@@ -137,7 +133,8 @@ $\omega_q$ & 12 GHz & 200 MHz & qubit vestido, $\nu/2\pi=35.4$ MHz\\
 \section{Derivaciones}
 \label{sec:deriv}
 
-\subsection{Imagen de interacción y descomposición por frecuencias}
+\subsection{Hamiltoniano efectivo de segundo orden}
+
 \label{sec:interaccion}
 
 Se toma $H_0=\omega\,a^{\dagger}a+\omega\,\sigma_z$, que corresponde a $\omega_q=2\omega$, y $U_0(t)=e^{iH_0t}$. Como $[a,a^{\dagger}a]=a$ y $[\sigma_z,\smi]=-2\smi$,
@@ -167,10 +164,8 @@ h_1=A+B,\quad A=g_x\smi a^{\dagger},\quad B=g_z\sigma_za;\qquad h_3=g_x\smi a.
 \end{equation}
 Se comprueba que $h_1^{\dagger}=g_x\spl a+g_z\sigma_za^{\dagger}$ acompaña a $e^{i\omega t}$ y que $h_3^{\dagger}=g_x\spl a^{\dagger}$ acompaña a $e^{3i\omega t}$, en acuerdo con la Ec.~\eqref{eq:Vx}.
 
-\subsection{Hamiltoniano promediado a segundo orden}
 \label{sec:JJ}
 
-\subsubsection{Fórmula de James y Jerke}
 
 Sea $V(t)=\sum_{k}A_ke^{-i\nu_kt}$ una suma finita en la que las frecuencias vienen en pares $\pm\nu$ con $A_{-k}=A_k^{\dagger}$ y $\nu_{-k}=-\nu_k$, todas grandes frente a la norma de los $A_k$. Se define
 \begin{equation}
@@ -200,7 +195,6 @@ Al agrupar $k=+n$ y $k=-n$ (con $\nu_{-n}=-\nu_n$ y $[A_{-n}^{\dagger},A_{-n}]=[
 \end{equation}
 Es la fórmula de James y Jerke~\cite{JamesJerke2007}. Cuando hay frecuencias degeneradas, como en $h_1=A+B$, el conmutador se toma con el operador completo asociado a esa frecuencia, lo que incluye los términos cruzados $[A^{\dagger},B]$ y $[B^{\dagger},A]$.
 
-\subsubsection{Términos lentos y el drive}
 
 El drive $\Omega(\spl+\smi)$ de la Ec.~\eqref{eq:V} es estático y no entra en $X$. Su contribución $\tfrac12[\Omega(\spl+\smi),X]$ oscila a $\omega$ o $3\omega$ y se promedia a cero. Queda una corrección de orden $\Omega g/\omega$ que se desprecia (tercer orden en el conjunto de las escalas pequeñas). La desintonía entre $\omega_p$, $\omega_q$ y $2\omega$, que es del orden de $g^2/\omega\ll\omega$, es una frecuencia lenta en este marco y se trata exactamente. Al pasar al marco que rota a $\omega_p/2$ para el oscilador y a $\omega_p$ para el qubit, se suma a $\Href$
 \begin{equation}
@@ -208,7 +202,6 @@ El drive $\Omega(\spl+\smi)$ de la Ec.~\eqref{eq:V} es estático y no entra en $
 \label{eq:desint}
 \end{equation}
 
-\subsubsection{Conmutadores}
 
 Con $\spl\smi=\Pe$, $\smi\spl=\Pg$, $[\sigma_z,\spl]=2\spl$, $[\sigma_z,\smi]=-2\smi$, $\sigma_z^2=1$, $[a,a^{\dagger}]=1$ y $\hn=a^{\dagger}a$, y sabiendo que $a$ conmuta con los operadores del qubit:
 \begin{align}
@@ -233,7 +226,6 @@ Los términos cruzados entre $h_1$ y $h_3$ oscilan a $2\omega$ y ya se descartar
 \end{resultado}
 Al que se suma $\Omega(\spl+\smi)+\Delta_m\hn+(\Delta_q/2)\sigma_z$ en el marco del drive. La constante $-g_z^2/\omega$ no afecta la dinámica.
 
-\subsubsection{Lectura de los corrimientos}
 
 De la Ec.~\eqref{eq:Hef} se leen tres cantidades:
 \begin{align}
@@ -248,7 +240,7 @@ E_e(n)-E_g(n)=\frac{g_x^2}{\omega}\left(\frac83n+\frac43\right),
 \end{equation}
 un resultado que se usa en la Sección~\ref{sec:chi}.
 
-\subsection{Control independiente: transformación polarónica}
+\subsection{Control independiente y base del código}
 \label{sec:polaron}
 
 El término de pares también se obtiene sin usar la fórmula de James y Jerke, eliminando primero el acoplamiento longitudinal con una transformación polarónica. Se define
@@ -284,6 +276,8 @@ En la imagen de interacción respecto a $H_0$ del apartado anterior, $\spl a^2$ 
 \end{equation}
 es decir, los mismos corrimientos que en la Ec.~\eqref{eq:Hef}. Los dos caminos, el cruce $[A^{\dagger},B]$ de la Sección~\ref{sec:JJ} y la expansión del polarón, dan el mismo coeficiente $-G=-2g_xg_z/\omega$ para el intercambio de pares y los mismos corrimientos. El factor $2$ en $G$ proviene de $e^{2K}$: el desplazamiento condicionado al estado del qubit es $2d$.
 
+\label{sec:codigo}
+
 \subsection{Estado oscuro y resonancia vestida}
 \label{sec:oscuro}
 
@@ -310,7 +304,6 @@ La segunda es la resonancia vestida. Con $\Delta_m=\omega-\omega_p/2$:
 \end{resultado}
 El drive debe estar al doble de la frecuencia vestida del oscilador con el qubit en $\ket{g}$, no de la desnuda. La desintonía del qubit $\Delta_q$ solo aporta una constante y no afecta la existencia del estado oscuro, aunque sí las tasas (Sección~\ref{sec:RS}). Con $\omega_p=2\omega$, elección de Ma et al., el estado oscuro no existe.
 
-\subsubsection{Comparación con las ecuaciones publicadas}
 
 \paragraph{Ma et al.} Su Ec.~(4) es $H^{\rm Ma}=(3g_x^2/\omega)\Pe+(2g_x^2/\omega)\hn\Pe-(2g_xg_z/\omega)(\spl a^2+\mathrm{h.c.})+\Omega(\spl+\smi)$, obtenida al descartar los términos contrarrotantes. Con solo el término rotante la parte diagonal de la Ec.~\eqref{eq:Hef} es $(g_x^2/\omega)[(\hn+1)\Pe-\hn\Pg]$, y con $\Pg=1-\Pe$,
 \begin{equation}
@@ -325,7 +318,6 @@ El primer término reproduce el $(2g_x^2/\omega)\hn\Pe$ de $H^{\rm Ma}$. El segu
 \subsection{Eliminación del qubit: tasas de pérdida de pares y de un fonón}
 \label{sec:RS}
 
-\subsubsection{Formalismo de operadores efectivos}
 
 Sea un sistema con un subespacio fundamental (qubit en $\ket{g}$) y uno excitado (qubit en $\ket{e}$) acoplados por $V_+$ (que excita) y $V_-=V_+^{\dagger}$ (que desexcita). El subespacio excitado decae con el salto $L=\sqrt\kappa\,\smi$ y evoluciona con el hamiltoniano no hermítico $H_{\rm NH}=H_e-\tfrac{i}{2}L^{\dagger}L$. En una trayectoria sin saltos, las amplitudes en cada subespacio, $c_g$ y $c_e$, obedecen
 \begin{equation}
@@ -347,7 +339,6 @@ H_{\rm NH}^{-1}=\frac{\Delta+i\kappa/2}{\Delta^2+\kappa^2/4},\qquad H_{\rm NH}^{
 \end{equation}
 Cada canal de excitación tiene una frecuencia distinta en la imagen de interacción, así que los términos cruzados entre canales oscilan y se promedian a cero (aproximación secular), y las tasas de cada canal se suman.
 
-\subsubsection{Disipación de pares}
 
 En el marco del drive y con $\Delta_q=0$, el proceso $\ket{g}\to\ket{e}$ por el canal de pares tiene $V_+=(\Omega-Ga^2)\spl$ y desintonía nula, de modo que $H_{\rm NH}=-i\kappa/2$ y $H_{\rm NH}^{-1}=2i/\kappa$. Entonces
 \begin{equation}
@@ -362,7 +353,6 @@ proyectado sobre $\ket{g}$. La dinámica efectiva es $\kappa_2\D[a^2-\alpha^2]$ 
 \end{resultado}
 Con $\Delta_q\neq0$ se tiene $H_{\rm NH}=\Delta_q-i\kappa/2$ y $\kappa_2\to4G^2\kappa/(\kappa^2+4\Delta_q^2)$. Se desprecian aquí los corrimientos del qubit dependientes de $n$ (Ec.~\eqref{eq:qubitn}), que se tratan en la Sección~\ref{sec:chi}.
 
-\subsubsection{Pérdida y ganancia de un fonón}
 
 El término rotante $V_+=g_xa\spl$ conecta $\ket{g,n}$ con $\ket{e,n-1}$, con desintonía $\Delta_1=\omega_q-\omega\simeq\omega$. El contrarrotante $V_+=g_xa^{\dagger}\spl$ conecta $\ket{g,n}$ con $\ket{e,n+1}$, con desintonía $\Delta_3=\omega_q+\omega\simeq3\omega$. Para el primero,
 \begin{equation}
@@ -377,7 +367,6 @@ salvo una fase global, de modo que el disipador es $\Gamma_1^{-}\D[a]$. El segun
 \end{resultado}
 Es el efecto Purcell del oscilador a través del qubit desintonizado, con su contraparte contrarrotante. Ninguno de los dos canales involucra a $g_z$ ni a $\Omega$.
 
-\subsubsection{Consistencia con el corrimiento del oscilador}
 
 El hamiltoniano efectivo de la Ec.~\eqref{eq:RS} para los dos canales de un fonón es
 \begin{equation}
@@ -393,7 +382,7 @@ Con $u=\kappa/2$: $\omega/(\omega^2+u^2)\simeq(1/\omega)(1-u^2/\omega^2)$ y $3\o
 \end{equation}
 El $\delta_1$ de Naseem coincide entonces con $\delta_{\rm osc}^{(g)}$ salvo por esta corrección cuadrática en $\kappa/\omega$.
 
-\subsection{Evolución de la paridad y tasa de phase-flip}
+\subsection{Phase-flip y figura de mérito}
 \label{sec:pf}
 
 Sea $P=e^{i\pi\hn}$. Como $Pa=-aP$ y $Pa^{\dagger}=-a^{\dagger}P$, el adjunto del disipador, $\D^{\dagger}[o]O=o^{\dagger}Oo-\tfrac12\{o^{\dagger}o,O\}$, sobre $P$ vale
@@ -417,7 +406,6 @@ El $+1$ proviene de que la ganancia actúa sobre $\ave{\hn+1}$. Respecto a la fo
 
 \paragraph{Piso de la paridad.} La paridad de un estado coherente es $\bra{\alpha}P\ket{\alpha}=\braket{\alpha}{-\alpha}=e^{-2|\alpha|^2}$. El estado estacionario, mezcla de $\ket{\pm\alpha}$ sin coherencia entre ellos, tiene entonces paridad $\simeq e^{-2|\alpha|^2}\simeq3.4\times10^{-4}$ con $|\alpha|^2=4$. La paridad medida en el estado estacionario del modelo completo es algo mayor, $c\simeq(6\text{ a }7)\times10^{-4}$, del orden de la población fuera del código. Por eso los ajustes temporales de la tasa se hacen con la forma $A\,e^{-\gamma_{\rm pf}t}+c$ y no con una exponencial pura.
 
-\subsection{Figura de mérito y umbral de tolerancia a fallas}
 \label{sec:merito}
 
 Dividiendo $\kappa_1$ (Ec.~\eqref{eq:k1}) entre $\kappa_2$ (Ec.~\eqref{eq:k2}):
@@ -489,10 +477,9 @@ que se reduce a la Ec.~\eqref{eq:merito} para un baño plano ($\kappa_f\to\infty
 \end{equation}
 que para $\kappa_f\ll\omega$ vale $\simeq\sqrt{41/45}\,\kappa_f/2\omega\simeq0.955\,\kappa_f/2\omega$. El precio es la modificación del confinamiento (Sección~\ref{sec:conf}).
 
-\subsection{Confinamiento con un auxiliar de dos niveles}
+\subsection{Confinamiento y frontera de validez}
 \label{sec:conf}
 
-\subsubsection{Modelo mínimo y cantidad conservada}
 
 El modelo mínimo es $H=G[(a^2-\alpha^2)\spl+\mathrm{h.c.}]$ con la disipación $\kappa\D[\smi]$ y $\Gamma_2\equiv4G^2/\kappa$. La ecuación maestra se escribe
 \begin{equation}
@@ -504,7 +491,6 @@ Se estudia primero $\alpha=0$, es decir, $H=G(a^2\spl+a^{\dagger2}\smi)$. Se def
 \end{equation}
 Como $[\hn,a^2]=-2a^2$ y $[2\spl\smi,\spl]=2\spl$, se tiene $[\hat N,a^2\spl]=-2a^2\spl+2a^2\spl=0$, y lo mismo para el hermítico conjugado. Por tanto $[\hat N,H]=0$ y $[\hat N,\spl\smi]=0$: $H_{\rm NH}$ es diagonal por bloques en $\hat N$.
 
-\subsubsection{Bloques y autovalores}
 
 Los autoestados de $\hat N$ son $\ket{0,g}$ ($N=0$), $\ket{1,g}$ ($N=1$) y, para $N\geq2$, los pares $\{\ket{N,g},\ket{N-2,e}\}$. Como $a^2\ket{N}=\sqrt{N(N-1)}\ket{N-2}$, el elemento de matriz en el bloque $N$ es $G_N=G\sqrt{N(N-1)}$ y
 \begin{equation}
@@ -515,7 +501,6 @@ Los estados $\ket{0,g}$ y $\ket{1,g}$ tienen $E=0$ (el espacio oscuro). El salto
 \lambda=-i\left(E_i^{(N)}-E_j^{(M)*}\right).
 \end{equation}
 
-\subsubsection{Brecha exacta}
 
 El modo más lento distinto de cero es la coherencia entre el espacio oscuro ($E=0$) y el bloque $N=2$. Con $G_2^2=2G^2=\kappa\Gamma_2/2$,
 \begin{equation}
@@ -534,7 +519,6 @@ con un punto excepcional en $\Gamma_2=\kappa/8$, donde las dos ramas del bloque 
 \end{equation}
 La pendiente es $d\Delta/d\Gamma_2=1/\sqrt{1-8\Gamma_2/\kappa}$.
 
-\subsubsection{Cota general sobre la tasa}
 
 Para cualquier autovector derecho $\ket{r}$ de $H_{\rm NH}$ con autovalor $E$ se tiene $E\braket{r}{r}=\bra{r}H\ket{r}-(i\kappa/2)\bra{r}\spl\smi\ket{r}$. Como $H$ es hermítico, $\bra{r}H\ket{r}$ es real y
 \begin{equation}
@@ -542,7 +526,6 @@ Para cualquier autovector derecho $\ket{r}$ de $H_{\rm NH}$ con autovalor $E$ se
 \end{equation}
 Toda tasa del término sin saltos está acotada por $\kappa/2$, y en acoplamiento fuerte los estados vestidos tienen $p_e\to1/2$, lo que explica que la tasa de la coherencia sature en $\kappa/4$ para $\alpha=0$. Con $\alpha\neq0$ no se dispone de una derivación análoga.
 
-\subsubsection{Confinamiento con $|\alpha|^2\neq0$}
 
 Para $\alpha\neq0$ (gato con $|\alpha|^2=4$) se define la tasa de confinamiento por la dinámica y no por el espectro. Se evoluciona desde $\ket{0}\otimes\ket{g}$, y también desde $D(d)\ket{1.3\alpha}\otimes\ket{g}$, y se ajusta la cola exponencial de $P_c(t)$ por encima del piso de paridad. El espectro no es fiable en el régimen saturado: existe una rama interior que no converge con el truncamiento, y modos de borde de Fock con $|\mathrm{Im}\,\lambda|\propto N$ que producen máximos espurios en la brecha. La tasa dinámica es estable ($\leq2\times10^{-4}$) para $N=24,30,36$. Se define
 \begin{equation}
@@ -550,7 +533,6 @@ c\equiv\lim_{\kappa_2\to0}\frac{\Delta}{\kappa_2},\qquad \kappa_2^{\rm eff}\equi
 \end{equation}
 La saturación empieza cuando $c\kappa_2\simeq\kappa/4$, es decir, en $\kappa_2/\kappa\simeq1/(4c)$.
 
-\subsection{Corrimiento del qubit dependiente de $n$ y frontera de validez}
 \label{sec:chi}
 
 Se elige el marco de la resonancia vestida, $\Delta_m=4g_x^2/3\omega$, para el que el sector $\ket{g}$ deja de depender de $\hn$. En el sector $\ket{e}$ el coeficiente de $\hn$ en la Ec.~\eqref{eq:Hefp} es $\Delta_m+4g_x^2/3\omega=8g_x^2/3\omega$. Queda entonces un corrimiento del qubit
@@ -570,9 +552,6 @@ La pérdida de confinamiento es del $5\%$ en $\chi|\alpha|^2/\kappa\simeq0.3$ (r
 \end{equation}
 Esta expresión es la frontera de la región de validez, no una fórmula para $\kappa_2/\kappa$.
 
-\subsection{Base del código}
-\label{sec:codigo}
-
 Con el desplazamiento polarónico (Sección~\ref{sec:polaron}), el oscilador con el qubit en $\ket{g}$ está desplazado en $+g_z/\omega$ (real) en el marco de laboratorio. En el marco que rota a $\omega_p/2$ ese desplazamiento sería $(g_z/\omega)e^{i\omega_pt/2}$ y cambia de signo entre períodos consecutivos. Muestreando en $t=nT_p$, $T_p=2\pi/\omega_p$, el desplazamiento vale $\pm g_z/\omega$ y, como el código es simétrico, el código es $\{D(g_z/\omega)\ket{\pm\alpha_{\rm nom}}\}$ con $\alpha_{\rm nom}^2=\Omega/G$. El signo solo depende del signo de $g_z$ con la convención $\sigma_z=\Pe-\Pg$; si el qubit estuviera en $\ket{e}$ el desplazamiento sería $-g_z/\omega$. Para $P_c$ se usa siempre este código fijo. La amplitud medida $|\alpha_{\rm eff}|^2=|\ave{(a-d)^2}|$ solo se usa en la tasa de phase-flip. Un código adaptado al estado no sirve para $P_c$, pues sigue al estado incluso lejos de la resonancia.
 
 \subsection{Modelo térmico y sesgo}
@@ -591,17 +570,16 @@ La ganancia térmica del qubit, $\kappa n_q\D[\spl]$, excita el qubit y permite 
 \subsection{Métodos numéricos y criterios de validación}
 \label{sec:metodos}
 
-\paragraph{Modelo completo.} Se integra la ecuación maestra~\eqref{eq:ME} con el hamiltoniano completo de la Ec.~\eqref{eq:H}, en el marco de laboratorio, sin aproximación de onda rotante y conservando los términos contrarrotantes y $g_z\sigma_z(a+a^{\dagger})$. Se usa QuTiP 5.3.1, con tolerancias absoluta $10^{-12}$ y relativa $10^{-10}$.
+Se integra la ecuación maestra~\eqref{eq:ME} con el hamiltoniano completo de la Ec.~\eqref{eq:H}, en el marco de laboratorio, sin aproximación de onda rotante y conservando los términos contrarrotantes y $g_z\sigma_z(a+a^{\dagger})$. Se usa QuTiP 5.3.1, con tolerancias absoluta $10^{-12}$ y relativa $10^{-10}$.
 
-\paragraph{Floquet y muestreo estroboscópico.} Como $H(t)$ es periódico con $T_p=2\pi/\omega_p$, se calcula el propagador del superoperador sobre un período y el estado estacionario es su autovector con $\lambda=1$. En $t=nT_p$, pasar al marco que rota a $\omega_p/2$ multiplica $a$ por $(-1)^n$, lo que deja invariantes el espacio del código, $\ave{a^2}$, $P_e$ y la paridad. $P_e$ y la paridad tienen micromovimiento dentro del período, y $P_c$ varía menos de $3\times10^{-5}$.
+Como $H(t)$ es periódico con $T_p=2\pi/\omega_p$, se calcula el propagador del superoperador sobre un período y el estado estacionario es su autovector con $\lambda=1$. En $t=nT_p$, pasar al marco que rota a $\omega_p/2$ multiplica $a$ por $(-1)^n$, lo que deja invariantes el espacio del código, $\ave{a^2}$, $P_e$ y la paridad. $P_e$ y la paridad tienen micromovimiento dentro del período, y $P_c$ varía menos de $3\times10^{-5}$.
 
-\paragraph{Tasas espectrales.} Las tasas son $r_k=-\ln|\lambda_k|/T_p$. El modo de paridad es el de $\lambda$ real cercano a $+1$ con mayor $|\mathrm{Tr}(PR_k)|/\|R_k\|$ (alrededor de $1.41$, frente a menos de $0.05$ en los demás modos lentos) y con peso de borde de Fock ($n>N-6$) menor que $0.5$. Un modo es espurio si su peso de borde supera $0.5$ o si su autovalor no es estable al $0.3\%$ en tres truncamientos $N$, $N+6$, $N+12$.
+Las tasas son $r_k=-\ln|\lambda_k|/T_p$. El modo de paridad es el de $\lambda$ real cercano a $+1$ con mayor $|\mathrm{Tr}(PR_k)|/\|R_k\|$ (alrededor de $1.41$, frente a menos de $0.05$ en los demás modos lentos) y con peso de borde de Fock ($n>N-6$) menor que $0.5$. Un modo es espurio si su peso de borde supera $0.5$ o si su autovalor no es estable al $0.3\%$ en tres truncamientos $N$, $N+6$, $N+12$.
 
-\paragraph{Validaciones.} En toda matriz densidad: $|\mathrm{Tr}\rho-1|<10^{-10}$, $\|\rho-\rho^{\dagger}\|<10^{-10}$ (medida antes de hermitizar) y mínimo autovalor mayor que $-10^{-9}$. Convergencia en $N$ en al menos un punto por resultado. Con $|\alpha|^2=4$ y un filtro explícito, $N\geq20$ es necesario: con $N=16$ aparece un exceso espurio de $\gamma_{\rm pf}$ de hasta $\times2.9$. $N=24$ con filtro no cabe en 14~GB de memoria.
+En toda matriz densidad: $|\mathrm{Tr}\rho-1|<10^{-10}$, $\|\rho-\rho^{\dagger}\|<10^{-10}$ (medida antes de hermitizar) y mínimo autovalor mayor que $-10^{-9}$. Convergencia en $N$ en al menos un punto por resultado. Con $|\alpha|^2=4$ y un filtro explícito, $N\geq20$ es necesario: con $N=16$ aparece un exceso espurio de $\gamma_{\rm pf}$ de hasta $\times2.9$. $N=24$ con filtro no cabe en 14~GB de memoria.
 
-\paragraph{Verificación independiente.} Los resultados centrales (V1 a V6) fueron reproducidos por una implementación distinta, que usa el marco de laboratorio con propagador de un período, identifica los niveles por diagonalización exacta y no leyó el código original. Sus veredictos se citan en cada apartado.
+Los resultados centrales (V1 a V6) fueron reproducidos por una implementación distinta, que usa el marco de laboratorio con propagador de un período, identifica los niveles por diagonalización exacta y no leyó el código original. Sus veredictos se citan en cada apartado.
 
-\subsection{Hamiltoniano efectivo: corrimientos y signo del término de pares}
 \label{sec:res_Hef}
 
 Se diagonalizó la Ec.~\eqref{eq:H} sin drive ($\omega=1$, $\omega_q=2$, hasta 46 fonones, identificando cada nivel por su máximo traslape con los estados desnudos) y se compararon los corrimientos con la Ec.~\eqref{eq:Hef}.
@@ -629,7 +607,7 @@ $g_x$ & $g_z$ & oscilador en $\ket{g}$ & oscilador en $\ket{e}$ & transición de
 
 El signo del término de pares se comprobó reconstruyendo el bloque efectivo $2\times2$ de $\{\ket{g,2},\ket{e,0}\}$ (ortonormalización de Löwdin). El elemento $\bra{g,2}\Href\ket{e,0}$ coincide con $-\sqrt2G$ en los cuatro cuadrantes de signo de $(g_x,g_z)$, con un error relativo de $10^{-3}$ a $3\times10^{-3}$ que crece como $g^2$. Por ejemplo, con $(g_x,g_z)=(+0.01,+0.02)$ el elemento vale $-5.651\times10^{-4}$ frente a $-5.657\times10^{-4}$, y con $(-0.02,-0.03)$ vale $-1.692\times10^{-3}$ frente a $-1.697\times10^{-3}$. La separación del doblete coincide con $\sqrt{(4g_x^2/\omega)^2+8G^2}$ al $0.04\%$--$0.5\%$. La energía absoluta $E(g,0)+\omega_q/2$ coincide con $-g_x^2/3\omega-g_z^2/\omega$ con error $\leq2\times10^{-4}$. Veredicto de la verificación independiente (V1): confirma el $\delta_{\rm osc}^{(g)}=-4g_x^2/3\omega$, el corrimiento del qubit $+4g_x^2/3\omega$ y el coeficiente de pares $-2g_xg_z/\omega$ a precisión de cuarto orden.
 
-\subsection{Resonancia vestida en el modelo completo}
+\subsection{Hamiltoniano efectivo y resonancia vestida}
 \label{sec:res_res}
 
 Con los parámetros de Ma et al.\ ($\omega=6$, $g=0.3$, $\theta=\pi/4$, $\kappa=0.03$, $\Omega=0.06$, unidades $2\pi\cdot$GHz), $g_x^2/\omega=0.0075$ y $\delta_{\rm osc}^{(g)}=-0.010$, es decir $2\pi\times10$~MHz, un tercio de $\kappa$. La Tabla~\ref{tab:res} resume la integración del modelo completo (con $N=22$, $\Gamma t=300$, $\Gamma=\kappa/2$) para el drive de Ma y el resintonizado.
@@ -679,7 +657,7 @@ En $\omega_p=2\omega$ el estado estacionario no es un gato: $P_c$ satura en $0.8
 
 \paragraph{Veredicto de la verificación independiente (V2)} (marco de laboratorio, propagador de un período): confirma $P_c=0.81180$ ($\omega_p=12$) y $0.99754$ ($\omega_p=11.98$), y un máximo del barrido en $11.9799\pm0.0005$ que coincide con la predicción $11.9800$.
 
-\subsection{Tasa de phase-flip}
+\subsection{Phase-flip y figura de mérito}
 \label{sec:res_pf}
 
 La tasa de la paridad del modelo completo se extrajo por ajuste $A\,e^{-kt}+c$ sobre la serie estroboscópica con $P_c>0.99$ (verificación V3) y por el método espectral (V4, V4b). Con los parámetros de Ma ($\kappa/\omega=0.005$) el término $\kappa^2/4$ de las Ecs.~\eqref{eq:k1} cambia la predicción en $6\times10^{-6}$ y no discrimina entre las dos formas.
@@ -720,7 +698,6 @@ $|\alpha|^2_{\rm nom}$ & $|\ave{a^2}|$ & A ($|\ave{a^2}|$) & B ($|\ave{a^2}|$) &
 
 El exceso de $+1.6\%$ que se observaba a $g_z/\kappa$ pequeño con la forma A es el término $\Gamma_1^{+}(|\alpha|^2+1)$. En los puntos saturados, la caída de la razón A (hasta $0.947$ con $\kappa_2/\kappa=1$) se debe casi por completo a que el gato real es más pequeño que el nominal ($|\ave{a^2}|=3.78$ en lugar de $4$): con el $|\ave{a^2}|$ medido, A pasa a $1.003$ y B a $0.977$.
 
-\subsection{Figura de mérito}
 \label{sec:res_merito}
 
 La Tabla~\ref{tab:V4} reúne 10 puntos del modelo completo con $\omega\in\{4,5,6,7\}$, $g_x\in\{0.03,\dots,0.15\}$ y $g_z/\kappa\in\{4,\dots,12\}$, todos con $N=22$, en el marco de laboratorio con $\omega_q=\omega_p=\wps$, $|\alpha|^2_{\rm nom}=4$ y $\kappa=0.03$. La tasa del modo de paridad es espectral, $\kappa_1=\gamma_{\rm pf}/(2|\alpha|^2)$ (forma A) y con la Ec.~\eqref{eq:gpf} (forma B, con $|\ave{a^2}|$).
@@ -812,7 +789,7 @@ $\kappa_f$ & mejora medida & predicha con Ec.~\eqref{eq:gpf} & medido/predicho &
 \label{fig:filtro}
 \end{figure}
 
-\subsection{Confinamiento}
+\subsection{Confinamiento y mapa de diseño}
 \label{sec:res_conf}
 
 \paragraph{Brecha exacta con $\alpha=0$.} La Ec.~\eqref{eq:brecha} se contrastó con diagonalización densa del liouvilliano estático ($N=20$ y $26$, $\kappa=1$), contando exactamente cuatro autovalores nulos (el espacio oscuro $\{\ket{0},\ket{1}\}\otimes\ket{g}$, poblaciones y coherencias).
@@ -871,7 +848,6 @@ $\Delta_{\rm filtro}/\Delta_{\rm plano}$ & 1.002 & 1.014 & 1.037 & 1.051 & 0.955
 
 Con $\kappa_2$ pequeño el filtro confina algo más rápido (hasta $+5\%$); en saturación, la mitad. Controles: con $\kappa_f=1000\kappa$ se recupera el plano (1.0015); $N=20\to26$ cambia menos de $0.1\%$; $N_f=2\to3$ cambia $1.2\%$. Por encima de $\kappa_2/\kappa=1.5$ el retorno de $P_c(t)$ no es monótono (sobrepaso) y la tasa no está definida.
 
-\subsection{Frontera de validez por el corrimiento del qubit y mapa de diseño}
 \label{sec:res_mapa}
 
 Se compara el confinamiento del modelo completo con el del modelo mínimo. El cociente $\mathrm{conf}_{\rm completo}/\Delta_{\rm min}$ es $1.00$--$1.03$ para $g_x/\omega\lesssim0.01$, baja a $0.93$--$0.86$ para $g_x/\omega\simeq0.014$--$0.02$ y a $0.64$ para $g_x/\omega=0.025$ con $\kappa_2/\kappa=0.16$. La causa es el corrimiento $\chi\hn\Pe$ de la Ec.~\eqref{eq:chi}: el modelo efectivo estático con $\chi$ reproduce el confinamiento del modelo completo al $0.5$--$4\%$ (por ejemplo $0.632$ frente a $0.640$ en el peor punto) y el efectivo sin $\chi$ reproduce el modelo mínimo ($\geq0.99$). Con $\omega/\kappa=500$ (mismos $g_x/\omega$, $g_z/\kappa$ y $\kappa_2/\kappa$) la desviación crece a $\mathrm{conf}/\Delta_{\rm min}=0.175$ (el efectivo con $\chi$ da $0.176$) y $0.13$. Con $\omega/\kappa=1000$ ($\chi|\alpha|^2/\kappa=4.3$ y $6.7$) el gato no se estabiliza: $P_c$ estacionario $0.49$ y $0.95$, con dinámica no monótona. El umbral empírico es $\mathrm{conf}/\Delta_{\rm min}\geq0.98$ para $\chi|\alpha|^2/\kappa\lesssim0.2$, $0.91$ en $0.45$ y $0.64$ en $1.3$: la pérdida es del $5\%$ en $\chi|\alpha|^2/\kappa\simeq0.3$.
@@ -969,7 +945,7 @@ con incertidumbre (semirrango intercuartil) $\leq2\%$. Se ajusta $c_{\rm bf}\pro
 
 \paragraph{Convergencia y validaciones.} En la isla, 34 de 160 puntos cambian más del $3\%$ entre $N=22$ y $24$, todos con $x\gtrsim13$ (piso de $T=0$); ningún umbral cae ahí. La región caliente $n_q>0.3$ ($x<1.47$) se excluye. Hermiticidad antes de hermitizar (sin simetrizar por paridad): $\|\rho-\rho^{\dagger}\|\leq1.4\times10^{-11}$; $|\mathrm{Tr}\rho-1|\leq6.7\times10^{-16}$; mínimo autovalor $\geq-8.7\times10^{-17}$. La validación con el modelo completo (filtro y temperatura, $N=22$) está abierta; véase la Sección~\ref{sec:limites}.
 
-\subsection{Mapa de plataformas y correcciones a la literatura}
+\subsection{Plataformas, literatura y limitaciones abiertas}
 \label{sec:res_plat}
 
 \begin{table}[h]
@@ -1002,7 +978,6 @@ veredicto & confinamiento saturado; fuera de la frontera de $\chi$ & falla térm
 \item Ma y Liu atribuyen a su esquema la conservación de la paridad en el estado estacionario. El modelo completo no la conserva: el estado estacionario es una mezcla de $\ket{\pm\alpha}$ y la tasa de phase-flip está dada por la Ec.~\eqref{eq:gpf}. Hou et al.\ no se incluye en la comparación cuantitativa porque no se ha leído su artículo.
 \end{itemize}
 
-\subsection{Limitaciones y puntos abiertos}
 \label{sec:limites}
 
 \begin{enumerate}
