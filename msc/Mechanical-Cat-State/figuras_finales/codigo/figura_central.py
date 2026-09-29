@@ -31,7 +31,9 @@ def delta(carpeta, patron, clave_conf=None):
     return np.array(sorted(T))
 
 
-def main():
+def main(sin_piso=False):
+    """sin_piso=True: variante con el color de (b) sin pérdida intrínseca (el piso solo en curvas) y achurado donde
+    γ/κ = 2e-5 supera a κ₁^filt; se guarda como figura_central_sinpiso."""
     Dp = delta('minimo', 'k*_N24.npz')
     Df = delta('minimo_filtro', 'k*_kf10_N20_Nf3.npz', True)
     KMAX_F = 1.5        # con filtro y κ₂/κ > 1.5 el retorno de P_c no es monótono (sobrepaso): tasa no definida
@@ -66,8 +68,8 @@ def main():
     EPS_MIN = 1e-5       # por debajo mandan otros canales (pérdida intrínseca, temperatura, desfase del qubit)
     norm = LogNorm(EPS_MIN, 10)
     lev = np.geomspace(EPS_MIN, 10, 25)
-    GAM_COLOR = 2e-5      # el color de (b) incluye el piso γ/κ = 2e-5
-    eps_b_col = eps_b + GAM_COLOR / (ip(Df, KK) / c)
+    GAM_COLOR = 2e-5      # versión por defecto: el color de (b) incluye el piso γ/κ = 2e-5
+    eps_b_col = eps_b if sin_piso else eps_b + GAM_COLOR / (ip(Df, KK) / c)
     for i, (e, lab) in enumerate([(eps_a, '(a) flat bath'), (eps_b, r'(b) filtered, $\kappa_f/\omega=0.05$')]):
         ax = fig.add_subplot(gs[i])
         cs = ax.contourf(GZ, KK, np.clip(e if i == 0 else eps_b_col, EPS_MIN * 1.01, 9.9), levels=lev, norm=norm, cmap='cividis')
@@ -91,6 +93,10 @@ def main():
                                Line2D([], [], color='0.5', lw=1, ls='--', label=r'$\epsilon=10^{-3}$')],
                       loc='lower right', fontsize=5.5, facecolor='0.3', framealpha=0.9, labelcolor='w').set_zorder(10)
             ax.contourf(GZ, KK, chi_mala.astype(float), levels=[0.5, 1.5], colors=['w'], alpha=0.25, zorder=4)
+            if sin_piso:
+                # achurado suave donde el piso γ/κ = 2e-5 supera al canal filtrado (filtrar más ya no aporta)
+                domina = (GAM_COLOR > f_filt * gxw2).astype(float)
+                ax.contourf(GZ, KK, domina, levels=[0.5, 1.5], colors='none', hatches=['...'], zorder=3)
         if i == 0:
             ax.contourf(GZ, KK, chi_mala.astype(float), levels=[0.5, 1.5], colors=['w'], alpha=0.28)
         ax.set_xscale('log'); ax.set_yscale('log')
@@ -116,8 +122,9 @@ def main():
     cx.axhline(1, color='k', lw=0.7); cx.set_xscale('log'); cx.set_ylim(0.95, 1.01)
     cx.set_xlabel(r'$\kappa_2/\kappa$'); cx.set_ylabel(r'$(\kappa_1/\kappa_2)(g_z/\kappa)^2/(5/72)$', fontsize=7)
     cx.text(0.04, 0.96, '(c)', transform=cx.transAxes, va='top', fontsize=8)
+    nombre = 'figura_central_sinpiso' if sin_piso else 'figura_central'
     for ext in ('pdf', 'png'):
-        fig.savefig(os.path.join(C.AQUI, f'figura_central.{ext}'))
+        fig.savefig(os.path.join(C.AQUI, f'{nombre}.{ext}'))
     print(f"c = {c:.4f}; f_filt = κ₁_filt/[(g_x/ω)²κ] = {f_filt:.4e} (plano 10/9)")
     for k in (1e-3, 0.01, 0.03, 0.1, 0.3, 1.0):
         j = np.argmin(abs(kk - k))
@@ -141,4 +148,5 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    import sys
+    main(sin_piso='--sin-piso' in sys.argv)

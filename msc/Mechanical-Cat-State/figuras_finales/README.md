@@ -237,7 +237,11 @@ Caché: `data/fig3/*.npz`, con la ρ estacionaria y los 12 modos más lentos.
   - **γ/κ = 2e-4:** ε = 1/220 solo en la franja κ₂/κ ≈ 0.19–0.33, con g_z/κ ≳ 0.8–1.9 según κ₂; ε = 1e-3 no se alcanza.
     **Dentro de la zona verificada (χ|α|² ≤ 0.3κ, ω/κ = 200) solo queda la parte con g_z/κ ≥ 9.3 (κ₂/κ = 0.19) a 11.9 (0.32), es decir g_z/κ ≳ 10.**
   - **γ/κ = 2e-5:** el umbral de 1/220 se desplaza +44% en κ₂/κ = 0.01, +14% en 0.03, +7% en 0.1, +5% en 0.3 y +8% en 1; el piso nunca baja del 10% de κ₁^filt.
-  - **Color de (b):** ε **con** el piso γ/κ = 2e-5. Escala limitada a ε ≥ 1e-5; por debajo mandan otros canales (pérdida intrínseca, temperatura, desfase del qubit).
+  - **Dos versiones para revisión (sin cómputo nuevo, mismos mapas):**
+    - `figura_central`: el color de (b) incluye el piso γ/κ = 2e-5.
+    - `figura_central_sinpiso` (`python codigo/figura_central.py --sin-piso`): el color de (b) es ε **sin** pérdida intrínseca (resultado universal del esquema), el piso solo aparece como curvas, y un punteado marca donde γ/κ = 2e-5 supera a κ₁^filt (donde filtrar más ya no aporta).
+      Recomendada para el paper, porque no ata el mapa a un γ/κ de plataforma. Pie: "el color muestra ε sin pérdida intrínseca; las curvas incluyen γ/κ = 2e-5 y 2e-4".
+  - **Color de (b) en `figura_central`:** ε **con** el piso γ/κ = 2e-5. Escala limitada a ε ≥ 1e-5; por debajo mandan otros canales (pérdida intrínseca, temperatura, desfase del qubit).
   - La región χ|α|² > 0.3κ (ω/κ = 200) se superpone sombreada sobre las curvas del piso.
   - **Verificación con piso** (modelo completo con filtro y γ = 2e-4κ como γD[a]; opción `--gam` de `calc_filtro_completo.py`):
     - (κ₂/κ, g_z/κ) = (0.25, 14), χ|α|²/κ = 0.17, N = 22: γ_pf/predicho = 1.007, confinamiento/mapa = 0.979, **ε_completo/ε_mapa = 1.028**.
