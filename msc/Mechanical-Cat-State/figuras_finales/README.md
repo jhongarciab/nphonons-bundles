@@ -219,7 +219,16 @@ Caché: `data/fig3/*.npz`, con la ρ estacionaria y los 12 modos más lentos.
   - (κ₂/κ, g_z/κ) = (0.03, 4): ε_completo/ε_mapa = **1.03**; κ₁ = 1.03 veces el predicho y confinamiento 1.04 veces el del plano.
   - (0.3, 12): con N = 16 salía 2.29, pero era un **artefacto de truncamiento** (P10).
   - **Con N = 20:** (0.03, 12) da ε_completo/ε_mapa = 0.987 y (0.3, 12) da 0.975 (γ_pf/predicho = 0.986 y 0.980). El panel (b) queda verificado en los dos regímenes.
-  - Convergencia con N = 22 en curso (N = 24 no cabe en 14 GB: ~13 GB solo en el propagador).
+  - **Convergencia en N** (N_f = 2; N = 24 no cabe en 14 GB, ~13 GB solo en el propagador):
+
+    | punto (κ₂/κ, g_z/κ) | N = 16 | N = 20 | N = 22 |
+    |---|---|---|---|
+    | (0.03, 12): γ_pf/predicho | 2.880 | 0.986 | 0.978 |
+    | (0.03, 12): ε_completo/ε_mapa | 2.831 | 0.987 | 0.979 |
+    | (0.3, 12): γ_pf/predicho | 2.261 | 0.980 | 0.977 |
+    | (0.3, 12): ε_completo/ε_mapa | 2.288 | 0.975 | 0.972 |
+
+    Entre N = 20 y 22, γ_pf cambia 0.8% y 0.3%, y el confinamiento < 0.05%. Validaciones con N = 22: |Tr ρ − 1| = 0 y mínimo autovalor ≥ −5.6e-9.
 - **Piso intrínseco en (b):** κ₁ → κ₁^filt + γ, con γ = ω/Q (γ/κ = 200/Q). Curvas naranja (Q = 1e6) y celeste (Q = 1e7); continua para ε = 1/220 y discontinua para ε = 1e-3. Sin piso: líneas blancas finas.
   - Como ε ≥ γ/κ₂^eff, alcanzar ε = 1/220 exige κ₂^eff/κ ≥ 220γ/κ: 0.044 con Q = 1e6 y 0.0044 con Q = 1e7. Para ε = 1e-3 hace falta ≥ 0.2 y ≥ 0.02.
   - **Q = 1e6:** ε = 1/220 solo se alcanza en una franja estrecha, κ₂/κ ≈ 0.2–0.35 (donde κ₂^eff es máximo), y con g_z/κ ≳ 1.1, frente a 0.24 sin piso. ε = 1e-3 no se alcanza en ningún punto.
