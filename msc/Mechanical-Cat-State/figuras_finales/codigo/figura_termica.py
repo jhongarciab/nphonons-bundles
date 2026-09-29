@@ -17,12 +17,18 @@ import estilo as E
 
 KT10 = kB * 0.010 / h / 1e9          # GHz: f_q = x · k_B T/h a 10 mK
 X_CAL = np.log(1 + 1 / 0.3)          # n_q = 0.3
+XS_REJILLA = np.geomspace(1.0, 25.0, 40)   # misma rejilla que run_termico.XS
+X_PISO = 13.0                        # por encima, γ_bf toca el piso de truncamiento (no convergido)
 
 
 def cargar():
     T = []
     for f in glob.glob(os.path.join(C.DATA, 'termico', '*.npz')):
+        if '_oc' in os.path.basename(f) or '_a' in os.path.basename(f).split('_w200')[1][:2] and not f.endswith('_a4.npz'):
+            continue                                   # excluye controles (ocupación real) y barridos en |α|²
         z = np.load(f)
+        if not np.any(np.isclose(float(z['x']), XS_REJILLA, rtol=0, atol=1e-6)):
+            continue                                   # solo la rejilla (excluye búsquedas de umbral y pruebas)
         T.append([float(z['x']), float(z['nq']), float(z['k2k']), float(z['gzk']), int(z['filtro']), float(z['gam']), int(z['N']),
                   float(z['gpf']), float(z['gbf']), float(z['eta']), float(z['pcode']), float(z['herm_cruda']),
                   float(z['tr_err']), float(z['mineig']), float(z['chi_a2'])])
@@ -117,13 +123,16 @@ def main():
     for fil, col in ((1, E.OKABE[0]), (0, E.OKABE[1])):
         for gam, ls in ((2e-5, '-'), (2e-4, '--')):
             f = filas[(filas[:, 0] == fil) & (filas[:, 1] == gam)]
-            ax.semilogy(f[:, 2], f[:, 7], ls, color=col, lw=1,
-                        label=('filtered' if fil else 'flat') + rf', $\gamma/\kappa={gam:.0e}$'.replace('e-0', r'\times10^{-') + '}$' if False else None)
-            nc = f[:, 10] == 1
-            ax.plot(f[nc, 2], f[nc, 7], 'x', color='r', ms=4)
+            fiable = (f[:, 10] == 0) & (f[:, 2] <= X_PISO)
+            ax.semilogy(f[fiable, 2], f[fiable, 7], ls, color=col, lw=1)
+            # más allá: piso de truncamiento a T → 0 (no físico); se dibuja tenue, es una cota inferior de η
+            k0 = np.where(fiable)[0].max()
+            ax.semilogy(f[k0:, 2], f[k0:, 7], ':', color=col, lw=0.7, alpha=0.5)
     for nivel in (100, 220):
         ax.axhline(nivel, color='k', lw=0.6, ls=':')
     ax.axvspan(0, X_CAL, color='0.6', alpha=0.35, hatch='///', lw=0)
+    ax.axvspan(X_PISO, 25, color='0.85', alpha=0.5, lw=0)
+    ax.text(19, 30, 'truncation floor\n($\\eta$ = lower bound)', fontsize=5.5, ha='center')
     ax.set_xlim(1, 25); ax.set_xlabel(r'$x=hf_q/k_BT$'); ax.set_ylabel(r'$\eta=\gamma_{\rm pf}/\gamma_{\rm bf}$')
     from matplotlib.lines import Line2D
     ax.legend(handles=[Line2D([], [], color=E.OKABE[0], label='filtered'), Line2D([], [], color=E.OKABE[1], label='flat'),
@@ -132,7 +141,20 @@ def main():
     sec = ax.secondary_xaxis('top', functions=(lambda x: x * KT10, lambda f: f / KT10))
     sec.set_xlabel(r'$f_q$ at 10 mK (GHz)', fontsize=7)
     ax.text(0.02, 0.96, '(a)', transform=ax.transAxes, va='top')
-    for axm, eje, ylab, lab in ((axs[0, 1], 'gz', r'$g_z/\kappa$ ($\kappa_2/\kappa=0.25$)', '(b)'), (axs[1, 0], 'k2', r'$\kappa_2/\kappa$ ($g_z/\kappa=14$)', '(c)')):
+    # mapa (γ/κ, x) en la isla
+    for fil in (1, 0):
+        m = isla & (FIL == fil) & (NN == 22)
+        xs = np.unique(X[m]); gs = np.unique(GAM[m])
+        Z = np.full((len(gs), len(xs)), np.nan)
+        for i, g in enumerate(gs):
+            for j, xv in enumerate(xs):
+                k = np.where(m & (GAM == g) & (X == xv))[0]
+                if len(k):
+                    Z[i, j] = ETA[k[0]]
+        mapas[(fil, 'gam')] = (xs, gs, Z)
+    np.savez(os.path.join(C.DATA, 'termico_mapa_gamma.npz'), x=mapas[(1, 'gam')][0], gam=mapas[(1, 'gam')][1],
+             eta_filtro=mapas[(1, 'gam')][2], eta_plano=mapas[(0, 'gam')][2])
+    for axm, eje, ylab, lab in ((axs[0, 1], 'gam', r'$\gamma/\kappa$ ($\kappa_2/\kappa=0.25$, $g_z/\kappa=14$)', '(b)'), (axs[1, 0], 'k2', r'$\kappa_2/\kappa$ ($g_z/\kappa=14$, $\gamma/\kappa=2\times10^{-5}$)', '(c)')):
         xs, ps, Z = mapas[(1, eje)]
         pc = axm.pcolormesh(xs, ps, Z, norm=LogNorm(1, 1e5), cmap='viridis', shading='nearest', rasterized=True)
         axm.contour(xs, ps, Z, levels=[100, 220], colors='w', linewidths=[0.9, 0.9], linestyles=['-', '--'])
@@ -142,7 +164,10 @@ def main():
         axm.set_xscale('log'); axm.set_yscale('log'); axm.set_xlim(1, 25)
         axm.set_xlabel(r'$x=hf_q/k_BT$'); axm.set_ylabel(ylab)
         axm.text(0.03, 0.96, lab, transform=axm.transAxes, va='top', color='w')
-        fig.colorbar(pc, ax=axm, pad=0.02).set_label(r'$\eta$ (filtered, $\gamma/\kappa=2\times10^{-5}$)', fontsize=7)
+        fig.colorbar(pc, ax=axm, pad=0.02).set_label(r'$\eta$ (filtered)', fontsize=7)
+        axm.legend(handles=[Line2D([], [], color='w', label='filtered'), Line2D([], [], color=E.OKABE[1], label='flat'),
+                            Line2D([], [], color='0.5', ls='-', label=r'$\eta=100$'), Line2D([], [], color='0.5', ls='--', label=r'$\eta=220$')],
+                   fontsize=5.5, loc='lower right', facecolor='0.3', framealpha=0.85, labelcolor='w')
     bx = axs[1, 1]
     for fil, col in ((1, E.OKABE[0]), (0, E.OKABE[1])):
         m = isla & (FIL == fil) & (GAM == 2e-5) & (NN == 22)

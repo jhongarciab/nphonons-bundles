@@ -24,8 +24,11 @@ import scipy.sparse.linalg as sla
 import comun as C
 
 
-def punto(x, k2k, gzk, filtro, gam, N, Nf=2, wk=200.0, al2=4.0, kfw=0.05, rerun=False):
-    f = os.path.join(C.DATA, 'termico', f'x{x:.5g}_k{k2k:.4g}_gz{gzk:.4g}_f{int(filtro)}_g{gam:g}_N{N}_Nf{Nf}_w{wk:g}_a{al2:g}.npz')
+def punto(x, k2k, gzk, filtro, gam, N, Nf=2, wk=200.0, al2=4.0, kfw=0.05, rerun=False, ocup='q'):
+    """ocup='q': Γ₁± con n_q (convención de la Tarea 37 y del modelo completo con un solo baño de Lindblad);
+    ocup='real': control con la ocupación a la frecuencia real del fotón emitido (n a ω para Γ₁⁻, n a 3ω para Γ₁⁺)."""
+    suf = '' if ocup == 'q' else f'_oc{ocup}'
+    f = os.path.join(C.DATA, 'termico', f'x{x:.5g}_k{k2k:.4g}_gz{gzk:.4g}_f{int(filtro)}_g{gam:g}_N{N}_Nf{Nf}_w{wk:g}_a{al2:g}{suf}.npz')
     if os.path.exists(f) and not rerun:
         return dict(np.load(f))
     nq = 1 / np.expm1(x); nm = 1 / np.expm1(x / 2)
@@ -47,8 +50,10 @@ def punto(x, k2k, gzk, filtro, gam, N, Nf=2, wk=200.0, al2=4.0, kfw=0.05, rerun=
         c += [np.sqrt(kf * (nq + 1)) * b, np.sqrt(kf * nq) * b.dag()]
     else:
         c += [np.sqrt(nq + 1) * sm, np.sqrt(nq) * sm.dag()]
-    down = Gm * (nq + 1) + Gp * nq + gam * (nm + 1)
-    up = Gm * nq + Gp * (nq + 1) + gam * nm
+    n1 = nq if ocup == 'q' else 1 / np.expm1(x / 2)          # Γ₁⁻: fotón a ω = f_q/2
+    n3 = nq if ocup == 'q' else 1 / np.expm1(3 * x / 2)      # Γ₁⁺: fotón a 3ω = 3f_q/2
+    down = Gm * (n1 + 1) + Gp * n3 + gam * (nm + 1)
+    up = Gm * n1 + Gp * (n3 + 1) + gam * nm
     c += [np.sqrt(down) * a, np.sqrt(up) * a.dag()]
     L = qt.liouvillian(H, c).data.as_scipy().tocsc()
     lam, R = sla.eigs(L, k=12, sigma=-1e-10, which='LM', tol=1e-14, maxiter=100000)

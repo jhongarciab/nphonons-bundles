@@ -252,25 +252,39 @@ Caché: `data/fig3/*.npz`, con la ρ estacionaria y los 12 modos más lentos.
 
 ---
 
-## Figura térmica (P7) — `codigo/figura_termica.py`, `calc_termico.py`, `run_termico.py`
+## Figura térmica (P7) — `codigo/figura_termica.py`, `calc_termico.py`, `run_termico.py`, `run_termico_gamma.py`, `ajuste_cbf.py`
 **Definición (la de la Tarea 37, `validacion/tarea37_worker.py`):** η = γ_pf/γ_bf.
 - γ_pf: tasa del modo, entre los modos lentos 1–3, con mayor traslape con P = e^{iπa†a}.
 - γ_bf: tasa del modo con mayor traslape con a (modo de pozo).
-- x = hf_q/(k_BT), con f_q la frecuencia del **qubit**. n_q = 1/(eˣ − 1) (baño del qubit o filtro, a f_q) y n_m = 1/(e^{x/2} − 1) (baño del oscilador, a f_q/2).
+- x = hf_q/(k_BT), con f_q la frecuencia del **qubit**; n_q = 1/(eˣ − 1).
 - Eje superior: f_q a 10 mK = x · 208.37 MHz (k_B·10 mK/h, calculado con `scipy.constants`).
 
-**Método:** modelo efectivo estático con el qubit explícito (validado en P9) y el filtro explícito (N_f = 2), con baños térmicos:
-- plano: κ[(n_q+1)D[σ₋] + n_qD[σ₊]];
-- filtro: κ_f[(n_q+1)D[b] + n_qD[b†]];
-- canales de un fonón: Γ₁±[(n_q+1)D[a∓] + n_qD[a±]];
-- pérdida intrínseca: γ[(n_m+1)D[a] + n_mD[a†]].
+**Umbrales η = 100 y η = 220: valores de referencia, no cotas derivadas aquí.**
+- η = 100 es el criterio de sesgo que se usó en la Tarea 37 y en el plan de figuras (C8). Es una convención de trabajo; no tiene justificación propia en este proyecto.
+- 220 es el umbral de Guillaud–Mirrahimi, que se define sobre κ₂/κ₁ y **no** es una cota sobre γ_pf/γ_bf. Aquí se usa solo como segundo nivel de referencia.
+- La figura los llama "valores de referencia" (pie).
 
-Los 12 modos más lentos se obtienen con eigs disperso (shift-invert). La tasa se estima como en la Tarea 37, pero en el Liouvilliano estático del marco rotante. La isla es κ₂/κ = 0.25, g_z/κ = 14, ω/κ = 200, |α|² = 4, con κ_f/ω = 0.05 o baño plano, y γ/κ = 2e-5 o 2e-4.
+**Supuestos de los baños** (convención de la Tarea 37 y del modelo completo con un solo baño de Lindblad):
+- El qubit, o el filtro, y los canales de un fonón mediados por el qubit (Γ₁±) usan n_q, la ocupación a f_q.
+- La pérdida intrínseca del oscilador usa n_m a f_q/2.
+- **Control** (`calc_termico.punto(..., ocup='real')`): si Γ₁⁻ usa n(ω) y Γ₁⁺ usa n(3ω), las frecuencias reales del fonón emitido:
+  - con filtro, γ_pf cambia ≤ 1e-4 y x*(100) no cambia (10.114);
+  - en el plano, γ_pf sube +1.1% en x = 10 y +2.9% en x = 8, y x*(100) pasa de 8.197 a 8.173 (−0.3%).
 
-**Rejillas:** x ∈ [1, 25] (40 valores) × g_z/κ ∈ [10, 40] (κ₂/κ = 0.25) y × κ₂/κ ∈ [0.02, 0.4] (g_z/κ = 14), todas con χ|α|² ≤ 0.3κ. N = 22, y N = 24 en la isla.
-**Datos:** `data/termico_curvas.csv` (η con N = 22 y 24, diferencia, bandera de convergencia, bandera caliente, validaciones), `data/termico_umbrales.csv`, `data/termico_umbral_parametro.csv`, `data/termico_ajuste_bf.csv`, `data/termico_mapas.npz`. Caché: `data/termico/`.
+**Método:** modelo efectivo estático con el qubit explícito (P9) y el filtro explícito (N_f = 2), con baños térmicos (ver el docstring de `calc_termico.py`). Espectro con eigs disperso (shift-invert).
+- Isla: κ₂/κ = 0.25, g_z/κ = 14, ω/κ = 200, |α|² = 4, con κ_f/ω = 0.05 o baño plano.
+- Rejillas: x ∈ [1, 25] (40 valores) × κ₂/κ ∈ [0.02, 0.4] (g_z/κ = 14; χ|α|²/κ ≤ 0.27) y × γ/κ ∈ [1e-6, 1e-3] en la isla. N = 22, y N = 24 en la isla.
+  - El barrido en g_z/κ ∈ [10, 40] se calculó, pero ya no se grafica, porque con filtro casi no mueve el umbral (x*(100) = 10.4 → 10.0).
+  - Ojo: su fila g_z/κ = 10 tiene χ|α|²/κ = 0.333 > 0.3; las demás cumplen.
+- **Figura:**
+  - (a) η(x) en la isla. Más allá de x = 13 las curvas son el piso de truncamiento a T → 0 (no convergido): van tenues y punteadas, y el η(T→0) real es mayor, así que es una cota inferior.
+  - (b) Mapa η(γ/κ, x) en la isla.
+  - (c) Mapa η(κ₂/κ, x) con γ/κ = 2e-5.
+  - En (b) y (c): contornos blancos para el baño filtrado y naranjas para el plano; continuos η = 100, discontinuos η = 220. El color es η con filtro.
+  - (d) γ_bf/κ frente a n_q.
+- **Datos:** `data/termico_curvas.csv`, `termico_umbrales.csv`, `termico_umbral_parametro.csv`, `termico_ajuste_bf.csv`, `termico_cbf.csv`, `termico_mapas.npz`, `termico_mapa_gamma.npz`. Caché: `data/termico/`.
 
-**Umbrales en la isla** (N = 22; N = 24 cambia x* en ≤ 0.008, es decir ≤ 0.1%):
+**Umbrales en la isla** (N = 22; N = 24 cambia x* en ≤ 0.008):
 
 | baño | γ/κ | x*(η=100) | x*(η=220) | f_q a 10 mK (η = 100 / 220) |
 |---|---|---|---|---|
@@ -279,27 +293,29 @@ Los 12 modos más lentos se obtienen con eigs disperso (shift-invert). La tasa s
 | plano | 2e-5 | 8.19 | 9.01 | 1.71 / 1.88 GHz |
 | plano | 2e-4 | 7.18 | 8.00 | 1.50 / 1.67 GHz |
 
-- **El filtro sí cambia el efecto térmico, y en contra:** con γ/κ = 2e-5 exige x unas 1.9 unidades mayor (más frío).
-  La causa es que el filtro reduce γ_pf (el numerador de η) mucho más de lo que cambia γ_bf. γ_bf/n_q vale 0.041κ con filtro y 0.032κ en el plano.
-  η mide sesgo, no calidad: el filtro mejora γ_pf en términos absolutos.
-- **Dependencia en los parámetros (filtro, γ/κ = 2e-5):**
-  - κ₂/κ domina: x*(100) = 5.0, 6.9, 9.7 y 10.8 para κ₂/κ = 0.02, 0.05, 0.2 y 0.4.
-  - g_z/κ apenas influye con filtro: x*(100) = 10.4 → 10.0 para g_z/κ = 10 → 40. En el plano sube de 8.2 a 9.3.
-- **Límite frío:** γ_bf − γ_bf(T→0) = A·n_q^p.
+- **El filtro sube el requisito en x porque reduce γ_pf** (el numerador de η); γ_bf/n_q sube solo un 28% (0.032κ → 0.041κ en la isla). η mide sesgo, no calidad.
+- **Dependencia en γ/κ** (panel (b)): el umbral depende de γ/κ mientras γ domine γ_pf. Con γ/κ ≲ 1e-5, en el plano el umbral se vuelve casi independiente de γ (x*(100) ≈ 8.4, régimen térmico puro). Con filtro sigue moviéndose.
 
-  | baño | p | A | ajuste | mediana γ_bf/n_q |
-  |---|---|---|---|---|
-  | filtrado | 1.02 | 0.05κ | rms 5% | 0.041κ |
-  | plano | 1.00 | 0.032κ | rms 0.1% | 0.032κ |
+**c_bf(κ₂/κ) por ajuste directo de γ_bf** (`ajuste_cbf.py`, `data/termico_cbf.csv`): γ_bf − γ_bf(T→0) = c_bf·n_q·κ con n_q ∈ [1e-5, 1e-2] (exponente local p = 1.00–1.02):
 
-  **Lineal en n_q**, pero con coeficiente 0.032–0.041κ, frente al "≈0.05 n_qκ" de las Tareas 36–37 (régimen de Naseem, Γ₂/κ = 0.13).
-- **Supresión con |α|²** (x = 9 y 12, |α|² = 2–6): d ln γ_bf/d|α|² ≈ −0.55 y −0.64 (plano), −0.43 y −0.42 (filtro).
-  La Tarea 44 (Gautier) da ≈ −0.55 con g₂/κ = 0.3; aquí G/κ = 0.25, así que **el baño plano coincide**. El filtro debilita la supresión.
-  El régimen lineal en n_th con supresión exponencial fuerte (−1.0 a −1.4) solo aplica para g₂/κ ≲ 0.1, fuera de esta isla.
+| κ₂/κ | 0.02 | 0.05 | 0.2 | 0.4 |
+|---|---|---|---|---|
+| c_bf con filtro | 2.62e-4 | 1.65e-3 | 2.75e-2 | 8.42e-2 |
+| c_bf en el plano | 2.76e-4 | 1.67e-3 | 2.23e-2 | 6.20e-2 |
 
-**Convergencia y validación:**
-- En la isla, 34 de 160 puntos cambian > 3% entre N = 22 y 24. **Todos están en el extremo frío (x ≳ 13)**, donde γ_bf satura en un piso de T = 0 que depende del truncamiento (≈6e-9κ con filtro, 2e-7κ en el plano). Van marcados con × y no se interpretan.
-- Ningún umbral cae ahí: la diferencia local en η junto a cada umbral es ≤ 1.5%.
-- Región caliente n_q > 0.3 (x < 1.47): achurada, excluida de los umbrales, sin interpretar.
-- **Hermiticidad antes de hermitizar** (sin simetrizar por paridad), en las 4800 ρ: ‖ρ − ρ†‖ ≤ 8.2e-13 (tolerancia 1e-10); |Tr ρ − 1| ≤ 6.7e-16; mínimo autovalor ≥ −8.7e-17. Todas cumplen.
-- Validación con el modelo completo con filtro y temperatura en la isla (x = 10.1, N = 22): en curso.
+- La incertidumbre (semi-rango intercuartil) es ≤ 2%.
+- **c_bf ∝ (G/κ)^s**, con G/κ = √(κ₂/κ)/2: **s = 3.96 ± 0.04 con filtro y 3.69 ± 0.05 en el plano.**
+- **El "≈0.05 n_qκ" de las Tareas 36–37 no es una constante** y no debe citarse como tal: c_bf varía más de dos órdenes de magnitud con κ₂/κ.
+
+**Supresión con |α|²** (x = 9 y 12, |α|² = 2–6): d ln γ_bf/d|α|² ≈ −0.55 y −0.64 en el plano, −0.43 y −0.42 con filtro.
+- Con G/κ = 0.25, el plano coincide con la Tarea 44 (Gautier: ≈ −0.55 con g₂/κ = 0.3). El filtro debilita la supresión.
+- La supresión fuerte (−1.0 a −1.4) solo aplica con g₂/κ ≲ 0.1.
+
+**Convergencia y validaciones:**
+- En la isla, 34 de 160 puntos cambian > 3% entre N = 22 y 24, todos con x ≳ 13 (el piso de T = 0). Ningún umbral cae ahí: la diferencia local de η junto a cada umbral es ≤ 1.5%.
+- Región caliente n_q > 0.3 (x < 1.47): achurada y excluida.
+- **Hermiticidad antes de hermitizar** (sin simetrizar por paridad) en todas las ρ: ‖ρ − ρ†‖ ≤ 1.4e-11 (tolerancia 1e-10); |Tr ρ − 1| ≤ 6.7e-16; mínimo autovalor ≥ −8.7e-17.
+- **Validación con el modelo completo** (con filtro y temperatura, N = 22): en curso (`codigo/run_validacion_termica.sh`).
+  - Punto 1: isla, x = 10.1.
+  - Punto 2: κ₂/κ = 0.05, x = 6.86 = x*(100) del efectivo.
+  - T = 0 en los dos puntos.
