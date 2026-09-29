@@ -34,7 +34,6 @@ def delta(carpeta, patron, clave_conf=None):
 def main():
     Dp = delta('minimo', 'k*_N24.npz')
     Df = delta('minimo_filtro', 'k*_kf10_N20_Nf3.npz', True)
-    K_VERIF = 0.1       # panel (b): por encima, κ₁ filtrado no verificado (P10)
     KMAX_F = 1.5        # con filtro y κ₂/κ > 1.5 el retorno de P_c no es monótono (sobrepaso): tasa no definida
     Df = Df[(Df[:, 0] <= KMAX_F) & np.isfinite(Df[:, 1])]
     c = np.polyval(np.polyfit(Dp[:3, 0], Dp[:3, 1] / Dp[:3, 0], 1), 0.0)
@@ -72,12 +71,8 @@ def main():
         if i == 0:
             ax.contour(GZ, KK, e, levels=[1 / 220], colors='w', linewidths=1.0)
         else:
-            # P10: en régimen saturado (κ₂/κ ≳ 0.1) el κ₁ filtrado no está verificado (exceso ×2.3 en κ₂/κ = 0.3)
-            ea = np.where(KK <= K_VERIF, e, np.nan); eb = np.where(KK >= K_VERIF, e, np.nan)
-            ax.contour(GZ, KK, ea, levels=[1 / 220], colors='w', linewidths=1.0)
-            ax.contour(GZ, KK, eb, levels=[1 / 220], colors='w', linewidths=1.0, linestyles='--')
-            ax.axhspan(K_VERIF, KMAX_F, color='w', alpha=0.18, lw=0)
-            ax.text(8, 0.35, 'not verified\n(P10)', fontsize=5.5, color='w', ha='center')
+            # P10 resuelto (artefacto de N = 16): verificado con N = 20 en κ₂/κ = 0.03 y 0.3 (ε completo/mapa = 0.987, 0.975)
+            ax.contour(GZ, KK, e, levels=[1 / 220], colors='w', linewidths=1.0)
         ax.contourf(GZ, KK, chi_mala.astype(float), levels=[0.5, 1.5], colors=['w'], alpha=0.28)
         ax.set_xscale('log'); ax.set_yscale('log')
         ax.set_xlabel(r'$g_z/\kappa$')

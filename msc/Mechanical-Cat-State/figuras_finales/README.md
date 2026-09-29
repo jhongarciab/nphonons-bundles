@@ -215,5 +215,6 @@ Caché: `data/fig3/*.npz`, con la ρ estacionaria y los 12 modos más lentos.
   - N_f = 2 → 3 cambia 1.2%; se usa N_f = 3.
 - **Verificación con el modelo completo con filtro** (`verif_figura_central.py`, N = 16, N_f = 2, ω/κ = 200, κ_f = 0.3):
   - (κ₂/κ, g_z/κ) = (0.03, 4): ε_completo/ε_mapa = **1.03**; κ₁ = 1.03 veces el predicho y confinamiento 1.04 veces el del plano.
-  - (0.3, 12): ε_completo/ε_mapa = **2.29**. El confinamiento sí coincide (0.94 frente a 0.955 del mapa), pero **κ₁ = 2.26 veces el filtrado predicho** (ver P10).
+  - (0.3, 12): con N = 16 salía 2.29, pero era un **artefacto de truncamiento** (P10).
+  - **Con N = 20:** (0.03, 12) da ε_completo/ε_mapa = 0.987 y (0.3, 12) da 0.975 (γ_pf/predicho = 0.986 y 0.980). El panel (b) queda verificado en los dos regímenes.
   - Validaciones: |Tr ρ − 1| ≤ 2e-16 y mínimo autovalor ≥ −1e-12.
