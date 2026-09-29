@@ -7,17 +7,18 @@ import numpy as np
 import comun as C
 import calc_termico as CT
 
-PUNTOS = [(1.7857143, 0.25, 10.1), (0.79859571, 0.05, 6.86)]
+PUNTOS = [(0.0535714, 0.25, 10.1), (0.0239579, 0.05, 6.86)]   # g_x en unidades de Ma (κ = 0.03, ω = 6)
+KAP = 0.03                                                      # las tasas del completo se dividen por κ
 filas = []
 for gx, k2k, x in PUNTOS:
-    ft = glob.glob(os.path.join(C.DATA, 'filtro_completo', f'gx{gx:.6g}_w200_gz14_kf10_al4_N22_Nf2_gam2e-05_x{x:g}.npz'))
-    f0 = glob.glob(os.path.join(C.DATA, 'filtro_completo', f'gx{gx:.6g}_w200_gz14_kf10_al4_N22_Nf2_gam2e-05.npz'))
+    ft = glob.glob(os.path.join(C.DATA, 'filtro_completo', f'gx{gx:.6g}_w6_gz0.42_kf0.3_al4_N22_Nf2_gam6e-07_x{x:g}.npz'))
+    f0 = glob.glob(os.path.join(C.DATA, 'filtro_completo', f'gx{gx:.6g}_w6_gz0.42_kf0.3_al4_N22_Nf2_gam6e-07.npz'))
     if not ft:
         print(f"κ₂/κ={k2k}: falta la corrida térmica del modelo completo"); continue
     z = np.load(ft[0]); e = CT.punto(x, k2k, 14.0, 1, 2e-5, 22)
     e0 = CT.punto(60.0, k2k, 14.0, 1, 2e-5, 22)              # efectivo a T → 0 (n_q ~ 1e-26)
-    gb0 = float(np.load(f0[0])['gbf']) if f0 else np.nan
-    gpf_c, gbf_c = float(z['gpf']), float(z['gbf']); gpf_e, gbf_e = float(e['gpf']), float(e['gbf'])
+    gb0 = float(np.load(f0[0])['gbf']) / KAP if f0 else np.nan
+    gpf_c, gbf_c = float(z['gpf']) / KAP, float(z['gbf']) / KAP; gpf_e, gbf_e = float(e['gpf']), float(e['gbf'])
     r = [k2k, x, gpf_c, gpf_e, gpf_c / gpf_e, gbf_c, gbf_e, gbf_c / gbf_e, gpf_c / gbf_c, gpf_e / gbf_e,
          (gpf_c / gbf_c) / (gpf_e / gbf_e), gb0, float(e0['gbf']), gb0 / gbf_c, float(z['herm_cruda']), *np.array(z['val'])]
     filas.append(r)
