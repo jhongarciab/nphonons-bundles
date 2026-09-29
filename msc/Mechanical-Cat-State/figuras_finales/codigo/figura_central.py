@@ -66,9 +66,11 @@ def main():
     EPS_MIN = 1e-5       # por debajo mandan otros canales (pérdida intrínseca, temperatura, desfase del qubit)
     norm = LogNorm(EPS_MIN, 10)
     lev = np.geomspace(EPS_MIN, 10, 25)
+    GAM_COLOR = 2e-5      # el color de (b) incluye el piso γ/κ = 2e-5
+    eps_b_col = eps_b + GAM_COLOR / (ip(Df, KK) / c)
     for i, (e, lab) in enumerate([(eps_a, '(a) flat bath'), (eps_b, r'(b) filtered, $\kappa_f/\omega=0.05$')]):
         ax = fig.add_subplot(gs[i])
-        cs = ax.contourf(GZ, KK, np.clip(e, EPS_MIN * 1.01, 9.9), levels=lev, norm=norm, cmap='cividis')
+        cs = ax.contourf(GZ, KK, np.clip(e if i == 0 else eps_b_col, EPS_MIN * 1.01, 9.9), levels=lev, norm=norm, cmap='cividis')
         if i == 0:
             ax.contour(GZ, KK, e, levels=[1 / 220], colors='w', linewidths=1.0)
         else:
@@ -77,18 +79,20 @@ def main():
             ax.contour(GZ, KK, e, levels=[1 / 220], colors='w', linewidths=0.6)
             ax.contour(GZ, KK, e, levels=[1e-3], colors='w', linewidths=0.6, linestyles='--')
             # con piso intrínseco γ = ω/Q (ω/κ = 200): κ₁ → κ₁^filt + γ
-            for Q, col in [(1e6, E.OKABE[1]), (1e7, E.OKABE[5])]:
-                ep = e + (WK / Q) / (ip(Df, KK) / c)
+            for gk, col in [(2e-4, E.OKABE[1]), (2e-5, E.OKABE[5])]:     # piso γ/κ = (ω/κ)/Q
+                ep = e + gk / (ip(Df, KK) / c)
                 ax.contour(GZ, KK, ep, levels=[1 / 220], colors=[col], linewidths=1.1)
                 ax.contour(GZ, KK, ep, levels=[1e-3], colors=[col], linewidths=1.1, linestyles='--')
             from matplotlib.lines import Line2D
             ax.legend(handles=[Line2D([], [], color='w', lw=0.6, label='no floor'),
-                               Line2D([], [], color=E.OKABE[1], lw=1.1, label=r'$Q=10^6$'),
-                               Line2D([], [], color=E.OKABE[5], lw=1.1, label=r'$Q=10^7$'),
+                               Line2D([], [], color=E.OKABE[1], lw=1.1, label=r'$\gamma/\kappa=2\times10^{-4}$'),
+                               Line2D([], [], color=E.OKABE[5], lw=1.1, label=r'$\gamma/\kappa=2\times10^{-5}$'),
                                Line2D([], [], color='0.5', lw=1, label=r'$\epsilon=1/220$'),
                                Line2D([], [], color='0.5', lw=1, ls='--', label=r'$\epsilon=10^{-3}$')],
-                      loc='lower right', fontsize=5.5, facecolor='0.3', framealpha=0.85, labelcolor='w')
-        ax.contourf(GZ, KK, chi_mala.astype(float), levels=[0.5, 1.5], colors=['w'], alpha=0.28)
+                      loc='lower right', fontsize=5.5, facecolor='0.3', framealpha=0.9, labelcolor='w').set_zorder(10)
+            ax.contourf(GZ, KK, chi_mala.astype(float), levels=[0.5, 1.5], colors=['w'], alpha=0.25, zorder=4)
+        if i == 0:
+            ax.contourf(GZ, KK, chi_mala.astype(float), levels=[0.5, 1.5], colors=['w'], alpha=0.28)
         ax.set_xscale('log'); ax.set_yscale('log')
         ax.set_xlabel(r'$g_z/\kappa$')
         if i == 0:
@@ -127,6 +131,12 @@ def main():
             i = np.where(row < 1 / 220)[0]
             u = np.exp(np.interp(np.log(1 / 220), np.log(row[::-1]), np.log(gz[::-1]))) if len(i) and row.min() < 1 / 220 else np.nan
             print(f"   κ₂/κ={kk[j]:.3g}: umbral g_z/κ con piso={u:.4f} (sin piso {umb[j,2]:.4f}); piso/κ₁^filt en el umbral sin piso = {gam/(f_filt*kk[j]/(16*umb[j,2]**2)):.2f}")
+    # parte del contorno ε = 1/220 con γ/κ = 2e-4 dentro de la zona verificada (χ|α|² ≤ 0.3κ)
+    ep = eps_b + 2e-4 / (ip(Df, KK) / c)
+    filas_ok = [(kk[j], gz[np.where(ep[j] < 1 / 220)[0]]) for j in range(len(kk)) if np.any(ep[j] < 1 / 220)]
+    for k, gzs in filas_ok[::4]:
+        gmin = gzs.min(); gchi = np.sqrt(k / (0.3 / (AL2 * (8 / 3) * WK / 16)))
+        print(f"γ/κ=2e-4: κ₂/κ={k:.3f}: ε<1/220 para g_z/κ ≥ {gmin:.2f}; verificado (χ|α|²≤0.3κ) para g_z/κ ≥ {gchi:.2f}")
     print(f"predicción adiabática: factor = sqrt(f_filt/(10/9)) = {np.sqrt(f_filt/(10/9)):.4f}; κ_f/(2ω) = {KFW/2:.4f}")
 
 

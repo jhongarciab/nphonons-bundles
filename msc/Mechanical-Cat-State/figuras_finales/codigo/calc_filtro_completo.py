@@ -10,8 +10,8 @@ import qutip as qt
 import comun as C
 
 
-def punto(gx, w, gz, kap, kf, al2, N, Nf, rerun=False, variante='full', espectro=False):
-    suf = '' if variante == 'full' else f'_{variante}'
+def punto(gx, w, gz, kap, kf, al2, N, Nf, rerun=False, variante='full', espectro=False, gam=0.0):
+    suf = ('' if variante == 'full' else f'_{variante}') + (f'_gam{gam:g}' if gam else '')
     f = os.path.join(C.DATA, 'filtro_completo', f'gx{gx:.6g}_w{w:g}_gz{gz:.6g}_kf{kf:g}_al{al2:g}_N{N}_Nf{Nf}{suf}.npz')
     if os.path.exists(f) and not rerun:
         return dict(np.load(f))
@@ -28,7 +28,8 @@ def punto(gx, w, gz, kap, kf, al2, N, Nf, rerun=False, variante='full', espectro
     H = [H0, [Om * sm.dag(), lambda t: np.exp(-1j * wp * t)], [Om * sm, lambda t: np.exp(1j * wp * t)]]
     Tp = 2 * np.pi / wp
     t0 = time.time()
-    U = qt.propagator(H, Tp, [np.sqrt(kf) * b], options=C.OPTS).full()
+    cops = [np.sqrt(kf) * b] + ([np.sqrt(gam) * a] if gam else [])     # γD[a]: pérdida intrínseca del oscilador
+    U = qt.propagator(H, Tp, cops, options=C.OPTS).full()
     tprop = time.time() - t0
     lam, R = np.linalg.eig(U); Linv = np.linalg.inv(R)
     D = 2 * N * Nf; d = gz / w if variante == 'full' else 0.0; al = np.sqrt(complex(Om / G))
@@ -54,7 +55,7 @@ def punto(gx, w, gz, kap, kf, al2, N, Nf, rerun=False, variante='full', espectro
     serie = np.real(np.exp(np.outer(ns, np.log(lam.astype(complex)))) @ (c * p))
     A = a.full() - d * np.eye(D)
     # P_e promediado en un período (C5)
-    rr = qt.mesolve(H, qt.Qobj(M, dims=[[N, 2, Nf], [N, 2, Nf]]), np.linspace(0, Tp, 41), [np.sqrt(kf) * b],
+    rr = qt.mesolve(H, qt.Qobj(M, dims=[[N, 2, Nf], [N, 2, Nf]]), np.linspace(0, Tp, 41), cops,
                     e_ops={'Pe': sm.dag() * sm}, options=C.OPTS)
     Pe_prom = np.mean(np.real(rr.e_data['Pe'][:-1]))
     extra = {}
@@ -62,12 +63,12 @@ def punto(gx, w, gz, kap, kf, al2, N, Nf, rerun=False, variante='full', espectro
         # P10(2): S(ν) = FT <σ₊(τ)σ₋(0)> desde el estacionario en fase 0 del drive (regresión cuántica)
         taus = np.arange(0, 400, 0.05)
         X0 = qt.Qobj(sm.full() @ M, dims=[[N, 2, Nf], [N, 2, Nf]])
-        rs = qt.mesolve(H, X0, taus, [np.sqrt(kf) * b], e_ops={'c': sm.dag()}, options=dict(atol=1e-10, rtol=1e-8, nsteps=10**7))
+        rs = qt.mesolve(H, X0, taus, cops, e_ops={'c': sm.dag()}, options=dict(atol=1e-10, rtol=1e-8, nsteps=10**7))
         corr = np.array(rs.e_data['c'])
         nu = np.fft.fftfreq(len(taus), taus[1] - taus[0]) * 2 * np.pi
         S = 2 * np.real(np.fft.fft(corr * np.hanning(2 * len(taus))[len(taus):])) * (taus[1] - taus[0])
         extra = dict(taus=taus, corr=corr, nu=nu, S=S)
-    res = dict(variante=variante, Pe_prom=Pe_prom, **extra,gx=gx, w=w, gz=gz, kap=kap, kf=kf, al2=al2, N=N, Nf=Nf, kap2=kap2, gpf=gpf, t=ns * Tp, Pc_din=serie,
+    res = dict(variante=variante, gam=gam, Pe_prom=Pe_prom, **extra,gx=gx, w=w, gz=gz, kap=kap, kf=kf, al2=al2, N=N, Nf=Nf, kap2=kap2, gpf=gpf, t=ns * Tp, Pc_din=serie,
                Pc_ss=np.real(np.trace(Pc_op @ M)), al2eff=np.trace(A @ A @ M), val=np.array(C.validar(M)), tprop=tprop)
     os.makedirs(os.path.dirname(f), exist_ok=True)
     np.savez(f, **res)
@@ -77,6 +78,7 @@ def punto(gx, w, gz, kap, kf, al2, N, Nf, rerun=False, variante='full', espectro
 if __name__ == '__main__':
     gx, w, gz, kap, kf, al2 = map(float, sys.argv[1:7]); N, Nf = int(sys.argv[7]), int(sys.argv[8])
     var = next((x.split('=')[1] for x in sys.argv if x.startswith('--variante=')), 'full')
-    r = punto(gx, w, gz, kap, kf, al2, N, Nf, '--rerun' in sys.argv, var, '--espectro' in sys.argv)
+    gam = float(next((x.split('=')[1] for x in sys.argv if x.startswith('--gam=')), 0.0))
+    r = punto(gx, w, gz, kap, kf, al2, N, Nf, '--rerun' in sys.argv, var, '--espectro' in sys.argv, gam)
     print(f"gx={gx} w={w} gz={gz} kf={kf}: κ₂/κ={float(r['kap2'])/kap:.4f} γ_pf={float(r['gpf']):.5e} P_c={float(r['Pc_ss']):.5f} P_e={float(r['Pe_prom']):.5f} var={var} "
           f"val={r['val']} t={float(r['tprop']):.0f}s")

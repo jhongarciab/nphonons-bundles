@@ -229,9 +229,14 @@ Caché: `data/fig3/*.npz`, con la ρ estacionaria y los 12 modos más lentos.
     | (0.3, 12): ε_completo/ε_mapa | 2.288 | 0.975 | 0.972 |
 
     Entre N = 20 y 22, γ_pf cambia 0.8% y 0.3%, y el confinamiento < 0.05%. Validaciones con N = 22: |Tr ρ − 1| = 0 y mínimo autovalor ≥ −5.6e-9.
-- **Piso intrínseco en (b):** κ₁ → κ₁^filt + γ, con γ = ω/Q (γ/κ = 200/Q). Curvas naranja (Q = 1e6) y celeste (Q = 1e7); continua para ε = 1/220 y discontinua para ε = 1e-3. Sin piso: líneas blancas finas.
-  - Como ε ≥ γ/κ₂^eff, alcanzar ε = 1/220 exige κ₂^eff/κ ≥ 220γ/κ: 0.044 con Q = 1e6 y 0.0044 con Q = 1e7. Para ε = 1e-3 hace falta ≥ 0.2 y ≥ 0.02.
-  - **Q = 1e6:** ε = 1/220 solo se alcanza en una franja estrecha, κ₂/κ ≈ 0.2–0.35 (donde κ₂^eff es máximo), y con g_z/κ ≳ 1.1, frente a 0.24 sin piso. ε = 1e-3 no se alcanza en ningún punto.
-  - **Q = 1e7:** el umbral de 1/220 se desplaza +44% en κ₂/κ = 0.01, +14% en 0.03, +7% en 0.1, +5% en 0.3 y +8% en 1. En el umbral sin piso, el piso vale 0.52, 0.23, 0.13, 0.10 y 0.15 veces κ₁^filt: **nunca baja del 10%**, así que no llega a ser despreciable. El mejor régimen es κ₂/κ ≈ 0.3.
-  - Escala de color limitada a ε ≥ 1e-5. **Pie:** por debajo de ese valor mandan otros canales (pérdida intrínseca, temperatura, desfase del qubit).
+- **Precisión con filtro (declarada):** ε_completo/ε_mapa = 0.979 en (κ₂/κ, g_z/κ) = (0.03, 12) y 0.972 en (0.3, 12), con N = 22. Es decir, **~2–3%**, convergido (N = 20 → 22: < 1%).
+- **Piso intrínseco en (b):** κ₁ → κ₁^filt + γ, rotulado por **γ/κ** (el piso depende solo de γ/κ = (ω/κ)/Q).
+  Curvas: naranja γ/κ = 2e-4, celeste γ/κ = 2e-5; continua para ε = 1/220, discontinua para ε = 1e-3; líneas blancas finas sin piso.
+  - **Pie:** Ma (Q = 1e7, ω/κ = 200) tiene γ/κ = 2e-5. Naseem (γ/2π = 15 Hz, κ/2π = 100 kHz) tiene γ/κ = 1.5e-4.
+  - Alcanzar ε = 1/220 exige κ₂^eff/κ ≥ 220γ/κ: 0.044 con γ/κ = 2e-4 y 0.0044 con 2e-5. Para ε = 1e-3, ≥ 0.2 y ≥ 0.02.
+  - **γ/κ = 2e-4:** ε = 1/220 solo en la franja κ₂/κ ≈ 0.19–0.33, con g_z/κ ≳ 0.8–1.9 según κ₂; ε = 1e-3 no se alcanza.
+    **Dentro de la zona verificada (χ|α|² ≤ 0.3κ, ω/κ = 200) solo queda la parte con g_z/κ ≥ 9.3 (κ₂/κ = 0.19) a 11.9 (0.32), es decir g_z/κ ≳ 10.**
+  - **γ/κ = 2e-5:** el umbral de 1/220 se desplaza +44% en κ₂/κ = 0.01, +14% en 0.03, +7% en 0.1, +5% en 0.3 y +8% en 1; el piso nunca baja del 10% de κ₁^filt.
+  - **Color de (b):** ε **con** el piso γ/κ = 2e-5. Escala limitada a ε ≥ 1e-5; por debajo mandan otros canales (pérdida intrínseca, temperatura, desfase del qubit).
+  - La región χ|α|² > 0.3κ (ω/κ = 200) se superpone sombreada sobre las curvas del piso.
   - Validaciones: |Tr ρ − 1| ≤ 2e-16 y mínimo autovalor ≥ −1e-12.
