@@ -24,10 +24,10 @@ import scipy.sparse.linalg as sla
 import comun as C
 
 
-def punto(x, k2k, gzk, filtro, gam, N, Nf=2, wk=200.0, al2=4.0, kfw=0.05, rerun=False, ocup='q'):
+def punto(x, k2k, gzk, filtro, gam, N, Nf=2, wk=200.0, al2=4.0, kfw=0.05, rerun=False, ocup='q', kick=False):
     """ocup='q': Γ₁± con n_q (convención de la Tarea 37 y del modelo completo con un solo baño de Lindblad);
     ocup='real': control con la ocupación a la frecuencia real del fotón emitido (n a ω para Γ₁⁻, n a 3ω para Γ₁⁺)."""
-    suf = ('' if ocup == 'q' else f'_oc{ocup}') + ('_nqoff' if os.environ.get('NQ_OFF') else '') + ('_nmoff' if os.environ.get('NM_OFF') else '')
+    suf = ('' if ocup == 'q' else f'_oc{ocup}') + ('_kick' if kick else '') + ('_nqoff' if os.environ.get('NQ_OFF') else '') + ('_nmoff' if os.environ.get('NM_OFF') else '')
     f = os.path.join(C.DATA, 'termico', f'x{x:.5g}_k{k2k:.4g}_gz{gzk:.4g}_f{int(filtro)}_g{gam:g}_N{N}_Nf{Nf}_w{wk:g}_a{al2:g}{suf}.npz')
     if os.path.exists(f) and not rerun:
         return dict(np.load(f))
@@ -57,6 +57,15 @@ def punto(x, k2k, gzk, filtro, gam, N, Nf=2, wk=200.0, al2=4.0, kfw=0.05, rerun=
     down = Gm * (n1 + 1) + Gp * n3 + gam * (nm + 1)
     up = Gm * n1 + Gp * (n3 + 1) + gam * nm
     c += [np.sqrt(down) * a, np.sqrt(up) * a.dag()]
+    if kick:
+        # Hipótesis (P7, fase 4): los saltos del baño plano del qubit llevan el desplazamiento dependiente del estado del marco polarónico,
+        # σ∓ → σ∓ D(β), β = 2g_z/ω. En la aproximación secular: D[σ₋a], D[σ₋a†] con tasa β²κ(n_q+1) y D[σ₊a], D[σ₊a†] con tasa β²κ n_q.
+        if filtro:
+            raise ValueError('kick solo definido para el baño plano')
+        beta2 = (2 * gzk / w)**2
+        c += [np.sqrt(beta2 * (nq + 1)) * sm * a, np.sqrt(beta2 * (nq + 1)) * sm * a.dag()]
+        if nq:
+            c += [np.sqrt(beta2 * nq) * sm.dag() * a, np.sqrt(beta2 * nq) * sm.dag() * a.dag()]
     L = qt.liouvillian(H, c).data.as_scipy().tocsc()
     lam, R = sla.eigs(L, k=12, sigma=-1e-10, which='LM', tol=1e-14, maxiter=100000)
     orden = np.argsort(-lam.real); lam, R = lam[orden], R[:, orden]
