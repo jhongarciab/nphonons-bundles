@@ -1,0 +1,3 @@
+κ₂/κ=0.25 x=10.1: γ_pf c/e=0.9562  γ_bf c/e=0.7976  η c/e=1.1988 (η_c=118.2, η_e=98.63)  γ_bf(T=0) completo=3.083e-08 efectivo=5.819e-09  fracción del térmico=2.34e-02  herm_cruda=8.5e-10  NO CUMPLE el criterio
+κ₂/κ=0.05: falta la corrida térmica del modelo completo
+κ₂/κ=0.25: falta la corrida térmica del modelo completo

@@ -1,0 +1,3 @@
+κ₂/κ=0.25 x=10.1: γ_pf c/e=0.9562  γ_bf c/e=0.7976  η c/e=1.1988 (η_c=118.2, η_e=98.63)  γ_bf(T=0) completo=3.086e-08 efectivo=5.819e-09  fracción del térmico=2.35e-02  herm_cruda=1.2e-09  NO CUMPLE el criterio
+κ₂/κ=0.05 x=6.86: γ_pf c/e=0.9588  γ_bf c/e=0.9561  η c/e=1.0029 (η_c=100.2, η_e=99.95)  γ_bf(T=0) completo=4.931e-09 efectivo=4.959e-09  fracción del térmico=2.99e-03  herm_cruda=1.8e-09  ACEPTADO
+κ₂/κ=0.25 x=6.86: γ_pf c/e=0.9588  γ_bf c/e=0.7848  η c/e=1.2216 (η_c=4.935, η_e=4.039)  γ_bf(T=0) completo=3.086e-08 efectivo=5.819e-09  fracción del térmico=9.22e-04  herm_cruda=4.1e-10  NO CUMPLE el criterio
