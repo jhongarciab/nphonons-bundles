@@ -7,7 +7,7 @@ import numpy as np
 import comun as C
 import calc_termico as CT
 
-PUNTOS = [(0.0535714, 0.25, 10.1), (0.0239579, 0.05, 6.86), (0.0535714, 0.25, 6.86)]   # g_x en unidades de Ma (κ = 0.03, ω = 6)
+PUNTOS = [(0.0535714, 0.25, 10.1), (0.0239579, 0.05, 6.86), (0.0535714, 0.25, 6.86), (0.0338816, 0.1, 6.86), (0.0677631, 0.4, 6.86)]   # g_x en unidades de Ma (κ = 0.03, ω = 6)
 KAP = 0.03                                                      # las tasas del completo se dividen por κ
 filas = []
 SUF = os.environ.get('SUF', '')   # '_tolE' para las corridas con tolerancia estricta

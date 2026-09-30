@@ -20,26 +20,31 @@ def punto(gx, w, gz, kap, kf, al2, N, Nf, rerun=False, variante='full', espectro
         return dict(np.load(f))
     I = [qt.qeye(N), qt.qeye(2), qt.qeye(Nf)]
     op = lambda k, o: qt.tensor(*[o if i == k else I[i] for i in range(3)])
-    a, sm, sz, sx, b = op(0, qt.destroy(N)), op(1, qt.sigmam()), op(1, qt.sigmaz()), op(1, qt.sigmax()), op(2, qt.destroy(Nf))
+    a, sm, sz, sx, b = op(0, qt.destroy(N)), op(1, qt.sigmam()), op(1, qt.sigmaz()), op(1, qt.sigmax()), op(2, (qt.destroy(Nf) if Nf > 1 else qt.qzero(1)))
     wp = 2 * (w - 4 * gx**2 / (3 * w)); G = 2 * gx * gz / w; Om = al2 * G; J = np.sqrt(kap * kf) / 2
     if variante == 'nogz_pair':
         # P10(1): sin g_z σ_z (a+a†); intercambio de pares explícito −G(σ₊a² + h.c.) (signo de R1)
         H0 = w * a.dag() * a + 0.5 * wp * sz + gx * (a + a.dag()) * sx - G * (sm.dag() * a * a + sm * a.dag() * a.dag())
     else:
         H0 = w * a.dag() * a + 0.5 * wp * sz + (a + a.dag()) * (gx * sx + gz * sz)
-    H0 = H0 + 2 * w * b.dag() * b + J * (sm.dag() * b + sm * b.dag())
+    plano = variante == 'plano'   # baño plano: qubit con κD[σ₋] directo, sin filtro (usar Nf = 1)
+    if not plano:
+        H0 = H0 + 2 * w * b.dag() * b + J * (sm.dag() * b + sm * b.dag())
     H = [H0, [Om * sm.dag(), lambda t: np.exp(-1j * wp * t)], [Om * sm, lambda t: np.exp(1j * wp * t)]]
     Tp = 2 * np.pi / wp
     t0 = time.time()
     # baños térmicos (convención de la Tarea 37): filtro a f_q con n_q; oscilador a f_q/2 con n_m. x = h f_q/(k_B T)
     nq = 1 / np.expm1(x) if x else 0.0; nm = 1 / np.expm1(x / 2) if x else 0.0
-    cops = [np.sqrt(kf * (nq + 1)) * b] + ([np.sqrt(kf * nq) * b.dag()] if nq else [])
+    if plano:
+        cops = [np.sqrt(kap * (nq + 1)) * sm] + ([np.sqrt(kap * nq) * sm.dag()] if nq else [])
+    else:
+        cops = [np.sqrt(kf * (nq + 1)) * b] + ([np.sqrt(kf * nq) * b.dag()] if nq else [])
     if gam:
         cops += [np.sqrt(gam * (nm + 1)) * a] + ([np.sqrt(gam * nm) * a.dag()] if nm else [])
     U = qt.propagator(H, Tp, cops, options=opts).full()
     tprop = time.time() - t0
     lam, R = np.linalg.eig(U); Linv = np.linalg.inv(R)
-    D = 2 * N * Nf; d = gz / w if variante == 'full' else 0.0; al = np.sqrt(complex(Om / G))
+    D = 2 * N * Nf; d = gz / w if variante != 'nogz_pair' else 0.0; al = np.sqrt(complex(Om / G))
     Dd = qt.displace(N, d)
     ca, cb = Dd * qt.coherent(N, al), Dd * qt.coherent(N, -al)
     Pc_op = qt.tensor((ca + cb).unit().proj() + (ca - cb).unit().proj(), qt.qeye(2), qt.qeye(Nf)).full()
