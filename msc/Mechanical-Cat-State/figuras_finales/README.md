@@ -315,7 +315,17 @@ Caché: `data/fig3/*.npz`, con la ρ estacionaria y los 12 modos más lentos.
 - En la isla, 34 de 160 puntos cambian > 3% entre N = 22 y 24, todos con x ≳ 13 (el piso de T = 0). Ningún umbral cae ahí: la diferencia local de η junto a cada umbral es ≤ 1.5%.
 - Región caliente n_q > 0.3 (x < 1.47): achurada y excluida.
 - **Hermiticidad antes de hermitizar** (sin simetrizar por paridad) en todas las ρ: ‖ρ − ρ†‖ ≤ 1.4e-11 (tolerancia 1e-10); |Tr ρ − 1| ≤ 6.7e-16; mínimo autovalor ≥ −8.7e-17.
-- **Validación con el modelo completo** (con filtro y temperatura, N = 22): en curso (`codigo/run_validacion_termica.sh`).
-  - Punto 1: isla, x = 10.1.
-  - Punto 2: κ₂/κ = 0.05, x = 6.86 = x*(100) del efectivo.
-  - T = 0 en los dos puntos.
+- **Validación con el modelo completo** (con filtro, temperatura y γ = 2e-5κ; N = 22; unidades de Ma κ = 0.03, ω = 6; `run_validacion_termica.sh`, `verif_termica.py`, `data/termico_validacion.csv`).
+  Criterio: γ_pf y γ_bf dentro de ±5%, y γ_bf(T=0) < 1% del térmico.
+
+  | punto | γ_pf c/e | γ_bf c/e | η c/e | η completo / efectivo | γ_bf(T=0)/γ_bf térmico | hermiticidad cruda |
+  |---|---|---|---|---|---|---|
+  | isla (κ₂/κ = 0.25), x = 10.1 | 0.956 | **0.798** | 1.199 | 118.2 / 98.6 | **2.35%** | 1.2e-9 |
+  | κ₂/κ = 0.05, x = 6.86 | 0.959 | 0.956 | 1.003 | 100.2 / 99.95 | 0.30% | 1.8e-9 |
+
+  - **κ₂/κ = 0.05: aceptado** en tasas y piso.
+  - **Isla: no cumple.** El efectivo sobreestima γ_bf en un 20% (c_bf completo ≈ 0.78 veces el efectivo tras restar el piso), y el piso de T = 0 del completo (3.1e-8κ, cinco veces el del efectivo) supera el 1%.
+    La discrepancia crece con κ₂/κ: aparece en la isla, que está en el régimen saturado (κ₂/κ > 0.06), y no en κ₂/κ = 0.05. Es compatible con una corrección no adiabática del bit-flip que el efectivo no captura (hipótesis, no verificada).
+    **Efecto en el umbral:** η completo = 1.2 veces el efectivo ⇒ x*(100) ≈ 10.11 − ln 1.2 ≈ 9.93 (−1.8%). El efectivo es conservador en la isla.
+  - **Hermiticidad cruda** de las corridas completas con filtro y N = 22: 1.2–2.3e-9, **por encima de la tolerancia 1e-10**. La traza (≤ 2.2e-16) y la positividad (≥ −4.4e-10) cumplen.
+  - El primer intento en unidades κ = 1 (ω = 200) no sirve: modo de pozo no convergido.
