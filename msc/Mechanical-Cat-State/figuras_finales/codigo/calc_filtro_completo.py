@@ -11,7 +11,10 @@ import comun as C
 
 
 def punto(gx, w, gz, kap, kf, al2, N, Nf, rerun=False, variante='full', espectro=False, gam=0.0, x=None):
-    suf = ('' if variante == 'full' else f'_{variante}') + (f'_gam{gam:g}' if gam else '') + (f'_x{x:g}' if x else '')
+    # TOL_ESTRICTA=1: tolerancia del integrador del propagador más apretada (atol 1e-14, rtol 1e-12; por defecto 1e-12, 1e-10)
+    estricta = bool(os.environ.get('TOL_ESTRICTA'))
+    opts = dict(atol=1e-14, rtol=1e-12, nsteps=10**7) if estricta else C.OPTS
+    suf = ('' if variante == 'full' else f'_{variante}') + (f'_gam{gam:g}' if gam else '') + (f'_x{x:g}' if x else '') + ('_tolE' if estricta else '')
     f = os.path.join(C.DATA, 'filtro_completo', f'gx{gx:.6g}_w{w:g}_gz{gz:.6g}_kf{kf:g}_al{al2:g}_N{N}_Nf{Nf}{suf}.npz')
     if os.path.exists(f) and not rerun:
         return dict(np.load(f))
@@ -33,7 +36,7 @@ def punto(gx, w, gz, kap, kf, al2, N, Nf, rerun=False, variante='full', espectro
     cops = [np.sqrt(kf * (nq + 1)) * b] + ([np.sqrt(kf * nq) * b.dag()] if nq else [])
     if gam:
         cops += [np.sqrt(gam * (nm + 1)) * a] + ([np.sqrt(gam * nm) * a.dag()] if nm else [])
-    U = qt.propagator(H, Tp, cops, options=C.OPTS).full()
+    U = qt.propagator(H, Tp, cops, options=opts).full()
     tprop = time.time() - t0
     lam, R = np.linalg.eig(U); Linv = np.linalg.inv(R)
     D = 2 * N * Nf; d = gz / w if variante == 'full' else 0.0; al = np.sqrt(complex(Om / G))
@@ -83,7 +86,7 @@ def punto(gx, w, gz, kap, kf, al2, N, Nf, rerun=False, variante='full', espectro
         nu = np.fft.fftfreq(len(taus), taus[1] - taus[0]) * 2 * np.pi
         S = 2 * np.real(np.fft.fft(corr * np.hanning(2 * len(taus))[len(taus):])) * (taus[1] - taus[0])
         extra = dict(taus=taus, corr=corr, nu=nu, S=S)
-    res = dict(modos=modos, variante=variante, gam=gam, x=x if x else 0.0, nq=nq, gbf=gbf, herm_cruda=np.linalg.norm(R[:, k0].reshape(D, D, order='F') / np.trace(R[:, k0].reshape(D, D, order='F')) - (R[:, k0].reshape(D, D, order='F') / np.trace(R[:, k0].reshape(D, D, order='F'))).conj().T), Pe_prom=Pe_prom, **extra,gx=gx, w=w, gz=gz, kap=kap, kf=kf, al2=al2, N=N, Nf=Nf, kap2=kap2, gpf=gpf, t=ns * Tp, Pc_din=serie,
+    res = dict(estricta=estricta, modos=modos, variante=variante, gam=gam, x=x if x else 0.0, nq=nq, gbf=gbf, herm_cruda=np.linalg.norm(R[:, k0].reshape(D, D, order='F') / np.trace(R[:, k0].reshape(D, D, order='F')) - (R[:, k0].reshape(D, D, order='F') / np.trace(R[:, k0].reshape(D, D, order='F'))).conj().T), Pe_prom=Pe_prom, **extra,gx=gx, w=w, gz=gz, kap=kap, kf=kf, al2=al2, N=N, Nf=Nf, kap2=kap2, gpf=gpf, t=ns * Tp, Pc_din=serie,
                Pc_ss=np.real(np.trace(Pc_op @ M)), al2eff=np.trace(A @ A @ M), val=np.array(C.validar(M)), tprop=tprop)
     os.makedirs(os.path.dirname(f), exist_ok=True)
     np.savez(f, **res)

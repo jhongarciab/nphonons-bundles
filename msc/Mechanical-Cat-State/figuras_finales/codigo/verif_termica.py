@@ -7,12 +7,13 @@ import numpy as np
 import comun as C
 import calc_termico as CT
 
-PUNTOS = [(0.0535714, 0.25, 10.1), (0.0239579, 0.05, 6.86)]   # g_x en unidades de Ma (κ = 0.03, ω = 6)
+PUNTOS = [(0.0535714, 0.25, 10.1), (0.0239579, 0.05, 6.86), (0.0535714, 0.25, 6.86)]   # g_x en unidades de Ma (κ = 0.03, ω = 6)
 KAP = 0.03                                                      # las tasas del completo se dividen por κ
 filas = []
+SUF = os.environ.get('SUF', '')   # '_tolE' para las corridas con tolerancia estricta
 for gx, k2k, x in PUNTOS:
-    ft = glob.glob(os.path.join(C.DATA, 'filtro_completo', f'gx{gx:.6g}_w6_gz0.42_kf0.3_al4_N22_Nf2_gam6e-07_x{x:g}.npz'))
-    f0 = glob.glob(os.path.join(C.DATA, 'filtro_completo', f'gx{gx:.6g}_w6_gz0.42_kf0.3_al4_N22_Nf2_gam6e-07.npz'))
+    ft = glob.glob(os.path.join(C.DATA, 'filtro_completo', f'gx{gx:.6g}_w6_gz0.42_kf0.3_al4_N22_Nf2_gam6e-07_x{x:g}{SUF}.npz'))
+    f0 = glob.glob(os.path.join(C.DATA, 'filtro_completo', f'gx{gx:.6g}_w6_gz0.42_kf0.3_al4_N22_Nf2_gam6e-07{SUF}.npz'))
     if not ft:
         print(f"κ₂/κ={k2k}: falta la corrida térmica del modelo completo"); continue
     z = np.load(ft[0]); e = CT.punto(x, k2k, 14.0, 1, 2e-5, 22)
