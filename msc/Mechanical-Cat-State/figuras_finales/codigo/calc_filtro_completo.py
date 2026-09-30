@@ -14,7 +14,7 @@ def punto(gx, w, gz, kap, kf, al2, N, Nf, rerun=False, variante='full', espectro
     # TOL_ESTRICTA=1: tolerancia del integrador del propagador más apretada (atol 1e-14, rtol 1e-12; por defecto 1e-12, 1e-10)
     estricta = bool(os.environ.get('TOL_ESTRICTA'))
     opts = dict(atol=1e-14, rtol=1e-12, nsteps=10**7) if estricta else C.OPTS
-    suf = ('' if variante == 'full' else f'_{variante}') + (f'_gam{gam:g}' if gam else '') + (f'_x{x:g}' if x else '') + ('_tolE' if estricta else '')
+    suf = ('' if variante == 'full' else f'_{variante}') + (f'_gam{gam:g}' if gam else '') + (f'_x{x:g}' if x else '') + ('_tolE' if estricta else '') + ('_nqoff' if os.environ.get('NQ_OFF') else '') + ('_nmoff' if os.environ.get('NM_OFF') else '')
     f = os.path.join(C.DATA, 'filtro_completo', f'gx{gx:.6g}_w{w:g}_gz{gz:.6g}_kf{kf:g}_al{al2:g}_N{N}_Nf{Nf}{suf}.npz')
     if os.path.exists(f) and not rerun:
         return dict(np.load(f))
@@ -35,6 +35,9 @@ def punto(gx, w, gz, kap, kf, al2, N, Nf, rerun=False, variante='full', espectro
     t0 = time.time()
     # baños térmicos (convención de la Tarea 37): filtro a f_q con n_q; oscilador a f_q/2 con n_m. x = h f_q/(k_B T)
     nq = 1 / np.expm1(x) if x else 0.0; nm = 1 / np.expm1(x / 2) if x else 0.0
+    # controles de atribución (NQ_OFF=1: sin ocupación térmica en el baño del qubit/filtro; NM_OFF=1: sin ocupación en la pérdida γ)
+    if os.environ.get('NQ_OFF'): nq = 0.0
+    if os.environ.get('NM_OFF'): nm = 0.0
     if plano:
         cops = [np.sqrt(kap * (nq + 1)) * sm] + ([np.sqrt(kap * nq) * sm.dag()] if nq else [])
     else:

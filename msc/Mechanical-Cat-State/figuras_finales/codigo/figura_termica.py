@@ -135,9 +135,15 @@ def main():
     ax.text(19, 30, 'truncation floor\n($\\eta$ = lower bound)', fontsize=5.5, ha='center')
     ax.set_xlim(1, 25); ax.set_xlabel(r'$x=hf_q/k_BT$'); ax.set_ylabel(r'$\eta=\gamma_{\rm pf}/\gamma_{\rm bf}$')
     from matplotlib.lines import Line2D
-    ax.legend(handles=[Line2D([], [], color=E.OKABE[0], label='filtered'), Line2D([], [], color=E.OKABE[1], label='flat'),
+    ax.legend(handles=[Line2D([], [], color=E.OKABE[0], label='filtered'), Line2D([], [], color=E.OKABE[1], label='flat (not validated)'),
+                       Line2D([], [], color='k', marker='s', ls='', ms=3.5, mfc='none', label='full model (filtered)'),
                        Line2D([], [], color='k', ls='-', label=r'$\gamma/\kappa=2\times10^{-5}$'),
                        Line2D([], [], color='k', ls='--', label=r'$\gamma/\kappa=2\times10^{-4}$')], fontsize=6, loc='lower right')
+    # puntos validados con el modelo completo (filtrado, γ/κ = 2e-5, N = 22; verif_termica.py): isla κ₂/κ = 0.25 en x = 6.86 y 10.1
+    V = np.loadtxt(os.path.join(C.DATA, 'termico_validacion.csv'), delimiter=',', skiprows=1)
+    va = V[abs(V[:, 0] - 0.25) < 1e-9]
+    ax.plot(va[:, 1], va[:, 8], 's', ms=3.5, mfc='none', mec='k', mew=0.8)
+    ax.text(0.04, 0.80, 'effective model is conservative:\nfull-model $x^*$ is 0–0.2 lower;\n$\\gamma_{\\rm bf}$ within $\\pm$5% only at\n$\\kappa_2/\\kappa=0.05$ (see text)', transform=ax.transAxes, fontsize=5, va='top')
     sec = ax.secondary_xaxis('top', functions=(lambda x: x * KT10, lambda f: f / KT10))
     sec.set_xlabel(r'$f_q$ at 10 mK (GHz)', fontsize=7)
     ax.text(0.02, 0.96, '(a)', transform=ax.transAxes, va='top')
@@ -161,11 +167,13 @@ def main():
         xs0, ps0, Z0 = mapas[(0, eje)]
         axm.contour(xs0, ps0, Z0, levels=[100, 220], colors=[E.OKABE[1]], linewidths=0.9, linestyles=['-', '--'])
         axm.axvspan(1, X_CAL, color='0.6', alpha=0.5, hatch='///', lw=0)
+        if eje == 'k2':
+            axm.plot(V[:, 1], V[:, 0], 's', ms=3.5, mfc='none', mec='w', mew=0.9)   # modelo completo, filtrado
         axm.set_xscale('log'); axm.set_yscale('log'); axm.set_xlim(1, 25)
         axm.set_xlabel(r'$x=hf_q/k_BT$'); axm.set_ylabel(ylab)
         axm.text(0.03, 0.96, lab, transform=axm.transAxes, va='top', color='w')
         fig.colorbar(pc, ax=axm, pad=0.02).set_label(r'$\eta$ (filtered)', fontsize=7)
-        axm.legend(handles=[Line2D([], [], color='w', label='filtered'), Line2D([], [], color=E.OKABE[1], label='flat'),
+        axm.legend(handles=[Line2D([], [], color='w', label='filtered'), Line2D([], [], color=E.OKABE[1], label='flat (not validated)'),
                             Line2D([], [], color='0.5', ls='-', label=r'$\eta=100$'), Line2D([], [], color='0.5', ls='--', label=r'$\eta=220$')],
                    fontsize=5.5, loc='lower right', facecolor='0.3', framealpha=0.85, labelcolor='w')
     bx = axs[1, 1]
@@ -175,7 +183,7 @@ def main():
         bx.loglog(NQ[m][o], GBF[m][o], 'o', ms=2.5, color=col)
         a = aj[(aj[:, 0] == fil) & (aj[:, 1] == 2e-5)][0]
         nn = np.geomspace(a[7], a[8], 20)
-        bx.loglog(nn, a[3] * nn**a[2] + a[9], '-', color=col, lw=0.8, label=rf'{"filtered" if fil else "flat"}: $p={a[2]:.2f}$')
+        bx.loglog(nn, a[3] * nn**a[2] + a[9], '-', color=col, lw=0.8, label=rf'{"filtered" if fil else "flat (not validated)"}: $p={a[2]:.2f}$')
     bx.axvspan(0.3, 3, color='0.6', alpha=0.35, hatch='///', lw=0)
     bx.set_xlabel(r'$n_q$'); bx.set_ylabel(r'$\gamma_{\rm bf}/\kappa$'); bx.legend(fontsize=6)
     bx.text(0.03, 0.96, '(d)', transform=bx.transAxes, va='top')

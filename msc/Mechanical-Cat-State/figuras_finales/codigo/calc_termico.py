@@ -27,11 +27,13 @@ import comun as C
 def punto(x, k2k, gzk, filtro, gam, N, Nf=2, wk=200.0, al2=4.0, kfw=0.05, rerun=False, ocup='q'):
     """ocup='q': Γ₁± con n_q (convención de la Tarea 37 y del modelo completo con un solo baño de Lindblad);
     ocup='real': control con la ocupación a la frecuencia real del fotón emitido (n a ω para Γ₁⁻, n a 3ω para Γ₁⁺)."""
-    suf = '' if ocup == 'q' else f'_oc{ocup}'
+    suf = ('' if ocup == 'q' else f'_oc{ocup}') + ('_nqoff' if os.environ.get('NQ_OFF') else '') + ('_nmoff' if os.environ.get('NM_OFF') else '')
     f = os.path.join(C.DATA, 'termico', f'x{x:.5g}_k{k2k:.4g}_gz{gzk:.4g}_f{int(filtro)}_g{gam:g}_N{N}_Nf{Nf}_w{wk:g}_a{al2:g}{suf}.npz')
     if os.path.exists(f) and not rerun:
         return dict(np.load(f))
     nq = 1 / np.expm1(x); nm = 1 / np.expm1(x / 2)
+    if os.environ.get('NQ_OFF'): nq = 0.0           # controles de atribución (ver calc_filtro_completo)
+    if os.environ.get('NM_OFF'): nm = 0.0
     w = wk; gxw = np.sqrt(k2k / (16 * gzk**2)); gx = gxw * w; gz = gzk
     G = 2 * gx * gz / w; Om = al2 * G; chi = 8 * gx**2 / (3 * w)
     kf = kfw * w

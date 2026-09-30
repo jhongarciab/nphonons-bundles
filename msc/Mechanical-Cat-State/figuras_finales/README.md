@@ -318,14 +318,21 @@ Caché: `data/fig3/*.npz`, con la ρ estacionaria y los 12 modos más lentos.
 - **Validación con el modelo completo** (con filtro, temperatura y γ = 2e-5κ; N = 22; unidades de Ma κ = 0.03, ω = 6; `run_validacion_termica.sh`, `verif_termica.py`, `data/termico_validacion.csv`).
   Criterio: γ_pf y γ_bf dentro de ±5%, y γ_bf(T=0) < 1% del térmico.
 
-  | punto | γ_pf c/e | γ_bf c/e | η c/e | η completo / efectivo | γ_bf(T=0)/γ_bf térmico | hermiticidad cruda |
-  |---|---|---|---|---|---|---|
-  | isla (κ₂/κ = 0.25), x = 10.1 | 0.956 | **0.798** | 1.199 | 118.2 / 98.6 | **2.35%** | 1.2e-9 |
-  | κ₂/κ = 0.05, x = 6.86 | 0.959 | 0.956 | 1.003 | 100.2 / 99.95 | 0.30% | 1.8e-9 |
+  | κ₂/κ | x | γ_pf c/e | γ_bf c/e | η c/e | η completo / efectivo | γ_bf(T=0)/γ_bf térmico | hermiticidad cruda |
+  |---|---|---|---|---|---|---|---|
+  | 0.05 | 6.86 | 0.959 | 0.956 | 1.003 | 100.2 / 99.95 | 0.30% | 1.8e-9 |
+  | 0.10 | 6.86 | 0.959 | 0.856 | 1.120 | 25.7 / 23.0 | 0.17% | 2.1e-9 |
+  | 0.25 | 6.86 | 0.959 | 0.785 | 1.222 | 4.94 / 4.04 | 0.09% | 4.1e-10 |
+  | 0.40 | 6.86 | 0.959 | 0.776 | 1.236 | 2.40 / 1.94 | 0.09% | 1.6e-12 |
+  | 0.25 | 10.1 | 0.956 | 0.798 | 1.199 | 118.2 / 98.6 | **2.35%** | 1.2e-9 |
 
-  - **κ₂/κ = 0.05: aceptado** en tasas y piso.
-  - **Isla: no cumple.** El efectivo sobreestima γ_bf en un 20% (c_bf completo ≈ 0.78 veces el efectivo tras restar el piso), y el piso de T = 0 del completo (3.1e-8κ, cinco veces el del efectivo) supera el 1%.
-    La discrepancia crece con κ₂/κ: aparece en la isla, que está en el régimen saturado (κ₂/κ > 0.06), y no en κ₂/κ = 0.05. Es compatible con una corrección no adiabática del bit-flip que el efectivo no captura (hipótesis, no verificada).
-    **Efecto en el umbral:** η completo = 1.2 veces el efectivo ⇒ x*(100) ≈ 10.11 − ln 1.2 ≈ 9.93 (−1.8%). El efectivo es conservador en la isla.
-  - **Hermiticidad cruda** de las corridas completas con filtro y N = 22: 1.2–2.3e-9, **por encima de la tolerancia 1e-10**. La traza (≤ 2.2e-16) y la positividad (≥ −4.4e-10) cumplen.
+  - **Solo κ₂/κ = 0.05 cumple ±5% en γ_bf.** γ_pf c/e ≈ 0.959 en todos (es α_eff² ≈ 3.80 frente a |α|² = 4 del efectivo, más ~1%).
+  - **La discrepancia de γ_bf depende de κ₂/κ y no de x** (fase 2: a κ₂/κ = 0.25, x = 6.86 y 10.1 dan 0.785 y 0.798). Cae monótonamente (0.956, 0.856, 0.785, 0.776) y se aplana; en κ₂/κ = 0.4 (χ|α|²/κ = 0.27, junto a la frontera ≈ 0.3) no se ve un desplome propio de la frontera. No se ajusta ni se aplica corrección empírica.
+  - **El efectivo es conservador:** x*(η) del completo (estimado como η_completo(x) ≈ (η c/e a x = 6.86)·η_efectivo(x)) queda 0–0.2 por debajo: x*(100) efectivo/completo = 6.86/6.86, 8.36/8.25, 10.11/9.91, 10.84/10.63; x*(220) = 7.67/7.66, 9.17/9.05, 10.91/10.71, 11.64/11.43 (`data/termico_tabla_k2.csv`).
+  - **El piso de T = 0 pasa el 1% a x = 6.86, pero no en la isla a x = 10.1** (el γ_bf térmico cae como e^{−x}). Con η_max ≈ 5000 frente a los umbrales (100, 220) se propone reportar el piso y no usarlo como criterio.
+  - **Tolerancia del integrador** (fase 2, isla): atol 1e-14 / rtol 1e-12 en lugar de 1e-12 / 1e-10 cambia γ_bf en 2.6e-5 relativo y el piso en 0.10%; γ_pf no cambia.
+  - **Hermiticidad cruda** (‖ρ − ρ†‖_F con Tr ρ = 1, antes de hermitizar) de las corridas completas con filtro: 1.6e-12 a 2.3e-9; **por encima de la tolerancia 1e-10 en 7 de 10 corridas** (no se relajó). No depende de la tolerancia del integrador.
+  - **Positividad:** mínimo autovalor de (ρ + ρ†)/2 ≥ −2.5e-9. **El criterio de las figuras (−1e-9) se incumple en 2 de las 10 corridas con filtro** (κ₂/κ = 0.05 a T = 0: −2.5e-9; 0.1 a T = 0: −1.4e-9); no se cambia el criterio aquí, queda a decisión del autor.
+  - **Baño plano (no validado):** completo sin filtro en (0.25, x = 6.86): γ_pf c/e = 1.52, γ_bf c/e = 0.858. El factor 1.52 es térmico (a T = 0, c/e = 0.940 y el completo coincide con la fórmula analítica a 1%); apagando n_q en el completo plano γ_pf baja de 1.369e-3 a 8.45e-4 (98% del aumento térmico) mientras que apagar n_m solo quita 1.1e-5. El efectivo no contiene ese canal del qubit (ver PENDIENTES P7). Las cantidades planas de `figura_termica` están marcadas "not validated". Barrido en N plano: N = 18 no converge; N = 22 → 26 cambia γ_bf(T=0) en −1.9% y γ_pf en ≤ 1e-5.
+  - **Tiempos** (un hilo efectivo, filtrado, N = 22, N_f = 2): 90–125 min por corrida (dos en paralelo agotan los 14 GB). Plano: 4–14 min (N = 22), 20–25 min (N = 26).
   - El primer intento en unidades κ = 1 (ω = 200) no sirve: modo de pozo no convergido.
