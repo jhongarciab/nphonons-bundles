@@ -219,7 +219,7 @@ Caché: `data/fig3/*.npz`, con la ρ estacionaria y los 12 modos más lentos.
   - (κ₂/κ, g_z/κ) = (0.03, 4): ε_completo/ε_mapa = **1.03**; κ₁ = 1.03 veces el predicho y confinamiento 1.04 veces el del plano.
   - (0.3, 12): con N = 16 salía 2.29, pero era un **artefacto de truncamiento** (P10).
   - **Con N = 20:** (0.03, 12) da ε_completo/ε_mapa = 0.987 y (0.3, 12) da 0.975 (γ_pf/predicho = 0.986 y 0.980). El panel (b) queda verificado en los dos regímenes.
-  - **Convergencia en N** (N_f = 2; N = 24 no cabe en 14 GB: la corrida con N = 22 ya usa 14.0 GB y la de N = 20 usa 11.4 GB, medidos con `/usr/bin/time`; ~17 GB estimados para N = 24):
+  - **Convergencia en N** (N_f = 2; N = 24 no cabe en 14 GB: la corrida con N = 22 ya usa 14.0 GB (toda la RAM), la de N = 20 usa 11.4 GB y la de N = 18 usa 7.5 GB, medidos con `/usr/bin/time`):
 
     | punto (κ₂/κ, g_z/κ) | N = 16 | N = 20 | N = 22 |
     |---|---|---|---|
@@ -326,7 +326,7 @@ Caché: `data/fig3/*.npz`, con la ρ estacionaria y los 12 modos más lentos.
   | 0.40 | 6.86 | 0.959 | 0.776 | 1.236 | 2.40 / 1.94 | 0.09% | 1.6e-12 |
   | 0.25 | 10.1 | 0.956 | 0.798 | 1.199 | 118.2 / 98.6 | **2.35%** | 1.2e-9 |
 
-  - **Solo κ₂/κ = 0.05 cumple ±5% en γ_bf.** γ_pf c/e entre 0.956 y 0.959 en todos. α_eff² ≈ 3.80 (completo) frente a 4.00 (efectivo) lo explica solo en parte: predice 0.9495 a T = 0 y se mide 0.956, y para el aumento térmico predice 0.94–0.95 y se mide 0.994–0.996 en x = 6.86 (hipótesis parcialmente contradicha; HANDOFF §8.3).
+  - **Solo κ₂/κ = 0.05 cumple ±5% en γ_bf** (0.956 con N = 22; con el residual de N estimado en κ₂/κ = 0.25, entre 0.956 y 0.946 en el peor caso; no medido en 0.05). γ_pf c/e entre 0.956 y 0.959 en todos. α_eff² ≈ 3.80 (completo) frente a 4.00 (efectivo) lo explica solo en parte: predice 0.9495 a T = 0 y se mide 0.956, y para el aumento térmico predice 0.94–0.95 y se mide 0.994–0.996 en x = 6.86 (hipótesis parcialmente contradicha; HANDOFF §8.3).
   - **La discrepancia de γ_bf depende de κ₂/κ y no de x** (fase 2: a κ₂/κ = 0.25, x = 6.86 y 10.1 dan 0.785 y 0.798). Cae monótonamente (0.956, 0.856, 0.785, 0.776) y se aplana; en κ₂/κ = 0.4 (χ|α|²/κ = 0.27, junto a la frontera ≈ 0.3) no se ve un desplome propio de la frontera. No se ajusta ni se aplica corrección empírica.
   - **El efectivo es conservador:** x*(η) del completo (estimado como η_completo(x) ≈ (η c/e a x = 6.86)·η_efectivo(x)) queda 0–0.2 por debajo: x*(100) efectivo/completo = 6.86/6.86, 8.36/8.25, 10.11/9.91, 10.84/10.63; x*(220) = 7.67/7.66, 9.17/9.05, 10.91/10.71, 11.64/11.43 (`data/termico_tabla_k2.csv`).
   - **El piso de T = 0 cumple el 1% a x = 6.86 (0.09% a 0.30%), pero no a x ≈ 9 (1.35% a 2.52%) ni en la isla a x = 10.1 (2.35%)** (el γ_bf térmico cae como e^{−x}). η(T=0) = γ_pf/γ_bf(T=0) del completo va de 3.1e4 (κ₂/κ = 0.05) a 2.35e3 (0.4), y vale 4968 en la isla; sigue siendo mayor que los umbrales (100, 220) en los cuatro casos, aunque en κ₂/κ = 0.4 queda justo sobre 10 × 220. Se propone reportar el piso y no usarlo como criterio; **la decisión es de Jhon**.
