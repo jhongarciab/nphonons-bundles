@@ -1,22 +1,27 @@
-# herm = ||rho - rho^dag||_F (Tr rho = 1, antes de hermitizar), umbral 1e-10; mineig = min eig de (rho + rho^dag)/2, criterio >= -1e-9 (sin cambios)
+# herm = ||rho - rho^dag||_F (Tr rho = 1, antes de hermitizar); mineig = min eig de (rho + rho^dag)/2
+# umbrales: plano herm 1e-10, mineig >= -1e-9 (sin cambios); completo con filtro herm 1e-8, mineig >= -1e-8 (fase 6). Se marca el umbral superado.
 archivo                                                                                         k2/k   N   x      herm      |Tr-1|    mineig     marcas
-gx0.0239579_w6_gz0.42_kf0.3_al4_N22_Nf2_gam6e-07.npz                                            0.050  22  0.00  2.33e-09   2.2e-16  -2.49e-09  HERM>1e-10 **POSITIVIDAD INCUMPLIDA (<-1e-9)**
-gx0.0239579_w6_gz0.42_kf0.3_al4_N22_Nf2_gam6e-07_x6.86.npz                                      0.050  22  6.86  1.78e-09   1.1e-16  -1.49e-10  HERM>1e-10 
-gx0.0338816_w6_gz0.42_kf0.3_al4_N22_Nf2_gam6e-07.npz                                            0.100  22  0.00  5.48e-10   0.0e+00  -1.42e-09  HERM>1e-10 **POSITIVIDAD INCUMPLIDA (<-1e-9)**
-gx0.0338816_w6_gz0.42_kf0.3_al4_N22_Nf2_gam6e-07_x6.86.npz                                      0.100  22  6.86  2.12e-09   0.0e+00  +7.32e-15  HERM>1e-10 
-gx0.0535714_w6_gz0.42_kf0.3_al4_N18_Nf1_plano_gam6e-07.npz                                      0.250  18  0.00  1.15e-10   0.0e+00  +8.05e-09  HERM>1e-10 
+gx0.0239579_w6_gz0.42_kf0.3_al4_N22_Nf2_gam6e-07.npz                                            0.050  22  0.00  2.33e-09   2.2e-16  -2.49e-09  
+gx0.0239579_w6_gz0.42_kf0.3_al4_N22_Nf2_gam6e-07_x6.86.npz                                      0.050  22  6.86  1.78e-09   1.1e-16  -1.49e-10  
+gx0.0239579_w6_gz0.42_kf0.3_al4_N22_Nf2_gam6e-07_x9.npz                                         0.050  22  9.00  1.32e-09   0.0e+00  +4.80e-17  
+gx0.0338816_w6_gz0.42_kf0.3_al4_N22_Nf2_gam6e-07.npz                                            0.100  22  0.00  5.48e-10   0.0e+00  -1.42e-09  
+gx0.0338816_w6_gz0.42_kf0.3_al4_N22_Nf2_gam6e-07_x6.86.npz                                      0.100  22  6.86  2.12e-09   0.0e+00  +7.32e-15  
+gx0.0338816_w6_gz0.42_kf0.3_al4_N22_Nf2_gam6e-07_x9.npz                                         0.100  22  9.00  2.80e-09   1.1e-16  -1.03e-16  
+gx0.0535714_w6_gz0.42_kf0.3_al4_N18_Nf1_plano_gam6e-07.npz                                      0.250  18  0.00  1.15e-10   0.0e+00  +8.05e-09  HERM>1e-10
 gx0.0535714_w6_gz0.42_kf0.3_al4_N18_Nf1_plano_gam6e-07_x6.86.npz                                0.250  18  6.86  5.46e-12   1.1e-16  +2.28e-08  
 gx0.0535714_w6_gz0.42_kf0.3_al4_N22_Nf1_plano_gam6e-07.npz                                      0.250  22  0.00  7.07e-11   0.0e+00  +5.43e-12  
 gx0.0535714_w6_gz0.42_kf0.3_al4_N22_Nf1_plano_gam6e-07_x6.86.npz                                0.250  22  6.86  2.63e-11   0.0e+00  +2.63e-11  
 gx0.0535714_w6_gz0.42_kf0.3_al4_N22_Nf1_plano_gam6e-07_x6.86_nmoff.npz                          0.250  22  6.86  3.13e-11   2.2e-16  +2.62e-11  
 gx0.0535714_w6_gz0.42_kf0.3_al4_N22_Nf1_plano_gam6e-07_x6.86_nqoff.npz                          0.250  22  6.86  2.70e-11   1.1e-16  +5.62e-12  
-gx0.0535714_w6_gz0.42_kf0.3_al4_N22_Nf2_gam6e-07.npz                                            0.250  22  0.00  1.41e-09   0.0e+00  -4.35e-10  HERM>1e-10 
-gx0.0535714_w6_gz0.42_kf0.3_al4_N22_Nf2_gam6e-07_tolE.npz                                       0.250  22  0.00  1.40e-09   4.4e-16  -3.53e-15  HERM>1e-10 
-gx0.0535714_w6_gz0.42_kf0.3_al4_N22_Nf2_gam6e-07_x10.1.npz                                      0.250  22 10.10  1.16e-09   1.1e-16  -2.73e-16  HERM>1e-10 
-gx0.0535714_w6_gz0.42_kf0.3_al4_N22_Nf2_gam6e-07_x10.1_tolE.npz                                 0.250  22 10.10  8.54e-10   2.2e-16  -1.84e-16  HERM>1e-10 
-gx0.0535714_w6_gz0.42_kf0.3_al4_N22_Nf2_gam6e-07_x6.86.npz                                      0.250  22  6.86  4.10e-10   0.0e+00  +1.74e-14  HERM>1e-10 
+gx0.0535714_w6_gz0.42_kf0.3_al4_N22_Nf2_gam6e-07.npz                                            0.250  22  0.00  1.41e-09   0.0e+00  -4.35e-10  
+gx0.0535714_w6_gz0.42_kf0.3_al4_N22_Nf2_gam6e-07_tolE.npz                                       0.250  22  0.00  1.40e-09   4.4e-16  -3.53e-15  
+gx0.0535714_w6_gz0.42_kf0.3_al4_N22_Nf2_gam6e-07_x10.1.npz                                      0.250  22 10.10  1.16e-09   1.1e-16  -2.73e-16  
+gx0.0535714_w6_gz0.42_kf0.3_al4_N22_Nf2_gam6e-07_x10.1_tolE.npz                                 0.250  22 10.10  8.54e-10   2.2e-16  -1.84e-16  
+gx0.0535714_w6_gz0.42_kf0.3_al4_N22_Nf2_gam6e-07_x6.86.npz                                      0.250  22  6.86  4.10e-10   0.0e+00  +1.74e-14  
 gx0.0535714_w6_gz0.42_kf0.3_al4_N26_Nf1_plano_gam6e-07.npz                                      0.250  26  0.00  2.16e-11   1.1e-16  +9.30e-16  
 gx0.0535714_w6_gz0.42_kf0.3_al4_N26_Nf1_plano_gam6e-07_x6.86.npz                                0.250  26  6.86  3.16e-11   2.2e-16  +1.41e-14  
-gx0.0677631_w6_gz0.42_kf0.3_al4_N22_Nf2_gam6e-07.npz                                            0.400  22  0.00  8.63e-10   2.2e-16  -1.84e-10  HERM>1e-10 
+gx0.0677631_w6_gz0.42_kf0.3_al4_N22_Nf2_gam6e-07.npz                                            0.400  22  0.00  8.63e-10   2.2e-16  -1.84e-10  
 gx0.0677631_w6_gz0.42_kf0.3_al4_N22_Nf2_gam6e-07_x6.86.npz                                      0.400  22  6.86  1.64e-12   2.2e-16  +2.31e-14  
-# 19 corridas; herm > 1e-10: 11; positividad incumplida: 2
+gx0.0677631_w6_gz0.42_kf0.3_al4_N22_Nf2_gam6e-07_x9.5.npz                                       0.400  22  9.50  1.98e-09   2.2e-16  -2.51e-16  
+# plano: 8 corridas; herm > 1e-10: 1; positividad < -1e-9: 0
+# filtro: 14 corridas; herm > 1e-8: 0; positividad < -1e-8: 0 (con los umbrales anteriores, herm > 1e-10: 13, mineig < -1e-9: 2)

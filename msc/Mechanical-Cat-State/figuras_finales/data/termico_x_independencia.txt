@@ -1,0 +1,72 @@
+
+κ₂/κ=0.05: x = 6.86 → 9
+  γ_pf completo                           : 0.00016504 → 0.00015699
+  γ_pf efectivo                           : 0.00017213 → 0.00016412
+  γ_bf completo                           : 1.6465e-06 → 1.9532e-07
+  γ_bf efectivo                           : 1.7221e-06 → 2.0383e-07
+  η completo                              : 100.24 → 803.75
+  η efectivo                              : 99.951 → 805.18
+  γ_pf c/e crudo                          : 0.95883 → 0.95655
+  γ_bf c/e crudo                          : 0.95611 → 0.95826
+  γ_pf c/e (piso T=0 restado)             : 0.99454 → 0.97279
+  γ_bf c/e (piso T=0 restado)             : 0.956 → 0.95736
+  η c/e crudo                             : 1.0029 → 0.99822
+  piso completo/γ_bf térmico completo     : 0.0029946 → 0.025245
+  piso efectivo/γ_bf térmico efectivo     : 0.0028797 → 0.02433
+  cambio relativo del cociente γ_bf con piso restado: +0.14%  (SOSTENIDA (<3%))
+  x*(100): efectivo 6.861 | completo con q(6.86) 6.858 | con q(x=9) 6.862 | con q interpolado 6.858
+  x*(220): efectivo 7.666 | completo con q(6.86) 7.663 | con q(x=9) 7.668 | con q interpolado 7.665
+
+κ₂/κ=0.1: x = 6.86 → 9
+  γ_pf completo                           : 0.00016509 → 0.00015706
+  γ_pf efectivo                           : 0.00017218 → 0.0001642
+  γ_bf completo                           : 6.42e-06 → 7.5495e-07
+  γ_bf efectivo                           : 7.4974e-06 → 8.7798e-07
+  η completo                              : 25.715 → 208.04
+  η efectivo                              : 22.966 → 187.02
+  γ_pf c/e crudo                          : 0.9588 → 0.95652
+  γ_bf c/e crudo                          : 0.85629 → 0.85988
+  γ_pf c/e (piso T=0 restado)             : 0.99471 → 0.9728
+  γ_bf c/e (piso T=0 restado)             : 0.85584 → 0.85599
+  η c/e crudo                             : 1.1197 → 1.1124
+  piso completo/γ_bf térmico completo     : 0.0016984 → 0.014443
+  piso efectivo/γ_bf térmico efectivo     : 0.0011672 → 0.0099676
+  cambio relativo del cociente γ_bf con piso restado: +0.02%  (SOSTENIDA (<3%))
+  x*(100): efectivo 8.361 | completo con q(6.86) 8.246 | con q(x=9) 8.253 | con q interpolado 8.250
+  x*(220): efectivo 9.166 | completo con q(6.86) 9.050 | con q(x=9) 9.057 | con q interpolado 9.057
+
+κ₂/κ=0.4: x = 6.86 → 9.5
+  γ_pf completo                           : 0.00016544 → 0.0001566
+  γ_pf efectivo                           : 0.00017257 → 0.00016378
+  γ_bf completo                           : 6.9085e-05 → 4.8496e-06
+  γ_bf efectivo                           : 8.9034e-05 → 6.2192e-06
+  η completo                              : 2.3948 → 32.292
+  η efectivo                              : 1.9382 → 26.335
+  γ_pf c/e crudo                          : 0.9587 → 0.95619
+  γ_bf c/e crudo                          : 0.77593 → 0.77979
+  γ_pf c/e (piso T=0 restado)             : 0.9962 → 0.97048
+  γ_bf c/e (piso T=0 restado)             : 0.77523 → 0.76968
+  η c/e crudo                             : 1.2355 → 1.2262
+  piso completo/γ_bf térmico completo     : 0.00094499 → 0.013462
+  piso efectivo/γ_bf térmico efectivo     : 3.5405e-05 → 0.00050687
+  cambio relativo del cociente γ_bf con piso restado: -0.72%  (SOSTENIDA (<3%))
+  x*(100): efectivo 10.845 | completo con q(6.86) 10.632 | con q(x=9.5) 10.640 | con q interpolado 10.640
+  x*(220): efectivo 11.640 | completo con q(6.86) 11.427 | con q(x=9.5) 11.435 | con q interpolado 11.435
+
+κ₂/κ=0.25: x = 6.86 → 10.1
+  γ_pf completo                           : 0.00016526 → 0.00015559
+  γ_pf efectivo                           : 0.00017237 → 0.00016272
+  γ_bf completo                           : 3.349e-05 → 1.3159e-06
+  γ_bf efectivo                           : 4.2671e-05 → 1.6498e-06
+  η completo                              : 4.9345 → 118.24
+  η efectivo                              : 4.0394 → 98.633
+  γ_pf c/e crudo                          : 0.95875 → 0.95618
+  γ_bf c/e crudo                          : 0.78484 → 0.7976
+  γ_pf c/e (piso T=0 restado)             : 0.99551 → 0.96793
+  γ_bf c/e (piso T=0 restado)             : 0.78422 → 0.78165
+  η c/e crudo                             : 1.2216 → 1.1988
+  piso completo/γ_bf térmico completo     : 0.00092163 → 0.023456
+  piso efectivo/γ_bf térmico efectivo     : 0.00013637 → 0.0035272
+  cambio relativo del cociente γ_bf con piso restado: -0.33%  (SOSTENIDA (<3%))
+  x*(100): efectivo 10.114 | completo con q(6.86) 9.911 | con q(x=10.1) 9.930 | con q interpolado 9.929
+  x*(220): efectivo 10.912 | completo con q(6.86) 10.709 | con q(x=10.1) 10.729 | con q interpolado 10.729

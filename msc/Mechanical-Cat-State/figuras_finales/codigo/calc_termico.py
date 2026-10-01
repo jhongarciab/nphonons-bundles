@@ -60,9 +60,9 @@ def punto(x, k2k, gzk, filtro, gam, N, Nf=2, wk=200.0, al2=4.0, kfw=0.05, rerun=
     if kick:
         # Hipótesis (P7, fase 4): los saltos del baño plano del qubit llevan el desplazamiento dependiente del estado del marco polarónico,
         # σ∓ → σ∓ D(β), β = 2g_z/ω. En la aproximación secular: D[σ₋a], D[σ₋a†] con tasa β²κ(n_q+1) y D[σ₊a], D[σ₊a†] con tasa β²κ n_q.
-        if filtro:
-            raise ValueError('kick solo definido para el baño plano')
-        beta2 = (2 * gzk / w)**2
+        # Con filtro, los cuatro canales (fotón del baño a ω o 3ω, desplazado ω respecto al centro del filtro en 2ω) llevan el factor
+        # lorentziano del filtro en δ = ω: tasa β²κ·ke(ω)·(n_q+1) o n_q (DIAGNÓSTICO de la fase 6, no una corrección).
+        beta2 = (2 * gzk / w)**2 * (ke(w) if filtro else 1.0)
         c += [np.sqrt(beta2 * (nq + 1)) * sm * a, np.sqrt(beta2 * (nq + 1)) * sm * a.dag()]
         if nq:
             c += [np.sqrt(beta2 * nq) * sm.dag() * a, np.sqrt(beta2 * nq) * sm.dag() * a.dag()]
