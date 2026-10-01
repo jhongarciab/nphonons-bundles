@@ -168,7 +168,7 @@ Estado a 2026-10-01. Cada afirmación lleva una marca: **[MEDIDO]** (sale de una
 ### 8.3 Estado de validación
 | afirmación | estado | archivo fuente |
 |---|---|---|
-| γ_pf del efectivo con filtro reproduce el completo: cociente completo/efectivo 0.9562 a 0.9588 en los ocho puntos | [MEDIDO]. El sesgo de ~4% no se explica del todo por α_eff² ≈ 3.80 (completo) frente a 4.00 (efectivo): predice 0.9495 a T = 0 y se mide 0.956; y para el aumento térmico de γ_pf predice 0.94 a 0.95 y se mide 0.994 a 0.996 en x = 6.86 (0.968 a 0.973 en x ≈ 9). **[HIPÓTESIS parcialmente contradicha]** | `data/handoff_verificacion_referencia.txt`, `handoff_cifras.txt` |
+| γ_pf del efectivo con filtro reproduce el completo: cociente completo/efectivo 0.9562 a 0.9588 en los ocho puntos | [MEDIDO]. α_eff² medido en el completo (3.798) explica el sesgo de γ_pf a T = 0 (predice 0.9495, se mide 0.956); no explica el aumento térmico (predice 0.94 a 0.95, se mide 0.994 a 0.996) salvo que el completo tenga un exceso de ~5e-7 a 7e-7 | `data/handoff_verificacion_referencia.txt`, `handoff_cifras.txt` |
 | γ_bf del efectivo con filtro dentro de ±5% del completo | [MEDIDO] solo en κ₂/κ = 0.05 con N = 22 (0.956, desvío 4.4%); con el residual de N estimado en κ₂/κ = 0.25 (−0.03%, peor caso −1.08%) queda en 0.956 o 0.946, es decir, dentro de ±5% salvo en el peor caso (5.4%); el residual no se midió en 0.05 **[VERIFICAR]**. En 0.1, 0.25 y 0.4 el efectivo lo sobreestima | `termico_validacion.csv`, `termico_validacion_fase3.txt`, `log_termico_ma6.txt` |
 | el cociente γ_bf completo/efectivo con piso restado no depende de x (criterio 3%) | [MEDIDO] en 4 valores de κ₂/κ, entre x = 6.86 y x ≈ 9 | `termico_x_independencia.csv`, `.txt` |
 | x* del completo (tabla §8.5) | [ESTIMADO]: supone cociente γ_bf con piso restado y cociente γ_pf constantes en x, y piso de T = 0 fijo | `termico_x_estrella_piso.csv` |
@@ -259,6 +259,20 @@ Diagnóstico en el efectivo con filtro (`filtro_kick.py`, `data/filtro_kick.txt`
 - **Resultado:** a x = 6.86, γ_bf cambia -4.6e-05 (κ₂/κ = 0.25) y -3.9e-05 (0.4) relativo; γ_pf +0.27%. A T → 0 (x = 60) γ_bf cambia +6.8e-04 y +1.0e-03. Es despreciable y no acerca γ_bf al completo (el cociente sigue en ~0.78).
 - **El efecto despreciable es consecuencia directa del factor 6.2e-4:** el efecto térmico del desplazamiento en el plano es 6.06e-4, por 6.2e-4 da 3.8e-7, frente a 4.64e-7 obtenido (+0.27%). No es evidencia independiente de que el desplazamiento no actúe con filtro.
 - **Comparación con el completo (§8.3):** el completo no muestra exceso positivo (la diferencia del aumento térmico de γ_pf, completo menos efectivo sin desplazamiento, va de −4.6e-8 a −1.1e-7 en los ocho puntos) y el ansatz predice +4.6e-7: son incompatibles salvo compensación. **Esa compensación existe y no se puede descartar** (`data/handoff_verificacion_referencia.txt`): la diferencia es exactamente (r_x − r_0)·γ_e(x) + (r_0 − 1)·Δ_e, con r_0 = 0.956 el cociente completo/efectivo de γ_pf a T = 0, r_x el cociente a x, γ_e el γ_pf del efectivo y Δ_e su aumento térmico. En κ₂/κ = 0.25 y x = 6.86 los términos valen +4.7e-7 y −5.3e-7 (suma −5.4e-8); en x = 10.1, +2.7e-8 y −1.0e-7 (suma −7.5e-8). El primer término es del tamaño del ansatz. Si el aumento térmico del completo escalara como el valor de base (cociente 0.94 a 0.95), el completo mostraría un exceso de +5e-7 a +7e-7 en x = 6.86, del orden del ansatz. Por tanto la diferencia no acota el canal con filtro: **[VERIFICAR]**, no se puede determinar con los datos actuales.
+- **Diagnóstico E_obs frente a E_ansatz (no es confirmación del canal)** (`codigo/diagnostico_E_obs.py`, `data/diagnostico_E_obs.txt`; κ = 1). E_obs = (r_x − r_0)·γ_e(x), con r_0 el cociente completo/efectivo de γ_pf a T = 0 de cada κ₂/κ, r_x el cociente a x y γ_e(x) el γ_pf del efectivo; E_ansatz es el aumento de γ_pf del efectivo con filtro por el ansatz con n_q en ese punto. Criterio fijado antes: "consistente" si E_obs/E_ansatz está en [0.7, 1.3] en los 8 puntos.
+
+| κ₂/κ | x | r_0 | r_x | E_obs | E_ansatz | E_obs/E_ansatz |
+|---|---|---|---|---|---|---|
+| 0.05 | 6.86 | 0.95614 | 0.95883 | +4.629e-07 | +4.620e-07 | 1.002 |
+| 0.05 | 9 | 0.95614 | 0.95655 | +6.730e-08 | +5.440e-08 | 1.237 |
+| 0.1 | 6.86 | 0.95611 | 0.95880 | +4.643e-07 | +4.627e-07 | 1.003 |
+| 0.1 | 9 | 0.95611 | 0.95652 | +6.746e-08 | +5.448e-08 | 1.238 |
+| 0.25 | 6.86 | 0.95601 | 0.95875 | +4.725e-07 | +4.646e-07 | 1.017 |
+| 0.25 | 10.1 | 0.95601 | 0.95618 | +2.764e-08 | +1.823e-08 | 1.516 |
+| 0.4 | 6.86 | 0.95591 | 0.95870 | +4.804e-07 | +4.667e-07 | 1.029 |
+| 0.4 | 9.5 | 0.95591 | 0.95619 | +4.564e-08 | +3.332e-08 | 1.370 |
+
+  Resultado: E_obs/E_ansatz va de 1.002 a 1.516 y está en [0.7, 1.3] en 6 de 8 puntos (fallan κ₂/κ = 0.25 a x = 10.1, 1.516, y κ₂/κ = 0.4 a x = 9.5, 1.370): **no consistente** con el criterio fijado. Reportado tal cual.
 - **Cota sobre la diferencia, no sobre el canal:** con |diferencia| ≤ 1.1e-7 el cociente frente al plano (5.25e-4) es ≳ 4.8e3, y es una cota superior de la diferencia. La diferencia crece en valor absoluto con x (−6.6e-8 en x = 6.86 y −1.1e-7 en x = 9, en κ₂/κ = 0.05) mientras n_q baja 8.5 veces, así que no es un canal proporcional a n_q. La tendencia la explica la referencia T = 0: el primer término cae de +4.6e-7 a +6.7e-8 y el segundo de −5.3e-7 a −1.8e-7.
 - **Alcance:** no es una exclusión general. Incluir los términos no seculares exige un cálculo de Floquet con tiempo, que no se hizo. Es solo un diagnóstico y no se aplica al mapa ni como corrección.
 
