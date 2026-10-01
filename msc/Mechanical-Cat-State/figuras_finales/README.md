@@ -219,7 +219,7 @@ Caché: `data/fig3/*.npz`, con la ρ estacionaria y los 12 modos más lentos.
   - (κ₂/κ, g_z/κ) = (0.03, 4): ε_completo/ε_mapa = **1.03**; κ₁ = 1.03 veces el predicho y confinamiento 1.04 veces el del plano.
   - (0.3, 12): con N = 16 salía 2.29, pero era un **artefacto de truncamiento** (P10).
   - **Con N = 20:** (0.03, 12) da ε_completo/ε_mapa = 0.987 y (0.3, 12) da 0.975 (γ_pf/predicho = 0.986 y 0.980). El panel (b) queda verificado en los dos regímenes.
-  - **Convergencia en N** (N_f = 2; N = 24 no cabe en 14 GB, ~13 GB solo en el propagador):
+  - **Convergencia en N** (N_f = 2; N = 24 no cabe en 14 GB: la corrida con N = 22 ya usa 14.0 GB y la de N = 20 usa 11.4 GB, medidos con `/usr/bin/time`; ~17 GB estimados para N = 24):
 
     | punto (κ₂/κ, g_z/κ) | N = 16 | N = 20 | N = 22 |
     |---|---|---|---|
@@ -293,7 +293,7 @@ Caché: `data/fig3/*.npz`, con la ρ estacionaria y los 12 modos más lentos.
 | plano | 2e-5 | 8.19 | 9.01 | 1.71 / 1.88 GHz |
 | plano | 2e-4 | 7.18 | 8.00 | 1.50 / 1.67 GHz |
 
-- **El filtro sube el requisito en x porque reduce γ_pf** (el numerador de η); γ_bf/n_q sube solo un 28% (0.032κ → 0.041κ en la isla). η mide sesgo, no calidad.
+- **El filtro sube el requisito en x porque reduce γ_pf** (el numerador de η); γ_bf/n_q con filtro frente al plano sube 28% en el efectivo (0.032κ → 0.041κ en la isla, x = 6.86) y 17% en el completo (0.027κ → 0.032κ, un punto); el efectivo lo exagera (HANDOFF §8.7). η mide sesgo, no calidad.
 - **Dependencia en γ/κ** (panel (b)): el umbral depende de γ/κ mientras γ domine γ_pf. Con γ/κ ≲ 1e-5, en el plano el umbral se vuelve casi independiente de γ (x*(100) ≈ 8.4, régimen térmico puro). Con filtro sigue moviéndose.
 
 **c_bf(κ₂/κ) por ajuste directo de γ_bf** (`ajuste_cbf.py`, `data/termico_cbf.csv`): γ_bf − γ_bf(T→0) = c_bf·n_q·κ con n_q ∈ [1e-5, 1e-2] (exponente local p = 1.00–1.02):
@@ -316,7 +316,7 @@ Caché: `data/fig3/*.npz`, con la ρ estacionaria y los 12 modos más lentos.
 - Región caliente n_q > 0.3 (x < 1.47): achurada y excluida.
 - **Hermiticidad antes de hermitizar** (sin simetrizar por paridad) en todas las ρ: ‖ρ − ρ†‖ ≤ 1.4e-11 (tolerancia 1e-10); |Tr ρ − 1| ≤ 6.7e-16; mínimo autovalor ≥ −8.7e-17.
 - **Validación con el modelo completo** (con filtro, temperatura y γ = 2e-5κ; N = 22; unidades de Ma κ = 0.03, ω = 6; `run_validacion_termica.sh`, `verif_termica.py`, `data/termico_validacion.csv`).
-  Criterio: γ_pf y γ_bf dentro de ±5%, y γ_bf(T=0) < 1% del térmico.
+  Criterio de aceptación: γ_pf y γ_bf dentro de ±5%. El criterio adicional γ_bf(T=0) < 1% del γ_bf térmico queda **pendiente de decisión de Jhon** (propuesta: reportarlo y no usarlo para aceptar; ver PENDIENTES, P7).
 
   | κ₂/κ | x | γ_pf c/e | γ_bf c/e | η c/e | η completo / efectivo | γ_bf(T=0)/γ_bf térmico | hermiticidad cruda |
   |---|---|---|---|---|---|---|---|
@@ -326,10 +326,10 @@ Caché: `data/fig3/*.npz`, con la ρ estacionaria y los 12 modos más lentos.
   | 0.40 | 6.86 | 0.959 | 0.776 | 1.236 | 2.40 / 1.94 | 0.09% | 1.6e-12 |
   | 0.25 | 10.1 | 0.956 | 0.798 | 1.199 | 118.2 / 98.6 | **2.35%** | 1.2e-9 |
 
-  - **Solo κ₂/κ = 0.05 cumple ±5% en γ_bf.** γ_pf c/e ≈ 0.959 en todos (es α_eff² ≈ 3.80 frente a |α|² = 4 del efectivo, más ~1%).
+  - **Solo κ₂/κ = 0.05 cumple ±5% en γ_bf.** γ_pf c/e entre 0.956 y 0.959 en todos. α_eff² ≈ 3.80 (completo) frente a 4.00 (efectivo) lo explica solo en parte: predice 0.9495 a T = 0 y se mide 0.956, y para el aumento térmico predice 0.94–0.95 y se mide 0.994–0.996 en x = 6.86 (hipótesis parcialmente contradicha; HANDOFF §8.3).
   - **La discrepancia de γ_bf depende de κ₂/κ y no de x** (fase 2: a κ₂/κ = 0.25, x = 6.86 y 10.1 dan 0.785 y 0.798). Cae monótonamente (0.956, 0.856, 0.785, 0.776) y se aplana; en κ₂/κ = 0.4 (χ|α|²/κ = 0.27, junto a la frontera ≈ 0.3) no se ve un desplome propio de la frontera. No se ajusta ni se aplica corrección empírica.
   - **El efectivo es conservador:** x*(η) del completo (estimado como η_completo(x) ≈ (η c/e a x = 6.86)·η_efectivo(x)) queda 0–0.2 por debajo: x*(100) efectivo/completo = 6.86/6.86, 8.36/8.25, 10.11/9.91, 10.84/10.63; x*(220) = 7.67/7.66, 9.17/9.05, 10.91/10.71, 11.64/11.43 (`data/termico_tabla_k2.csv`).
-  - **El piso de T = 0 pasa el 1% a x = 6.86, pero no en la isla a x = 10.1** (el γ_bf térmico cae como e^{−x}). Con η_max ≈ 5000 frente a los umbrales (100, 220) se propone reportar el piso y no usarlo como criterio.
+  - **El piso de T = 0 cumple el 1% a x = 6.86 (0.09% a 0.30%), pero no a x ≈ 9 (1.35% a 2.52%) ni en la isla a x = 10.1 (2.35%)** (el γ_bf térmico cae como e^{−x}). η(T=0) = γ_pf/γ_bf(T=0) del completo va de 3.1e4 (κ₂/κ = 0.05) a 2.35e3 (0.4), y vale 4968 en la isla; sigue siendo mayor que los umbrales (100, 220) en los cuatro casos, aunque en κ₂/κ = 0.4 queda justo sobre 10 × 220. Se propone reportar el piso y no usarlo como criterio; **la decisión es de Jhon**.
   - **Independencia de x del cociente (fase 6):** el cociente γ_bf completo/efectivo con el piso de T = 0 restado cambia +0.14%, +0.02%, −0.72% y −0.33% entre x = 6.86 y x ≈ 9 (κ₂/κ = 0.05, 0.1, 0.4 a x = 9.5, y la isla a x = 10.1); criterio < 3%: **sostenido**. Pisos 2.52%, 1.44%, 1.35%, 2.35%. x*(100) del completo recalculado: 6.862, 8.253, 10.640, 9.930 (κ₂/κ = 0.05, 0.1, 0.4, 0.25), ≤ 0.02 de la estimación anterior (`data/termico_x_independencia.txt`, `.csv`). N = 24 con filtro no cabe en 14 GB (cada corrida de N = 22 usa 14.0 GB): no ejecutado.
   - **Umbrales de calidad:** plano 1e-10 (hermiticidad) y −1e-9 (positividad); completo con filtro 1e-8 y −1e-8. Origen del residuo de hermiticidad (diagonalización densa) no verificado.
   - **Tolerancia del integrador** (fase 2, isla): atol 1e-14 / rtol 1e-12 en lugar de 1e-12 / 1e-10 cambia γ_bf en 2.6e-5 relativo y el piso en 0.10%; γ_pf no cambia.
