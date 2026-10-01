@@ -174,7 +174,7 @@ Estado a 2026-10-01. Cada afirmación lleva una marca: **[MEDIDO]** (sale de una
 | x* del completo (tabla §8.5) | [ESTIMADO]: supone cociente γ_bf con piso restado y cociente γ_pf constantes en x, y piso de T = 0 fijo | `termico_x_estrella_piso.csv` |
 | el efectivo es conservador: x* real entre 0 y 0.2 menor | [ESTIMADO] (misma base) | idem |
 | piso de T = 0 por κ₂/κ | [MEDIDO]; origen **[VERIFICAR]** | `handoff_cifras.txt`, logs en `data/filtro_completo/` |
-| convergencia en N con filtro | [MEDIDO] solo en el punto térmico (0.25, x = 6.86): N = 20 frente a 22 cambia γ_pf 3.2e-5 y γ_bf 1.08% (< 3%, criterio fijado antes). Sin barrido del piso a T = 0 con filtro | `data/filtro_completo/log_termico_ma5.txt` |
+| convergencia en N con filtro | [MEDIDO] solo en el punto térmico (0.25, x = 6.86): de N = 20 a 22 γ_pf cambia −3.2e-5 (relativo) y γ_bf −1.07% (los dos bajan al subir N; < 3%, criterio fijado antes). Sin barrido del piso a T = 0 con filtro | `data/filtro_completo/log_termico_ma5.txt` |
 | canal n_q del desplazamiento con filtro en el completo | **[VERIFICAR]**: la diferencia de aumentos térmicos (−4.6e-8 a −1.1e-7) no lo acota (compensación con la referencia T = 0, §8.8) | `data/handoff_verificacion_referencia.txt` |
 | baño plano, cualquier cantidad | **[NO VALIDADO]** | `data/filtro_completo/*plano*` |
 | factor 1.52 de γ_pf en el plano es el canal n_q del qubit | [MEDIDO] (apagado por canales en el completo) | `*_nqoff.npz`, `*_nmoff.npz` |
@@ -280,7 +280,7 @@ Hermiticidad cruda = ‖ρ − ρ†‖_F con Tr ρ = 1, antes de hermitizar; po
 - **Dos corridas con filtro en paralelo agotaron la memoria** (13 de 14 GB) y el sistema cortó un vigilante; se pasó a corridas secuenciales.
 - **Plano** (`log_plano_control.txt`; el tiempo total se asigna por el tiempo del propagador): N = 18, 4 min 5 s (térmico) y 3 min 57 s (T = 0); N = 22, n_q apagado 11 min 36 s, n_m apagado 11 min 27 s, T = 0 13 min 46 s (`time`); N = 26, 24 min 39 s (térmico) y 20 min 27 s (T = 0). El plano térmico N = 22 (propagador 416 s) se calculó de cero, pero su tiempo total no se registró **[VERIFICAR]**: la cifra de 7.6 s que se dio antes era de una lectura de caché y se retira (§11). `plano_modos.py`: unos 8 min con dos corridas en paralelo (marcas de archivo, 16:05:53 a 16:13:52 del 2026-09-30).
 - **Efectivo:** segundos por punto (`plano_kick.py`, `filtro_kick.py`: ≤ 2 s por corrida, en `data/plano_kick.txt` y `data/filtro_kick.txt`).
-- **N = 20 con filtro (κ₂/κ = 0.25, x = 6.86, N_f = 2) [MEDIDO]** (`data/filtro_completo/log_termico_ma5.txt`, corrida del 2026-10-01 08:26 a 09:24): γ_pf 1.65261e-04, γ_bf 3.38515e-05, η 4.882, P_c 0.995830. Cambio relativo frente a N = 22 (1.65256e-04, 3.34895e-05, 4.935, 0.995840): γ_pf +3.2e-05 (+5.2e-09κ en absoluto), γ_bf +1.08% (+3.6e-07κ), η −1.07%, P_c −9.8e-06. Peso de borde de los modos elegidos 1.7e-05 (paridad y bit-flip). Hermiticidad cruda 6.6e-10, |Tr ρ − 1| 2.2e-16, mínimo autovalor +7.5e-13 (umbral del filtro 1e-8, sin marcas). Tiempo real 3515.15 s (58.6 min) con `/usr/bin/time`, memoria máxima 11.36 GB. **Criterio fijado antes (cambio < 3% en γ_pf y γ_bf): se cumple, N = 22 se da por convergido en este punto.** Alcance: un solo punto térmico y dos valores de N; el piso a T = 0 con filtro y los otros κ₂/κ no tienen barrido. El cálculo solo de los modos lentos no es necesario por ahora.
+- **N = 20 con filtro (κ₂/κ = 0.25, x = 6.86, N_f = 2) [MEDIDO]** (`data/filtro_completo/log_termico_ma5.txt`, corrida del 2026-10-01 08:26 a 09:24): γ_pf 1.65261e-04, γ_bf 3.38515e-05, η 4.882, P_c 0.995830. Cambio de N = 20 a N = 22 (1.65256e-04, 3.34895e-05, 4.935, 0.995840), **relativo** y con signo: γ_pf **−3.2e-05** (−5.2e-09κ en absoluto), γ_bf **−1.07%** (−3.6e-07κ), η +1.08%, P_c +9.7e-06; es decir, γ_pf y γ_bf **bajan** al subir N. Peso de borde de los modos elegidos 1.7e-05 (paridad y bit-flip). Hermiticidad cruda 6.6e-10, |Tr ρ − 1| 2.2e-16, mínimo autovalor +7.5e-13 (umbral del filtro 1e-8, sin marcas). Tiempo real 3515.15 s (58.6 min) con `/usr/bin/time`, memoria máxima 11.36 GB. **Criterio fijado antes (cambio < 3% en γ_pf y γ_bf): se cumple, N = 22 se da por convergido en este punto.** Alcance: un solo punto térmico y dos valores de N; el piso a T = 0 con filtro y los otros κ₂/κ no tienen barrido. El cálculo solo de los modos lentos no es necesario por ahora.
 
 ### 8.12 Parámetros cubiertos y supuesto del baño
 - **Un solo juego de parámetros.** Toda la validación con el modelo completo usa g_z/κ = 14, ω/κ = 200 (ω = 6, κ = 0.03), |α|² = 4, γ/κ = 2e-5, κ_f/ω = 0.05, unidades de Ma y N = 22 (N_f = 2). **No cubierto:** γ/κ = 2e-4 (las curvas de γ/κ = 2e-4 de §8.2 no tienen punto del completo), otros κ_f, otros g_z/κ, y Naseem (x ≈ 0.96, fuera del rango validado de x ≥ 6.86). **[NO VALIDADO]**
@@ -304,6 +304,21 @@ Hermiticidad cruda = ‖ρ − ρ†‖_F con Tr ρ = 1, antes de hermitizar; po
 | sin ansatz; Γ₁± con n(ω), n(3ω) | 1.724e-4 | 4.267e-5 | 4.040 |
 
 - **Cociente plano/filtrado (efectivo con el mismo modelo en ambos):** γ_bf plano/filtrado 0.783 sin desplazamiento, 0.748 con el ansatz y n_q, y **2.00 con n(ω), n(3ω)**; γ_pf plano/filtrado 5.22, 8.71 y 32.4. El completo con ruido blanco da γ_bf 0.857 y γ_pf 8.29. **Con ruido blanco el plano tiene menor γ_bf que el filtrado; con n(ω) y n(3ω) tiene mayor (el doble)**, y γ_pf plano/filtrado pasa de 8.7 a 32. Con filtro, la ocupación de banda lateral cambia γ_pf solo +1.8% (1.728e-4 a 1.759e-4) y γ_bf +0.12%.
+- **Barrido de la densidad espectral del baño [NO VALIDADO]** (`codigo/barrido_s_ocupacion.py`, `data/barrido_s_ocupacion.txt`; efectivo, κ₂/κ = 0.25, x = 6.86, κ = 1, ocupación física y ansatz del desplazamiento). s = J(ω)/J(2ω), con J(2ω) la del baño del qubit. Escalan por s los canales cuyo fotón del baño está a ω (Γ₁⁻, σ₊a y σ₋a†) y por J(3ω)/J(2ω) los de 3ω (Γ₁⁺, σ₊a† y σ₋a); no escalan el baño del qubit ni la pérdida γ. Variante A: J(3ω) = J(ω); variante B: J(3ω) = J(2ω). Con s = 1 reproduce las filas de ocupación física de arriba.
+
+| s | variante | γ_pf plano | γ_bf plano | γ_pf filtro | γ_bf filtro | γ_pf plano/filtro | γ_bf plano/filtro |
+|---|---|---|---|---|---|---|---|
+| 0.1 | A | 8.021e-4 | 4.020e-5 | 1.724e-4 | 4.268e-5 | 4.654 | 0.942 |
+| 0.2 | A | 1.413e-3 | 4.667e-5 | 1.728e-4 | 4.268e-5 | 8.180 | 1.094 |
+| 0.5 | A | 3.143e-3 | 6.372e-5 | 1.739e-4 | 4.270e-5 | 18.07 | 1.492 |
+| 1 | A y B | 5.738e-3 | 8.561e-5 | 1.759e-4 | 4.272e-5 | 32.62 | 2.004 |
+| 2 | A | 1.014e-2 | 1.135e-4 | 1.799e-4 | 4.277e-5 | 56.35 | 2.654 |
+| 0.1 | B | 9.809e-4 | 3.567e-5 | 1.725e-4 | 4.267e-5 | 5.688 | 0.836 |
+| 0.2 | B | 1.542e-3 | 4.198e-5 | 1.728e-4 | 4.268e-5 | 8.920 | 0.984 |
+| 0.5 | B | 3.173e-3 | 5.973e-5 | 1.740e-4 | 4.269e-5 | 18.24 | 1.399 |
+| 2 | B | 1.039e-2 | 1.262e-4 | 1.798e-4 | 4.278e-5 | 57.78 | 2.951 |
+
+  El cociente γ_bf plano/filtrado cruza 1 en **s = 0.132** (variante A) y **s = 0.209** (variante B), por interpolación log-log. Por encima de ese s el plano tiene mayor γ_bf que el filtrado; con ruido blanco el completo da 0.857. γ_pf plano/filtrado crece con s de 4.7 a 56 (variante A). Con filtro, γ_pf y γ_bf casi no cambian con s (γ_pf de 1.724e-4 a 1.799e-4). La asignación de qué canales escalan y J(3ω) son supuestos.
 - **El plano sigue [NO VALIDADO]:** con ocupación física el efectivo con ansatz predice γ_pf 3.8 veces y γ_bf 2.7 veces los valores con n_q, y el completo no puede comprobarlo. Que η plano con el ansatz coincida con el completo es compensación de errores (§8.7).
 
 ## 9. Criterios numéricos (siempre)
@@ -398,7 +413,7 @@ Ver la respuesta del chat que acompaña a este archivo.
 | modo vecino de γ_pf (plano) | identificar | es el tercer modo lógico (traslape 1.409 con Y_L) | §8.9 |
 | control con n(ω) y n(3ω) (efectivo) | cambio de γ_pf pequeño | con filtro ≤ 2.5e-4; en el plano hasta +7.8% (x = 6) | §8.12 |
 | hermiticidad y positividad | 1e-10 y −1e-9 (plano); 1e-8 y −1e-8 (filtro) | filtro: 0 de 14 superan el umbral vigente; con el anterior, 13 y 2. Plano: 1 de 8 supera 1e-10 | §8.10 |
-| convergencia en N con filtro (N = 20 frente a 22) | cambio < 3% en γ_pf y γ_bf (fijado antes) | cumple: γ_pf +3.2e-5, γ_bf +1.08% (un punto térmico) | §8.11 |
+| convergencia en N con filtro (N = 20 frente a 22) | cambio < 3% en γ_pf y γ_bf (fijado antes) | cumple: de N = 20 a 22, γ_pf −3.2e-5 (relativo) y γ_bf −1.07% (un punto térmico) | §8.11 |
 
 ## 17. Historial de tareas de Opus (fases térmicas; la numeración de fases es la de `PENDIENTES_Y_HALLAZGOS.md`, P7)
 | fase | fecha | commit | qué se pidió | qué se obtuvo |
@@ -409,6 +424,6 @@ Ver la respuesta del chat que acompaña a este archivo.
 | 4 | 2026-09-30 | `2b64d26` | origen del 1.52 y barrido en N del plano; puntos y notas en la figura térmica | canal n_q; N = 18 no converge; figura con puntos validados |
 | 5 | 2026-09-30 | `1603317` | hipótesis del desplazamiento, modo vecino, log de hermiticidad | desplazamiento reproduce el canal con 16% de exceso; vecino = tercer modo lógico |
 | 6 | 2026-09-30 a 10-01 | `efda948` (datos), `163e971` (documentación) | independencia de x (x ≈ 9), umbrales del filtro, desplazamiento con filtro; N = 24 si cabía | independencia sostenida; N = 24 no cabe; desplazamiento con filtro despreciable |
-| N = 20 | 2026-10-01 | commit de datos de esta fecha | convergencia en N con filtro (κ₂/κ = 0.25, x = 6.86, N = 20) | γ_pf +3.2e-5, γ_bf +1.08% frente a N = 22; N = 22 convergido en ese punto |
+| N = 20 | 2026-10-01 | commit de datos de esta fecha | convergencia en N con filtro (κ₂/κ = 0.25, x = 6.86, N = 20) | de N = 20 a 22, γ_pf −3.2e-5 (relativo) y γ_bf −1.07%; N = 22 convergido en ese punto |
 | x* con piso | 2026-10-01 | `8ffd720` | corregir x* por el crecimiento relativo del piso | solo cambia en κ₂/κ = 0.4 (+0.028 y +0.081); `termico_x_estrella_piso.csv` |
 | verificación de HANDOFF | 2026-10-01 | commits de HANDOFF, README y PENDIENTES de esta fecha | verificar observaciones de lectura y aplicar correcciones | error de atribución del canal n_m en §8.7; §8.8 reescrito como ansatz; la diferencia de aumentos térmicos con filtro no acota el canal n_q (compensación con la referencia T = 0); α_eff² solo explica parcialmente el sesgo de γ_pf |
