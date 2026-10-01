@@ -1,0 +1,9 @@
+completo κ_f/ω = 0.2, N = 20, (κ₂/κ, x) = (0.25, 6.86), κ = 1
+γ_pf  T=0 1.58888e-04  térmico 1.76739e-04  | γ_bf T=0 3.4494e-07  térmico 2.9108e-05 | η térmico 6.072, η(T=0) 460.6
+efectivo (pre-registro): γ_pf T=0 1.66411e-04  térmico 1.78395e-04  Δ_e 1.1984e-05  E_ansatz +7.341e-06
+r_0 = 0.95479   r_x = 0.99072
+Δ_c = γ_pf(térm) − γ_pf(T=0) = 1.7850e-05   D = Δ_c − Δ_e = +5.866e-06   (sin canal esperado ≈ -5.42e-07; con canal ≈ +6.80e-06)
+E_obs = (r_x − r_0)·γ_e = +6.408e-06   E_obs/E_ansatz = 0.873
+al2eff: T=0 3.79744  térmico 3.79408  (parte imaginaria +6.8e-03, +6.1e-03)
+hermiticidad cruda: T=0 1.55e-09, térmico 7.52e-11; mín. autovalor -1.0e-14, +3.3e-13; |Tr−1| 0e+00, 2e-16
+REGLA (sobre E_obs): E_obs > 3e-6 canal de tamaño ansatz; |E_obs| < 1e-6 no hay canal; resto indeterminado  ->  canal de tamaño ansatz
