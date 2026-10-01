@@ -1,0 +1,5 @@
+efectivo plano T=0 (x=60)  : γ_pf=8.86279e-04  γ_bf=2.11363e-07  analítica(α²=4)=8.86332e-04  analítica(α²=3.798)=8.42467e-04
+efectivo plano térmico     : γ_pf=8.99599e-04  γ_bf=3.34241e-05  analítica(α²=4)=9.00056e-04  analítica(α²=3.798)=8.55575e-04
+efectivo plano n_q off     : γ_pf=8.98327e-04  γ_bf=2.26728e-07  analítica(α²=4)=8.98382e-04  analítica(α²=3.798)=8.53976e-04
+efectivo plano n_m off     : γ_pf=8.87556e-04  γ_bf=3.34094e-05  analítica(α²=4)=8.88006e-04  analítica(α²=3.798)=8.44066e-04
+Γ₁⁻=7.9719e-05 Γ₁⁺=8.8577e-06 n_q=1.0500e-03 n_m=3.3471e-02

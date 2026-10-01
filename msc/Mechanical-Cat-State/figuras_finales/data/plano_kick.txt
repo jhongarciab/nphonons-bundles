@@ -1,0 +1,9 @@
+T0    : con kick γ_pf=8.83944e-04 γ_bf=1.6670e-07 | sin kick γ_pf=8.86279e-04 γ_bf=2.1136e-07 | completo γ_pf=8.33135e-04 γ_bf=3.0422e-07 | tiempo 0.1 s (calculado, rerun=True) herm=1.0e-14 mineig=+1.8e-13
+term  : con kick γ_pf=1.50587e-03 γ_bf=3.1922e-05 | sin kick γ_pf=8.99599e-04 γ_bf=3.3424e-05 | completo γ_pf=1.36936e-03 γ_bf=2.8691e-05 | tiempo 0.1 s (calculado, rerun=True) herm=1.1e-14 mineig=+4.3e-11
+nqoff : con kick γ_pf=8.95815e-04 γ_bf=1.7865e-07 | sin kick γ_pf=8.98327e-04 γ_bf=2.2673e-07 | completo γ_pf=8.44529e-04 γ_bf=3.1657e-07 | tiempo 0.1 s (calculado, rerun=True) herm=9.2e-15 mineig=+1.8e-13
+nmoff : con kick γ_pf=1.49401e-03 γ_bf=3.1910e-05 | sin kick γ_pf=8.87556e-04 γ_bf=3.3409e-05 | completo γ_pf=1.35797e-03 γ_bf=2.8678e-05 | tiempo 0.1 s (calculado, rerun=True) herm=6.0e-15 mineig=+4.3e-11
+
+incremento por n_q (término − n_q off, n_m on): kick γ_pf = 6.1006e-04; sin kick = 1.2712e-06; completo = 5.2483e-04
+incremento térmico total (térmico − T=0): kick = 6.2193e-04; sin kick = 1.3319e-05; completo = 5.3622e-04
+por evento (÷ n_q κ = 1.0500e-03): kick = 0.581; sin kick = 0.0012; completo = 0.500
+γ_bf térmico: kick 3.1922e-05, sin kick 3.3424e-05, completo 2.8691e-05; γ_bf T=0: kick 1.6670e-07, sin kick 2.1136e-07, completo 3.0422e-07
