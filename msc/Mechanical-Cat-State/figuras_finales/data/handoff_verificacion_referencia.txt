@@ -1,0 +1,39 @@
+=== (a) α_eff² y el cociente γ_pf completo/efectivo
+npz del completo guardan: ['N', 'Nf', 'Pc_din', 'Pc_ss', 'Pe_prom', 'al2', 'al2eff', 'gam', 'gbf', 'gpf', 'gx', 'gz', 'herm_cruda', 'kap', 'kap2', 'kf', 'modos', 'nq', 't', 'tprop', 'val', 'variante', 'w', 'x']
+κ₂/κ=0.05 x=6.86  α_eff²(T=0)=3.7980 α_eff²(x)=3.7968 | cociente T=0 medido 0.9561 predicho 0.9495 | cociente térmico medido 0.9588 predicho 0.9496 | cociente de incrementos medido 0.9945 predicho 0.9508
+κ₂/κ=0.05 x=9     α_eff²(T=0)=3.7980 α_eff²(x)=3.7979 | cociente T=0 medido 0.9561 predicho 0.9495 | cociente térmico medido 0.9566 predicho 0.9496 | cociente de incrementos medido 0.9728 predicho 0.9537
+κ₂/κ=0.1 x=6.86  α_eff²(T=0)=3.7981 α_eff²(x)=3.7962 | cociente T=0 medido 0.9561 predicho 0.9495 | cociente térmico medido 0.9588 predicho 0.9494 | cociente de incrementos medido 0.9947 predicho 0.9482
+κ₂/κ=0.1 x=9     α_eff²(T=0)=3.7981 α_eff²(x)=3.7979 | cociente T=0 medido 0.9561 predicho 0.9495 | cociente térmico medido 0.9565 predicho 0.9496 | cociente de incrementos medido 0.9728 predicho 0.9528
+κ₂/κ=0.25 x=6.86  α_eff²(T=0)=3.7982 α_eff²(x)=3.7947 | cociente T=0 medido 0.9560 predicho 0.9496 | cociente térmico medido 0.9588 predicho 0.9491 | cociente de incrementos medido 0.9955 predicho 0.9428
+κ₂/κ=0.25 x=10.1  α_eff²(T=0)=3.7982 α_eff²(x)=3.7981 | cociente T=0 medido 0.9560 predicho 0.9496 | cociente térmico medido 0.9562 predicho 0.9496 | cociente de incrementos medido 0.9677 predicho 0.9528
+κ₂/κ=0.4 x=6.86  α_eff²(T=0)=3.7983 α_eff²(x)=3.7939 | cociente T=0 medido 0.9559 predicho 0.9496 | cociente térmico medido 0.9587 predicho 0.9489 | cociente de incrementos medido 0.9961 predicho 0.9395
+κ₂/κ=0.4 x=9.5   α_eff²(T=0)=3.7983 α_eff²(x)=3.7980 | cociente T=0 medido 0.9559 predicho 0.9496 | cociente térmico medido 0.9562 predicho 0.9496 | cociente de incrementos medido 0.9706 predicho 0.9511
+
+α_eff² y ⟨a†a⟩ del efectivo con filtro (estado estacionario), κ₂/κ = 0.25:
+  x=60: |⟨a²⟩|=4.0000  ⟨a†a⟩=4.0000  (completo: α_eff² = 3.7982; ⟨a†a⟩ no está guardado en los .npz del completo)
+  x=6.86: |⟨a²⟩|=3.9959  ⟨a†a⟩=3.9979  (completo: α_eff² = 3.7947; ⟨a†a⟩ no está guardado en los .npz del completo)
+
+=== (b) descomposición de la diferencia de incrementos: diff = (r_x − r_0)·γ_e(x) + (r_0 − 1)·Δ_e
+  κ₂/κ=0.05 x=6.86  r_0=0.9561 r_x=0.9588 | (r_x−r_0)γ_e=+4.63e-07  (r_0−1)Δ_e=-5.29e-07  suma=-6.60e-08  diff medida=-6.60e-08  n_q=1.05e-03
+  κ₂/κ=0.05 x=9     r_0=0.9561 r_x=0.9566 | (r_x−r_0)γ_e=+6.74e-08  (r_0−1)Δ_e=-1.77e-07  suma=-1.10e-07  diff medida=-1.10e-07  n_q=1.23e-04
+  κ₂/κ=0.1 x=6.86  r_0=0.9561 r_x=0.9588 | (r_x−r_0)γ_e=+4.64e-07  (r_0−1)Δ_e=-5.28e-07  suma=-6.40e-08  diff medida=-6.40e-08  n_q=1.05e-03
+  κ₂/κ=0.1 x=9     r_0=0.9561 r_x=0.9565 | (r_x−r_0)γ_e=+6.74e-08  (r_0−1)Δ_e=-1.77e-07  suma=-1.10e-07  diff medida=-1.10e-07  n_q=1.23e-04
+  κ₂/κ=0.25 x=6.86  r_0=0.9560 r_x=0.9588 | (r_x−r_0)γ_e=+4.72e-07  (r_0−1)Δ_e=-5.26e-07  suma=-5.40e-08  diff medida=-5.40e-08  n_q=1.05e-03
+  κ₂/κ=0.25 x=10.1  r_0=0.9560 r_x=0.9562 | (r_x−r_0)γ_e=+2.70e-08  (r_0−1)Δ_e=-1.02e-07  suma=-7.50e-08  diff medida=-7.50e-08  n_q=4.11e-05
+  κ₂/κ=0.4 x=6.86  r_0=0.9559 r_x=0.9587 | (r_x−r_0)γ_e=+4.80e-07  (r_0−1)Δ_e=-5.26e-07  suma=-4.60e-08  diff medida=-4.60e-08  n_q=1.05e-03
+  κ₂/κ=0.4 x=9.5   r_0=0.9559 r_x=0.9562 | (r_x−r_0)γ_e=+4.61e-08  (r_0−1)Δ_e=-1.38e-07  suma=-9.20e-08  diff medida=-9.20e-08  n_q=7.49e-05
+
+=== cálculo nuevo: efectivo con filtro, κ₂/κ = 0.25, x = 6.86 (κ=1)
+  FILTRO sin desplazamiento                               γ_pf=1.72366e-04 γ_bf=4.26707e-05 η=4.039
+  FILTRO ansatz con n_q                                   γ_pf=1.72830e-04 γ_bf=4.26687e-05 η=4.051
+  FILTRO ansatz con n(ω), n(3ω); Γ₁± con n_q              γ_pf=1.75880e-04 γ_bf=4.27218e-05 η=4.117
+  FILTRO ansatz con n(ω), n(3ω); Γ₁± con n(ω), n(3ω)      γ_pf=1.75909e-04 γ_bf=4.27218e-05 η=4.118
+  FILTRO sin ansatz; Γ₁± con n(ω), n(3ω)                  γ_pf=1.72395e-04 γ_bf=4.26707e-05 η=4.04
+
+  cociente efectivo plano / efectivo filtrado (mismo modelo en ambos):
+  sin desplazamiento                               γ_pf plano/filtrado=5.219  γ_bf plano/filtrado=0.7833  η plano=26.91 η filtrado=4.039
+  ansatz con n_q                                   γ_pf plano/filtrado=8.713  γ_bf plano/filtrado=0.7481  η plano=47.17 η filtrado=4.051
+  ansatz con n(ω), n(3ω); Γ₁± con n_q              γ_pf plano/filtrado=32.37  γ_bf plano/filtrado=2.003  η plano=66.53 η filtrado=4.117
+  ansatz con n(ω), n(3ω); Γ₁± con n(ω), n(3ω)      γ_pf plano/filtrado=32.62  γ_bf plano/filtrado=2.004  η plano=67.03 η filtrado=4.118
+  sin ansatz; Γ₁± con n(ω), n(3ω)                  γ_pf plano/filtrado=5.487  γ_bf plano/filtrado=0.7846  η plano=28.25 η filtrado=4.04
+  completo (ruido blanco): γ_pf plano/filtrado = 8.286, γ_bf plano/filtrado = 0.8567
