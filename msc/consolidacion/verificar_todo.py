@@ -1470,7 +1470,7 @@ def escribir():
 def main():
     bloque_simbolico(); bloque_ma(); bloque_pf(); bloque_filtro(); bloque_minimo(); bloque_mapa(); bloque_termico_ef()
     E = bloque_termico_full(); bloque_plano(E); bloque_diag(E); bloque_calidad(); bloque_logs(); bloque_convergencia()
-    for nm in ('bloque_textual', 'bloque_textual2', 'bloque_textual3', 'bloque_textual4', 'bloque_textual5', 'bloque_textual6', 'bloque_L2', 'bloque_meta'):
+    for nm in ('bloque_textual', 'bloque_textual2', 'bloque_textual3', 'bloque_textual4', 'bloque_textual5', 'bloque_textual6', 'bloque_L2', 'bloque_meta', 'bloque_pd'):
         if nm in globals(): globals()[nm](E)
     return escribir()
 
@@ -2246,6 +2246,21 @@ def lineas_sin_verificar():
         w = csv.writer(fh); w.writerow(['archivo', 'linea', 'tipo', 'texto'])
         for r in out: w.writerow(r)
     return len(out)
+
+# ============================================================ BLOQUE 20: por decidir por Jhon (casos que los datos no resuelven o decisiones declaradas pendientes)
+def bloque_pd(E):
+    por_decidir('PD-c', 'Que "c = FWHM/G" citar: HANDOFF y README dan 2.93 (+-0.25) para la serie wq=wp; el informe da 2.94; los datos dan 2.936 (ajuste por el origen) y media 2.916 con desviacion 0.27 (5 puntos). La serie con wq fijo (7 puntos, Tarea 47d) da 2.870 +- 0.246.',
+                'Citar c = 2.94 (ajuste por el origen, serie wq=wp, informe) como cifra de la regla y 2.87 +- 0.25 como serie con wq fijo', 'Citar 2.93 +- 0.25 como HANDOFF/README (el 2.93 y el +-0.25 no salen de los datos de la serie wq=wp)', 'FW-06..FW-10; data/fig2b.csv')
+    por_decidir('PD-sat', 'Costo del filtro en saturacion (kappa2/kappa=1, kappa_f/omega=0.05): "Delta_filtro/Delta_plano = 0.48" (N=20, N_f=2/3) frente a 0.957 con N=26, N_f=3. El P_c estacionario del modelo minimo con filtro cambia de 0.99934 (N=20) a 0.99999993 (N=26): el punto no esta convergido en N. Los controles de convergencia del README (N=20->26 < 0.1%) solo se hicieron en kappa2/kappa=0.1.',
+                'Mantener "en saturacion el filtro cuesta la mitad" (README, informe) hasta repetir con N>=26', 'Retirar la frase y la entrada 0.480 de la tabla hasta repetir con N>=26 (el filtro costaria ~4% en kappa2/kappa=1)', 'MF-SAT; data/minimo_filtro/k1_kf10_N{20,26}_*.npz')
+    por_decidir('PD-9.2', 'Rotulo de kappa1/kappa2 de Naseem en la tabla de plataformas: HANDOFF 7, informe y documento_completo escriben 9.2e-5 como "nominal"; la formula nominal (5/72)(kappa/gz)^2 da 1.9e-5 y 9.2e-5 es (kappa1+gamma)/kappa2 (mapa_plataformas.tex l.94 lo aclara).',
+                'Rotular 9.2e-5 como "con perdida intrinseca" y agregar 1.9e-5 como nominal', 'Dejar 9.2e-5 como cifra de la tabla y aclarar en el pie', 'PL-08, PL-09; docs/mapa_plataformas/mapa_plataformas.tex')
+    por_decidir('PD-eta', 'Origen de los niveles de referencia eta = 100 y 220 (README: "convencion de trabajo, sin justificacion propia"; informe: "punto a discutir").',
+                'Mantener 100 y 220 como valores de referencia rotulados asi', 'Fijar un criterio de diseno propio (p. ej. eta_max >= 10 x nivel, ver PD-piso)', 'HANDOFF 8.2; README termico; informe 4.5')
+    por_decidir('PD-central', 'Version de la figura central: figura_central (color con piso gamma/kappa=2e-5) o figura_central_sinpiso (recomendada en README); estilo de figura_termica.',
+                'figura_central_sinpiso (no ata el mapa a un gamma/kappa de plataforma)', 'figura_central', 'HANDOFF 12.12; README figura central')
+    por_decidir('PD-naseem', 'Termico para Naseem (x ~ 0.96, kappa2/kappa = 2.07): "no lanzar hasta decidirlo" (fuera del rango validado x >= 6.86).', 'No lanzar; reportarlo como no calculado', 'Lanzarlo con el efectivo marcando no validado', 'HANDOFF 12.3')
+    return
 
 # ---- COLA (mantener al final)
 if __name__ == '__main__':

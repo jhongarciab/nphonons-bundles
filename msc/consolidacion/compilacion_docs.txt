@@ -1,0 +1,6 @@
+Informe: pdf=1 undefined_citations=0 undefined_refs=0 errors=0
+brecha_punto_excepcional: pdf=1 undefined_citations=0 undefined_refs=0 errors=0
+documento_completo: pdf=1 undefined_citations=0 undefined_refs=0 errors=0
+figura_merito: pdf=1 undefined_citations=0 undefined_refs=0 errors=0
+lamb_shift_ma2019: pdf=1 undefined_citations=0 undefined_refs=0 errors=0
+mapa_plataformas: pdf=1 undefined_citations=0 undefined_refs=0 errors=0
