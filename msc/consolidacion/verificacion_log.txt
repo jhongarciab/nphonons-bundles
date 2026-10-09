@@ -1,0 +1,33 @@
+afirmaciones: 802
+nivel 1 estado D: 21
+nivel 1 estado R: 11
+nivel 1 estado S: 1
+nivel 1 estado V: 769
+
+anclas no encontradas (3):
+  ancla no encontrada: HANDOFF.md :: 'positividad ... −1e-9'
+  ancla no encontrada: HANDOFF.md :: 'la hermiticidad cruda del completo con filtro va de 1.6e-12 a 2.8e-09'
+  ancla no encontrada: docs/Informe/informe.tex :: 'γ_{\\rm pf}$ cambia $0.8\\%$ y $0.3\\%$'
+
+D:
+  C6-18 | rep=0.333 | rec=0.220414 | C6/P5: el campo medio explica un tercio de la diferencia d_pred - d_opt
+  C6-23 | rep=4.2e-10 | rec=8.64129e-13 | C6: rho estacionarias: min autovalor >= 4.2e-10 (todas)
+  FW-09 | rep=0.25 | rec=0.273259 | Desviacion de c en la serie wq=wp (5 puntos): +-0.25
+  RU-06 | rep=3.25 | rec=3.18134 | FWHM en x, |alpha|^2=4: rango 2.5-3.25 (cota superior)
+  RU-14 | rep=157 | rec=204 | Numero de estados estacionarios (rho) de la Fig. 2 nueva: 157
+  F5a-N3 | rep=2e-6 | rec=9.70954e-06 | README Fig.4(a): N=8 frente a 12 <= 2e-6 (plano; kf=1: N8 Nf3 vs N12 Nf3)
+  F4v-1 | rep=-2e-11 | rec=-1.11765e-09 | README Fig.4: todas las rho con min autovalor >= -2e-11
+  MN-08 | rep=2e-4 | rec=0.000384063 | C9: en 8 valores con N=24,30,36 la tasa dinamica es estable (<= 2e-4)
+  MF-SAT | rep=0.480 | rec=0.957143 | Costo del filtro en saturacion: kappa2/kappa=1, ratio con N=26,N_f=3 frente a N=20,N_f=2
+  PL-08 | rep=9.2e-5 | rec=1.92901e-05 | Naseem: kappa1/kappa2 "nominal" = (5/72)(k/gz)^2 = 1.9e-5; con la perdida intrinseca (kappa1+gamma)/kappa2 = 9
+  PS-05 | rep=1.9 | rec=2.18042 | Piso 2e-4: gz/kappa maximo del umbral en la franja (1.9)
+  PS-g5-10 | rep=0.10 | rec=0.0922648 | Piso 2e-5: el piso (gamma) nunca baja del 10% de kappa1_filt en la region del umbral
+  TX-N24 | rep=0.008 | rec=0.00818224 | N=22->24 cambia x* en <= 0.008
+  CB-iqr | rep=0.02 | rec=0.0306476 | Incertidumbre de c_bf (semi-rango intercuartil) <= 2%
+  CB-p | rep=1.02 | rec=1.02428 | Exponente local de n_q: p = 1.00-1.02
+  AL-cache | rep=no estan | rec= | HANDOFF 8.2: las caches del barrido en |alpha|^2 no estan en data/termico/
+  Q-a2 | rep=si | rec= | Criterio declarado de positividad (min autovalor > -1e-9) cumplido por todas las rho de figuras_finales/data/
+  Q-a3 | rep=2 | rec=5 | HANDOFF: solo 2 violaciones del criterio -1e-9 (corridas termicas con filtro a T=0)
+  Q-f2 | rep=1.2e-13 | rec=4.26567e-15 | Fig.2 de validacion: min autovalor >= 1.2e-13 (todas las rho de data/fig2)
+  Q-f4 | rep=6.5e-15 | rec=3.54895e-15 | Fig.2 nueva: 157 rho, min autovalor >= 6.5e-15
+  Q-t4 | rep=8.2e-13 | rec=1.39674e-11 | PENDIENTES E7: herm cruda del termico nuevo <= 8.2e-13 en 4800 rho

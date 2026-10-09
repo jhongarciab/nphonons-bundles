@@ -1,0 +1,2 @@
+id,texto,version_a,version_b,dato
+PD-umbral,"Relajacion de umbrales de hermiticidad y positividad del completo con filtro (1e-10/-1e-9 -> 1e-8/-1e-8), decidida despues de observar -2.49e-9 y -1.42e-9. PENDIENTES (fase 4) dice ""no se cambio el criterio: decision del autor"".",Mantener 1e-8/-1e-8 solo para las corridas con filtro con la justificacion de HANDOFF 8.10 (el origen del residuo no esta verificado),"Restituir 1e-10/-1e-9 y declarar 2 violaciones (mas las 3 de data/ fuera del log termico: -5.58e-9, -1.31e-9 y -1.12e-9)","Q-h1, Q-a2, Q-a3"
