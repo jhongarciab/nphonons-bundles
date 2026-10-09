@@ -1470,7 +1470,7 @@ def escribir():
 def main():
     bloque_simbolico(); bloque_ma(); bloque_pf(); bloque_filtro(); bloque_minimo(); bloque_mapa(); bloque_termico_ef()
     E = bloque_termico_full(); bloque_plano(E); bloque_diag(E); bloque_calidad(); bloque_logs(); bloque_convergencia()
-    for nm in ('bloque_textual', 'bloque_textual2', 'bloque_textual3', 'bloque_textual4', 'bloque_textual5', 'bloque_textual6', 'bloque_L2', 'bloque_meta', 'bloque_pd'):
+    for nm in ('bloque_textual', 'bloque_textual2', 'bloque_textual3', 'bloque_textual4', 'bloque_textual5', 'bloque_textual6', 'bloque_L2', 'bloque_meta', 'bloque_pd', 'bloque_fechas'):
         if nm in globals(): globals()[nm](E)
     return escribir()
 
@@ -2260,6 +2260,15 @@ def bloque_pd(E):
     por_decidir('PD-central', 'Version de la figura central: figura_central (color con piso gamma/kappa=2e-5) o figura_central_sinpiso (recomendada en README); estilo de figura_termica.',
                 'figura_central_sinpiso (no ata el mapa a un gamma/kappa de plataforma)', 'figura_central', 'HANDOFF 12.12; README figura central')
     por_decidir('PD-naseem', 'Termico para Naseem (x ~ 0.96, kappa2/kappa = 2.07): "no lanzar hasta decidirlo" (fuera del rango validado x >= 6.86).', 'No lanzar; reportarlo como no calculado', 'Lanzarlo con el efectivo marcando no validado', 'HANDOFF 12.3')
+    return
+
+def bloque_fechas(E):
+    S = 'consolidacion/verificar_todo.py::bloque_fechas'
+    fch = sh("git log -1 --format=%ad --date=short -- Mechanical-Cat-State/figuras_finales/PENDIENTES_Y_HALLAZGOS.md")
+    txt('FEC-1', 1, [(PH, 'Actualizado: 2026-09-28')], 'PENDIENTES_Y_HALLAZGOS.md declara "Actualizado: 2026-09-28"; su ultimo commit es %s y P7 incluye resultados hasta 2026-10-01' % fch, 'S', rep='2026-09-28', tipo='cualitativa', dato='git log', script=S, nota='la fecha del encabezado esta desfasada; la seccion 4 (Limitaciones) quedo con el estado del 2026-09-28 (PEN-4a)')
+    fh = sh("git log -1 --format=%ad --date=short -- HANDOFF.md")
+    txt('FEC-2', 1, [(H8, 'Actualizado el 2026-10-01 con los resultados de las simulaciones térmicas')], 'HANDOFF.md: "actualizado el 2026-10-01"; ultimo commit %s' % fh, 'V', rep='2026-10-01', tipo='cualitativa', dato='git log', script=S, nota='el encabezado no menciona la corrida kf/w=0.2 ni el diagnostico E_obs, pero el cuerpo si los incluye (8.8)')
+    byid('FEC-2')['estado'] = 'V' if fh == '2026-10-01' else 'D'
     return
 
 # ---- COLA (mantener al final)

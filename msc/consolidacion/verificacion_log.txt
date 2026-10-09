@@ -1,10 +1,10 @@
-afirmaciones: 1069; lineas numericas de nivel 1 sin cubrir: 117
+afirmaciones: 1071; lineas numericas de nivel 1 sin cubrir: 117
 nivel 1 estado D: 26
 nivel 1 estado H: 17
 nivel 1 estado L: 8
 nivel 1 estado R: 22
-nivel 1 estado S: 28
-nivel 1 estado V: 913
+nivel 1 estado S: 29
+nivel 1 estado V: 914
 nivel 2 estado D: 8
 nivel 2 estado S: 12
 nivel 2 estado V: 31
