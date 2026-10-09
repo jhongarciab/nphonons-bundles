@@ -1,13 +1,14 @@
-afirmaciones: 802
-nivel 1 estado D: 21
-nivel 1 estado R: 11
+afirmaciones: 855
+nivel 1 estado D: 23
+nivel 1 estado R: 15
 nivel 1 estado S: 1
-nivel 1 estado V: 769
+nivel 1 estado V: 816
 
-anclas no encontradas (3):
+anclas no encontradas (4):
   ancla no encontrada: HANDOFF.md :: 'positividad ... −1e-9'
   ancla no encontrada: HANDOFF.md :: 'la hermiticidad cruda del completo con filtro va de 1.6e-12 a 2.8e-09'
   ancla no encontrada: docs/Informe/informe.tex :: 'γ_{\\rm pf}$ cambia $0.8\\%$ y $0.3\\%$'
+  ancla no encontrada: docs/Informe/informe.tex :: 'ε_{\\rm completo}/\\epsilon_{\\rm mapa}=1.028'
 
 D:
   C6-18 | rep=0.333 | rec=0.220414 | C6/P5: el campo medio explica un tercio de la diferencia d_pred - d_opt
@@ -31,3 +32,5 @@ D:
   Q-f2 | rep=1.2e-13 | rec=4.26567e-15 | Fig.2 de validacion: min autovalor >= 1.2e-13 (todas las rho de data/fig2)
   Q-f4 | rep=6.5e-15 | rec=3.54895e-15 | Fig.2 nueva: 157 rho, min autovalor >= 6.5e-15
   Q-t4 | rep=8.2e-13 | rec=1.39674e-11 | PENDIENTES E7: herm cruda del termico nuevo <= 8.2e-13 en 4800 rho
+  P4-a | rep=0.4% | rec=0.0069 | Deficit medido/predicho <= 0.4% para kappa2/kappa <= 0.05
+  PL7-84 | rep=0.84 | rec=0.860 (completo/kick); 1.163 (kick/completo) | El desplazamiento dependiente del estado reproduce el 84% del canal n_q del plano (con 16% de exceso)
