@@ -1,12 +1,16 @@
-afirmaciones: 913
-nivel 1 estado D: 24
-nivel 1 estado L: 1
-nivel 1 estado R: 19
-nivel 1 estado S: 19
-nivel 1 estado V: 850
+afirmaciones: 1069; lineas numericas de nivel 1 sin cubrir: 117
+nivel 1 estado D: 26
+nivel 1 estado H: 17
+nivel 1 estado L: 8
+nivel 1 estado R: 23
+nivel 1 estado S: 28
+nivel 1 estado V: 912
+nivel 2 estado D: 8
+nivel 2 estado S: 12
+nivel 2 estado V: 31
+nivel 3 estado V: 4
 
-anclas no encontradas (1):
-  ancla no encontrada: HANDOFF.md :: '34 de 160 puntos'
+anclas no encontradas (0):
 
 D:
   C6-18 | rep=0.333 | rec=0.220414 | C6/P5: el campo medio explica un tercio de la diferencia d_pred - d_opt
@@ -33,3 +37,13 @@ D:
   P4-a | rep=0.4% | rec=0.0069 | Deficit medido/predicho <= 0.4% para kappa2/kappa <= 0.05
   PL7-84 | rep=0.84 | rec=0.860 (completo/kick); 1.163 (kick/completo) | El desplazamiento dependiente del estado reproduce el 84% del canal n_q del plano (con 16% de exceso)
   ENV-1 | rep=existe | rec= | El entorno .venv_qutip5 (QuTiP 5.3.1) existe
+  RM-48 | rep=48 | rec=49 | P2: 48 puntos recalculados con N=22 en |x|<=1 para las curvas |a|^2=4 que tenian N=16
+  RM-30 | rep=30 | rec=31 | Modelo minimo: 30 valores de kappa2/kappa entre 1e-3 y 10 con N=24
+  LS-T-wp12.0-20-F | rep=0.710 | rec=0.704345 | lamb_shift Tabla full: wp12.0, F en Gt~20: 0.710
+  LS-T-wp12.0-20-par | rep=0.798 | rec=0.789286 | lamb_shift Tabla full: wp12.0, par en Gt~20: 0.798
+  LS-T-wp12.0-20-Pe | rep=0.128 | rec=0.12547 | lamb_shift Tabla full: wp12.0, Pe en Gt~20: 0.128
+  LS-T-wp12.0-30-F | rep=0.682 | rec=0.678743 | lamb_shift Tabla full: wp12.0, F en Gt~30: 0.682
+  LS-T-wp12.0-30-par | rep=0.729 | rec=0.721975 | lamb_shift Tabla full: wp12.0, par en Gt~30: 0.729
+  LS-T-wp11.98-20-par | rep=0.487 | rec=0.484033 | lamb_shift Tabla full: wp11.98, par en Gt~20: 0.487
+  LS-T-wp11.98-20-Pe | rep=0.010 | rec=0.0072252 | lamb_shift Tabla full: wp11.98, Pe en Gt~20: 0.010
+  LS-T-wp11.98-30-Pe | rep=0.008 | rec=0.00306199 | lamb_shift Tabla full: wp11.98, Pe en Gt~30: 0.008

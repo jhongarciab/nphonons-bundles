@@ -1,0 +1,68 @@
+#!/usr/bin/env python3
+"""Nivel 3 (historico): tabla por tarea con estado frente al estado actual del proyecto. No verifica linea por linea.
+Fuentes: validacion/tareas_naseem/*.md (Tareas 1-44), validacion/tareas_ma/*.md (Tareas 39-47), HANDOFF.md seccion 11.
+Estados: vigente | parcial | superada | contradicha | incompleta."""
+import csv, os
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+N = 'Mechanical-Cat-State/validacion/tareas_naseem/'
+M = 'Mechanical-Cat-State/validacion/tareas_ma/'
+R = [
+ # tarea, serie, resultado clave (del reporte), estado, reemplazada/contrastada por, archivo
+ ('1', 'Naseem', 'fig2 reproducida: F~0.98 completo vs efectivo; traza y hermiticidad perfectas; positividad en ruido numerico pero fuera del umbral estricto', 'vigente', '', N + 'tarea1_resultados.md'),
+ ('2', 'Naseem', 'Hipotesis del factor 2: no concluyente (confundida por acoplamiento fuerte y drive fijo)', 'superada', 'Tareas 7 y 8 (g_eff = 2g); naseem/HANDOFF.md: "No reusar esas conclusiones"', N + 'tarea2_resultados.md'),
+ ('3', 'Naseem', 'Aislar el termino de dos fonones: dinamica no markoviana limpia; no concluyente', 'superada', 'Tareas 7 y 8', N + 'tarea3_resultados.md'),
+ ('4', 'Naseem', 'Correccion de Re_S1_plus en fig1/fig4: efecto despreciable (tracedist <= 1.9e-3)', 'vigente', '', N + 'tarea4_resultados.md'),
+ ('5', 'Naseem', 'fig4: la degradacion con n_th viene casi toda de la mezcla del estado inicial termico', 'vigente', '', N + 'tarea5_resultados.md'),
+ ('6a', 'Naseem', 'La formula de saturacion de un qubit libre falla 2 ordenes de magnitud (qubit hibridizado con la mecanica)', 'vigente', '', N + 'tarea6a_resultados.md'),
+ ('6b', 'Naseem', 'g_eff = 2g reproduce n_ss del completo al 1-6% para eps >~ 0.4 kappa; "piso" para eps <~ 0.2 kappa sin resolver', 'parcial', 'el piso se atribuye a Gamma1 en la Tarea 19', N + 'tarea6b_resultados.md'),
+ ('7', 'Naseem', 'Rabi de dos fotones sin disipacion: g_eff = 2g (acuerdo < 5% con 2 sqrt2 (2g))', 'vigente', 'consistente con HANDOFF.md 6 (Naseem: g_eff = 2g)', N + 'tarea7_resultados.md'),
+ ('8', 'Naseem', 'Algebra tipo polaron: coeficiente -2g (Ec. 9 del articulo), no +g (Ec. 11)', 'vigente', 'consistente con SIM-27 (G = 2 d gx)', N + 'tarea8_resultados.md'),
+ ('9a/9b', 'Naseem', 'Muestreo estroboscopico reduce la deriva espuria 100-800x; acuerdo completo-efectivo 1-6%', 'vigente', '', N + 'tarea9a_resultados.md, tarea9b_resultados.md'),
+ ('10', 'Naseem', 'El estado inicial del qubit en fig2 (basis(Na,0) = excitado) contribuye al dip de fidelidad', 'vigente', 'regla: qubit siempre en basis(Na,1) desde la Tarea 13', N + 'tarea10_resultados.md'),
+ ('11', 'Naseem', 'El efectivo reproduce el estacionario en todo el rango, pero la dinamica completa exige Gamma2/kappa << 1', 'parcial', 'Tarea 38 y dinamica (C9) para el confinamiento', N + 'tarea11_resultados.md'),
+ ('12', 'Naseem', 'Estacionario a eps=1.44 es el estado oscuro tipo gato par (F~0.97)', 'contradicha', 'Tarea 18: la paridad verdadera es 0.052; lo medido con mesolve era un plateau transitorio', N + 'tarea12_resultados.md'),
+ ('13', 'Naseem', 'Todas las corridas previas (salvo la 10) iniciaban el qubit excitado; el piso = quench (2gz/w)^2=0.0144 + resto', 'vigente', '', N + 'tarea13_resultados.md'),
+ ('14', 'Naseem', 'Con qubit base y Lamb delta1, el efectivo reproduce la dinamica (F_min>0.99) solo en acoplamiento debil', 'vigente', '', N + 'tarea14_resultados.md'),
+ ('15', 'Naseem', 'Patada polaronica y paridad: la ley (2gz/w)^2 subestima la perdida de paridad', 'superada', 'Tareas 17 y 19 (el calentamiento sigue gx^2 + gamma_m, no la patada)', N + 'tarea15_resultados.md'),
+ ('16', 'Naseem', 'El piso en <n> es fisico (no numerico) y requiere el acoplamiento cruzado gz gx', 'parcial', 'Tarea 19 (origen: canal Gamma1)', N + 'tarea16_resultados.md'),
+ ('17', 'Naseem', 'Patada polaronica limpia: no concluyente (R^2=0.05)', 'superada', 'Tarea 19', N + 'tarea17_resultados.md'),
+ ('18', 'Naseem', 'Floquet exacto: paridad verdadera 0.052 en eps=1.44; modo de phase-flip ultra lento', 'vigente', 'metodo adoptado en todo el proyecto (propagador de un periodo)', N + 'tarea18_resultados.md'),
+ ('19', 'Naseem', 'El calentamiento escala como gx^2 + gamma_m (R^2=1.0000): canal Gamma1', 'vigente', 'consistente con SIM-09 (Gamma1)', N + 'tarea19_resultados.md'),
+ ('20', 'Naseem', 'Jerarquia de escalas: confinamiento (tau~10/kappa) << phase-flip (1447) < bit-flip (2074)', 'vigente', 'cualitativamente; las cifras son del punto del paper de Naseem', N + 'tarea20_resultados.md'),
+ ('21', 'Naseem', 'La brecha del efectivo diverge del completo (hasta 53.5x en Gamma2/kappa=2.07); phase-flip real ~4x la formula ingenua; el efectivo omitia gamma', 'contradicha', 'Tarea 38 / HANDOFF 11: la brecha del completo usaba modos de borde; con +1 y alpha_eff la formula de phase-flip se verifica (V4, V4b)', N + 'tarea21_resultados.md'),
+ ('22', 'Naseem', 'Supresion exponencial de bit-flip con alpha^2 (pendiente -1.3 a -1.6); eta > 1500; fila "compensado" del completo invalida', 'parcial', 'naseem/HANDOFF.md 2: descartar la fila "compensado" del completo; HANDOFF.md 8.2 (pendiente -0.4 a -0.64 en la isla)', N + 'tarea22_resultados.md'),
+ ('23', 'Naseem', 'Gamma2/kappa optimo ~0.126 (maxima brecha), brecha 0.161', 'contradicha', 'HANDOFF.md 11: maximo en 0.13 = artefacto de borde de Fock (Tareas 35, 38, 45)', N + 'tarea23_resultados.md'),
+ ('24', 'Naseem', 'Floquet conmensurable; la resonancia vestida es una cresta en delta_m, no un punto', 'vigente', 'caveat: modo de confinamiento espurio en 4 celdas (Tarea 25)', N + 'tarea24_resultados.md (huerfano)'),
+ ('25', 'Naseem', 'Resonancia vestida (0.048, 0.144): tablas (a) gamma_bf, gamma_pf vs alpha^2 y (b)', 'parcial', 'clasificar() del worker marcado como pendiente de revision', N + 'tarea25_resultados.md'),
+ ('26-27', 'Naseem', 'gamma_bf sin piso numerico; maximo de la brecha en 0.13 persiste en el completo', 'parcial', 'el maximo se retira (Tarea 38); lo de gamma_bf sin piso numerico sigue', N + 'tarea26_27_resultados.md'),
+ ('28', 'Naseem', 'Ramas espectrales con Im creciente', 'contradicha', 'marcada CORREGIDA en el propio reporte (Tarea 38: modos de borde de Fock)', N + 'tarea28_resultados.md'),
+ ('29bis', 'Naseem', 'Buffer de 2 niveles vs armonico y compuerta Z: quedo a medias', 'incompleta', '', N + 'HANDOFF.md 3c'),
+ ('31-34', 'Naseem', 'El maximo de la brecha en Gamma2/kappa~0.13 solo aparece con Floquet', 'contradicha', 'Tareas 35 y 38: el maximo es artefacto de truncamiento', N + 'tarea31_34_resultados.md'),
+ ('35', 'Naseem', 'El cuadruplete de Floquet (Im 7-37) es artefacto de truncamiento (|Im| ~ N)', 'vigente', 'confirmado en F4m-* (5.o modo)', N + 'tarea35_36_resultados.md'),
+ ('36', 'Naseem', 'Umbral termico: tabla de n_q* y f_min (|alpha|^2=2,3)', 'superada', 'Tarea 37 (banos consistentes) y HANDOFF.md 8 (x* de la isla)', N + 'tarea35_36_resultados.md'),
+ ('37', 'Naseem', 'Banos termicos consistentes: eta>=100 requiere hf/kT >~ 4.8 (frecuencia mecanica)', 'superada', 'HANDOFF.md 11/8: x*(100) = 7.18-10.11 en f_q (TX-*); la hermiticidad "antes de hermitizar" de esta tarea se media tras simetrizar (PENDIENTES E7)', N + 'tarea37_38_resultados.md'),
+ ('38', 'Naseem', 'La brecha fisica del Floquet completo es monotona y satura en ~0.23 kappa', 'parcial', 'Tarea 45: rama interior no determinada; HANDOFF.md 11 y C9: usar la tasa dinamica (satura en ~0.28 kappa con |alpha|^2=4)', N + 'tarea37_38_resultados.md'),
+ ('44', 'Naseem', 'Buffer de dos niveles con bano termico (Gautier): d ln gamma_bf/d alpha^2 ~ -0.55 con g2/kappa~0.3; fuerte (-1.0 a -1.4) solo con g2/kappa <~ 0.1', 'vigente', 'usada en HANDOFF 8.2 / AL-*', N + 'tarea44_resultados.md'),
+ ('39-40', 'Ma', 'Ma, modelo completo Floquet: P_c(12)=0.796, P_c(11.98)=0.996 a Gt=30 (transitorio); resonancia en 11.98', 'vigente', 'V2 y MA-*: valores estacionarios 0.8140/0.99873 (codigo fijo); LS-T-* (diferencias de fase de muestreo)', M + 'tarea39_40_resultados.md'),
+ ('41', 'Ma', 'delta_1(kappa/omega): coincide con -4gx^2/3w a 4 cifras', 'vigente', 'SIM-16', M + 'tarea41_resultados.md'),
+ ('42', 'Ma', 'Figura de merito kappa1/kappa2 del completo re-sintonizado; brecha fisica = 5.o modo', 'parcial', 'kappa1/kappa2 vigente (V4, V4-RANGO); la brecha por 5.o modo, superada por la tasa dinamica (E5)', M + 'tarea42_resultados.md'),
+ ('43', 'Ma', 'Bano filtrado |alpha|^2=2: mejora 166x (kf=1) y 1838x (kf=0.3); brecha cae a x0.23 con kf=0.1', 'parcial', 'la mejora es vigente (V5, F5b-*); el x0.23 es espurio (PENDIENTES E5; dinamica x0.53, F4c-0.1)', M + 'tarea43_resultados.md'),
+ ('45a', 'Ma', 'Sensibilidad del umbral de borde para el 5.o modo', 'vigente', '', M + 'tarea45a_resultados.md'),
+ ('45b-e', 'Ma', 'N_f=2 basta (3%); caida de P_c por g_z sz a; ancho de la resonancia ~ kappa2^0.54; brecha a Gamma2/kappa>~0.25 no determinada', 'vigente', 'C6, P9, FW-*', M + 'tarea45_resultados_bcde.md'),
+ ('46', 'Ma', 'Liu, Ec.(9) en la base vestida: no forma gato', 'superada', 'Tarea 47(b) (convencion del coseno 2 eps_p)', M + 'tarea46_resultados.md'),
+ ('47', 'Ma', 'Cierres: peso de los estados iniciales sobre la rama interior ~1e-14; nocounter re-sintonizado; FWHM = c G, c = 2.87 +- 0.25', 'vigente', 'FW-10 (media 2.870 sobre los 7 c del reporte); el c de la serie wq=wp es 2.92-2.94 (FW-06..FW-09)', M + 'tarea47_resultados.md'),
+ ('47b', 'Ma', 'Liu con coseno 2 eps_p (alpha^2=2.5): la Ec.(9) completa tampoco forma gato a kappa/omega~0.9; Fig. 2 de Liu con el efectivo', 'vigente', 'dependiente de la literatura (Liu): ver LIT-6', M + 'tarea47b_task46_resultados.md, tarea47b_fig2_resultados.md'),
+]
+EXTRA = [
+ ('RESUMEN_FINAL (rondas 1-13)', 'Naseem', 'Resumenes por ronda (1-5, 6-8, 9-12, 13-15, ...)', 'superada', 'HANDOFF.md raiz; naseem/HANDOFF.md secciones 1-3h', N + 'RESUMEN_FINAL*.md'),
+ ('RESUMEN_FINAL_RONDA8', 'Naseem', 'Tareas 22-23 (sesgo de ruido, acoplamiento optimo) -- archivo huerfano', 'parcial', 'ver filas 22 y 23', N + 'RESUMEN_FINAL_RONDA8.md (huerfano)'),
+ ('RESUMEN_FINAL_RONDA14-16', 'Ma', 'Rondas 14, 15, 16 (Tareas 39-47)', 'parcial', 'ver filas 39-47', M + 'RESUMEN_FINAL_RONDA1[456].md'),
+ ('verificacion_signo_pair', 'Ma', 'Signo del termino de pares explicito en ma2.py (solo pair=True, Tarea 45d): el signo equivocado nunca se commiteo; correcto es -p[G]', 'vigente', 'GIT-ma2, MA-*; afecta solo variantes nogz_pair', M + 'verificacion_signo_pair.md (huerfano)'),
+ ('HANDOFF_chat_2026-09-29', 'chat', 'HANDOFF original del chat; su propio indice marca [VERIFICAR] y propone v2 de documento_completo', 'superada', 'HANDOFF.md raiz (consolidado el 2026-09-29, actualizado hasta 2026-10-01); el chat ya traia: 8.2e-13 de hermiticidad (Q-t4), 9.2e-5 de Naseem (PL-08), 34/160 (CV-34)', 'docs/handoff_chat/HANDOFF_chat_2026-09-29.md (huerfano)'),
+ ('naseem/HANDOFF.md', 'Naseem', 'Handoff de las Tareas 1-25; instrucciones de entorno (QuTiP4, .venv), patron un proceso por celda', 'parcial', 'las secciones 3-4 (Tareas 24-25 pendientes) estan completadas; el entorno .venv existe (QuTiP 4.7)', N + 'HANDOFF.md'),
+]
+with open(os.path.join(ROOT, 'consolidacion', 'tareas_historicas.csv'), 'w', newline='', encoding='utf-8') as f:
+    w = csv.writer(f); w.writerow(['tarea', 'serie', 'resultado_clave', 'estado', 'reemplazada_o_contrastada_por', 'archivo'])
+    for r in R + EXTRA: w.writerow(r)
+import collections
+print(collections.Counter(r[3] for r in R + EXTRA))

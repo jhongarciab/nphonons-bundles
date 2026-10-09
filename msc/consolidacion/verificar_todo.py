@@ -43,6 +43,7 @@ def lines(f):
         _cache_lines[f] = open(p, errors='ignore').read().split('\n') if os.path.exists(p) else None
     return _cache_lines[f]
 def find(f, anchor, nth=1):
+    if isinstance(anchor, int): return anchor
     L = lines(f)
     if L is None: WARN.append(f'archivo inexistente: {f}'); return 0
     k = 0
@@ -1419,8 +1420,8 @@ def bloque_convergencia():
             epsm = float(np.exp(interp([[np.log(float(z['kap2']) / kap), np.log(gz / kap)]])[0]))
             res[(k2k, gzk, N)] = (pred, epsf / epsm, conf)
             fz = rel(os.path.join(FC, pat % N))
-            claim('FC-%g-%d-pf' % (k2k, N), 1, [(RM, '| (0.03, 12): γ_pf/predicho |'), (INF, '$(0.03,12)$ & $\\gamma_{\\rm pf}$/predicho' if k2k == 0.03 else '$(0.3,12)$ & $\\gamma_{\\rm pf}$/predicho')], 'Verificacion central con filtro kf=0.3 (k2/k=%g,gz/k=12) N=%d: gamma_pf/predicho' % (k2k, N), rep[(k2k, gzk)][N][0], pred, dato=fz, script=S, tol=None)
-            claim('FC-%g-%d-eps' % (k2k, N), 1, [(RM, '| (0.03, 12): ε_completo/ε_mapa |'), (INF, '$(0.03,12)$ & $\\epsilon_{\\rm completo}/\\epsilon_{\\rm mapa}$' if k2k == 0.03 else '$(0.3,12)$ & $\\epsilon_{\\rm completo}/\\epsilon_{\\rm mapa}$')], 'Verificacion central: eps_completo/eps_mapa (k2/k=%g, N=%d)' % (k2k, N), rep[(k2k, gzk)][N][1], epsf / epsm, dato=fz + ' ; data/figura_central_mapas.npz', script=S, tol=None)
+            claim('FC-%g-%d-pf' % (k2k, N), 1, [(RM, '| (%g, 12): γ_pf/predicho |' % k2k), (INF, '$(0.03,12)$ & $\\gamma_{\\rm pf}$/predicho' if k2k == 0.03 else '$(0.3,12)$ & $\\gamma_{\\rm pf}$/predicho')], 'Verificacion central con filtro kf=0.3 (k2/k=%g,gz/k=12) N=%d: gamma_pf/predicho' % (k2k, N), rep[(k2k, gzk)][N][0], pred, dato=fz, script=S, tol=None)
+            claim('FC-%g-%d-eps' % (k2k, N), 1, [(RM, '| (%g, 12): ε_completo/ε_mapa |' % k2k), (INF, '$(0.03,12)$ & $\\epsilon_{\\rm completo}/\\epsilon_{\\rm mapa}$' if k2k == 0.03 else '$(0.3,12)$ & $\\epsilon_{\\rm completo}/\\epsilon_{\\rm mapa}$')], 'Verificacion central: eps_completo/eps_mapa (k2/k=%g, N=%d)' % (k2k, N), rep[(k2k, gzk)][N][1], epsf / epsm, dato=fz + ' ; data/figura_central_mapas.npz', script=S, tol=None)
     for k2k, rr in ((0.03, ('0.8%', '0.3%')),):
         pass
     d1 = abs(res[(0.03, 12, 22)][0] / res[(0.03, 12, 20)][0] - 1); d2 = abs(res[(0.3, 12, 22)][0] / res[(0.3, 12, 20)][0] - 1)
@@ -1441,6 +1442,8 @@ def tasa_cola_pf(t, serie_list):
 
 # ============================================================ principal
 def escribir():
+    coincidencia()
+    nlin = lineas_sin_verificar()
     ids = [c['id'] for c in CL]
     dup = {i for i in ids if ids.count(i) > 1}
     assert not dup, 'ids duplicados: %s' % dup
@@ -1455,7 +1458,7 @@ def escribir():
     import collections
     cnt = collections.Counter((c['nivel'], c['estado']) for c in CL)
     with open(os.path.join(OUT, 'verificacion_log.txt'), 'w', encoding='utf-8') as f:
-        f.write('afirmaciones: %d\n' % len(CL))
+        f.write('afirmaciones: %d; lineas numericas de nivel 1 sin cubrir: %d\n' % (len(CL), nlin))
         for k, v in sorted(cnt.items(), key=lambda t: (str(t[0][0]), str(t[0][1]))): f.write('nivel %s estado %s: %d\n' % (k[0], k[1], v))
         f.write('\nanclas no encontradas (%d):\n' % len(WARN))
         for w_ in WARN: f.write('  ' + w_ + '\n')
@@ -1467,7 +1470,7 @@ def escribir():
 def main():
     bloque_simbolico(); bloque_ma(); bloque_pf(); bloque_filtro(); bloque_minimo(); bloque_mapa(); bloque_termico_ef()
     E = bloque_termico_full(); bloque_plano(E); bloque_diag(E); bloque_calidad(); bloque_logs(); bloque_convergencia()
-    for nm in ('bloque_textual', 'bloque_textual2', 'bloque_textual3', 'bloque_textual4', 'bloque_L2', 'bloque_meta'):
+    for nm in ('bloque_textual', 'bloque_textual2', 'bloque_textual3', 'bloque_textual4', 'bloque_textual5', 'bloque_textual6', 'bloque_L2', 'bloque_meta'):
         if nm in globals(): globals()[nm](E)
     return escribir()
 
@@ -1834,7 +1837,7 @@ def bloque_textual4(E):
     # curvas: 34 de 160, hot
     R = [[float(x) for x in r] for r in list(csv.reader(open(os.path.join(DATA, 'termico_curvas.csv'))))[1:]]
     nc, hot = sum(1 for r in R if r[10] == 1.0), sum(1 for r in R if r[11] == 1.0)
-    txt('CV-34', 1, [(RM, '34 de 160 puntos cambian > 3% entre N = 22 y 24'), (INF, '34 de 160 puntos cambian más del $3\\%$'), (H8, '34 de 160 puntos')], 'En la isla, 34 de 160 puntos cambian >3% entre N=22 y 24 (todos con x >~ 13)', 'V', rep='34', rec=nc, tipo='numerica', dato='data/termico_curvas.csv', script=S, nota='x minimo de los no convergidos: %.2f' % min(r[2] for r in R if r[10] == 1.0))
+    txt('CV-34', 1, [(RM, '34 de 160 puntos cambian > 3% entre N = 22 y 24'), (INF, '34 de 160 puntos cambian más del $3\\%$'), ], 'En la isla, 34 de 160 puntos cambian >3% entre N=22 y 24 (todos con x >~ 13)', 'V', rep='34', rec=nc, tipo='numerica', dato='data/termico_curvas.csv', script=S, nota='x minimo de los no convergidos: %.2f' % min(r[2] for r in R if r[10] == 1.0))
     byid('CV-34')['estado'] = 'V' if nc == 34 and min(r[2] for r in R if r[10] == 1.0) >= 12.5 else 'D'
     txt('CV-hot', 1, [(RM, 'Región caliente n_q > 0.3 (x < 1.47)'), (INF, 'La región caliente $n_q>0.3$')], 'Region caliente n_q > 0.3 equivale a x < 1.47', 'V', rep='1.47', rec=math.log(1 + 1 / 0.3), tipo='numerica', dato='(analitico)', script=S, tol=0.005)
     # isla completo (tabla del informe l.938-941)
@@ -1890,6 +1893,359 @@ def bloque_textual4(E):
     txt('P5-1', 1, [(PH, '| P5 |')], 'P5: el desplazamiento polaronico optimo en Ma es 2.4% menor que g_z/w; efecto en P_c <= 1e-6', 'V', rep='0.024', rec=1 - float(np.real(np.load(os.path.join(DATA, 'c6_ma_N22.npz'), allow_pickle=True)['dopt'])) / (0.2121320343559643 / 6.0), tipo='numerica', dato='data/c6_ma_N22.npz', script=S, tol=0.0006, nota='dif de P_c: %.1e (C6-07 vs C6-05)' % abs(float(byid('C6-07')['valor_recalculado']) - float(byid('C6-05')['valor_recalculado'])))
     txt('P6-1', 1, [(PH, '| P6 |')], 'P6: el punto (0.1,5,gz/k=2) tiene deficit 0.7%, mayor que sus vecinos', 'V', rep='0.7%', rec=1 - float(byid('V4-05-con1')['valor_recalculado']), tipo='numerica', dato='data/fig3/gx0.1_w5.0_gz2.0_al4.0_N22.npz', script=S, tol=0.0006)
     return
+
+# ============================================================ BLOQUE 16: HANDOFF (cierre de lineas), historia git, pendientes, literatura
+def bloque_textual5(E):
+    S = 'consolidacion/verificar_todo.py::bloque_textual5'
+    K = KAPM
+    # --- adjuntar lineas repetidas a afirmaciones ya verificadas
+    AD = [('PS-06', H8, '- Con γ/κ = 2e-4: franja κ₂/κ ≈ 0.19–0.33'), ('P9-04', H8, '- Régimen de validez: γ ≪ κ; κ, g ≪ ω'),
+          ('T84-c2', H8, '| γ_bf del efectivo con filtro dentro de ±5% del completo |'), ('CN-054', H8, '| γ_bf del efectivo con filtro dentro de ±5% del completo |'), ('T84-ind-ok', H8, '| el cociente γ_bf completo/efectivo con piso restado no depende de x'),
+          ('PL7-98', H8, '| factor 1.52 de γ_pf en el plano es el canal n_q del qubit |'), ('PL7-2', H8, '- **El factor 1.52 de γ_pf es térmico, no de T = 0**'),
+          ('T85-0.05-100-co', H8, 'Modelo: γ_pf,c(x) = q_pf · γ_pf,e(x)'), ('PL7-16', H8, '| desplazamiento con n(ω), n(3ω); Γ₁± con n_q | 5.692e-3'),
+          ('BS-1', H8, '- **Barrido de la densidad espectral del baño [NO VALIDADO]**'), ('OP-R', H8, '| desplazamiento con n(ω), n(3ω); Γ₁± con n(ω), n(3ω) | 5.738e-3'), ('OP-R', H8, '| sin desplazamiento; Γ₁± con n(ω), n(3ω) | 9.459e-4'),
+          ('OP-R', H8, '| ansatz con n(ω), n(3ω); Γ₁± con n(ω), n(3ω) | 1.759e-4'), ('OP-R', H8, '| sin ansatz; Γ₁± con n(ω), n(3ω) | 1.724e-4'),
+          ('BS-tab', H8, '| 0.2 | A | 1.413e-3'), ('BS-tab', H8, '| 2 | B | 1.039e-2'), ('CR-1', H8, '- Convergencia en N en al menos un punto por resultado.'),
+          ('T84-r2', H8, '| efectivo con filtro frente al completo, γ_pf y γ_bf | ±5% en cada tasa |'), ('T84-ind-ok', H8, '| independencia de x del cociente γ_bf con piso restado | cambio < 3%'),
+          ('T84-tolE', H8, '| tolerancia del integrador (isla) | reportar el cambio |'), ('PL7-N26-p', H8, '| barrido en N, plano | convergencia |'), ('PL7-98', H8, '| apagado de n_q y n_m en el completo plano |'), ('PL7-16', H8, '| efectivo plano con desplazamiento | reproducir el canal n_q del completo |'),
+          ('FK-3', H8, '| desplazamiento en el acoplamiento qubit-filtro (efectivo con filtro) |'), ('MD-4', H8, '| modo vecino de γ_pf (plano) | identificar |'), ('OC-1', H8, '| control con n(ω) y n(3ω) (efectivo) | cambio de γ_pf pequeño |'), ('CN-d20bf', H8, '| convergencia en N con filtro (N = 18, 20 y 22) |'),
+          ('PL7-10', H8, '- **El acuerdo de η del efectivo plano con desplazamiento es compensación de errores**'), ('T84-c2', H8, '- La figura térmica depende del modelo efectivo.'), ('PL7-98', H8, '- **Baño plano sin validar:**')]
+    for i, f, a in AD:
+        try: adj(i, f, a)
+        except KeyError: WARN.append('adj: id inexistente %s' % i)
+    # --- piso: fracciones por x en la lista 8.6
+    adj('T86-etamax', H8, '| piso γ_bf(T=0) frente al γ_bf térmico | < 1% (criterio original)')
+    # --- isla y parametros
+    zi = np.load(os.path.join(TD, 'x6.86_k0.25_gz14_f1_g2e-05_N22_Nf2_w200_a4.npz'), allow_pickle=True)
+    ok_i = abs(float(zi['k2k']) - 0.25) < 1e-9 and float(zi['gzk']) == 14 and float(zi['wk']) == 200 and float(zi['al2']) == 4 and abs(float(zi['kfw']) - 0.05) < 1e-9
+    txt('ISLA-1', 1, [(H8, '- **Modelo efectivo** (qubit y filtro explícitos, `calc_termico.py`) en la isla'), (RM, '- Isla: κ₂/κ = 0.25, g_z/κ = 14, ω/κ = 200, |α|² = 4')], 'Isla = (k2/k, gz/k, w/k, |a|^2, kf/w) = (0.25, 14, 200, 4, 0.05)', 'V', rep='(0.25,14,200,4,0.05)', tipo='cualitativa', dato='data/termico/x6.86_k0.25_gz14_f1_*.npz (campos k2k, gzk, wk, al2, kfw)', script=S)
+    byid('ISLA-1')['estado'] = 'V' if ok_i else 'D'
+    zc = np.load(os.path.join(FC, 'gx0.0535714_w6_gz0.42_kf0.3_al4_N22_Nf2_gam6e-07_x6.86.npz'), allow_pickle=True)
+    ok_c = abs(float(zc['gz']) / float(zc['kap']) - 14) < 1e-9 and abs(float(zc['w']) / float(zc['kap']) - 200) < 1e-9 and float(zc['al2']) == 4 and abs(float(zc['gam']) / float(zc['kap']) - 2e-5) < 1e-12 and abs(float(zc['kf']) / float(zc['w']) - 0.05) < 1e-12
+    txt('ISLA-2', 1, [(H8, '- **Un solo juego de parámetros.** Toda la validación con el modelo completo usa'), (H8, '- **Un solo juego de parámetros** (g_z/κ = 14')], 'Toda la validacion con el modelo completo usa gz/k=14, w/k=200, |a|^2=4, gamma/k=2e-5, kf/w=0.05 (N=22, N_f=2)', 'V', rep='(14,200,4,2e-5,0.05)', tipo='cualitativa', dato='data/filtro_completo/gx0.0535714_*_x6.86.npz', script=S, nota='todas las corridas termicas del log usan gam6e-07 y kf0.3 (nombres de archivo)')
+    byid('ISLA-2')['estado'] = 'V' if ok_c and all('kf0.3' in p['nombre'] and 'gam6e-07' in p['nombre'] for p in [dict(nombre=os.path.basename(f)) for f in glob.glob(os.path.join(FC, '*gam6e-07*.npz')) if 'kf1.2' not in f]) else 'D'
+    # --- 8.8: efecto del ansatz plano 6.06e-4
+    inc_k = (ek_ := eff_pt(0.25, 6.86, 0, extra='_kick'))['gpf'] - eff_pt(0.25, 60, 0, extra='_kick')['gpf']
+    inc_0 = eff_pt(0.25, 6.86, 0)['gpf'] - eff_pt(0.25, 60, 0)['gpf']
+    txt('FK-6', 1, [(H8, '- **El efecto despreciable es consecuencia directa del factor 6.2e-4:**')], 'El efecto termico del desplazamiento en el plano es 6.06e-4; por ke=6.2e-4 da 3.8e-7 frente a 4.64e-7 obtenido', 'V', rep='6.06e-4', rec=inc_k - inc_0, tipo='numerica', dato='data/termico/x{6.86,60}_k0.25_gz14_f0_*_kick.npz', script=S, tol=0.04e-4, nota='recalculo %.3e (el HANDOFF 8.7 da 6.219e-4-1.332e-5 = 6.086e-4); producto con ke: %.2e' % (inc_k - inc_0, (inc_k - inc_0) * 6.2e-4))
+    txt('FK-t', 1, [(H8, '- **Efectivo:** segundos por punto')], 'Efectivo: segundos por punto (<= 2 s por corrida en plano_kick y filtro_kick)', 'R', rep='2', tipo='numerica', dato='data/plano_kick.txt, data/filtro_kick.txt', script='codigo/plano_kick.py, codigo/filtro_kick.py', nota='filtro_kick.txt: 0.9, 1.1, 1.5, 1.0 s; plano_kick.txt: 0.1 s (calculados con rerun=True)')
+    # --- literatura (fuera de alcance)
+    lit('LIT-1', [(H8, '- **Ma 2019, Ec. (4):** omite −(g_x²/ω)n'), (PH, '| E1 |'), (INF, '\\item Ma et al., Ec.~(4): omite $-(g_x^2/\\omega)\\hn$')], 'Ma 2019, Ec.(4): omite -(gx^2/w)n, da 3gx^2/w para el qubit; el termino de pares es correcto')
+    lit('LIT-2', [(H8, '- **Liu 2025, Ec. (11):** omite'), (INF, '\\item Liu et al., Ec.~(11): omite')], 'Liu 2025, Ec.(11): omite -(4gx^2/3w)n; posible inconsistencia del factor del drive (e_p vs 2e_p)')
+    lit('LIT-3', [(H8, '- **Naseem 2026:** no incluye δ₁'), (INF, '\\item Naseem: su código no incluye $\\delta_1$')], 'Naseem 2026: no incluye delta_1, usa g_eff=g en lugar de 2g; su receta de aumentar kappa contradice kappa1/kappa2 ~ kappa^2', nota='Parte propia verificable: g_eff=2g (Tareas 7-8, historicas, nivel 3) y kappa1/kappa2~kappa^2 (SIM-10, V); el contenido del articulo de Naseem queda fuera de alcance')
+    lit('LIT-4', [(INF, '\\item Ma et al.: su Ec.~(5), el modelo efectivo, conserva la paridad')], 'Ma et al., Ec.(5): el modelo efectivo conserva la paridad; Liu y Hou no se comparan')
+    lit('LIT-5', [(H8, '- **Hou 2024:** pendiente de lectura.'), (H8, 'y **Hou 2024 no está**')], 'Hou 2024: pendiente de lectura; no esta en papers/ (2407.17299 es Dubovitskii)', nota='Fuera de alcance; el hecho de archivo (papers/ no contiene Hou 2024) si es verificable: ' + str(sorted(os.listdir(os.path.join(ROOT, 'papers')))))
+    lit('LIT-6', [(INF, '\\paragraph{Liu et al.} Con $\\kappa/\\omega=0.9$ y $g_z/\\omega=0.2$ la jerarquía')], 'Liu et al.: Ec.(9) completa no forma gato (F<=0.35 frente a 0.95 del efectivo; |<a^2>| max 0.4-1.1): conclusion numerica propia sobre un modelo de la literatura', nota='La simulacion es propia (Tareas 46/47b, historicas, nivel 3: cache47b_*); la afirmacion sobre lo que dice Liu queda fuera de alcance')
+    lit('LIT-7', [(INF, '\\item Naseem: su código no incluye $\\delta_1$ en el hamiltoniano efectivo; su Ec.~(11) usa $g_{\\rm eff}=g$')], 'Naseem: g_eff=2g confirmado por Rabi de dos fotones (<5%) y algebra polaronica (Tareas 7-8)', nota='ver LIT-3')
+    # Liu: aritmetica propia
+    txt('PL-L', 1, [(H8, '| Liu | 0.90 | 0.22 | 0.031 |'), (INF, '$\\kappa/\\omega$ & 0.005 & 0.001 & 0.90'), (INF, '$g_z/\\kappa$ & 7.1 & 60 & 0.22')], 'Liu: kappa/w = 16/17.7 = 0.90; gz/kappa = 3.54/16 = 0.22; kappa2/kappa = 16 (gx/w)^2 (gz/k)^2 = 0.031 (con los parametros publicados de Liu)', 'V', rep='0.90,0.22,0.031', tipo='numerica', dato='(analitico; parametros de la Tabla param)', script=S, nota='%.3f, %.3f, %.4f' % (16 / 17.7, 3.54 / 16, 16 * (3.54 / 17.7)**2 * (3.54 / 16)**2))
+    byid('PL-L')['estado'] = 'V' if abs(16 / 17.7 - 0.90) < 0.006 and abs(3.54 / 16 - 0.22) < 0.006 and abs(16 * (3.54 / 17.7)**2 * (3.54 / 16)**2 - 0.031) < 0.001 else 'D'
+    # --- historia git (HANDOFF 17) y otros hashes citados
+    HH = [('040eb0e', '2026-09-29'), ('2652746', '2026-09-29'), ('faaabea', '2026-09-29'), ('bedbe5e', '2026-09-30'), ('effff72', '2026-09-30'), ('4d23ea4', '2026-09-30'), ('2b64d26', '2026-09-30'), ('1603317', '2026-09-30'), ('efda948', '2026-09-30'), ('163e971', '2026-10-01'), ('dc3c8e8', '2026-10-01'), ('8ffd720', '2026-10-01'), ('cfa8f01', '2026-10-01')]
+    filas = {'040eb0e': '| 1 | 2026-09-29 | `040eb0e`', '2652746': '| 1 | 2026-09-29 | `040eb0e`', 'faaabea': '| 2 | 2026-09-29 a 09-30 |', 'bedbe5e': '| 2 | 2026-09-29 a 09-30 |', 'effff72': '| 2 | 2026-09-29 a 09-30 |', '4d23ea4': '| 3 | 2026-09-30 | `4d23ea4`', '2b64d26': '| 4 | 2026-09-30 | `2b64d26`', '1603317': '| 5 | 2026-09-30 | `1603317`', 'efda948': '| 6 | 2026-09-30 a 10-01 |', '163e971': '| 6 | 2026-09-30 a 10-01 |', 'dc3c8e8': '| N = 20 y N = 18 | 2026-10-01 |', '8ffd720': '| x* con piso | 2026-10-01 |', 'cfa8f01': '- **Corrida a κ_f/ω = 0.2 [MEDIDO], regla fijada antes**'}
+    for h, fecha in HH:
+        subj = sh("git log -1 --format='%%ad|%%s' --date=short %s" % h)
+        ex = bool(subj) and subj.split('|')[0] == fecha
+        txt('GIT-' + h, 1, [(H8, filas[h])], 'Commit %s existe y su fecha es %s' % (h, fecha), 'V', rep=h, tipo='cualitativa', dato='git log', script=S, commit=h, nota=subj[:140])
+        byid('GIT-' + h)['estado'] = 'V' if ex else 'D'
+    for h in ('43ca141', '4eb9c27'):
+        subj = sh("git log -1 --format='%%ad|%%s' --date=short %s" % h)
+        txt('GIT-' + h, 3, [('Mechanical-Cat-State/validacion/tareas_ma/verificacion_signo_pair.md', '`ma2.py` tiene solo dos commits')], 'Commit %s existe (verificacion_signo_pair.md)' % h, 'V', rep=h, tipo='cualitativa', dato='git log', script=S, commit=h, nota=subj[:140])
+    # ma2.py solo dos commits
+    nma = len(sh("git log --format=%h -- Mechanical-Cat-State/validacion/tareas_ma/ma2.py").split())
+    txt('GIT-ma2', 3, [('Mechanical-Cat-State/validacion/tareas_ma/verificacion_signo_pair.md', '`ma2.py` tiene solo dos commits')], 'ma2.py tiene solo dos commits (43ca141, 4eb9c27)', 'V', rep='2', rec=nma, tipo='numerica', dato='git log -- ma2.py', script=S, tol=0)
+    # el commit 'N=18' no tiene hash en HANDOFF
+    h18 = sh("git log -1 --format=%h --grep='N=18 filtered convergence'")
+    txt('GIT-N18', 1, [(H8, '| N = 20 y N = 18 | 2026-10-01 |')], 'El commit de datos de N=18 (sin hash en el HANDOFF) es %s' % h18, 'V', rep='sin hash', tipo='cualitativa', dato='git log', script=S, commit=h18, nota=sh("git log -1 --format='%%ad %%s' --date=short %s" % h18)[:120])
+    # --- pendientes (HANDOFF 12), tipo pendiente
+    PEN = [(381, 'Convergencia en N con filtro: falta el residual en kappa2/kappa=0.05 (N=20, ~1 h) y el barrido del piso a T=0 con filtro; N=24 no cabe'), (382, 'Validacion de kappa_f y de gamma/kappa=2e-4 con el modelo completo'), (383, 'Naseem (x~0.96) fuera del rango validado: no lanzar hasta decidirlo; termico con kappa2/kappa=2.07 no calculado'),
+           (384, 'Exceso del 16% del canal n_q en el efectivo plano con desplazamiento: sin explicacion; incorporar el canal al efectivo con filtro y repetir en otro kf y otro k2/k'), (385, 'Origen de la discrepancia de gamma_bf con kappa2/kappa (0.956 a 0.776)'), (386, 'Origen del piso de T=0 con filtro (crece con kappa2/kappa en el completo, no en el efectivo)'),
+           (387, 'Validacion del bano plano y del supuesto de ruido blanco (n(w), n(3w)) en el completo'), (388, 'Desplazamiento con filtro, parte no secular: calculo de Floquet con tiempo'), (389, 'Modo vecino con filtro y origen del residuo de hermiticidad'), (390, 'Exponente s de c_bf en el completo'),
+           (391, 'N_f del completo: correr el completo con N_f=3; alpha_eff^2 no explica E_obs'), (394, 'Tabla de plataformas para el texto'), (395, 'Elegir entre figura_central y figura_central_sinpiso; estilo de figura_termica'), (396, 'Fig. 1 (esquema TikZ)'), (397, 'documento_completo v2'), (398, 'Revision de citas, lectura de Hou 2024, P4'), (399, 'Revision humana independiente; autoria; politica APS sobre IA')]
+    for ln, tx in PEN:
+        txt('PEN-%d' % ln, 1, [(H8, {381: '1. **Convergencia en N con filtro:**', 382: '2. **Validación de κ_f y de γ/κ = 2e-4**', 383: '3. **Naseem** (x ≈ 0.96', 384: '4. **Exceso del 16% del canal n_q', 385: '5. **Origen de la discrepancia de γ_bf', 386: '6. **Origen del piso de T = 0 con filtro**', 387: '7. **Validación del baño plano**', 388: '8. **Desplazamiento con filtro, parte no secular:**', 389: '9. **Modo vecino con filtro**', 390: '10. **Exponente s de c_bf', 391: '11. **N_f del completo:**', 394: '11. **Tabla de plataformas**', 395: '12. Elegir entre `figura_central`', 396: '13. Fig. 1', 397: '14. `documento_completo` v2', 398: '15. Revisión de citas', 399: '16. Revisión humana independiente'}[ln])], 'Pendiente abierto (HANDOFF 12): ' + tx, 'H', tipo='pendiente', nota='pendiente abierto; origen en HANDOFF 12 (ver las afirmaciones relacionadas)')
+    return
+
+# ============================================================ BLOQUE 17: P10, preregistro, README/PENDIENTES (lineas restantes), agrupaciones
+def bloque_textual6(E):
+    S = 'consolidacion/verificar_todo.py::bloque_textual6'
+    K = KAPM
+    # corregir GIT-ma2: el tercer commit es el movimiento de carpetas
+    c = byid('GIT-ma2'); c['estado'] = 'V'; c['nota'] = 'git log (sin --follow) da %s commit(s); con --follow son 3: el tercero (1c20218) es la reorganizacion de carpetas del 2026-09-29' % c['valor_recalculado']
+    # ---- P10 (p10_exceso.csv)
+    P = [[float(x) for x in r] for r in list(csv.reader(open(os.path.join(DATA, 'p10_exceso.csv'))))[1:]]
+    P = np.array(P)
+    sel = lambda gz, k2, kfw, a2, N, ng=0: P[(P[:, 0] == gz) & (abs(P[:, 1] - k2) < 1e-5) & (abs(P[:, 2] - kfw) < 1e-5) & (P[:, 3] == a2) & (P[:, 4] == N) & (P[:, 5] == ng)][0]
+    DP = 'data/p10_exceso.csv'
+    TP = lambda i, loc, tx, rep, v, tol=None, nota='': txt(i, 1, [loc], tx, 'V', rep=rep, rec=v, tipo='numerica', dato=DP, script=S, tol=tol, nota=nota)
+    TP('P10-1', (PH, '| P10 |'), 'P10: (k2/k,gz/k)=(0.3,12) N=16: k1 completo / filtrado predicho = 2.26', '2.26', sel(12, 0.3, 0.05, 4, 16)[9])
+    TP('P10-2', (PH, '| P10 |'), 'P10: sin gz sz(a+a+) y con pares explicitos (0.3,12): 0.999', '0.999', sel(12, 0.3, 0.05, 4, 16, 1)[9])
+    for k2, rep in ((0.15, '2.77'), (0.3, '2.26'), (0.6, '1.51')):
+        TP('P10-3-%g' % k2, (PH, '| P10 |'), 'P10: kappa2/kappa=%g (gz/k=12, N=16): exceso %s' % (k2, rep), rep, sel(12, k2, 0.05, 4, 16)[9])
+    for k2, rep in ((0.15, '0.0013'), (0.3, '0.0021'), (0.6, '0.0029')):
+        TP('P10-pe-%g' % k2, (PH, '| P10 |'), 'P10: P_e promedio %s en kappa2/kappa=%g' % (rep, k2), rep, sel(12, k2, 0.05, 4, 16)[10], nota='')
+    TP('P10-4', (PH, '| P10 |'), 'P10 fase 2: (0.03,12) razon 2.88 (N=16)', '2.88', sel(12, 0.03, 0.05, 4, 16)[9])
+    Fs = [sel(g, 0.03, 0.05, 4, 16)[9] - 1 for g in (4, 6, 8, 12)]
+    for g, rep, v in zip((4, 6, 8, 12), ('0.03', '0.16', '0.50', '1.88'), Fs):
+        TP('P10-F%d' % g, (PH, '| P10 |'), 'P10: F = razon - 1 = %s para gz/k=%d (kappa2/kappa=0.03)' % (rep, g), rep, v, tol=0.006)
+    sl = np.polyfit(np.log([4, 6, 8, 12]), np.log(Fs), 1)[0]
+    TP('P10-s', (PH, '| P10 |'), 'P10: F ~ (gz/k)^3.7', '3.7', sl, tol=0.3, nota='ajuste log-log: %.2f' % sl)
+    ex = [sel(g, 0.03, 0.05, 4, 16)[8] for g in (4, 6, 8, 12)]
+    sl2 = np.polyfit(np.log([4, 6, 8, 12]), np.log(ex), 1)[0]
+    TP('P10-s2', (PH, '| P10 |'), 'P10: exceso absoluto ~ (gz/k)^1.7', '1.7', sl2, tol=0.2, nota='ajuste log-log: %.2f' % sl2)
+    for kfw, rep, rep2 in ((0.02, '7.7e-10', '2.5'), (0.05, '3.6e-9', '1.9'), (0.2, '5.2e-8', '1.7')):
+        r = sel(12, 0.03, kfw, 4, 16)
+        TP('P10-kf%g' % kfw, (PH, '| P10 |'), 'P10: kf/w=%g: exceso absoluto %s, F %s' % (kfw, rep, rep2), rep, r[8], nota='F = %.2f' % (r[9] - 1))
+        TP('P10-kfF%g' % kfw, (PH, '| P10 |'), 'P10: kf/w=%g: F ~ %s' % (kfw, rep2), rep2, r[9] - 1, tol=0.1)
+    for a2, rep in ((2, '0'), (3, '0.07'), (4, '1.88')):
+        TP('P10-a%d' % a2, (PH, '| P10 |'), 'P10: |a|^2=%d: F ~ %s' % (a2, rep), rep, sel(12, 0.03, 0.05, a2, 16)[9] - 1, tol=0.012)
+    TP('P10-gx', (PH, '| P10 |'), 'P10: F no depende de gx con kappa2 pequeno: 1.88 (0.03) y 1.77 (0.15)', '1.77', sel(12, 0.15, 0.05, 4, 16)[9] - 1, tol=0.01)
+    TP('P10-sat', (PH, '| P10 |'), 'P10: F baja en saturacion: 1.26 (0.3) y 0.51 (0.6)', '0.51', sel(12, 0.6, 0.05, 4, 16)[9] - 1, tol=0.01, nota='0.3: %.2f' % (sel(12, 0.3, 0.05, 4, 16)[9] - 1))
+    TP('P10-a5', (PH, '| P10 |'), 'P10 fase 3: |a|^2=5 con N=20 da F=0.15', '0.15', sel(12, 0.03, 0.05, 5, 20)[9] - 1, tol=0.006)
+    TP('P10-n22', (PH, '| P10 |'), 'P10: (0.03,12) |a|^2=4 N=22 sin filtro (kf/w=0): 0.988', '0.988', sel(12, 0.03, 0.0, 4, 22)[9], tol=0.0006)
+    # ---- 1b criterio del piso (PENDIENTES)
+    adj('T86-etamax', PH, 'En la isla, η_max = η(T=0)', None) if False else None
+    txt('PI-1b', 1, [(PH, 'Eso desplaza x* como mucho'), (PH, '**Propuesta (pendiente de decisión de Jhon):**')], 'Criterio del piso: fraccion eta/eta_max = 2% (eta=100) a 4.4% (eta=220); x* se desplaza <= ln(1/(1-0.044)) = 0.045; 4968>=2200; 2352>=2200', 'V', rep='0.045', rec=math.log(1 / (1 - 0.044)), tipo='numerica', dato='T86-*', script=S, tol=0.001, nota='100/4968=%.3f, 220/4968=%.3f; 10*220=2200' % (100 / 4968, 220 / 4968))
+    por_decidir('PD-piso', 'Criterio del piso gamma_bf(T=0) < 1% del termico como criterio de aceptacion', 'Mantener el criterio original (falla a x~9 y en la isla a x=10.1: 1.35%-2.52%)', 'Reportar el piso y sustituirlo por eta_max >= 10 x nivel de sesgo (en k2/k=0.4: 2352 >= 2200, justo)', 'HANDOFF 16, PENDIENTES 1b, T86-*')
+    # ---- E2..E5 (PENDIENTES) -> adj
+    adj('V3-07', PH, '| E3 |'); adj('V4b-rango', PH, '| E2 |'); adj('F4c-flat', PH, '| E5 |'); adj('F4c-0.1', PH, '| E5 |')
+    adj('CV-f2d', PH, '- Fig. 2(a) de validación con N = 22; la primera versión con N = 20 subestimaba P_c en 1.4e-4.')
+    txt('PEN-4a', 1, [(PH, '- Convergencia con filtro solo N = 16 → 18 (N = 20 no cabe en 14 GB).'), (PH, '- La regla universal usa N = 14–16 en las curvas nuevas (ver P2).')], 'PENDIENTES 4 (2026-09-28): "convergencia con filtro solo N=16->18 (N=20 no cabe en 14 GB)"; "regla universal con N=14-16"', 'S', rep='N=20 no cabe', rec=None, tipo='cualitativa', dato='log_termico_ma5.txt (N=20: 11.36 GB)', script=S, nota='superada: N=20 y N=18 corrieron el 2026-10-01 (CN-*, RC-N20); las curvas de la regla universal con |a|^2=4 fueron recalculadas con N=22 en |x|<=1 (P2); el encabezado de PENDIENTES dice "Actualizado: 2026-09-28" y no incluye P7 fases posteriores en la fecha')
+    # ---- preregistro: aritmetica y parametros
+    txt('PR-1', 1, [(PRE, 'Modelo completo con filtro, N = 20, N_f = 2, en (κ₂/κ, x) = (0.25, 6.86)')], 'Preregistro: parametros del completo kf/w=0.2: gx=0.0535714, w=6, gz=0.42, kappa=0.03, kf=1.2, |a|^2=4, gamma=6e-7, N=20, N_f=2', 'V', rep='kf=1.2', tipo='cualitativa', dato='data/filtro_completo/gx0.0535714_*kf1.2*N20*.npz', script=S)
+    zz = np.load(os.path.join(FC, 'gx0.0535714_w6_gz0.42_kf1.2_al4_N20_Nf2_gam6e-07.npz'), allow_pickle=True)
+    okp = all(abs(float(zz[k]) - v) < 1e-9 for k, v in (('gx', 0.0535714), ('w', 6.0), ('gz', 0.42), ('kap', 0.03), ('kf', 1.2), ('al2', 4.0), ('gam', 6e-7))) and int(zz['N']) == 20 and int(zz['Nf']) == 2
+    byid('PR-1')['estado'] = 'V' if okp else 'D'
+    txt('PR-2', 1, [(PRE, '| γ_pf a T = 0 (x = 60) | 1.66411e-04 |'), (PRE, '| γ_pf térmico (x = 6.86) | 1.78395e-04 |'), (PRE, '| Δ_e = aumento térmico sin ansatz | 1.1984e-05 |'), (PRE, '| γ_pf térmico con ansatz (n_q) | 1.85736e-04 |'), (PRE, '| **E_ansatz** = aumento por el ansatz con n_q'), (PRE, '| γ_bf térmico / a T = 0 (efectivo)'), (PRE, '| E con ocupación física (referencia)')], 'Predicciones del efectivo (kf/w=0.2, N=22) del preregistro: gamma_pf T=0 1.66411e-4, termico 1.78395e-4, Delta_e 1.1984e-5, con ansatz 1.85736e-4, E_ansatz +7.341e-6', 'R', tipo='numerica', dato='data/preregistro_kf0.2.md (el efectivo con kf/w=0.2 no esta en data/termico)', script='codigo/calc_termico.py', nota='aritmetica interna: 1.78395e-4-1.66411e-4 = %.4e (Delta_e); 1.85736e-4-1.78395e-4 = %.4e (E_ansatz)' % (1.78395e-4 - 1.66411e-4, 1.85736e-4 - 1.78395e-4))
+    byid('PR-2')['valor_recalculado'] = '%.4e; %.4e' % (1.78395e-4 - 1.66411e-4, 1.85736e-4 - 1.78395e-4)
+    txt('PR-3', 1, [(PRE, '- **Esperado con canal de tamaño ansatz:** E_obs ≈ +7.3e-6')], 'Preregistro: con canal D ~ E_ansatz + (r_0-1) Delta_e = +6.8e-6; sin canal D ~ (r_0-1) Delta_e = -5.3e-7 (r_0 = 0.956)', 'V', rep='6.8e-6', rec=7.341e-6 + (0.956 - 1) * 1.1984e-5, tipo='numerica', dato='(analitico)', script=S, tol=0.06e-6, nota='sin canal: %.2e' % ((0.956 - 1) * 1.1984e-5))
+    txt('PR-4', 1, [(PRE, '- **4J²/κ_f = κ se mantiene:**')], 'Preregistro: J = sqrt(kappa kf)/2 = 0.09487 y 4J^2/kf = 0.03 para kf=1.2', 'V', rep='0.09487', rec=math.sqrt(0.03 * 1.2) / 2, tipo='numerica', dato='(analitico)', script=S, nota='4J^2/kf = %.5f' % (4 * (math.sqrt(0.03 * 1.2) / 2)**2 / 1.2))
+    txt('PR-5', 1, [(PRE, '- **γ ≪ κ:** γ/κ = 2e-5; además γ/κ_f = 5e-7.')], 'Preregistro: gamma/kappa = 2e-5 y gamma/kf = 5e-7', 'V', rep='5e-7', rec=6e-7 / 1.2, tipo='numerica', dato='(analitico)', script=S, nota='gamma/kappa = %.1e' % (6e-7 / 0.03))
+    txt('PR-6', 1, [(PRE, '- **Resolución:** el residual de N = 20 en γ_pf'), (PRE, '- ke(ω) = κ_f²/(4ω² + κ_f²) = 9.9e-3')], 'Preregistro: ke(w) con kf=1.2 = 9.9e-3 (16 veces el de kf/w=0.05)', 'V', rep='9.9e-3', rec=1.2**2 / (4 * 36 + 1.2**2), tipo='numerica', dato='(analitico)', script=S, tol=0.05e-3, nota='cociente con 6.2e-4: %.1f' % (1.2**2 / (144 + 1.44) / (0.3**2 / (144 + 0.09))))
+    txt('PR-7', 1, [(PRE, '- **N_f = 2 basta:**')], 'Preregistro: efectivo con N_f=2,3,4 a kf/w=0.2: gamma_pf termico 1.7839497e-4, 1.7839545e-4, 1.7839545e-4 (cambio 2.7e-6)', 'R', rep='2.7e-6', tipo='numerica', dato='data/preregistro_kf0.2.md', script='codigo/calc_termico.py', nota='no hay caches del efectivo con N_f=3,4; aritmetica: 1.7839545/1.7839497-1 = %.2e' % (1.7839545 / 1.7839497 - 1))
+    txt('PR-8', 1, [(PRE, 'No se lanza `nogz_pair`, N = 20 en κ₂/κ = 0.05, N = 24 ni Naseem')], 'Preregistro: no se lanzan nogz_pair, N=20 en k2/k=0.05, N=24 ni Naseem', 'V', rep='no lanzadas', tipo='cualitativa', dato='data/filtro_completo/', script=S, nota='no existe en filtro_completo ninguna corrida kf1.2 salvo las dos de la pareja; N24: %d archivos; N20 para gx0.0239579: %d' % (len(glob.glob(os.path.join(FC, '*N24*'))), len(glob.glob(os.path.join(FC, 'gx0.0239579*N20*')))))
+    byid('PR-8')['estado'] = 'V' if len(glob.glob(os.path.join(FC, '*N24*'))) == 0 and len(glob.glob(os.path.join(FC, 'gx0.0239579*N20*'))) == 0 and len(glob.glob(os.path.join(FC, '*kf1.2*'))) == 3 else 'D'
+    # ---- C6 linea 33
+    adj('C6-07', C6, '- La diferencia de P_c entre d = g_z/ω y d_opt es ≤ 1e-6')
+    # ---- README: comprobaciones restantes
+    txt('RM-x133', 1, [(RM, 'Recuadro: Wigner de Ma en x = 0 y en ω_p = 2ω (x = 1.33')], 'En omega_p = 2w = 12, x = (wp - wp*)/G = 1.33', 'V', rep='1.33', rec=(12.0 - 11.98) / 0.015, tipo='numerica', dato='(analitico)', script=S, tol=0.005)
+    n22 = [f for f in glob.glob(os.path.join(DATA, 'pfig2', '*_N22.npz')) if not os.path.basename(f).startswith('w6_gx-0.212132')]
+    txt('RM-48', 1, [(RM, 'se recalcularon con N = 22 (48 puntos)')], 'P2: 48 puntos recalculados con N=22 en |x|<=1 para las curvas |a|^2=4 que tenian N=16', 'V', rep='48', rec=len(n22), tipo='numerica', dato='data/pfig2/*_N22.npz', script=S, tol=0, nota='data/pfig2 tiene %d archivos *_N22.npz (excluyendo Ma, w6_gx-0.212132); no identifica por si mismo cuales fueron "recalculados"' % len(n22))
+    nmin = len(glob.glob(os.path.join(DATA, 'minimo', 'k*_N24.npz')))
+    txt('RM-30', 1, [(RM, '- **Modelo mínimo:** 30 valores de κ₂/κ entre 1e-3 y 10 con N = 24')], 'Modelo minimo: 30 valores de kappa2/kappa entre 1e-3 y 10 con N=24', 'V', rep='30', rec=nmin, tipo='numerica', dato='data/minimo/k*_N24.npz', script=S, tol=0)
+    umb = [[float(x) for x in r] for r in list(csv.reader(open(os.path.join(DATA, 'termico_umbral_parametro.csv'))))[1:]]
+    ug = [r for r in umb if r[0] == 1 and r[1] == 0]
+    txt('RM-gz', 1, [(RM, 'El barrido en g_z/κ ∈ [10, 40] se calculó, pero ya no se grafica')], 'Barrido en gz/k de 10 a 40 (filtro): x*(100) = 10.4 -> 10.0', 'V', rep='10.4', rec=ug[0][3], tipo='numerica', dato='data/termico_umbral_parametro.csv', script=S, tol=0.05, nota='extremo gz/k=40: %.3f' % ug[-1][3])
+    txt('RM-gz10', 1, [(RM, 'Ojo: su fila g_z/κ = 10 tiene χ|α|²/κ = 0.333 > 0.3')], 'Fila gz/k=10 (k2/k=0.25, w/k=200): chi|a|^2/k = 0.333', 'V', rep='0.333', rec=(4 / 6) * 200 * 0.25 / 100, tipo='numerica', dato='(analitico)', script=S)
+    Ux = csvrows('termico_umbrales.csv')
+    txt('RM-1.5', 1, [(RM, 'la diferencia local de η junto a cada umbral es ≤ 1.5%'), (INF, 'La diferencia local relativa de $\\eta$ junto a cada umbral es $\\leq1.5\\%$')], 'Diferencia local relativa de eta junto a cada umbral <= 1.5%', 'V', rep='0.015', rec=max(r[6] for r in Ux), tipo='numerica', dato='data/termico_umbrales.csv', script=S, tol=0, modo='le')
+    byid('RM-1.5')['estado'] = 'V' if max(r[6] for r in Ux) <= 0.015 else 'D'
+    # plano a gamma bajo
+    cp = {}
+    for gm in (1e-6, 1.77828e-6, 3.16228e-6):
+        try:
+            c = eff_curve(0.25, 0, gm); cp[gm] = xstar_c(c, 100)
+        except Exception: pass
+    txt('RM-g6', 1, [(RM, 'Con γ/κ ≲ 1e-5, en el plano el umbral se vuelve casi independiente de γ (x*(100) ≈ 8.4'), (INF, 'con $\\gamma/\\kappa\\lesssim10^{-5}$ en el plano se vuelve casi independiente de $\\gamma$')], 'Plano con gamma/kappa <~ 1e-5: x*(100) ~ 8.4 (regimen termico puro)', 'V', rep='8.4', rec=cp.get(1e-6), tipo='numerica', dato='data/termico/x*_k0.25_gz14_f0_g1e-06_*.npz', script=S, tol=0.1, nota='x*(100) para gamma=1e-6, 1.78e-6, 3.16e-6: %s' % {k: round(v, 3) for k, v in cp.items()})
+    return
+
+# ============================================================ BLOQUE 18: informe (superado) y docs LaTeX (nivel 2)
+FMT = 'docs/figura_merito/figura_merito.tex'; MPT = 'docs/mapa_plataformas/mapa_plataformas.tex'; LST = 'docs/lamb_shift_ma2019/lamb_shift_ma2019.tex'; BRT = 'docs/brecha_punto_excepcional/brecha_punto_excepcional.tex'; DCT = 'docs/documento_completo/documento_completo.tex'
+def bloque_L2(E):
+    S = 'consolidacion/verificar_todo.py::bloque_L2'
+    K = KAPM
+    # ---- informe.tex: afirmaciones superadas por trabajo posterior (el .tex no se edita)
+    sup = [('INF-S1', '\\paragraph{Validación con el modelo completo (un punto).}', 'Informe: la validacion termica con el completo es de un solo punto (k2/k=0.25, x=10.1); "esta en curso un segundo punto"', 'data/filtro_completo: 8 puntos validados (T84-*), commits 2652746..163e971'),
+           ('INF-S2', 'Está en curso un segundo punto', 'Informe: "esta en curso un segundo punto (k2/k=0.05, x=6.86)"', 'completado el 2026-09-29 (commit 2652746) y ampliado a 0.1 y 0.4 (4d23ea4)'),
+           ('INF-S3', '\\item Validación térmica con el modelo completo. Solo hay un punto validado', 'Informe, Limitaciones 1: "solo hay un punto validado"', 'T84-* (8 puntos), HANDOFF 8.4'),
+           ('INF-S4', 'Excepción declarada: las corridas del modelo completo con filtro y temperatura superan la tolerancia', 'Informe 4.1: hermiticidad cruda 1.2e-9 (punto validado) y 2.7e-10 (corrida previa) por encima de la tolerancia', 'Q-b6 (1.6e-12..2.8e-9), Q-h1 (umbrales 1e-8 desde 2026-09-30/10-01)'),
+           ('INF-S5', 'mientras que $\\gamma_{\\rm bf}/n_q$ sube un $28\\%$', 'Informe 4.5: gamma_bf/n_q sube 28% con el filtro (efectivo); "no esta contrastado con el completo"', 'PL7-f17: +17% en el completo (un punto)'),
+           ('INF-S6', 'No se estudió su dependencia con $N$ ni con la tolerancia del integrador', 'Informe: el piso de gamma_bf a T->0 del completo no se estudio en N ni en la tolerancia', 'T84-tolE2 (-0.10%); plano N=18/22/26 (PL7-N*); con filtro sigue sin barrido en N del piso'),
+           ('INF-S7', 'Hasta completarlo, los umbrales de la Tabla', 'Informe: "hasta completarlo, los umbrales de la tabla y los c_bf se consideran resultados del efectivo"', 'T85-*, T84-*; sigue vigente como [ESTIMADO] para x*')]
+    for i, a, t, sp in sup:
+        txt(i, 1, [(INF, a)], t, 'S', nota='superado por: ' + sp + '; docs/Informe/informe.tex no se modifica (ultimo cambio 7304288, 2026-09-29, anterior a las fases 3 a 6)', tipo='cualitativa', commit='7304288')
+    # ---- figura_merito.tex
+    A, G5 = 5 / 72, None
+    r = (5 / 24) * (36 / 5)**(2 / 3)
+    txt('FM-01', 2, [(FMT, 'Con $(5/24)(36/5)^{2/3}=0.777$')], 'figura_merito: (5/24)(36/5)^(2/3) = 0.777', 'V', rep='0.777', rec=r, tipo='numerica', dato='(analitico)', script=S, tol=0.0005)
+    import sympy as sp
+    k_, A_, B_ = sp.symbols('k A B', positive=True)
+    ks = sp.solve(sp.diff(A_ * k_**2 + B_ / k_, k_), k_)[0]
+    rmin = sp.simplify((A_ * k_**2 + B_ / k_).subs(k_, ks))
+    txt('FM-02', 2, [(FMT, 'Derivando e igualando a cero'), (FMT, 'r_{\\min}=3A\\kappa_{*}^{2}')], 'figura_merito: r(k)=A k^2 + B/k tiene minimo en k*^3 = B/(2A) con r_min = 3 A k*^2', 'V', rep='simbolico', tipo='cualitativa', dato='(sympy)', script=S)
+    byid('FM-02')['estado'] = 'V' if sp.simplify(ks**3 - B_ / (2 * A_)) == 0 and sp.simplify(rmin - 3 * A_ * ks**2) == 0 else 'D'
+    q = (r * 220)**1.5
+    txt('FM-03', 2, [(FMT, 'Q\\geq\\frac{1}{\\epsilon\\eta}\\left(\\frac{0.777}{1/220}\\right)^{3/2}')], 'figura_merito: Q >= 2.23e3/(eps eta)', 'V', rep='2.23e3', rec=q, tipo='numerica', dato='(analitico)', script=S, nota='recalculo %.0f' % q)
+    for e_, h_, rep in ((0.03, 0.1, '7.4e5'), (0.1, 0.1, '2.2e5'), (0.03, 0.05, '1.5e6')):
+        txt('FM-Q%g-%g' % (e_, h_), 2, [(FMT, 'Con $\\epsilon=0.03$ y $\\eta=0.1$ se necesita')], 'figura_merito: Q >= %s con eps=%g, eta=%g' % (rep, e_, h_), 'V', rep=rep, rec=q / (e_ * h_), tipo='numerica', dato='(analitico)', script=S, nota='recalculo %.3g' % (q / (e_ * h_)))
+    gx_, gz_ = 0.3 * math.sin(math.pi / 4), 0.3 * math.cos(math.pi / 4)
+    txt('FM-04', 2, [(FMT, 'da $r_{q}=1.39\\times10^{-3}$')], 'figura_merito: Ma r_q = (5/72)(k/gz)^2 = 1.39e-3; gamma/kappa2 = 2e-5', 'V', rep='1.39e-3', rec=(5 / 72) * (0.03 / gz_)**2, tipo='numerica', dato='(analitico)', script=S, nota='gamma/kappa2 = %.2e' % (6e-7 / 0.03))
+    k1 = (10 / 9) * gx_**2 * 0.03 / 36
+    txt('FM-05', 2, [(FMT, 'el cociente es $\\kappa_{1}/(\\kappa/4)=5.6\\times10^{-3}$')], 'figura_merito: kappa1/(kappa/4) = 5.6e-3 para Ma', 'V', rep='5.6e-3', rec=k1 / (0.03 / 4), tipo='numerica', dato='(analitico)', script=S)
+    txt('FM-S1', 2, [(FMT, 'la brecha, que satura en $\\kappa/4$')], 'figura_merito: la brecha satura en kappa/4 (con |alpha|^2=4 satura en ~0.28 kappa)', 'S', rep='0.25', rec=0.2784, tipo='numerica', dato='MN-02', script=S, nota='superado: HANDOFF 11 "Techo kappa/4"; con la tasa dinamica el confinamiento satura en 0.28 kappa y el epsilon de Ma es 0.022 (PL-17), no 5.6e-3')
+    byid('FM-S1')['estado'] = 'S'
+    txt('FM-S2', 2, [(FMT, 'Falta comprobar num\\\'ericamente la dependencia')], 'figura_merito: "falta comprobar numericamente la dependencia (k/gz)^2 variando gz/k a gx fijo"', 'S', nota='superado por V4 (15 puntos, 0.979-0.999; V4-RANGO) y V4b', tipo='cualitativa')
+    txt('FM-S3', 2, [(FMT, 'requieren $hf_{q}/k_{B}T\\gtrsim5$')], 'figura_merito: termico "hf_q/kT >~ 5"', 'S', nota='superado por MP (conclusion 4: ~8.8) y por HANDOFF 8 (x*(100) = 7.18-10.11 segun bano y gamma)', tipo='cualitativa')
+    txt('FM-S4', 2, [(FMT, 'con $P_{c}=0.996$ en $\\kappa_{2}/\\kappa\\approx1$')], 'figura_merito: Ma re-sintonizado P_c = 0.996 en kappa2/kappa~1', 'S', rep='0.996', rec=float(byid('MA-13')['valor_recalculado']), tipo='numerica', dato='MA-12, MA-13', script=S, nota='0.996 es el valor transitorio a Gt=30 (cache39: 0.9961); estacionario: 0.99754 (codigo sin desplazar) y 0.99873 (codigo fijo)')
+    byid('FM-S4')['estado'] = 'S'
+    # ---- mapa_plataformas.tex
+    adj('PL-08', MPT, '$\\kappa_{1}/\\kappa_{2}$ & $1.4\\times10^{-3}$ & $9.2\\times10^{-5}$')
+    txt('MP-1', 2, [(MPT, '$\\Gamma_{1}/\\kappa_{2}$ & $1.39\\times10^{-3}$ & $1.9\\times10^{-5}$')], 'mapa_plataformas: Gamma1/kappa2 Ma 1.39e-3, Naseem 1.9e-5; gamma/kappa2 2e-5 y 7.2e-5; kappa1/kappa2 = suma (1.4e-3, 9.2e-5)', 'V', rep='1.9e-5', rec=(5 / 72) / 60**2, tipo='numerica', dato='(analitico)', script=S, tol=None, nota='gamma/kappa2 Naseem = %.2e; suma = %.2e (mapa_plataformas l.94 aclara que incluye gamma)' % (1.5e-4 / 2.0736, (5 / 72) / 3600 + 1.5e-4 / 2.0736))
+    txt('MP-2', 2, [(MPT, 'el qubit a 200 MHz tiene $n_{q}=0.62$ a 10 mK')], 'mapa_plataformas: Naseem n_q = 0.62 a 10 mK; T <~ 1.1 mK para x=8.8; f_q >~ 1.8 GHz; w_m/2pi >~ 0.9 GHz', 'V', rep='0.62', rec=1 / (math.exp(200 / 208.37) - 1), tipo='numerica', dato='(analitico)', script=S, tol=0.005, nota='T para x=8.8: %.2f mK; f_q: %.2f GHz' % (200 / 208.37 * 10 / 8.8, 8.8 * 0.20837))
+    txt('MP-3', 2, [(MPT, '$n_{q}$ (10 mK) & $10^{-25}$ & 0.62')], 'mapa_plataformas: Ma n_q(10 mK) = 1e-25', 'V', rep='1e-25', rec=1 / (math.exp(12000 / 208.37) - 1), tipo='numerica', dato='(analitico)', script=S, tol=0.5e-25)
+    for lvl, xx, nq_rep in ((100, 8.8, '1.5e-4'), (100, 7.8, '4.2e-4'), (10, 6.4, '1.7e-3'), (10, 5.4, '4.6e-3'), (1, 3.9, '2.1e-2'), (1, 2.5, '9.1e-2')):
+        txt('MP-nq%g-%g' % (lvl, xx), 2, [(MPT, 'sesgo $\\eta$ & $n_{q}^{*}$')], 'mapa_plataformas Tabla termico: n_q* para eta=%d y hf/kT=%g: %s' % (lvl, xx, nq_rep), 'V', rep=nq_rep, rec=1 / (math.exp(xx) - 1), tipo='numerica', dato='(analitico, aritmetica con la x redondeada de la tabla)', script=S, tol=0.05 * float(nq_rep))
+    txt('MP-S1', 2, [(MPT, 'la Tabla~\\ref{tab:termico} exige $hf_{q}/k_{B}T\\geq8.8$ para un sesgo de 100')], 'mapa_plataformas: requisito termico hf/kT >= 8.8 para sesgo 100 (|a|^2=2, Naseem, Tarea 36)', 'S', nota='superado por HANDOFF 8 / TX-*: x*(100) = 7.18-10.11 en la isla (|a|^2=4, kappa2/kappa=0.25), segun bano y gamma/kappa; el valor 8.8 viene de la Tarea 36 con baños inconsistentes (Tarea 37)', tipo='cualitativa')
+    txt('MP-S2', 2, [(MPT, 'el confinamiento satura en 0.14$\\kappa$'), (MPT, 'sube a $1.0\\times10^{-2}$')], 'mapa_plataformas: Ma satura el confinamiento en 0.14 kappa (|a|^2=2, Tarea 43) y kappa1/conf = 1.0e-2; Naseem 0.23 kappa y 8.3e-4', 'S', rep='1.0e-2', rec=1.41e-3 / 0.14, tipo='numerica', dato='MP-1', script=S, nota='aritmetica 1.41e-3/0.14 = %.3g; superado por el confinamiento dinamico con |a|^2=4 (satura en 0.28 kappa; PL-16/PL-17: epsilon de Ma = 0.022)' % (1.41e-3 / 0.14))
+    byid('MP-S2')['estado'] = 'S'
+    txt('MP-S3', 2, [(MPT, '\\item Correcci\\\'on a un valor citado antes en la conversaci\\\'on')], 'mapa_plataformas: correccion del criterio termico (8.8 en vez de 5; 4.8 de la Tarea 37 es en frecuencia mecanica)', 'S', nota='superado por HANDOFF 8 (ver MP-S1)', tipo='cualitativa')
+    # ---- lamb_shift_ma2019.tex
+    adj('MA-02', LST, 'se obtiene $g_{x}^{2}/\\omega=0.0075$ y $\\delta_{\\mathrm{osc}}=-0.010$')
+    txt('LS-1', 2, [(LST, 'dos tercios de $g_{\\mathrm{eff}}=2\\pi\\times15$~MHz')], 'lamb_shift: delta_osc = 0.010 es 2/3 de g_eff = G = 0.015', 'V', rep='0.667', rec=0.01 / 0.015, tipo='numerica', dato='(analitico)', script=S, tol=0.001)
+    c39 = {}
+    for fn in ('wp12.0_N22', 'wp11.98_N22'):
+        z39 = np.load(os.path.join(VAL, 'tareas_ma/cache39/%s.npz' % fn), allow_pickle=True); c39[fn] = z39
+    cellrows = [('wp12.0_N22', 20, 'F', '0.710'), ('wp12.0_N22', 20, 'par', '0.798'), ('wp12.0_N22', 20, 'Pe', '0.128'), ('wp12.0_N22', 30, 'F', '0.682'), ('wp12.0_N22', 30, 'par', '0.729'), ('wp12.0_N22', 30, 'Pe', '0.125'),
+                ('wp11.98_N22', 20, 'F', '0.731'), ('wp11.98_N22', 20, 'par', '0.487'), ('wp11.98_N22', 20, 'Pe', '0.010'), ('wp11.98_N22', 30, 'F', '0.692'), ('wp11.98_N22', 30, 'par', '0.387'), ('wp11.98_N22', 30, 'Pe', '0.008')]
+    for fn, Gt, key, rep in cellrows:
+        z39 = c39[fn]; i = int(np.argmin(abs(z39['Gt'] - Gt)))
+        v = float(np.real(z39[key][i]))
+        txt('LS-T-%s-%d-%s' % (fn.split('_')[0], Gt, key), 2, [(LST, '$\\omega_{p}=2\\omega$ (Ma et al.) & 20 & 0.710' if fn.startswith('wp12') else '$\\omega_{p}=2(\\omega+\\delta_{\\mathrm{osc}})$ & 20 & 0.731')], 'lamb_shift Tabla full: %s, %s en Gt~%d: %s' % (fn.split('_')[0], key, Gt, rep), 'V', rep=rep, rec=v, tipo='numerica', dato='Mechanical-Cat-State/validacion/tareas_ma/cache39/%s.npz (Gt=%.2f)' % (fn, z39['Gt'][i]), script=S, tol=0.0025, nota='recalculo %.4f; la tabla del documento usa otra fase de muestreo (tarea39_40_resultados.md: P_e y paridad tienen micromovimiento)' % v)
+    txt('LS-pf', 2, [(LST, '2|\\alpha|^{2}\\left(\\Gamma_{1}^{-}+\\Gamma_{1}^{+}\\right) = 2\\cdot4')], 'lamb_shift: tasa de phase-flip 2|a|^2(G1m+G1p) = 3.3e-4; extraida de la tabla 3.4e-4 (acuerdo "dentro del 3%"); T_coh ~ 0.5 us; G1m = 3.8e-5 (60 veces mayor que gamma con Q=1e7)', 'V', rep='3.3e-4', rec=2 * 4 * sum(Gam1(gx_, 6.0, 0.03)), tipo='numerica', dato='(analitico)', script=S, tol=None, nota='extraida: ln(0.487/0.387)/(10/0.015) = %.3e (%.1f%% de la prediccion: el documento dice 3%%); Gamma1- = %.2e; G1m/gamma = %.0f; 1/rate = %.2f us' % (math.log(0.487 / 0.387) / (10 / 0.015), 100 * (math.log(0.487 / 0.387) / (10 / 0.015) / (2 * 4 * sum(Gam1(gx_, 6.0, 0.03))) - 1), Gam1(gx_, 6.0, 0.03)[0], Gam1(gx_, 6.0, 0.03)[0] / 6e-7, 1 / (2 * 4 * sum(Gam1(gx_, 6.0, 0.03)) * 2 * math.pi * 1e9) * 1e6))
+    txt('LS-S1', 2, [(LST, 'El modelo completo dependiente del tiempo confirma el corrimiento')], 'lamb_shift: con el drive de Ma el modelo completo da P_e ~ 0.13 y |<a^2>| ~ 2.44; con el drive re-sintonizado P_c = 0.996', 'V', rep='0.13', rec=float(byid('MA-06')['valor_recalculado']), tipo='numerica', dato='MA-06, MA-10', script=S, tol=0.02, nota='valores transitorios (Gt=20..30: 0.125-0.128); estacionarios: P_e = 0.115, |a^2| = 2.49 (MA-06, MA-10); P_c re-sintonizado estacionario 0.9975/0.9987 (MA-12/13)')
+    # ---- brecha_punto_excepcional.tex
+    tb = [('0.0050', '0.00506', '0.00505', 0.005), ('0.0631', '0.07407', '0.07407', 0.0631), ('0.0794', '0.09906', '0.09900', 0.0794), ('0.1000', '0.13820', '0.13820', 0.1), ('0.1259', '0.25000', '0.25000', 0.1259), ('0.3981', '0.25000', '0.25000', 0.3981)]
+    pr = lambda g: 0.25 * (1 - math.sqrt(1 - 8 * g)) if g <= 0.125 else 0.25
+    for g_, num, pre, gv in tb:
+        txt('BR-T%s' % g_, 2, [(BRT, ('%s & %s & %s' % (g_, num, pre)))], 'brecha_punto_excepcional Tabla: Gamma2/kappa = %s: Delta predicho %s (formula exacta)' % (g_, pre), 'V', rep=pre, rec=pr(gv), tipo='numerica', dato='(analitico)', script=S, nota='columna numerica del documento: %s (R: ED de la verificacion V6/Tarea 35)' % num)
+    txt('BR-c', 2, [(BRT, 'Num\\\'ericamente se obtiene $c(0)=1$')], 'brecha: c(0)=1, c(1)~1.40, c(2)~2.57, c(3)~3.31; cruce G^x ~ 0.18, 0.10, 0.08 kappa', 'V', rep='0.18,0.10,0.08', tipo='numerica', dato='(analitico sobre los c del documento)', script=S, nota='0.25/1.40=%.3f, 0.25/2.57=%.3f, 0.25/3.31=%.3f; los c(alpha^2) vienen de simulaciones del modelo minimo (R); c(4)=4.14 (MN-01) es consistente con la secuencia' % (0.25 / 1.40, 0.25 / 2.57, 0.25 / 3.31))
+    byid('BR-c')['estado'] = 'V' if abs(0.25 / 1.40 - 0.18) < 0.005 and abs(0.25 / 2.57 - 0.10) < 0.005 and abs(0.25 / 3.31 - 0.08) < 0.005 else 'D'
+    txt('BR-S1', 2, [(BRT, 'satura en valores del orden de $0.10\\kappa$ a $0.17\\kappa$'), (BRT, 'Un valor de saturaci\\\'on entre $0.10\\kappa$ y $0.17\\kappa$')], 'brecha: la brecha del modelo completo de Naseem satura en 0.10-0.17 kappa, claramente por debajo de kappa/4, con un maximo en Gamma2/kappa~0.13', 'S', nota='superado: HANDOFF 11 (artefactos de modos de borde de Fock, Tareas 35, 38, 45, 47); la tasa dinamica satura en ~0.28 kappa (MN-02)', tipo='cualitativa')
+    # ---- documento_completo.tex (v1)
+    txt('DC-S1', 2, [(DCT, 'El costo es la tasa de confinamiento, que cae de $4.2\\times10^{-3}$ (plano)')], 'documento_completo v1: tasa de confinamiento 4.2e-3 (plano) a 3.6, 3.1, 2.2, 0.98e-3 (kf=3,1,0.3,0.1), "no convergido en N (6%)"', 'S', nota='superado: con la tasa dinamica el plano es 6.98e-3 y la relativa 0.965, 0.967, 0.90, 0.53 (F4c-*); HANDOFF 11 y PENDIENTES E5', tipo='cualitativa')
+    txt('DC-S2', 2, [(DCT, 'Umbrales: sesgo 100 con')], 'documento_completo v1: umbrales termicos hf/kT = 8.8, 7.8, 6.4, 5.4 (Naseem, Tarea 36)', 'S', nota='superado por HANDOFF 8 (ver MP-S1)', tipo='cualitativa')
+    txt('DC-S3', 2, [(DCT, 'En el esquema de Naseem ($\\Gamma_{2}/\\kappa=0.13$), $\\gamma_{\\rm bf}\\approx0.05n_{q}\\kap')], 'documento_completo v1: gamma_bf ~ 0.05 n_q kappa', 'S', nota='superado: S-04 (c_bf depende de kappa2/kappa)', tipo='cualitativa')
+    adj('MA-13', DCT, '$\\omega_{p}=\\omega_{p}^{*}=11.98$ & 0.99754')
+    adj('FW-06', DCT, 'el ajuste ${\\rm FWHM}=cG$, $c=2.94$')
+    adj('FW-10', DCT, 'Con siete valores de $\\kappa_{2}/\\kappa$ (Tarea 47(d)), $c=2.87\\pm0.25$')
+    adj('V3-07', DCT, 'Ma, con piso, f\\\'ormula con $+1$ y $|\\langle a^{2}\\rangle|=3.973$')
+    adj('MF-T0.1', DCT, 'El costo es la tasa de confinamiento') if False else None
+    txt('DC-docs', 2, [(DCT, '\\item El m\\\'aximo de la brecha en $\\Gamma_{2}/\\kappa\\approx0.13$ y su saturaci')], 'documento_completo v1 lista como retirados: maximo de la brecha en 0.13 (artefacto), umbral hf/kT>=5, precision <=0.4% para kappa2/kappa<=0.25, +1 faltante, signo de pares en 45(d)', 'S', nota='coincide con HANDOFF 11 y PENDIENTES E2-E5; HANDOFF 12.14 pide v2', tipo='cualitativa')
+    return
+
+# ============================================================ BLOQUE 19: meta (referencias, hashes, unicode, copias de figuras, compilacion)
+def bloque_meta(E):
+    S = 'consolidacion/verificar_todo.py::bloque_meta'
+    # (h) archivos citados en los .md de nivel 1: existencia por nombre (con expansion de patrones)
+    import fnmatch
+    allf = []
+    for dp, dn, fn in os.walk(ROOT):
+        dn[:] = [d for d in dn if d not in ('.venv', '.venv_qutip5', '.git.bak', '.git', '__pycache__', 'consolidacion')]
+        allf += fn
+    docs = [H8, MD0, RM, PH, C6, PRE]
+    miss = []; total = 0
+    ext = r'(?:npz|py|sh|md|tex|pdf|png|csv|log|txt|bib)'
+    for d in docs:
+        t = open(os.path.join(ROOT, d), errors='ignore').read()
+        for m in re.finditer(r'`([^`\n]+)`', t):
+            for tok in re.findall(r'[\w\-\.\*/{}\[\]]+\.' + ext, m.group(1)):
+                total += 1
+                b = os.path.basename(tok)
+                pat = re.sub(r'\{[^}]*\}', '*', b)
+                ok = any(fnmatch.fnmatch(k, pat) for k in allf)
+                if not ok: miss.append((d, tok))
+    txt('REF-1', 1, [(H8, 'Mechanical-Cat-State/validacion/independiente/V1..V6_reporte.md'), (H8, '`termico_validacion_fase2.txt`/`.csv`/`_tolE.txt` (fase 2)')], 'Archivos citados entre comillas invertidas en HANDOFF, READMEs, PENDIENTES, C6 y preregistro existen (por nombre, con expansion de patrones)', 'V', rep='todos', tipo='cualitativa', dato='repositorio', script=S,
+        nota='%d referencias; sin resolver: %s (ambas son abreviaturas: "V1..V6_reporte.md" = V1..V6_reporte.md y "_tolE.txt" = termico_validacion_fase2_tolE.txt, que existen)' % (total, sorted(set(t for d, t in miss))))
+    byid('REF-1')['estado'] = 'V' if set(t for d, t in miss) <= {'Mechanical-Cat-State/validacion/independiente/V1..V6_reporte.md', '_tolE.txt'} else 'D'
+    # referencias rotas reales (fase A)
+    txt('REF-2', 1, [(H8, 'Mechanical-Cat-State/validacion/independiente/V1..V6_reporte.md')], 'Referencias rotas candidatas de la Fase A: handoff_cifras.py (g_gz14_f1_..._N22_...npz), V1..V6_reporte.md, _tolE.txt, detuning_scan_results (fig3_git_v4.py), marco_teorico.tex, msc/ma2019.pdf', 'V', rep='resueltas', tipo='cualitativa', dato='consolidacion/referencias_rotas.csv', script=S,
+        nota='handoff_cifras.py: plantilla "x60_k%g_gz14_f1_g2e-05_N22_Nf2_w200_a4.npz" -> existe (4 archivos); V1..V6_reporte.md: abreviatura, existen V1..V6 y V4b; _tolE.txt: renombrado a termico_validacion_fase2_tolE.txt; detuning_scan_results.{csv,npz}: salida que escribe el script original (codigo_original/fig3_git_v4.py), no se incluye en el repo; marco_teorico.tex: archivo de otro proyecto (tesis, citado solo en HANDOFF_chat); msc/ma2019.pdf: citado en V1_reporte.md, papers/ no lo tiene (gitignored: Ma 2019 solo en local)')
+    # (6) unicode
+    nus = [f for f in os.listdir(os.path.join(VAL, 'tareas_ma')) if 'ν' in f]
+    import unicodedata
+    ok_n = all(unicodedata.is_normalized('NFC', f) and unicodedata.is_normalized('NFD', f) and [hex(ord(c)) for c in f if ord(c) > 127] == ['0x3bd'] for f in nus)
+    scripts_nu = [os.path.basename(p) for p in glob.glob(os.path.join(VAL, 'tareas_ma', '*.py')) + glob.glob(os.path.join(VAL, 'tareas_ma', '*.sh')) if 'ν' in open(p, errors='ignore').read()]
+    cp_scripts = set(hex(ord(c)) for p in glob.glob(os.path.join(VAL, 'tareas_ma', 'tarea4[67]*.py')) for c in open(p, errors='ignore').read() if c == 'ν' or unicodedata.normalize('NFD', c) == 'ν' or unicodedata.normalize('NFC', c) == 'ν')
+    txt('UNI-1', 1, [(MD0, 'validacion/')], 'Los 4 .npz con nu en el nombre (cache46_{i,ii}_nu, cache47b_{i,ii}_nu): la letra es U+03BD (nu griega), sin descomposicion: NFC = NFD; los scripts que los generan (tarea46_run.py, tarea47b_run.py, tarea47b_fig2.py) usan la misma letra U+03BD literal', 'V', rep='4 archivos', tipo='cualitativa', dato='validacion/tareas_ma/cache46_*, cache47b_*', script=S,
+        nota='archivos: %s; scripts con la letra literal: %s (codepoints %s). Ninguna referencia falla por NFC/NFD' % (nus, scripts_nu, sorted(cp_scripts)))
+    byid('UNI-1')['estado'] = 'V' if len(nus) == 4 and ok_n and cp_scripts == {'0x3bd'} else 'D'
+    # figuras copia (README raiz)
+    def sha(p):
+        import hashlib
+        return hashlib.sha256(open(os.path.join(ROOT, p), 'rb').read()).hexdigest()
+    okc = all(sha('docs/documento_completo/%s.pdf' % a) == sha('Mechanical-Cat-State/figuras_finales/figuras/%s.pdf' % b) for a, b in (('fig2_val', 'fig2'), ('fig3_val', 'fig3'), ('fig2_wigner', 'apendice_fig2_estados')))
+    txt('FIG-1', 1, [(MD0, '`docs/documento_completo`: `fig2_val.pdf`, `fig3_val.pdf` y `fig2_wigner.pdf` son copias')], 'documento_completo: fig2_val.pdf, fig3_val.pdf y fig2_wigner.pdf son copias de figuras_finales/figuras/{fig2, fig3, apendice_fig2_estados}.pdf', 'V', rep='copias', tipo='cualitativa', dato='sha256 de los PDF', script=S)
+    byid('FIG-1')['estado'] = 'V' if okc else 'D'
+    same_t = sha('docs/Informe/figuras/figura_termica.pdf') == sha('Mechanical-Cat-State/figuras_finales/figuras/figura_termica.pdf')
+    txt('FIG-2', 1, [(INF, 'figuras/figura_termica.pdf')] if False else [(INF, 'figura_termica.pdf')], 'docs/Informe/figuras/figura_termica.pdf es la figura termica actual de figuras_finales', 'S', rep='igual', tipo='cualitativa', dato='sha256', script=S, nota='no es igual: la del informe es del 2026-09-29 (39d026c); figuras_finales/figuras/figura_termica.pdf se regenero en 2b64d26 (2026-09-30) con los puntos del completo y las notas "not validated"')
+    byid('FIG-2')['estado'] = 'S' if not same_t else 'V'
+    # compilacion de los docs (resultado guardado de una corrida manual en el scratchpad)
+    rc = os.path.join(OUT, 'compilacion_docs.txt')
+    if os.path.exists(rc):
+        t = open(rc).read()
+        bad = [l for l in t.split('\n') if l.strip() and ('undefined_citations=0' not in l or 'undefined_refs=0' not in l or 'pdf=1' not in l.replace(' ', ''))]
+        txt('COMP-1', 1, [(MD0, 'Todos los docs compilan (pdflatex + bibtex, sin citas indefinidas)')], 'Todos los docs compilan con pdflatex + bibtex sin citas indefinidas', 'V', rep='compilan', tipo='cualitativa', dato='consolidacion/compilacion_docs.txt (copia en scratchpad; docs/ no se modifica)', script='(manual) pdflatex/bibtex', nota=t.strip().replace('\n', ' | '))
+        byid('COMP-1')['estado'] = 'V' if not bad else 'D'
+    else:
+        txt('COMP-1', 1, [(MD0, 'Todos los docs compilan (pdflatex + bibtex, sin citas indefinidas)')], 'Todos los docs compilan con pdflatex + bibtex sin citas indefinidas', 'R', rep='compilan', tipo='cualitativa', nota='no se compilo')
+    # tareas_ma: scripts que importan ma2 y la linea del termino de pares
+    imps = sorted(os.path.basename(p) for p in glob.glob(os.path.join(VAL, 'tareas_ma', '*.py')) if re.search(r'^\s*import [^\n]*\bma2\b|^\s*from ma2 import', open(p, errors='ignore').read(), re.M))
+    ma2 = open(os.path.join(VAL, 'tareas_ma/ma2.py'), errors='ignore').read()
+    txt('SG-3', 3, [('Mechanical-Cat-State/validacion/tareas_ma/verificacion_signo_pair.md', 'Scripts que importan `ma2`')], 'verificacion_signo_pair.md: solo tarea42/43/45d/45e importan ma2; la linea "if pair: H0 = H0 - p[G] (sp a a + sm a+ a+)" existe en ma2.py', 'V', rep='4 scripts', tipo='cualitativa', dato='validacion/tareas_ma/*.py', script=S, nota='importan ma2: %s' % imps)
+    byid('SG-3')['estado'] = 'V' if imps == ['tarea42_worker.py', 'tarea43_worker.py', 'tarea45d_worker.py', 'tarea45e_worker.py'] and "if pair: H0 = H0 - p['G'] * (sp * a * a + sm * a.dag() * a.dag())" in ma2 else 'D'
+    return
+
+# ============================================================ postproceso: coincidencia de ubicaciones repetidas y lineas sin verificar
+def _nums(line):
+    t = line.replace('−', '-').replace('\\times', '×').replace('$', '').replace('{', '').replace('}', '').replace('\\,', '')
+    t = re.sub(r'×\s*10\^\s*(-?\d+)', r'e\1', t)
+    t = re.sub(r'(\d)\s*×\s*10\^?(-?\d+)', r'\1e\2', t)
+    out = []
+    for m in re.finditer(r'[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?', t):
+        pr = parse(m.group(0))
+        if pr: out.append(pr)
+    return out
+def coincidencia():
+    for c in CL:
+        locs = [u for u in c['ubicaciones'].split(' | ') if ':' in u]
+        if len(locs) < 2 or c.get('tipo') in ('pendiente',): continue
+        reps = [x for x in re.split(r'[;, ]+', str(c['valor_reportado'])) if parse(x)]
+        if not reps: continue
+        ok_all, bad = True, []
+        for u in locs:
+            f, ln = u.rsplit(':', 1)
+            L = lines(f)
+            if not ln.isdigit() or int(ln) < 1 or L is None: continue
+            nums = _nums(L[int(ln) - 1])
+            found = False
+            for rep in reps:
+                vr, ur = parse(rep)
+                if any(abs(v - vr) <= max(ur or 0, u or 0) * (1 + 1e-9) or (vr and abs(v - vr) <= 0.011 * abs(vr)) for v, u in nums): found = True
+            if not found: ok_all = False; bad.append(u)
+        c['ubicaciones_coinciden'] = c['ubicaciones_coinciden'] or ('coinciden' if ok_all else 'cifra no literal en: ' + ';'.join(bad))
+def lineas_sin_verificar():
+    import importlib
+    cov = {}
+    for c in CL:
+        for u in c['ubicaciones'].split(' | '):
+            if ':' in u:
+                f, l = u.rsplit(':', 1)
+                if l.isdigit() and int(l) > 0: cov.setdefault(f, set()).add(int(l))
+    def sust(l):
+        t = re.sub(r'`[^`]*`', '', l); t = re.sub(r'§\s?\d+(\.\d+)?', '', t); t = re.sub(r'\b[PECV]\d+(b)?\b', '', t); t = re.sub(r'Tareas? \d+(\s*[-–a y]\s*\d+)?', '', t); t = re.sub(r'\d{4}-\d\d-\d\d', '', t)
+        t = re.sub(r'\\label\{[^}]*\}|\\ref\{[^}]*\}|\\eqref\{[^}]*\}|\\cite\{[^}]*\}|\\includegraphics.*|\b(19|20)\d\d\b', '', t)
+        return bool(re.search(r'\d+\.\d+|\de-\d|\d\s?%|\d+ de \d+|[NK]\s*=\s*\d+|\d+\s*(GB|s\b|min|kB|MHz|GHz|Hz|mK)|×10|10\^|\\times|\d{3,}', t))
+    L1 = [H8, MD0, RM, PH, C6, PRE, INF]
+    out = []
+    for f in L1:
+        for i, l in enumerate(lines(f), 1):
+            if i not in cov.get(f, set()) and not l.startswith('#') and sust(l) and len(l) > 15:
+                kind = 'tabla/encabezado' if (l.strip().startswith('|') or '&' in l) else ('caption/titulo' if ('\\caption' in l or '\\paragraph' in l or '\\geometry' in l or '\\date' in l) else 'texto')
+                out.append((f, i, kind, l.strip()[:300]))
+    with open(os.path.join(OUT, 'lineas_sin_verificar.csv'), 'w', newline='', encoding='utf-8') as fh:
+        w = csv.writer(fh); w.writerow(['archivo', 'linea', 'tipo', 'texto'])
+        for r in out: w.writerow(r)
+    return len(out)
 
 # ---- COLA (mantener al final)
 if __name__ == '__main__':

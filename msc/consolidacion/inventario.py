@@ -64,13 +64,36 @@ for p in files:
                 if q != p: refs[q].add(p)
         elif len(b) > 4 and not b.startswith('.') and b not in ('np.log', '-np.log'):
             broken.append((p, t))
+# --- resolucion de patrones: un script/md que nombra el directorio de datos (p.ej. 'termico', 'pfig2', 'tarea24_cache') abre sus archivos por glob/plantilla
+ref_directos = {p: set(v) for p, v in refs.items()}
+refs_patron = collections.defaultdict(set)
+dirs = collections.defaultdict(list)
+for p in files:
+    if clasif(p) in ('dato', 'log') or p.endswith('.npz'):
+        dirs[os.path.dirname(p)].append(p)
+textos = {}
+for p in files:
+    e = os.path.splitext(p)[1].lower()
+    if e in ('.py', '.sh', '.md', '.tex') and os.path.getsize(os.path.join(ROOT, p)) < 3_000_000:
+        textos[p] = open(os.path.join(ROOT, p), errors='ignore').read()
+for d, fl in dirs.items():
+    base = os.path.basename(d)
+    if not base: continue
+    pat = re.compile(r'(?:^|[^\w])' + re.escape(base) + r'(?:$|[^\w])')
+    for t, txt in textos.items():
+        if os.path.dirname(t) == d or t in fl: continue
+        if pat.search(txt):
+            for q in fl:
+                if t not in ref_directos.get(q, set()): refs_patron[q].add(t)
+for q, v in refs_patron.items(): refs[q] |= v
 with open(os.path.join(ROOT, 'consolidacion', 'inventario.csv'), 'w', newline='') as f:
     w = csv.writer(f)
-    w.writerow(['ruta', 'tipo', 'ext', 'bytes', 'sha256_12', 'en_git', 'n_refs_entrantes', 'referenciado_por(max5)', 'huerfano'])
+    w.writerow(['ruta', 'tipo', 'ext', 'bytes', 'sha256_12', 'en_git', 'n_refs_entrantes', 'referenciado_por(max5)', 'huerfano', 'huerfano_directo', 'n_refs_por_patron'])
     for p in files:
         r = sorted(refs.get(p, ()))
+        rd = ref_directos.get(p, set())
         w.writerow([p, clasif(p), os.path.splitext(p)[1], os.path.getsize(os.path.join(ROOT, p)), sha(p),
-                    int(p in tracked or ('msc/' + p) in tracked), len(r), ';'.join(r[:5]), int(len(r) == 0)])
+                    int(p in tracked or ('msc/' + p) in tracked), len(r), ';'.join(r[:5]), int(len(r) == 0), int(len(rd) == 0), len(refs_patron.get(p, ()))])
 with open(os.path.join(ROOT, 'consolidacion', 'referencias_rotas.csv'), 'w', newline='') as f:
     w = csv.writer(f); w.writerow(['archivo_fuente', 'referencia_rota'])
     for r in sorted(set(broken)): w.writerow(r)
