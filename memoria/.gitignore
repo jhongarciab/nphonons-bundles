@@ -1,0 +1,15 @@
+# Material archivado (no se versiona)
+archivo_no_usado/
+
+# Auxiliares de compilación de LaTeX (se regeneran)
+tex/**/*.aux
+tex/**/*.log
+tex/**/*.blg
+tex/**/*.fls
+tex/**/*.fdb_latexmk
+tex/**/*Notes.bib
+
+# Cachés
+__pycache__/
+*.pyc
+.DS_Store
