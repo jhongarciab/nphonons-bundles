@@ -1,0 +1,313 @@
+%% APS (REVTeX 4.2) template for Phys. Rev. A / Phys. Rev. B.
+%% Switch the journal option: pra <-> prb. For the journal's final look use twocolumn instead of preprint.
+%% The unmodified official templates are in plantilla_aps/ (apstemplate.tex, apssamp.tex, apssamp.bib).
+\documentclass[aps,pra,preprint,groupedaddress,amsmath,amssymb,floatfix]{revtex4-2}
+%\documentclass[aps,prb,twocolumn,groupedaddress,amsmath,amssymb,floatfix]{revtex4-2}
+
+\usepackage{graphicx}
+\usepackage{pgf}
+\usepackage{xcolor}
+\usepackage{bm}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+
+\newcommand{\ket}[1]{\lvert #1\rangle}
+\newcommand{\bra}[1]{\langle #1\rvert}
+\newcommand{\wb}{\omega_b}
+\newcommand{\Dxx}{\Delta_{xx}}
+
+\begin{document}
+
+\title{Memory for a phononic qubit based on dark states of three coupled quantum dots}
+
+\author{J. S. Garc\'ia Barrera}
+\email{jhgarciaba@unal.edu.co}
+\affiliation{Departamento de F\'isica, Facultad de Ciencias Exactas y Naturales,
+\\Universidad Nacional de Colombia, Sede Manizales, Manizales, Colombia}
+
+\date{\today}
+
+\begin{abstract}
+A memory for a phononic qubit must preserve not only the excitation but also the phase between its two time bins. We propose to store the two components in the two optically dark collective states of three quantum dots coupled by F\"orster transfer, which a nonuniform strain connects to a bright state. Frequency-selective Raman pulses write and read each component, and the third dot places both in the same one-exciton manifold, so that common-mode energy noise leaves their relative phase invariant. With loading and readout through cascaded waveguides, we compare the memory with two passive acoustic modes that use the same ports. In the limit of perfectly common noise, the recovery probability of the memory, close to $0.7$, and its unconditional fidelity are almost independent of the wait up to eight lifetimes of the mode, while the passive modes lose almost all of the excitation. The conditional fidelity is lower than the passive one ($0.83$--$0.88$ versus $0.95$), so the gain lies in the probability of recovering the qubit. The result requires a noise correlation close to perfect that tightens with the wait, ports much faster than the intrinsic loss, a strain coupling above a threshold, and a large interdot two-exciton shift.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+\label{sec:intro}
+
+A quantum memory synchronizes probabilistic operations and decouples the generation, transmission, and processing of a quantum state, which makes it central to long-distance communication~\cite{duan2001}. Optical memories have been built with dark-state polaritons, Raman transfer, and atomic frequency combs~\cite{fleischhauer2002,gorshkov2007,afzelius2009}. Their performance is judged by the storage time, the probability of recovering the excitation, and the fidelity of the recovered state, because neither a long lifetime nor a strong output shows that a qubit was preserved~\cite{hedges2010,ortu2022,wang2019}. For a qubit encoded in two time bins, the relative phase between the early and late components must also survive the wait~\cite{ortu2022}. The same criteria apply to a phononic qubit.
+
+A phonon memory would extend that function to integrated circuits, where phonons can carry information between components~\cite{habraken2012,schuetz2015}. Single phonons have been controlled, transferred between nodes, and sent in two time bins through phononic waveguides~\cite{satzinger2018,bienfait2019,dumur2021,zivariWaveguide2022,zivariTimebin2022}. Mechanical oscillators coupled to superconducting circuits have stored microwave fields and single phonons~\cite{oconnell2010,chu2017,palomaki2013,liu2023,reed2017}. Optomechanical devices have stored phonons and broadband light, and phononic band engineering has extended the lifetime of acoustic modes~\cite{galland2014,wallucks2020,england2013,macCabe2020,taylor2022,bozkurt2025}. In general, however, the stored excitation remains a phonon during the wait, so the lifetime of the mode limits the storage, which is why band engineering seeks to lengthen it. These architectures must be judged against passive storage, which includes capture and readout and not only the wait; this is the criterion we use here.
+
+Semiconductor quantum dots (QDs) couple light and motion: the exciton responds to strain and can be controlled optically, and its coupling to mechanical motion and to resonators has been observed down to the few-phonon regime~\cite{kettler2021,spinnler2024}. Theory has used this coupling to \emph{emit} phonons: Bin \emph{et al.}\ proposed Stokes resonances of a single dot to produce phonon bundles~\cite{bin2020}, the spin-dark exciton of a single dot was shown to support giant Rabi oscillations~\cite{vargas2022}, and microscopic treatments of the bath show that the phonon continuum modifies the emission statistics~\cite{cosacchi2022}. Emission, however, is not storage: these proposals do not absorb an incoming phononic qubit, preserve its phase, or return it. Storage requires long-lived internal states that both the phonon and a laser can address, and we ask whether an optically controlled solid-state emitter can offer them.
+
+A QD molecule is a candidate. The coupling between emitters creates collective excitonic states, and the mixing of bright and dark excitons, controlled coupling, optophononic effects, and the storage of excitonic information have been observed~\cite{ortner2003,krenner2005,gerardot2005,skold2013,kerfoot2014,boyerdelagiroday2011,carlson2019}. Here ``dark'' means dark by interference of the optical dipoles, which differs from the spin-dark excitons of an isolated dot~\cite{lueker2017}. Vibronic coupling has been shown theoretically to transfer population between bright and dark collective states of molecular emitters~\cite{holzinger2022}; this is a close physical analogue, but that work did not implement an input--output phononic memory channel.
+
+Optical darkness, however, is not enough. The phonon continuum adds incoherent transfer and dephasing~\cite{rozbicki2008,muljarov2005,sirkina2025,daniels2013}, and the stored phase depends on the noise correlations: decoherence-free subspaces protect against collective noise~\cite{lidar1998}, a different charge-quadrupole encoding in three dots has been proposed to suppress uniform electric-field fluctuations~\cite{friesen2017}, and the coherence of a shared phonon bath can reduce the dephasing of coupled dots~\cite{hall2025}. What is missing is a protocol that absorbs a phononic qubit into dark states, keeps it through a wait under these mechanisms, and returns it, and that is compared with passive storage.
+
+We propose a memory that stores the two time components of a phononic qubit in the two collective dark states of three coupled dots, so that the excitation is not held in an optically bright state during the wait. The transfer is possible because, with F\"orster transfer and a nonuniform strain, coupling elements appear between collective eigenstates, whereas the longitudinal coupling of a single dot does not exchange an excitation between two levels. Each component is written by a two-photon Raman resonance selected by a laser pulse and is read by reversing the process; the laser is off during the wait, but the coupling of the cavity to the waveguide must be varied during loading and readout. We compare the memory with two passive acoustic modes that have the same input and output efficiencies, and we analyze the effect of the noise correlations and of the ports. In the regime we study, the memory keeps a substantial probability of recovering the qubit during a wait in which the passive reference loses almost all of the excitation, although the fidelity conditioned on recovery is lower.
+
+The paper is organized as follows. Sec.~\ref{sec:model} introduces the model and the dark storage subspace, Sec.~\ref{sec:raman} derives the Raman write and read process, Sec.~\ref{sec:noise} treats losses, noise, and ports, and Sec.~\ref{sec:results} presents the comparison with passive storage. Sec.~\ref{sec:platform} discusses the platform requirements, which are conditions of the result and not an implementation, and Sec.~\ref{sec:conclusions} concludes.
+
+\section{Model and dark storage subspace}
+\label{sec:model}
+
+We consider three semiconductor quantum dots with lowering operators $\sigma_i$ and occupations $n_i=\sigma_i^\dagger\sigma_i$ ($i=1,2,3$), coupled by F\"orster transfer and located inside an acoustic cavity with a single mode of frequency $\wb$ and lowering operator $b$. A common laser field drives the excitons, and the cavity is coupled to input and output waveguides during loading and readout. Figure~\ref{fig:scheme} shows the internal Raman transitions. We set $\hbar=1$ and express energies and rates in units of $\wb$.
+
+\begin{figure}[t]
+\centering
+\resizebox{\columnwidth}{!}{\input{../../figs/figM0_memory_scheme.pgf}}
+\caption{(Color online) Raman transitions used to write and read the two dark slots. A laser at frequency $\omega_{L,s}$ couples $\ket{G,1}$ off resonantly to the virtual bright intermediate $\ket{B,1}$, and nonuniform strain couples the latter to $\ket{D_s,0}$ with matrix element $g_s$. The level positions are schematic.}
+\label{fig:scheme}
+\end{figure}
+
+The Hamiltonian is
+\begin{align}
+H(t)={}&\wb\, b^\dagger b+\sum_{ij}h_{ij}\,\sigma_i^\dagger\sigma_j
++\Dxx\sum_{i<j}n_in_j\nonumber\\
+&+\sum_i\lambda_i\,n_i\,(b+b^\dagger)+H_L(t),\label{eq:H}\\
+H_L(t)={}&\frac{\Omega(t)}{\sqrt3}\sum_i\bigl(\sigma_i\,e^{i\omega_Lt}+\sigma_i^\dagger\,e^{-i\omega_Lt}\bigr),\nonumber\\
+&h_{ii}=\varepsilon_i,\quad h_{i\neq j}=J_{ij}.\nonumber
+\end{align}
+Here $\varepsilon_i$ are the exciton energies of the dots, $J_{ij}$ the F\"orster couplings, $\Dxx$ the interaction energy of each pair of excitons, $\lambda_i$ the longitudinal deformation-potential coupling of dot $i$ to the acoustic mode, and $\Omega(t)$ the amplitude of a laser of frequency $\omega_L$ with the same phase on the three dots. Real dot molecules may also have tunnel coupling and phonon-assisted transitions~\cite{daniels2013}; these processes are not represented by additional coherent hopping terms in Eq.~\eqref{eq:H}. The \emph{complete} model keeps the eight electronic states of the three dots and allows us to check whether the pulses populate biexcitons. The \emph{reduced} model restricts the electronic space to the vacuum and the one-exciton manifold, which is exact for $|\Dxx|\to\infty$.
+
+In the site basis $\ket{i}=\sigma_i^\dagger\ket{G}$, where $\ket G$ is the electronic ground state, the common laser excites only
+\begin{equation}
+\ket{B}=\frac{\ket1+\ket2+\ket3}{\sqrt3},\qquad
+\bra{B}\sum_i\sigma_i^\dagger\ket G=\sqrt3 .\label{eq:bright}
+\end{equation}
+Two orthogonal vectors are
+\begin{equation}
+\ket{D_1}=\frac{\ket2-\ket3}{\sqrt2},\qquad
+\ket{D_2}=\frac{2\ket1-\ket2-\ket3}{\sqrt6}.\label{eq:dark}
+\end{equation}
+Orthogonality with $\ket B$ makes them dark to a collective field and to a collective radiative channel in the Dicke limit of indistinguishable optical phases~\cite{dicke1954,mokhlespour2012}. For them also to be stationary eigenstates of $h$, $\ket B$ must be an eigenvector, so the three row sums of $h$ must be equal. This is a condition on the site energies and couplings, not an automatic property of three emitters. Setting $E_B=0$, $E_{D_1}=-G_1$, and $E_{D_2}=-G_2$ with $0<G_1<G_2$, the spectral decomposition $h=\sum_aE_a\ket a\bra a$ gives
+\begin{align}
+\varepsilon_1&=-\frac{2G_2}{3},&
+\varepsilon_2=\varepsilon_3&=-\frac{G_1}{2}-\frac{G_2}{6},\nonumber\\
+J_{12}=J_{13}&=\frac{G_2}{3},&
+J_{23}&=\frac{G_1}{2}-\frac{G_2}{6},\label{eq:inverse}
+\end{align}
+so that $\varepsilon_1+2J_{12}=\varepsilon_2+J_{12}+J_{23}=0$.
+
+With $\Lambda=\mathrm{diag}(\lambda_1,\lambda_2,\lambda_3)$ in the one-exciton manifold, the matrix elements connecting the bright state to the two dark ones are
+\begin{align}
+g_1&=\bra B\Lambda\ket{D_1}=\frac{\lambda_2-\lambda_3}{\sqrt6},\nonumber\\
+g_2&=\bra B\Lambda\ket{D_2}=\frac{2\lambda_1-\lambda_2-\lambda_3}{\sqrt{18}}.\label{eq:g}
+\end{align}
+A component of $\lambda_i$ equal on the three dots shifts the energies but does not contribute to $g_s$.
+
+The input to be stored is a one-phonon qubit in two time bins, entangled with a reference $R$ that does not undergo the protocol:
+\begin{equation}
+\ket{\Psi_{\rm in}}=\frac{\ket0_R\ket{1_{t_1},0_{t_2}}+\ket1_R\ket{0_{t_1},1_{t_2}}}{\sqrt2}.
+\label{eq:input}
+\end{equation}
+The first component is written into $D_1$ and the second into $D_2$. During the wait, both branches occupy the same one-exciton manifold, $\mathcal H_L=\mathrm{span}\{\ket{D_1,0},\ket{D_2,0}\}$. Three dots are needed because with two emitters there is only one collective dark state, so two components do not fit in the same manifold; a $\ket G/\ket D$ encoding would instead compare the zero- and one-exciton sectors, whose relative phase is not protected against common noise.
+
+\section{Raman write and read}
+\label{sec:raman}
+
+Each time component is written into a dark slot with a laser pulse of selected frequency. The two slots have different energies, so each is addressed by the laser frequency alone and no interaction needs to be switched, and the readout reverses the process starting with the slot written last. For slot $s$, the two-photon Raman transition goes from $\ket{G,1}$ (empty dots, one phonon) to $\ket{D_s,0}$ (exciton in slot $s$, no phonon), with the bright state $\ket B$ as a strongly detuned intermediate level. In the frame rotating at the laser frequency, $\delta_a=E_a-\omega_L$, the states $\ket{G,1}$, $\ket{B,1}$, and $\ket{D_s,0}$ have energies $\wb$, $\delta_B+\wb$, and $\delta_s$. The laser couples the first two with amplitude $\Omega$, and the strain couples the last two with amplitude $g_s$ (Eq.~\eqref{eq:g}), keeping only the excitation-conserving part, $\ket B\bra{D_s}\,b^\dagger$. The two-photon resonance is $\delta_s=\wb+\delta_2$, with $\delta_2$ small, and the detuning of the intermediate level is $\Delta_{I,s}\equiv\delta_B\simeq\wb+G_s$, which is always large because the dark states lie below $\ket B$. Eliminating $\ket{B,1}$ for $|\Omega|,|g_s|\ll\Delta_{I,s}$ gives, in the basis $\{\ket{G,1},\ket{D_s,0}\}$,
+\begin{align}
+H_{\rm eff}^{(s)}&=
+\begin{pmatrix}
+\wb-\Omega^2/\Delta_{I,s}&-\Omega_{{\rm eff},s}\\
+-\Omega_{{\rm eff},s}&\wb+\delta_2-g_s^2/\Delta_{I,s}
+\end{pmatrix},\nonumber\\
+\Omega_{{\rm eff},s}&=\frac{\Omega g_s}{\Delta_{I,s}}.\label{eq:heff}
+\end{align}
+The elimination is adiabatic when the pulse envelope is smooth on the time scale $1/\Delta_I$~\cite{brion2007,reiter2012}; an abrupt turn-off leaves a residual mixture of $\ket B$. Complete transfer occurs when the diagonal energies are equal, $\delta_{2,s}^{\star}=(g_s^2-\Omega^2)/\Delta_{I,s}$, after the $\pi$ time
+\begin{equation}
+t_{\pi,s}=\frac{\pi}{2\Omega_{{\rm eff},s}}=\frac{\pi\Delta_{I,s}}{2\Omega g_s}.\label{eq:tpi}
+\end{equation}
+
+Equation~\eqref{eq:heff} omits that $\ket{D_s,0}$ is also coupled by $\Lambda$ to all one-phonon states of the one-exciton manifold, $\ket{c,1}$ with $c\in\{B,D_1,D_2\}$, including $c=s$ through the diagonal element $\bra{D_s}\Lambda\ket{D_s}$. To second order in $\Lambda$ the energy of $\ket{D_s,0}$ is shifted by $-\sum_c|\Lambda_{cs}|^2/(\wb+E_c-E_s)$, and the resonance condition becomes
+\begin{align}
+\delta_{2,s}^{\star}&\simeq-\frac{\Omega^2}{\Delta_{I,s}}+\sum_{c\in\{B,D_1,D_2\}}\frac{|\Lambda_{cs}|^2}{\wb+E_c-E_s},\nonumber\\
+\Lambda_{cs}&=\bra c\Lambda\ket{D_s}.\label{eq:stark}
+\end{align}
+The term $c=B$ reproduces the shift of Eq.~\eqref{eq:heff}. The diagonal term $c=s$ is the polaronic shift, and it dominates for $s=2$ because $\bra{D_2}\Lambda\ket{D_2}=0.157\,\wb$ for the parameters of Fig.~\ref{fig:raman_map}. The denominators must stay away from additional resonances.
+
+While the pulse acts, the phonon remains in the mode with probability $\cos^2(\Omega_{\rm eff}t)$ and decays at the cavity rate $\kappa$, so the write efficiency is, to first order in $\kappa$,
+\begin{equation}
+\eta_w\simeq1-\kappa\int_0^{t_\pi}\!\cos^2(\Omega_{\rm eff}t)\,\mathrm dt=1-\frac{\kappa t_\pi}{2}.\label{eq:etaw}
+\end{equation}
+Reducing $\Delta_I$ shortens $t_\pi$ but increases the virtual population of the bright state, $p_B\sim(\Omega/\Delta_I)^2$, which dephases and relaxes. At fixed $t_\pi$, $\Omega_{\rm eff}=\pi/2t_\pi$ and the coupling required for a given $p_{B,\max}$ is
+\begin{equation}
+g_{\min}=\frac{\Omega_{\rm eff}}{\sqrt{p_{B,\max}}}=\frac{\pi}{2\,t_\pi\sqrt{p_{B,\max}}},\qquad \Omega=\frac{\Omega_{\rm eff}\Delta_I}{g}\propto\frac1g.\label{eq:gmin}
+\end{equation}
+For $t_\pi\simeq190/\wb$ this gives $g_{\min}=0.026\,\wb$ if $p_{B,\max}=0.1$ and $0.019\,\wb$ if $p_{B,\max}=0.2$. A smaller strain coupling therefore requires a proportionally more intense pulse of nearly the same duration.
+
+The unaddressed slot, $s'$, is detuned in two-photon frequency by $\Delta_{ss'}=|E_{D_s}-E_{D_{s'}}|$ and is excited with effective amplitude $\Omega_{\rm eff}'=\Omega g_{s'}/\Delta_I$. The maximum population it reaches is that of a detuned Rabi oscillation,
+\begin{equation}
+P_{s'}^{\max}=\frac{(2\Omega_{\rm eff}')^2}{(2\Omega_{\rm eff}')^2+\Delta_{ss'}^2}\simeq\frac{4\Omega_{\rm eff}'^2}{\Delta_{ss'}^2},\label{eq:leak}
+\end{equation}
+which gives $5\times10^{-3}$ and $7\times10^{-3}$ for the pulses on $D_1$ and $D_2$ ($\Omega_{\rm eff}'\simeq0.009$ and $0.010\,\wb$, $\Delta_{ss'}=0.25\,\wb$).
+
+\begin{figure}[t]
+\centering
+\resizebox{\columnwidth}{!}{\input{../../figs/figM1_raman_response.pgf}}
+\caption{(Color online) Population of the dark state $D_s$ after a Raman pulse from $\ket{G,1}$ as a function of the two-photon detuning $\delta_2/\omega_b$ and of the pulse duration $t\omega_b$, for (a) $D_1$ with $\Omega/\omega_b=0.197$ and (b) $D_2$ with $\Omega/\omega_b=0.290$. Stars mark the numerically optimized pulses, $(\delta_2/\omega_b,\,d\,\omega_b)=(-0.020,\,170)$ and $(-0.025,\,150)$. Reduced model with losses and system parameters: $G_1/\omega_b=0.35$ and $G_2/\omega_b=0.60$, which give $\varepsilon_i/\omega_b=(-0.400,-0.275,-0.275)$, $J_{12}/\omega_b=J_{13}/\omega_b=0.200$, and $J_{23}/\omega_b=0.075$; $\lambda_i/\omega_b=(0.20,0.14,0)$, which give $g_1/\omega_b=0.0572$ and $g_2/\omega_b=0.0613$; $\kappa/\omega_b=10^{-3}$, $\gamma/\omega_b=2\times10^{-4}$, $\gamma_\varphi/\omega_b=4\times10^{-4}$, $\chi=1$.}
+\label{fig:raman_map}
+\end{figure}
+
+Figure~\ref{fig:raman_map} shows the population of the target dark state after a write pulse from $\ket{G,1}$ as a function of the two-photon detuning and of the pulse duration. Each map has the shape of the Rabi oscillation of Eq.~\eqref{eq:heff}: on resonance the population grows to a maximum near $t_\pi$ and falls again; away from resonance the oscillations speed up and their amplitude decreases. The maximum population as a function of detuning is a Lorentzian of full width $4\Omega_{\rm eff,s}$, equal to $0.035\,\omega_b$ for $D_1$ and $0.045\,\omega_b$ for $D_2$ in the maps, and there is a single maximum per slot in the explored interval, so the laser frequency selects the slot. That maximum is not at $\delta_2=0$ but at $\delta_2^\star$, which makes Eq.~\eqref{eq:stark} necessary: the first-order shift $(g_s^2-\Omega^2)/\Delta_I$ misses the resonance of $D_2$ by a factor of two and that of $D_1$ by about $30\%$, whereas Eq.~\eqref{eq:stark} reproduces the resonance of both slots to within $10^{-3}\,\omega_b$. The maximum population, near $0.9$, stays below unity because the phonon decays while the pulse acts, Eq.~\eqref{eq:etaw}, and because of the mixing of the bright state; the optimal duration, marked with stars, coincides with $t_\pi$ to within $10\%$. The efficiency of Eq.~\eqref{eq:etaw} extended to a finite pulse of duration $d$, $\eta_w\simeq\sin^2(\Omega_{\rm eff}d)\,\bigl[1-\kappa\bigl(d/2+\sin 2\Omega_{\rm eff}d/4\Omega_{\rm eff}\bigr)\bigr]$, agrees with the simulation for $D_1$ and exceeds it for $D_2$ by an amount of the order of the bright-state mixing, $(\Omega/\Delta_I)^2$, which is lost when the pulse is turned off abruptly.
+
+Figure~\ref{fig:raman_dyn} is a cut of the map at the optimal detuning. The population of the target slot follows the oscillation of Eq.~\eqref{eq:heff} with a small fast ripple, and the unaddressed slot stays near one percent, with a simulated maximum of $0.011$ and $0.009$, about a factor of two from the estimate of Eq.~\eqref{eq:leak}.
+
+\begin{figure}[t]
+\centering
+\resizebox{\columnwidth}{!}{\input{../../figs/figM3_raman_dynamics.pgf}}
+\caption{(Color online) Population of the target dark slot (blue) and of the other slot (red, dashed) during a write pulse from $\ket{G,1}$ at the optimized detuning, for (a) slot $D_1$ and (b) slot $D_2$. Dotted lines and dots mark the optimized durations of Fig.~\ref{fig:raman_map}. System parameters as in Fig.~\ref{fig:raman_map}.}
+\label{fig:raman_dyn}
+\end{figure}
+
+\section{Losses, noise, and ports}
+\label{sec:noise}
+
+Three mechanisms act on the stored qubit: loss of the acoustic excitation, dephasing of the exciton energies, and relaxation by the phonon continuum. They affect the two dark slots differently, and only the dephasing depends on how the noise is correlated among the dots.
+
+The open dynamics follows the Lindblad master equation
+\begin{equation}
+\begin{aligned}\dot\rho={}&-i[H,\rho]+\mathcal D[L_\kappa]\rho+\mathcal D[L_\gamma]\rho\\&+\sum_\alpha\mathcal D[L_{\varphi,\alpha}]\rho+\sum_{a\neq b}\mathcal D[L_{a\to b}]\rho,\end{aligned}\label{eq:master}
+\end{equation}
+with $\mathcal D[L]\rho=L\rho L^\dagger-\tfrac12\{L^\dagger L,\rho\}$ and $H$ the Hamiltonian of Eq.~\eqref{eq:H} including the drive. The jump operators are the acoustic loss $L_\kappa=\sqrt\kappa\,b$, the collective radiative channel $L_\gamma$ of the excitons, the dephasing operators $L_{\varphi,\alpha}$, and the relaxation $L_{a\to b}=\sqrt{\Gamma_{a\to b}}\ket b\bra a$ between excitonic eigenstates by the phonon continuum, which we define below. The radiative channel is
+\begin{equation}
+L_\gamma=\sqrt{\frac{2\gamma}{3}}\sum_i\sigma_i,\qquad \|L_\gamma\ket B\|^2=2\gamma,\qquad L_\gamma\ket{D_s}=0.\label{eq:radiative}
+\end{equation}
+The last equality requires parallel optical dipoles, equivalent phases, and a collective radiative channel; independent radiative losses would break the protection~\cite{dicke1954,mokhlespour2012,carlson2019}.
+
+We model the fluctuations of the site energies as white Gaussian noise, $\langle\xi_i(t)\xi_j(t')\rangle=\gamma_\varphi K_{ij}\delta(t-t')$, with $K$ positive semidefinite and $K_{ii}=1$. If $K=\sum_\alpha\mu_\alpha\bm u_\alpha\bm u_\alpha^T$, the Lindblad operators are
+\begin{equation}
+L_{\varphi,\alpha}=\sqrt{\gamma_\varphi\mu_\alpha}\sum_iu_{i\alpha}\,n_i.\label{eq:noisejumps}
+\end{equation}
+We take $K=(1-\chi)I+\chi\bm1\bm1^T$, with $\chi=0$ for local noise and $\chi=1$ for perfectly common noise. The latter is the collective-noise limit underlying decoherence-free encodings~\cite{lidar1998,friesen2017}, not a measured correlation for the proposed three-dot structure. In the eigenbasis $\{B,D_1,D_2\}$ and under the secular approximation $|E_a-E_b|\gg\gamma_\varphi$, the rate of noise-induced jumps between eigenstates is $W_{ab}=\gamma_\varphi\sum_{ij}K_{ij}(a_ib_i)(a_jb_j)$, and for the two slots
+\begin{equation}
+W_{D_1D_2}=\frac{\gamma_\varphi}{6}(1-\chi),\qquad
+\Gamma_{D_1D_2}^{(\varphi)}=\frac{5\gamma_\varphi}{6}(1-\chi),\label{eq:gamma_dark}
+\end{equation}
+where $\Gamma_{D_1D_2}^{(\varphi)}$ is the decay rate of the coherence between $D_1$ and $D_2$. For $\chi=1$ the noise operator is proportional to the total number of excitons and acts as the identity on the storage subspace $\mathcal H_L$, so the coherence between the slots is protected. The coherence between the vacuum and a one-exciton state decays at $\gamma_\varphi/2$ for any $\chi$.
+
+Figure~\ref{fig:storage} shows the retention of each slot and of the coherence during the wait. In (a) both slots keep almost all of their population over waits in which a passive phonon has decayed as $e^{-\kappa t}$ to nothing; $D_1$ loses somewhat more than $D_2$, mainly by slow transfer to the other slot. In (b), for $\chi=1$ the coherence decays slowly, for $\chi=0$ it follows the secular law of Eq.~\eqref{eq:gamma_dark}, and a correlation of $\chi=0.9$ already places the coherence clearly below the ideal curve at long waits. Protection therefore requires a correlation close to unity, not a moderate one.
+
+The protection does not cover the sequential write and read: between two windows one branch holds an exciton and the other none. For unprotected times $\tau_u^w$ and $\tau_u^r$ and a protected wait $T_{\rm prot}$, the visibility of the stored superposition is
+\begin{equation}
+\mathcal V\simeq\mathcal V_0\exp\!\Bigl[-\frac{\gamma_\varphi}{2}(\tau_u^w+\tau_u^r)-\Gamma_{D_1D_2}^{(\varphi)}T_{\rm prot}\Bigr].\label{eq:visibility}
+\end{equation}
+Varying only the separation between the two windows in a simulation with ideal loading and $\chi=1$, the slope of $\ln\mathcal V$ agrees approximately with $-\gamma_\varphi/2$. The unprotected interval is therefore the origin of the cost of loading the second phonon slowly.
+
+\begin{figure}[t]
+\centering
+\resizebox{\columnwidth}{!}{\input{../../figs/figM5_dark_storage_decay.pgf}}
+\caption{(Color online) Retention of the dark slots during the wait with the laser off. (a) Population of the prepared state $D_1$ (blue, solid) and $D_2$ (red, dash-dotted) and decay $e^{-\kappa t}$ of a passive phonon (black, dashed). (b) Coherence $2|\rho_{D_1D_2}|$ for $\chi=1$ (blue, solid), $0.9$ (gold, dashed), and $0$ (red, dash-dotted); the dotted line is the secular law of Eq.~\eqref{eq:gamma_dark} for $\chi=0$. System parameters as in Fig.~\ref{fig:raman_map}, plus the relaxation rates of the phonon continuum at zero temperature.}
+\label{fig:storage}
+\end{figure}
+
+In addition to the discrete mode $b$, the dots couple to the continuum of longitudinal phonons. We compute the zero-temperature relaxation rate $\Gamma_{a\to b}$ between eigenstates with Fermi's golden rule for the bulk deformation-potential coupling, with spectral density $J_{\rm LA}(\omega)\propto\omega^3$ at low frequency~\cite{krummheuer2002} and a form factor that depends on the overlap of the two states and on the distances $r_{ij}$ between dots. For $qr_{ij}\ll1$, with $q=(E_a-E_b)/\hbar c$, the rate scales as $(E_a-E_b)^5$, so small separations between slots are favored. Confinement and nearby free surfaces can modify this continuum model~\cite{krummheuer2005}, and for the material constants and geometry estimated here the rate between the slots is negligible compared with the other channels, so we do not extrapolate an absolute value. The rates enter the simulations as projected jumps $L_{a\to b}=\sqrt{\Gamma_{a\to b}}\ket b\bra a$, which assume a Markovian continuum and separations that resolve the transitions; the bath is at zero temperature.
+
+An itinerant phonon of normalized envelope $u(t)$ is represented by a source cavity $a_s$ cascaded with the mode $b$, following the formalism of cascaded systems and single-quantum wave packets~\cite{gardiner1993,carmichael1993,gough2012},
+\begin{align}
+L_{\rm cas}&=\sqrt{\gamma_s(t)}\,a_s+\sqrt{\kappa_{\rm in}}\,b,\nonumber\\
+H_{\rm cas}&=-\frac i2\sqrt{\gamma_s(t)\kappa_{\rm in}}\,(b^\dagger a_s-a_s^\dagger b),\nonumber\\
+\gamma_s(t)&=\frac{|u(t)|^2}{1-\int_0^t|u(t')|^2\mathrm dt'}.\label{eq:cascade}
+\end{align}
+The sign of the coherent term fixes the direction of the cascade. Loading uses a growing exponential packet truncated after a window $T_L$, motivated by the emission of a time-reversed cavity and by impedance-matched transfer~\cite{cirac1997}, so that a fraction $\epsilon$ remains in the source at the end. Readout reverses the Raman pulses and opens an output port $\kappa_{\rm out}$ that captures a decaying exponential packet in a sink cavity, regularized with the same $\epsilon$. The efficiencies of these isolated ports, $\eta_L$ and $\eta_R$, are close to $0.96$ for $\kappa_{\rm in}T_L=\kappa_{\rm out}t=4$ and $\epsilon=0.02$; the complete channel also includes the Raman write, the wait, and the Raman read. During the wait we use $\kappa=10^{-3}\,\omega_b$, and during loading and extraction $\kappa_{\rm in}=\kappa_{\rm out}=10\kappa$, with instantaneous switching of the port.
+
+Figure~\ref{fig:protocol} shows the full sequence for a wait $T\omega_b=2000$. The occupation of the mode rises during each loading and falls when the Raman pulse transfers the phonon to its slot; the population of $D_1$ conditioned on $R=0$ appears at the first write and that of $D_2$ conditioned on $R=1$ at the second. The coherence between the two components exists only while both are stored: it appears after the second write, stays almost constant during the wait, in agreement with Fig.~\ref{fig:storage}(b), and disappears when the readout empties the slots. Its value is lower than the populations alone would allow: the visibility is lost mostly while the second component is loaded and written, when one branch holds an exciton and the other does not, and hardly at all during the wait.
+
+\begin{figure}[t]
+\centering
+\resizebox{\columnwidth}{!}{\input{../../figs/figM4_protocol_dynamics.pgf}}
+\caption{(Color online) Full protocol for $T\omega_b=2000$: mode occupation $\langle b^\dagger b\rangle$ (black, dotted), populations of $D_1$ conditioned on the branch $R=0$ (blue, solid) and of $D_2$ conditioned on $R=1$ (red, dash-dotted), and stored coherence $2|\rho_{R0D_1,R1D_2}|$ (gold). Labels mark the stages: loading (L1, L2), Raman write (W1, W2), storage, Raman read (R1, R2), and output (O1, O2); the numeral is the time bin. Blue shading marks loading and emission windows; green shading marks the wait. The coherence is defined only while both components are stored. System parameters: as in Fig.~\ref{fig:storage}, with $\kappa_{\rm in}/\kappa=\kappa_{\rm out}/\kappa=10$ and a separation of $100/\omega_b$ between the two time bins.}
+\label{fig:protocol}
+\end{figure}
+
+Let $\rho_{R,{\rm out}}$ be the joint state of the reference and the two output windows, including the vacuum, and $\Pi_1$ the projector onto exactly one phonon in the output. We define
+\begin{align}
+s&=\mathrm{Tr}(\Pi_1\rho_{R,{\rm out}}),\qquad
+F_h=F/s,\nonumber\\
+F&=\bra{\Psi_{\rm id}}\rho_{R,{\rm out}}\ket{\Psi_{\rm id}},\label{eq:metrics}
+\end{align}
+with $\ket{\Psi_{\rm id}}$ the ideal output state of Eq.~\eqref{eq:input}; the deterministic phase of the logical qubit is calibrated before evaluating $F$. The conditional fidelity $F_h$ is not an efficiency and does not imply that every attempt produced the qubit. It is the overlap of the normalized one-phonon output and its reference with a maximally entangled two-qubit state, an entanglement-fidelity measure appropriate to a single-quantum memory~\cite{surmacz2006}, and a value $F_h>1/2$ certifies that this conditional state is entangled, entanglement that is distillable in principle~\cite{bennett1996,horodecki1997}. For recovery probabilities $P_0,P_1$ per branch and residual visibility $\mathcal V$, without additional population errors, $F=(P_0+P_1)/4+\sqrt{P_0P_1}\,\mathcal V/2$ and $s=(P_0+P_1)/2$, so that $F_h=(1+\mathcal V)/2$ for $P_0=P_1$. This identity separates the loss of excitations from the loss of coherence: an increase in $F$ can come from a higher success probability even if $F_h$ decreases.
+
+The passive reference is simulated as two independent acoustic modes with the same intrinsic loss $\kappa$ and the same ports, one per time bin. Each mode has at most one excitation and decays only in amplitude, so the result is written with the recovery probabilities of each bin and the coherence between them:
+\begin{align}
+p_1&=\eta_{L1}\eta_R\,e^{-\kappa(\tau_{12}+t_{L2}+T+t_E)},\qquad
+p_2=\eta_{L2}\eta_R\,e^{-\kappa T},\nonumber\\
+s_{\rm pas}&=\frac{p_1+p_2}{2},\qquad
+F_{\rm pas}=\frac{p_1+p_2}{4}+\frac{\sqrt{p_1p_2}}{2},\label{eq:passive}
+\end{align}
+with $\tau_{12}$ the separation between the two loading windows and $t_{L2}$ and $t_E$ the durations of the second loading and of the first extraction: the first bin waits during that whole time and the second only during $T$.
+
+\section{Results and passive benchmark}
+\label{sec:results}
+
+The results of this section come from the open dynamics of the reduced model with the parameters of Fig.~\ref{fig:raman_map} and the pulses of Sec.~\ref{sec:raman}, optimized once; the parameters are varied one at a time with the pulses fixed, except when scaling the strain coupling. The relative integration tolerance is $10^{-9}$, since with $10^{-6}$ the complete model returned density matrices with negative eigenvalues; all reported matrices have nonnegative eigenvalues and satisfy $|\rho_{01}|^2\le\rho_{00}\rho_{11}$. Truncating the phonon mode at $N_{\rm cut}=3$ instead of $2$ changes $F_h$ by about $0.016$ and $s$ by about $0.012$ at $T\omega_b=2000$, an uncertainty that applies to the second decimal place of the results; the complete runs use $N_{\rm cut}=2$.
+
+\begin{figure}[h]
+\centering
+\resizebox{\columnwidth}{!}{\input{../../figs/figM2_operational_sweep.pgf}}
+\caption{(Color online) (a) Unconditional fidelity $F$, (b) recovery probability $s$, and (c) conditional fidelity $F_h=F/s$ as functions of the wait $T\omega_b$, with real loading and readout, for the dark-state memory (red; open circles are the computed points at equally spaced waits) and for two passive acoustic modes with the same ports (black, dashed). Dotted vertical lines mark $T\omega_b=2000$. System parameters: as in Fig.~\ref{fig:storage}, with $\kappa_{\rm in}/\kappa=\kappa_{\rm out}/\kappa=10$, $\chi=1$, a separation of $100/\omega_b$ between the two time bins, and the optimized pulses of Fig.~\ref{fig:raman_map}.}
+\label{fig:sweep}
+\end{figure}
+
+Figure~\ref{fig:sweep} compares the memory with the passive reference as a function of the wait $T$. The unconditional fidelity $F$ and the recovery probability $s$ of the passive modes decay with the lifetime of the cavity, since the excitation is kept as a phonon during the whole wait. In the memory the phonon is converted into a dark exciton, so the decay of the cavity no longer limits the stored amplitude and $F$ and $s$ are nearly independent of $T$. For $F$ the two curves cross at a very short wait, where the passive modes still hold most of the excitation, and $s$ of the memory is already higher at zero wait; beyond that the advantage grows with $T$. The plateau lies below unity because $s$ is bounded by the product of the efficiencies of loading, writing, reading, and emission, none of which depends on $T$.
+
+Panel (c) shows what the memory does not do. The conditional fidelity, which measures the coherence of the qubit once it has been recovered, stays below the passive value even at zero wait and decreases slowly with $T$. A passive cavity loses amplitude but keeps the phase, so its conditional fidelity is limited only by the ports. The gap at zero wait is not caused by the storage: it comes from the sequential write and read, during which one branch holds an exciton and the other none, and from the imperfect Raman transfers (Fig.~\ref{fig:protocol}). The slow decrease with $T$ is the additional cost of the residual relaxation and dephasing of the slots during the wait. The advantage of the memory is therefore the probability of recovering the qubit after a wait in which the passive modes lose the excitation, not a higher fidelity per recovered qubit.
+
+Figure~\ref{fig:ports}(a),(b) varies the speed of the ports. Loading is the critical step. While the first time bin is stored and the second is still being loaded, one branch holds an exciton and the other none, and this unprotected interval is not covered by the common-mode cancellation (Eq.~\eqref{eq:visibility}). A faster input port shortens it, and $F_h$ increases with $\kappa_{\rm in}/\kappa$. The output port has the same structure, since the first component remains stored while the second is emitted, and has a comparable effect, although its gain saturates earlier. The dependence on the port rates is nearly the same for all waits and the curves differ by a vertical offset, so the wait only adds the slow decoherence of Fig.~\ref{fig:sweep}(c) on top of what loading and readout leave.
+
+The strain coupling fixes the effective Raman coupling $g_s$ and with it the time needed to write and read. To check the requirement of Eq.~\eqref{eq:gmin}, we scale all strain couplings by a factor $S$, which scales $g_s$ in the same way, and reoptimize the amplitude, duration, and detuning of both pulses for each $S$ with ideal ports and bounded amplitude; where two optimizations were run, the pulses with the higher real-port $F_h$ are kept. Figure~\ref{fig:ports}(d) shows that $F_h$ is almost independent of $S$ for large couplings and decreases below a threshold ($g_s\simeq0.03\,\omega_b$). The decrease with real ports occurs in steps, which correspond to different amplitude regimes found by the pulse optimizer, so the position of each step should not be overinterpreted; what is robust is that below the threshold the conditional fidelity falls. The reason is the one anticipated in Sec.~\ref{sec:raman}: a smaller $g_s$ requires a more intense or longer pulse, and once the amplitude limit is reached, the virtual population of the bright state and the light shift grow and limit the transfer even when the memory still outperforms the passive modes in $F$ and $s$. The ideal-port curve lies above the real-port curve because of the cost of loading and emission, which is small for large couplings and grows when the pulses lengthen. The curve with uncorrelated noise is low and flat: a larger coupling shortens the pulses but cannot replace the protection against noise.
+
+\begin{figure}[t]
+\centering
+\resizebox{\columnwidth}{!}{\input{../../figs/figM7_ports_noise.pgf}}
+\caption{(Color online) Conditional fidelity $F_h$ of the memory as a function of (a) the input-port rate $\kappa_{\rm in}/\kappa$ with ideal readout, (b) the output-port rate $\kappa_{\rm out}/\kappa$, (c) the noise-correlation factor $\chi$ (Sec.~\ref{sec:noise}), and (d) the scale $S$ of the strain couplings $\lambda_i\to S\lambda_i$. In (a)--(c) the symbols correspond to the waits $T\omega_b=500$, $2000$, and $8000$; in (d), at $T\omega_b=2000$ with the pulses reoptimized for each $S$, the curves are for ideal ports (squares), real ports (circles), and ideal ports with uncorrelated noise, $\chi=0$ (crosses). The black lines are the passive reference. Lines are monotone interpolations of the computed points. System parameters: reduced model, the same as in Fig.~\ref{fig:sweep} except those varied in each panel ($S=1$ by default); integration tolerance $10^{-9}$.}
+\label{fig:ports}
+\end{figure}
+
+Figure~\ref{fig:ports}(c) and Fig.~\ref{fig:requirements}(a) show which assumptions about the environment determine the conditional fidelity. Fig.~\ref{fig:ports}(c) varies the degree $\chi$ of correlation between the noise acting on the two slots: $F_h$ grows monotonically with $\chi$, because common-mode fluctuations shift both slots equally and leave the stored relative phase invariant, whereas the uncorrelated part dephases it. The protection of the coherence therefore rests on the noise correlation, which is a condition of the model and not a derived property (Sec.~\ref{sec:noise}). For uncorrelated noise and long waits the memory still outperforms the passive modes in $F$ and $s$, but its conditional fidelity is far below the passive value, which shows that the protection by common noise, and not only the dark character of the states, is what preserves the qubit. The dependence on $\chi$ sharpens with the wait: after a short wait the uncorrelated noise has not yet dephased the stored phase and $F_h$ is almost flat in $\chi$, whereas after a long wait it is the noise correlation that decides how much coherence survives, as expected from the dephasing rate between the slots, proportional to $1-\chi$ (Eq.~\eqref{eq:gamma_dark}).
+
+Figure~\ref{fig:requirements}(a) plots $F_h$ in the plane of $\chi$ and the wait, with the contours $F_h=0.8$ and $F_h=1/2$, above which the conditional state is entangled. The contours curve toward $\chi=1$ as the wait grows: the longer the storage, the closer to perfectly common noise the environment must be, and for the longest waits the region of certified entanglement shrinks to large $\chi$.
+
+A second assumption is that the noise couples with equal strength to all dots. Figure~\ref{fig:requirements}(b) relaxes it by taking the noise operator as $\sum_i a_i n_i$ with unequal Stark responses $a_i$ and perfectly correlated noise. When one dot deviates from the others (pattern A), the two slots acquire slightly different noise shifts, a second-order effect in $\delta$, and the loss of $F_h$ is small. When two dots deviate in opposite directions (pattern B), the noise acquires a matrix element between the two slots and induces transitions between them, which accumulate with the wait and give a larger loss. In both cases deviations of the order of ten percent cost little. The requirement is therefore the spatial correlation of the field acting on the dots, not an exact equality of their Stark responses.
+
+\begin{figure}[t]
+\centering
+\resizebox{\columnwidth}{!}{\input{../../figs/figM9_requirements.pgf}}
+\caption{(Color online) (a) Conditional fidelity $F_h$ as a function of the noise-correlation factor $\chi$ and of the wait $T\omega_b$; the contours are $F_h=0.5$ and $0.8$, interpolated between the computed points. (b) $F_h$ as a function of the mismatch $\delta$ of the Stark responses, with noise operator $\sum_i a_i n_i$ and $\chi=1$: pattern A, $a=(1+\delta,1,1)$ (squares), and pattern B, $a=(1,1+\delta,1-\delta)$ (crosses), for $T\omega_b=2000$ (red) and $8000$ (green); the black line is the passive reference. Lines in (b) are monotone interpolations. System parameters: reduced model, the same as in Fig.~\ref{fig:sweep}; integration tolerance $10^{-9}$.}
+\label{fig:requirements}
+\end{figure}
+
+When a branch already contains an exciton, the next pulse can reach the two-exciton manifold, which the reduced model omits. Figure~\ref{fig:biexciton} shows the effect on the complete protocol with real ports for selected values of the interdot two-exciton shift $\Delta_{xx}$. For large shifts the conditional fidelity approaches the value of the reduced model, whereas the recovery probability decreases earlier as the extra manifold becomes accessible: the pulse that must write the second time bin begins to excite two-exciton states of the other branch and removes population from the stored amplitude. The biexciton therefore reduces the success probability before it reduces the quality of the recovered qubit.
+
+The reduced model is valid for large shifts, and the required separation depends on the pulse parameters in addition to $\Delta_{xx}$. The complete model with a large shift also reproduces the dependence on the wait of Fig.~\ref{fig:sweep} (checked at three waits), and projected onto the one-exciton subspace it reproduces the reduced results.
+
+\begin{figure}[h]
+\centering
+\resizebox{0.6\columnwidth}{!}{\input{../../figs/figM8_biexciton.pgf}}
+\caption{(Color online) Recovery probability $s$ (squares) and conditional fidelity $F_h$ (circles) of the complete eight-state model with real ports at $T\omega_b=2000$ as a function of the interdot two-exciton shift $\Delta_{xx}$; dashed lines are the reduced model. Other parameters: the same as in Fig.~\ref{fig:sweep}, with $N_{\rm cut}=2$ and integration tolerance $10^{-9}$.}
+\label{fig:biexciton}
+\end{figure}
+
+\section{Platform requirements}
+\label{sec:platform}
+
+The results hold under five conditions, which are independent of each other. We give the conversions of the model parameters at $f_b=\omega_b/2\pi=100$~GHz ($\hbar\omega_b=0.414$~meV) and at 10~GHz ($0.0414$~meV), which follow from the definitions and are not measured device properties, together with the partial precedents we know of. The first is the phonon quality factor, $Q=\omega_b/\kappa=10^3$. Acoustic resonances with $Q\sim10^3$ near 100~GHz have been reported in GaAs/AlAs Bragg microcavities~\cite{czerniuk2014}, and high frequency--quality-factor products in other materials~\cite{zalalutdinov2021}; neither concerns a three-dot structure. The second is the strain coupling, $g_s\gtrsim0.03\,\omega_b$ (Fig.~\ref{fig:ports}(d)), that is $\hbar g_s\gtrsim12.4~\mu$eV at 100~GHz and $1.24~\mu$eV at 10~GHz; the mechanism of a dot coupled to a phononic-crystal mode has been shown at 1.466~GHz~\cite{spinnler2024}, but the threshold itself is our estimate. The third is fast switchable ports, $\kappa_{\rm in},\kappa_{\rm out}\gtrsim10\kappa$ (Fig.~\ref{fig:ports}); switchable couplers of this kind exist in superconducting and surface-acoustic-wave circuits at a few GHz, not for phonons at 10--100~GHz.
+
+The other two conditions depend on the structure and its environment. The fourth is the interdot two-exciton shift, $|\Delta_{xx}|\gtrsim6\,\omega_b$ (Fig.~\ref{fig:biexciton}), that is, about 2.5~meV at 100~GHz and 0.25~meV at 10~GHz, and we know of no measurement of this quantity for stacked dots in the required range. The fifth is the noise correlation, $\chi$ close to one, with the exact value depending on the wait (Fig.~\ref{fig:requirements}) and tolerant of moderate mismatch of the Stark responses; it depends on the noise source and the geometry, and we have no measurement for this structure. Whether a structure can meet all five at once is an open question that this work does not address.
+
+The higher recovery probability suggests local synchronization of probabilistic phononic operations as a possible use, with purification only if several recovered pairs and suitable gates become available; quantum memories can raise the rate of synchronized probabilistic events, while memory errors constrain the benefit of purification~\cite{nunn2013,briegel1998,razavi2009}. Our calculation neither implements those operations nor supplies a nondestructive flag for the one-phonon projection defining $F_h$. The short storage times considered here also do not establish a long-distance repeater application. We therefore claim a conditional entanglement resource and a recovery-probability advantage within the model, not a fault-tolerant memory or an operational purification protocol.
+
+\section{Conclusions}
+\label{sec:conclusions}
+We have shown that three quantum dots coupled by F\"orster transfer can store the two components of a time-bin phononic qubit in two collective dark excitons. The third dot is what makes the scheme possible: it places both components in the same one-exciton manifold, so that common-mode energy fluctuations leave their relative phase invariant, and the different energies of the two dark excitons allow them to be addressed by frequency with Raman pulses, without switching any interaction. The nonuniform strain, which connects the dark states to the bright one, is what allows writing and reading.
+
+Compared with two passive acoustic modes with the same ports, the memory maintains a recovery probability close to $0.7$ and a nearly constant unconditional fidelity over waits in which the passive reference loses almost all of the excitation. The fidelity conditioned on recovery, $0.83$ to $0.88$ for the memory versus $0.95$ for the reference, does not improve: it is limited by the sequential write and read, not by the storage. The gain is therefore the probability of recovering the qubit, and not a higher quality per recovered qubit.
+
+This advantage depends on conditions that the calculation makes explicit: noise almost perfectly correlated among the dots, since with local noise the conditional fidelity falls below $0.35$ at the longest wait; input and output ports about ten times faster than the loss of the mode; a strain coupling above a threshold; and a large interdot two-exciton shift (Sec.~\ref{sec:platform}). Whether a single structure can bring them together remains open. The most direct next step is to derive the noise correlation for a specific source and geometry instead of treating it as a parameter, and to equip the readout with a nondestructive flag for the one-phonon projection, without which a conditional fidelity above one half, which certifies conditional entanglement, is not yet an operational resource.
+
+\bibliography{../referencias_intro}% the apsrev4-2 style is chosen by the aps option
+
+\end{document}

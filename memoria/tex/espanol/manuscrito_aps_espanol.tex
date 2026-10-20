@@ -1,0 +1,339 @@
+%% Versión en español del manuscrito (REVTeX 4.2, doble columna). Traducción de manuscrito_aps.tex.
+%% La Fig. 1 se dibuja directamente con TikZ; las demás figuras PGF se comparten con la versión en inglés.
+\documentclass[aps,pra,twocolumn,groupedaddress,amsmath,amssymb,floatfix]{revtex4-2}
+
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{graphicx}
+\usepackage{pgf}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,babel}
+\usepackage{xcolor}
+\usepackage{bm}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+
+\newcommand{\ket}[1]{\lvert #1\rangle}
+\newcommand{\bra}[1]{\langle #1\rvert}
+\newcommand{\wb}{\omega_b}
+\newcommand{\Dxx}{\Delta_{xx}}
+
+\begin{document}
+
+\title{Memoria para un qubit fon\'onico basada en estados oscuros de tres puntos cu\'anticos acoplados}
+
+\author{J. S. Garc\'ia Barrera}
+\email{jhgarciaba@unal.edu.co}
+\affiliation{Departamento de F\'isica, Facultad de Ciencias Exactas y Naturales,
+\\Universidad Nacional de Colombia, Sede Manizales, Manizales, Colombia}
+
+\date{\today}
+
+\begin{abstract}
+Una memoria para un qubit fon\'onico debe conservar no solo la excitaci\'on sino tambi\'en la fase entre sus dos intervalos temporales. Proponemos almacenar las dos componentes en los dos estados colectivos \'opticamente oscuros de tres puntos cu\'anticos acoplados por transferencia de F\"orster, que una deformaci\'on no uniforme conecta con un estado brillante. Pulsos Raman selectivos en frecuencia escriben y leen cada componente, y el tercer punto coloca ambas en la misma variedad de un ex\'citon, de modo que el ruido de energ\'ia de modo com\'un deja invariante su fase relativa. Con carga y lectura a trav\'es de gu\'ias de onda en cascada, comparamos la memoria con dos modos ac\'usticos pasivos con los mismos puertos. En el l\'imite de ruido perfectamente com\'un, la probabilidad de recuperaci\'on de la memoria, cercana a $0.7$, y su fidelidad incondicional son casi independientes de la espera hasta ocho tiempos de vida del modo, mientras que los modos pasivos pierden casi toda la excitaci\'on. La fidelidad condicional es menor que la pasiva ($0.83$--$0.88$ frente a $0.95$), de modo que la ganancia est\'a en la probabilidad de recuperar el qubit. El resultado exige una correlaci\'on del ruido cercana a la perfecta, que se endurece con la espera, puertos mucho m\'as r\'apidos que la p\'erdida intr\'inseca, un acoplo por deformaci\'on por encima de un umbral y un desplazamiento de dos excitones entre puntos grande.
+\end{abstract}
+
+\maketitle
+
+\section{Introducci\'on}
+\label{sec:intro}
+
+Una memoria cu\'antica sincroniza operaciones probabil\'isticas y desacopla la generaci\'on, la transmisi\'on y el procesamiento de un estado cu\'antico, lo que la hace central para la comunicaci\'on a larga distancia~\cite{duan2001}. Se han construido memorias \'opticas con polaritones de estado oscuro, transferencia Raman y peines de frecuencia at\'omicos~\cite{fleischhauer2002,gorshkov2007,afzelius2009}. Su desempe\~no se juzga por el tiempo de almacenamiento, la probabilidad de recuperar la excitaci\'on y la fidelidad del estado recuperado, porque ni una vida media larga ni una salida intensa demuestran que se haya preservado un qubit~\cite{hedges2010,ortu2022,wang2019}. Para un qubit codificado en dos intervalos temporales, la fase relativa entre las componentes temprana y tard\'ia tambi\'en debe sobrevivir a la espera~\cite{ortu2022}. Los mismos criterios se aplican a un qubit fon\'onico.
+
+Una memoria de fonones extender\'ia esa funci\'on a los circuitos integrados, donde los fonones pueden transportar informaci\'on entre componentes~\cite{habraken2012,schuetz2015}. Se han controlado fonones individuales, transferido entre nodos y enviado en dos intervalos temporales por gu\'ias de onda fon\'onicas~\cite{satzinger2018,bienfait2019,dumur2021,zivariWaveguide2022,zivariTimebin2022}. Osciladores mec\'anicos acoplados a circuitos superconductores han almacenado campos de microondas y fonones individuales~\cite{oconnell2010,chu2017,palomaki2013,liu2023,reed2017}. Dispositivos optomec\'anicos han almacenado fonones y luz de banda ancha, y la ingenier\'ia de bandas fon\'onicas ha extendido el tiempo de vida de modos ac\'usticos~\cite{galland2014,wallucks2020,england2013,macCabe2020,taylor2022,bozkurt2025}. En general, sin embargo, la excitaci\'on almacenada sigue siendo un fon\'on durante la espera, de modo que la vida media del modo limita el almacenamiento, y por eso la ingenier\'ia de bandas busca alargarla. Estas arquitecturas deben juzgarse frente al almacenamiento pasivo, que incluye la captura y la lectura y no solo la espera; ese es el criterio que usamos aqu\'i.
+
+Los puntos cu\'anticos (QD) semiconductores acoplan luz y movimiento: el ex\'citon responde a la deformaci\'on y puede controlarse \'opticamente, y su acoplo al movimiento mec\'anico y a resonadores se ha observado hasta el r\'egimen de pocos fonones~\cite{kettler2021,spinnler2024}. La teor\'ia ha usado este acoplo para \emph{emitir} fonones: Bin \emph{et al.}\ propusieron resonancias Stokes de un solo punto para producir paquetes de fonones~\cite{bin2020}, se mostr\'o que el ex\'citon oscuro de esp\'in de un solo punto admite oscilaciones de Rabi gigantes~\cite{vargas2022}, y tratamientos microsc\'opicos del ba\~no muestran que el continuo de fonones modifica la estad\'istica de emisi\'on~\cite{cosacchi2022}. Sin embargo, emitir no es almacenar: estas propuestas no absorben un qubit fon\'onico entrante, no preservan su fase ni lo devuelven. Almacenar requiere estados internos de vida larga a los que puedan acceder tanto el fon\'on como un l\'aser, y preguntamos si un emisor de estado s\'olido controlado \'opticamente puede ofrecerlos.
+
+Una mol\'ecula de QD es un candidato. El acoplo entre emisores crea estados excit\'onicos colectivos, y se han observado la mezcla de excitones brillantes y oscuros, el acoplo controlado, los efectos optofon\'onicos y el almacenamiento de informaci\'on excit\'onica~\cite{ortner2003,krenner2005,gerardot2005,skold2013,kerfoot2014,boyerdelagiroday2011,carlson2019}. Aqu\'i ``oscuro'' significa oscuro por interferencia de los dipolos \'opticos, lo que difiere de los excitones oscuros de esp\'in de un punto aislado~\cite{lueker2017}. Se ha mostrado te\'oricamente que el acoplo vibr\'onico transfiere poblaci\'on entre estados colectivos brillantes y oscuros de emisores moleculares~\cite{holzinger2022}; es un an\'alogo f\'isico cercano, pero ese trabajo no implement\'o un canal de memoria fon\'onica de entrada y salida.
+
+La oscuridad \'optica, sin embargo, no basta. El continuo de fonones a\~nade transferencia incoherente y desfase~\cite{rozbicki2008,muljarov2005,sirkina2025,daniels2013}, y la fase almacenada depende de las correlaciones del ruido: los subespacios libres de decoherencia protegen contra el ruido colectivo~\cite{lidar1998}, se ha propuesto una codificaci\'on distinta de cuadrupolo de carga en tres puntos para suprimir las fluctuaciones uniformes del campo el\'ectrico~\cite{friesen2017}, y la coherencia de un ba\~no de fonones compartido puede reducir el desfase de puntos acoplados~\cite{hall2025}. Falta, por tanto, un protocolo que absorba un qubit fon\'onico en estados oscuros, lo conserve durante una espera bajo estos mecanismos y lo devuelva, y que se compare con el almacenamiento pasivo.
+
+Proponemos una memoria que almacena las dos componentes temporales de un qubit fon\'onico en los dos estados oscuros colectivos de tres puntos acoplados, de modo que la excitaci\'on no se mantenga en un estado \'opticamente brillante durante la espera. La transferencia es posible porque, con la transferencia de F\"orster y una deformaci\'on no uniforme, aparecen elementos de acoplo entre autoestados colectivos, mientras que el acoplo longitudinal de un solo punto no intercambia una excitaci\'on entre dos niveles. Cada componente se escribe mediante una resonancia Raman de dos fotones seleccionada por un pulso l\'aser y se lee invirtiendo el proceso; el l\'aser est\'a apagado durante la espera, pero el acoplo de la cavidad a la gu\'ia de onda debe variarse durante la carga y la lectura. Comparamos la memoria con dos modos ac\'usticos pasivos que tienen las mismas eficiencias de entrada y salida, y analizamos el efecto de las correlaciones del ruido y de los puertos. En el r\'egimen que estudiamos, la memoria mantiene una probabilidad sustancial de recuperar el qubit durante una espera en la que la referencia pasiva pierde casi toda la excitaci\'on, aunque la fidelidad condicionada a la recuperaci\'on es menor.
+
+El art\'iculo se organiza as\'i. La Sec.~\ref{sec:model} introduce el modelo y el subespacio de almacenamiento oscuro, la Sec.~\ref{sec:raman} deriva el proceso de escritura y lectura Raman, la Sec.~\ref{sec:noise} trata las p\'erdidas, el ruido y los puertos, y la Sec.~\ref{sec:results} presenta la comparaci\'on con el almacenamiento pasivo. La Sec.~\ref{sec:platform} discute los requisitos de plataforma, que son condiciones del resultado y no una implementaci\'on, y la Sec.~\ref{sec:conclusions} concluye.
+
+\section{Modelo y subespacio de almacenamiento oscuro}
+\label{sec:model}
+
+Consideramos tres puntos cu\'anticos semiconductores con operadores de descenso $\sigma_i$ y ocupaciones $n_i=\sigma_i^\dagger\sigma_i$ ($i=1,2,3$), acoplados por transferencia de F\"orster y situados dentro de una cavidad ac\'ustica con un solo modo de frecuencia $\wb$ y operador de descenso $b$. Un campo l\'aser com\'un excita los excitones, y la cavidad se acopla a gu\'ias de onda de entrada y salida durante la carga y la lectura. La Figura~\ref{fig:scheme} muestra las transiciones Raman internas. Tomamos $\hbar=1$ y expresamos energ\'ias y tasas en unidades de $\wb$.
+
+\begin{figure}[t]
+	\centering
+	\begin{tikzpicture}[x=1cm,y=1cm,>=Latex,
+		level/.style={line width=1.1pt,line cap=round},
+		coupling/.style={{Latex[length=2mm]}-{Latex[length=2mm]},line width=0.8pt}]
+		% Niveles esquemáticos: cada ranura se pone en resonancia con un láser distinto.
+		\definecolor{schemegold}{RGB}{169,111,28}
+		\definecolor{schemered}{RGB}{186,42,38}
+		\definecolor{schemeblue}{RGB}{35,96,170}
+		\definecolor{schemegreen}{RGB}{38,126,78}
+		\draw[level] (0.15,0.55)--(1.15,0.55);
+		\node[above,font=\small] at (0.65,0.55) {$\ket{G,1}$};
+		\draw[level,schemered] (2.35,2.55)--(3.75,2.55);
+		\node[above,schemered,font=\small] at (3.05,2.55) {$\ket{B,1}$};
+		\draw[level,schemeblue] (2.35,1.48)--(3.75,1.48);
+		\node[below,schemeblue,font=\small] at (3.05,1.48) {$\ket{D_1,0}$};
+		\draw[level,schemegreen] (2.35,0.42)--(3.75,0.42);
+		\node[below,schemegreen,font=\small] at (3.05,0.42) {$\ket{D_2,0}$};
+		\draw[coupling,schemegold] (1.15,0.66)--(2.35,2.44);
+		\node[schemegold,font=\small,anchor=east,align=right] at (1.75,1.90)
+		{$\Omega_s(t)$\\$\omega_{L,s}$};
+		\draw[coupling,schemeblue] (2.57,2.43)--(2.57,1.60);
+		\node[schemeblue,font=\small,anchor=west] at (2.70,2.02) {$g_1$};
+		\draw[coupling,schemegreen] (3.60,2.43)--(3.60,0.54);
+		\node[schemegreen,font=\small,anchor=west] at (3.70,2.02) {$g_2$};
+	\end{tikzpicture}
+	\caption{(En color en l\'inea) Transiciones Raman usadas para escribir y leer las dos ranuras oscuras. Un l\'aser de frecuencia $\omega_{L,s}$ acopla $\ket{G,1}$ fuera de resonancia con el intermedio brillante virtual $\ket{B,1}$, y la deformaci\'on no uniforme acopla este \'ultimo con $\ket{D_s,0}$ mediante el elemento de matriz $g_s$. Las posiciones de los niveles son esquem\'aticas.}
+	\label{fig:scheme}
+\end{figure}
+
+El hamiltoniano es
+\begin{align}
+H(t)={}&\wb\, b^\dagger b+\sum_{ij}h_{ij}\,\sigma_i^\dagger\sigma_j
++\Dxx\sum_{i<j}n_in_j\nonumber\\
+&+\sum_i\lambda_i\,n_i\,(b+b^\dagger)+H_L(t),\label{eq:H}\\
+H_L(t)={}&\frac{\Omega(t)}{\sqrt3}\sum_i\bigl(\sigma_i\,e^{i\omega_Lt}+\sigma_i^\dagger\,e^{-i\omega_Lt}\bigr),\nonumber\\
+&h_{ii}=\varepsilon_i,\quad h_{i\neq j}=J_{ij}.\nonumber
+\end{align}
+Aqu\'i $\varepsilon_i$ son las energ\'ias de excit\'on de los puntos, $J_{ij}$ los acoplos de F\"orster, $\Dxx$ la energ\'ia de interacci\'on de cada par de excitones, $\lambda_i$ el acoplo longitudinal por potencial de deformaci\'on del punto $i$ con el modo ac\'ustico y $\Omega(t)$ la amplitud de un l\'aser de frecuencia $\omega_L$ con la misma fase en los tres puntos. Las mol\'eculas de puntos reales tambi\'en pueden tener acoplo t\'unel y transiciones asistidas por fonones~\cite{daniels2013}; estos procesos no se representan con t\'erminos coherentes de salto adicionales en la Ec.~\eqref{eq:H}. El modelo \emph{completo} conserva los ocho estados electr\'onicos de los tres puntos y permite comprobar si los pulsos pueblan biexcitones. El modelo \emph{reducido} restringe el espacio electr\'onico al vac\'io y a la variedad de un ex\'citon, lo cual es exacto para $|\Dxx|\to\infty$.
+
+En la base de sitio $\ket{i}=\sigma_i^\dagger\ket{G}$, donde $\ket G$ es el estado fundamental electr\'onico, el l\'aser com\'un solo excita
+\begin{equation}
+\ket{B}=\frac{\ket1+\ket2+\ket3}{\sqrt3},\qquad
+\bra{B}\sum_i\sigma_i^\dagger\ket G=\sqrt3 .\label{eq:bright}
+\end{equation}
+Dos vectores ortogonales son
+\begin{equation}
+\ket{D_1}=\frac{\ket2-\ket3}{\sqrt2},\qquad
+\ket{D_2}=\frac{2\ket1-\ket2-\ket3}{\sqrt6}.\label{eq:dark}
+\end{equation}
+La ortogonalidad con $\ket B$ los hace oscuros para un campo colectivo y para un canal radiativo colectivo en el l\'imite de Dicke de fases \'opticas indistinguibles~\cite{dicke1954,mokhlespour2012}. Para que adem\'as sean autoestados estacionarios de $h$, $\ket B$ debe ser un autovector, de modo que las tres sumas de fila de $h$ deben ser iguales. Esta es una condici\'on sobre las energ\'ias de sitio y los acoplos, no una propiedad autom\'atica de tres emisores. Fijando $E_B=0$, $E_{D_1}=-G_1$ y $E_{D_2}=-G_2$ con $0<G_1<G_2$, la descomposici\'on espectral $h=\sum_aE_a\ket a\bra a$ da
+\begin{align}
+\varepsilon_1&=-\frac{2G_2}{3},&
+\varepsilon_2=\varepsilon_3&=-\frac{G_1}{2}-\frac{G_2}{6},\nonumber\\
+J_{12}=J_{13}&=\frac{G_2}{3},&
+J_{23}&=\frac{G_1}{2}-\frac{G_2}{6},\label{eq:inverse}
+\end{align}
+de modo que $\varepsilon_1+2J_{12}=\varepsilon_2+J_{12}+J_{23}=0$.
+
+Con $\Lambda=\mathrm{diag}(\lambda_1,\lambda_2,\lambda_3)$ en la variedad de un ex\'citon, los elementos de matriz que conectan el estado brillante con los dos oscuros son
+\begin{align}
+g_1&=\bra B\Lambda\ket{D_1}=\frac{\lambda_2-\lambda_3}{\sqrt6},\nonumber\\
+g_2&=\bra B\Lambda\ket{D_2}=\frac{2\lambda_1-\lambda_2-\lambda_3}{\sqrt{18}}.\label{eq:g}
+\end{align}
+Una componente de $\lambda_i$ igual en los tres puntos desplaza las energ\'ias pero no contribuye a $g_s$.
+
+La entrada que se almacena es un qubit de un fon\'on en dos intervalos temporales, entrelazado con una referencia $R$ que no se somete al protocolo:
+\begin{equation}
+\ket{\Psi_{\rm in}}=\frac{\ket0_R\ket{1_{t_1},0_{t_2}}+\ket1_R\ket{0_{t_1},1_{t_2}}}{\sqrt2}.
+\label{eq:input}
+\end{equation}
+La primera componente se escribe en $D_1$ y la segunda en $D_2$. Durante la espera, ambas ramas ocupan la misma variedad de un ex\'citon, $\mathcal H_L=\mathrm{span}\{\ket{D_1,0},\ket{D_2,0}\}$. Hacen falta tres puntos porque con dos emisores solo hay un estado oscuro colectivo, de modo que no caben dos componentes en la misma variedad; una codificaci\'on $\ket G/\ket D$ comparar\'ia en cambio los sectores de cero y un ex\'citon, cuya fase relativa no est\'a protegida contra el ruido com\'un.
+
+\section{Escritura y lectura Raman}
+\label{sec:raman}
+
+Cada componente temporal se escribe en una ranura oscura con un pulso l\'aser de frecuencia seleccionada. Las dos ranuras tienen energ\'ias distintas, de modo que cada una se direcciona solo con la frecuencia del l\'aser y no hace falta conmutar ninguna interacci\'on, y la lectura invierte el proceso empezando por la ranura escrita en \'ultimo lugar. Para la ranura $s$, la transici\'on Raman de dos fotones va de $\ket{G,1}$ (puntos vac\'ios, un fon\'on) a $\ket{D_s,0}$ (ex\'citon en la ranura $s$, sin fon\'on), con el estado brillante $\ket B$ como nivel intermedio muy desintonizado. En el sistema rotante a la frecuencia del l\'aser, $\delta_a=E_a-\omega_L$, los estados $\ket{G,1}$, $\ket{B,1}$ y $\ket{D_s,0}$ tienen energ\'ias $\wb$, $\delta_B+\wb$ y $\delta_s$. El l\'aser acopla los dos primeros con amplitud $\Omega$, y la deformaci\'on acopla los dos \'ultimos con amplitud $g_s$ (Ec.~\eqref{eq:g}), conservando solo la parte que conserva la excitaci\'on, $\ket B\bra{D_s}\,b^\dagger$. La resonancia de dos fotones es $\delta_s=\wb+\delta_2$, con $\delta_2$ peque\~no, y la desintonizaci\'on del nivel intermedio es $\Delta_{I,s}\equiv\delta_B\simeq\wb+G_s$, que siempre es grande porque los estados oscuros est\'an por debajo de $\ket B$. Eliminando $\ket{B,1}$ para $|\Omega|,|g_s|\ll\Delta_{I,s}$ se obtiene, en la base $\{\ket{G,1},\ket{D_s,0}\}$,
+\begin{align}
+H_{\rm eff}^{(s)}&=
+\begin{pmatrix}
+\wb-\Omega^2/\Delta_{I,s}&-\Omega_{{\rm eff},s}\\
+-\Omega_{{\rm eff},s}&\wb+\delta_2-g_s^2/\Delta_{I,s}
+\end{pmatrix},\nonumber\\
+\Omega_{{\rm eff},s}&=\frac{\Omega g_s}{\Delta_{I,s}}.\label{eq:heff}
+\end{align}
+La eliminaci\'on es adiab\'atica cuando la envolvente del pulso es suave en la escala de tiempo $1/\Delta_I$~\cite{brion2007,reiter2012}; un apagado abrupto deja una mezcla residual de $\ket B$. La transferencia completa ocurre cuando las energ\'ias diagonales son iguales, $\delta_{2,s}^{\star}=(g_s^2-\Omega^2)/\Delta_{I,s}$, tras el tiempo $\pi$
+\begin{equation}
+t_{\pi,s}=\frac{\pi}{2\Omega_{{\rm eff},s}}=\frac{\pi\Delta_{I,s}}{2\Omega g_s}.\label{eq:tpi}
+\end{equation}
+
+La Ecuaci\'on~\eqref{eq:heff} omite que $\ket{D_s,0}$ tambi\'en est\'a acoplado por $\Lambda$ a todos los estados de un fon\'on de la variedad de un ex\'citon, $\ket{c,1}$ con $c\in\{B,D_1,D_2\}$, incluyendo $c=s$ a trav\'es del elemento diagonal $\bra{D_s}\Lambda\ket{D_s}$. A segundo orden en $\Lambda$ la energ\'ia de $\ket{D_s,0}$ se desplaza en $-\sum_c|\Lambda_{cs}|^2/(\wb+E_c-E_s)$, y la condici\'on de resonancia pasa a ser
+\begin{align}
+\delta_{2,s}^{\star}&\simeq-\frac{\Omega^2}{\Delta_{I,s}}+\sum_{c\in\{B,D_1,D_2\}}\frac{|\Lambda_{cs}|^2}{\wb+E_c-E_s},\nonumber\\
+\Lambda_{cs}&=\bra c\Lambda\ket{D_s}.\label{eq:stark}
+\end{align}
+El t\'ermino $c=B$ reproduce el desplazamiento de la Ec.~\eqref{eq:heff}. El t\'ermino diagonal $c=s$ es el desplazamiento polar\'onico, y domina para $s=2$ porque $\bra{D_2}\Lambda\ket{D_2}=0.157\,\wb$ para los par\'ametros de la Fig.~\ref{fig:raman_map}. Los denominadores deben mantenerse lejos de resonancias adicionales.
+
+Mientras act\'ua el pulso, el fon\'on permanece en el modo con probabilidad $\cos^2(\Omega_{\rm eff}t)$ y decae con la tasa de la cavidad $\kappa$, de modo que la eficiencia de escritura es, a primer orden en $\kappa$,
+\begin{equation}
+\eta_w\simeq1-\kappa\int_0^{t_\pi}\!\cos^2(\Omega_{\rm eff}t)\,\mathrm dt=1-\frac{\kappa t_\pi}{2}.\label{eq:etaw}
+\end{equation}
+Reducir $\Delta_I$ acorta $t_\pi$ pero aumenta la poblaci\'on virtual del estado brillante, $p_B\sim(\Omega/\Delta_I)^2$, que desfasa y se relaja. A $t_\pi$ fijo, $\Omega_{\rm eff}=\pi/2t_\pi$ y el acoplo requerido para un $p_{B,\max}$ dado es
+\begin{align}
+g_{\min}&=\frac{\Omega_{\rm eff}}{\sqrt{p_{B,\max}}}=\frac{\pi}{2\,t_\pi\sqrt{p_{B,\max}}},\nonumber\\
+\Omega&=\frac{\Omega_{\rm eff}\Delta_I}{g}\propto\frac1g.\label{eq:gmin}
+\end{align}
+Para $t_\pi\simeq190/\wb$ esto da $g_{\min}=0.026\,\wb$ si $p_{B,\max}=0.1$ y $0.019\,\wb$ si $p_{B,\max}=0.2$. Un acoplo por deformaci\'on menor requiere por tanto un pulso proporcionalmente m\'as intenso de duraci\'on casi igual.
+
+La ranura no direccionada, $s'$, est\'a desintonizada en frecuencia de dos fotones por $\Delta_{ss'}=|E_{D_s}-E_{D_{s'}}|$ y se excita con amplitud efectiva $\Omega_{\rm eff}'=\Omega g_{s'}/\Delta_I$. La poblaci\'on m\'axima que alcanza es la de una oscilaci\'on de Rabi desintonizada,
+\begin{equation}
+P_{s'}^{\max}=\frac{(2\Omega_{\rm eff}')^2}{(2\Omega_{\rm eff}')^2+\Delta_{ss'}^2}\simeq\frac{4\Omega_{\rm eff}'^2}{\Delta_{ss'}^2},\label{eq:leak}
+\end{equation}
+que da $5\times10^{-3}$ y $7\times10^{-3}$ para los pulsos sobre $D_1$ y $D_2$ ($\Omega_{\rm eff}'\simeq0.009$ y $0.010\,\wb$, $\Delta_{ss'}=0.25\,\wb$).
+
+\begin{figure}[t]
+	\centering
+	\resizebox{\columnwidth}{!}{\input{../../figs/figM1_raman_response.pgf}}
+	\caption{(En color en l\'inea) Poblaci\'on del estado oscuro $D_s$ tras un pulso Raman desde $\ket{G,1}$ en funci\'on de la desintonizaci\'on de dos fotones $\delta_2/\omega_b$ y de la duraci\'on del pulso $t\omega_b$, para (a) $D_1$ con $\Omega/\omega_b=0.197$ y (b) $D_2$ con $\Omega/\omega_b=0.290$. Las estrellas marcan los pulsos optimizados num\'ericamente, $(\delta_2/\omega_b,\,d\,\omega_b)=(-0.020,\,170)$ y $(-0.025,\,150)$. Modelo reducido con p\'erdidas y par\'ametros del sistema: $G_1/\omega_b=0.35$ y $G_2/\omega_b=0.60$, que dan $\varepsilon_i/\omega_b=(-0.400,-0.275,-0.275)$, $J_{12}/\omega_b=J_{13}/\omega_b=0.200$ y $J_{23}/\omega_b=0.075$; $\lambda_i/\omega_b=(0.20,0.14,0)$, que dan $g_1/\omega_b=0.0572$ y $g_2/\omega_b=0.0613$; $\kappa/\omega_b=10^{-3}$, $\gamma/\omega_b=2\times10^{-4}$, $\gamma_\varphi/\omega_b=4\times10^{-4}$, $\chi=1$.}
+	\label{fig:raman_map}
+\end{figure}
+
+La Figura~\ref{fig:raman_map} muestra la poblaci\'on del estado oscuro objetivo tras un pulso de escritura desde $\ket{G,1}$, en funci\'on de la desintonizaci\'on de dos fotones y de la duraci\'on del pulso. Cada mapa tiene la forma de la oscilaci\'on de Rabi de la Ec.~\eqref{eq:heff}: en la resonancia la poblaci\'on crece hasta un m\'aximo cerca de $t_\pi$ y vuelve a caer; al desintonizar, las oscilaciones se aceleran y su amplitud disminuye. La poblaci\'on m\'axima en funci\'on de la desintonizaci\'on es una lorentziana de ancho total $4\Omega_{\rm eff,s}$, de $0.035\,\omega_b$ para $D_1$ y $0.045\,\omega_b$ para $D_2$ en los mapas, y hay un solo m\'aximo por ranura en el intervalo explorado, de modo que la frecuencia del l\'aser selecciona la ranura. Ese m\'aximo no est\'a en $\delta_2=0$ sino en $\delta_2^\star$, lo que obliga a usar la Ec.~\eqref{eq:stark}: el desplazamiento de primer orden $(g_s^2-\Omega^2)/\Delta_I$ falla la resonancia de $D_2$ por un factor dos y la de $D_1$ en cerca del $30\%$, mientras que la Ec.~\eqref{eq:stark} reproduce la de ambas ranuras dentro de $10^{-3}\,\omega_b$. La poblaci\'on m\'axima, cerca de $0.9$, queda por debajo de la unidad porque el fon\'on decae mientras act\'ua el pulso, Ec.~\eqref{eq:etaw}, y por la mezcla del estado brillante; la duraci\'on \'optima, marcada con estrellas, coincide con $t_\pi$ dentro del $10\%$. La eficiencia de la Ec.~\eqref{eq:etaw} extendida a un pulso finito de duraci\'on $d$, $\eta_w\simeq\sin^2(\Omega_{\rm eff}d)\,\bigl[1-\kappa\bigl(d/2+\sin 2\Omega_{\rm eff}d/4\Omega_{\rm eff}\bigr)\bigr]$, coincide con la simulaci\'on para $D_1$ y la supera para $D_2$ en una cantidad del orden de la mezcla del estado brillante, $(\Omega/\Delta_I)^2$, que se pierde cuando el pulso se apaga abruptamente.
+
+La Figura~\ref{fig:raman_dyn} es un corte del mapa en la desintonizaci\'on \'optima. La poblaci\'on de la ranura objetivo sigue la oscilaci\'on de la Ec.~\eqref{eq:heff} con un peque\~no rizado r\'apido, y la ranura no direccionada permanece cerca de un por ciento, con un m\'aximo simulado de $0.011$ y $0.009$, a un factor dos de la estimaci\'on de la Ec.~\eqref{eq:leak}.
+
+\begin{figure}[t]
+\centering
+\resizebox{\columnwidth}{!}{\input{../../figs/figM3_raman_dynamics.pgf}}
+\caption{(En color en l\'inea) Poblaci\'on de la ranura oscura objetivo (azul) y de la otra ranura (rojo, discontinuo) durante un pulso de escritura desde $\ket{G,1}$ a la desintonizaci\'on optimizada, para (a) la ranura $D_1$ y (b) la ranura $D_2$. Las l\'ineas de puntos y los puntos marcan las duraciones optimizadas de la Fig.~\ref{fig:raman_map}. Par\'ametros del sistema como en la Fig.~\ref{fig:raman_map}.}
+\label{fig:raman_dyn}
+\end{figure}
+
+\section{P\'erdidas, ruido y puertos}
+\label{sec:noise}
+
+Tres mecanismos act\'uan sobre el qubit almacenado: la p\'erdida de la excitaci\'on ac\'ustica, el desfase de las energ\'ias de los excitones y la relajaci\'on por el continuo de fonones. Afectan de manera distinta a las dos ranuras oscuras, y solo el desfase depende de c\'omo est\'e correlacionado el ruido entre los puntos.
+
+La din\'amica abierta sigue la ecuaci\'on maestra de Lindblad
+\begin{equation}
+\begin{aligned}\dot\rho={}&-i[H,\rho]+\mathcal D[L_\kappa]\rho+\mathcal D[L_\gamma]\rho\\&+\sum_\alpha\mathcal D[L_{\varphi,\alpha}]\rho+\sum_{a\neq b}\mathcal D[L_{a\to b}]\rho,\end{aligned}\label{eq:master}
+\end{equation}
+con $\mathcal D[L]\rho=L\rho L^\dagger-\tfrac12\{L^\dagger L,\rho\}$ y $H$ el hamiltoniano de la Ec.~\eqref{eq:H} incluido el campo de excitaci\'on. Los operadores de salto son la p\'erdida ac\'ustica $L_\kappa=\sqrt\kappa\,b$, el canal radiativo colectivo $L_\gamma$ de los excitones, los operadores de desfase $L_{\varphi,\alpha}$ y la relajaci\'on $L_{a\to b}=\sqrt{\Gamma_{a\to b}}\ket b\bra a$ entre autoestados excit\'onicos por el continuo de fonones, que definimos m\'as abajo. El canal radiativo es
+\begin{align}
+L_\gamma&=\sqrt{\frac{2\gamma}{3}}\sum_i\sigma_i,\nonumber\\
+\|L_\gamma\ket B\|^2&=2\gamma,\qquad L_\gamma\ket{D_s}=0.\label{eq:radiative}
+\end{align}
+La \'ultima igualdad requiere dipolos \'opticos paralelos, fases equivalentes y un canal radiativo colectivo; las p\'erdidas radiativas independientes romper\'ian la protecci\'on~\cite{dicke1954,mokhlespour2012,carlson2019}.
+
+Modelamos las fluctuaciones de las energ\'ias de sitio como ruido gaussiano blanco, $\langle\xi_i(t)\xi_j(t')\rangle=\gamma_\varphi K_{ij}\delta(t-t')$, con $K$ semidefinida positiva y $K_{ii}=1$. Si $K=\sum_\alpha\mu_\alpha\bm u_\alpha\bm u_\alpha^T$, los operadores de Lindblad son
+\begin{equation}
+L_{\varphi,\alpha}=\sqrt{\gamma_\varphi\mu_\alpha}\sum_iu_{i\alpha}\,n_i.\label{eq:noisejumps}
+\end{equation}
+Tomamos $K=(1-\chi)I+\chi\bm1\bm1^T$, con $\chi=0$ para ruido local y $\chi=1$ para ruido perfectamente com\'un. Este \'ultimo es el l\'imite de ruido colectivo en el que se basan las codificaciones libres de decoherencia~\cite{lidar1998,friesen2017}, no una correlaci\'on medida para la estructura de tres puntos propuesta. En la base de autoestados $\{B,D_1,D_2\}$ y bajo la aproximaci\'on secular $|E_a-E_b|\gg\gamma_\varphi$, la tasa de saltos inducidos por ruido entre autoestados es $W_{ab}=\gamma_\varphi\sum_{ij}K_{ij}(a_ib_i)(a_jb_j)$, y para las dos ranuras
+\begin{equation}
+W_{D_1D_2}=\frac{\gamma_\varphi}{6}(1-\chi),\qquad
+\Gamma_{D_1D_2}^{(\varphi)}=\frac{5\gamma_\varphi}{6}(1-\chi),\label{eq:gamma_dark}
+\end{equation}
+donde $\Gamma_{D_1D_2}^{(\varphi)}$ es la tasa de decaimiento de la coherencia entre $D_1$ y $D_2$. Para $\chi=1$ el operador de ruido es proporcional al n\'umero total de excitones y act\'ua como la identidad sobre el subespacio de almacenamiento $\mathcal H_L$, de modo que la coherencia entre las ranuras queda protegida. La coherencia entre el vac\'io y un estado de un ex\'citon decae a $\gamma_\varphi/2$ para cualquier $\chi$.
+
+La Figura~\ref{fig:storage} muestra la retenci\'on de cada ranura y de la coherencia durante la espera. En (a) ambas ranuras conservan casi toda su poblaci\'on durante esperas en las que un fon\'on pasivo ha deca\'ido como $e^{-\kappa t}$ hasta desaparecer; $D_1$ pierde algo m\'as que $D_2$, sobre todo por una lenta transferencia a la otra ranura. En (b), para $\chi=1$ la coherencia decae lentamente, para $\chi=0$ sigue la ley secular de la Ec.~\eqref{eq:gamma_dark}, y una correlaci\'on de $\chi=0.9$ ya sit\'ua la coherencia claramente por debajo de la curva ideal a esperas largas. La protecci\'on requiere por tanto una correlaci\'on cercana a la unidad, no una moderada.
+
+La protecci\'on no cubre la escritura y la lectura secuenciales: entre dos ventanas una rama contiene un ex\'citon y la otra ninguno. Para tiempos sin protecci\'on $\tau_u^w$ y $\tau_u^r$ y una espera protegida $T_{\rm prot}$, la visibilidad de la superposici\'on almacenada es
+\begin{equation}
+\mathcal V\simeq\mathcal V_0\exp\!\Bigl[-\frac{\gamma_\varphi}{2}(\tau_u^w+\tau_u^r)-\Gamma_{D_1D_2}^{(\varphi)}T_{\rm prot}\Bigr].\label{eq:visibility}
+\end{equation}
+Variando solo la separaci\'on entre las dos ventanas en una simulaci\'on con carga ideal y $\chi=1$, la pendiente de $\ln\mathcal V$ concuerda aproximadamente con $-\gamma_\varphi/2$. El intervalo sin protecci\'on es por tanto el origen del costo de cargar lentamente el segundo fon\'on.
+
+\begin{figure}[t]
+	\centering
+	\resizebox{\columnwidth}{!}{\input{../../figs/figM5_dark_storage_decay.pgf}}
+	\caption{(En color en l\'inea) Retenci\'on de las ranuras oscuras durante la espera con el l\'aser apagado. (a) Poblaci\'on del estado preparado $D_1$ (azul, continua) y $D_2$ (rojo, punto-raya) y decaimiento $e^{-\kappa t}$ de un fon\'on pasivo (negro, discontinuo). (b) Coherencia $2|\rho_{D_1D_2}|$ para $\chi=1$ (azul, continua), $0.9$ (dorado, discontinua) y $0$ (rojo, punto-raya); la l\'inea de puntos es la ley secular de la Ec.~\eqref{eq:gamma_dark} para $\chi=0$. Par\'ametros del sistema como en la Fig.~\ref{fig:raman_map}, m\'as las tasas de relajaci\'on por el continuo de fonones a temperatura cero.}
+	\label{fig:storage}
+\end{figure}
+
+Adem\'as del modo discreto $b$, los puntos se acoplan al continuo de fonones longitudinales. Calculamos la tasa de relajaci\'on a temperatura cero $\Gamma_{a\to b}$ entre autoestados con la regla de oro de Fermi para el acoplo de potencial de deformaci\'on en volumen, con densidad espectral $J_{\rm LA}(\omega)\propto\omega^3$ a baja frecuencia~\cite{krummheuer2002} y un factor de estructura que depende del solapamiento de los dos estados y de las distancias $r_{ij}$ entre puntos. Para $qr_{ij}\ll1$, con $q=(E_a-E_b)/\hbar c$, la tasa escala como $(E_a-E_b)^5$, de modo que las separaciones peque\~nas entre ranuras resultan favorecidas. El confinamiento y las superficies libres cercanas pueden modificar este modelo de continuo~\cite{krummheuer2005}, y para las constantes del material y la geometr\'ia estimadas aqu\'i la tasa entre las ranuras es despreciable frente a los otros canales, por lo que no extrapolamos un valor absoluto. Las tasas entran en las simulaciones como saltos proyectados $L_{a\to b}=\sqrt{\Gamma_{a\to b}}\ket b\bra a$, que suponen un continuo markoviano y separaciones que resuelven las transiciones; el ba\~no est\'a a temperatura cero.
+
+Un fon\'on itinerante de envolvente normalizada $u(t)$ se representa con una cavidad fuente $a_s$ en cascada con el modo $b$, siguiendo el formalismo de sistemas en cascada y de paquetes de onda de un solo cuanto~\cite{gardiner1993,carmichael1993,gough2012},
+\begin{align}
+L_{\rm cas}&=\sqrt{\gamma_s(t)}\,a_s+\sqrt{\kappa_{\rm in}}\,b,\nonumber\\
+H_{\rm cas}&=-\frac i2\sqrt{\gamma_s(t)\kappa_{\rm in}}\,(b^\dagger a_s-a_s^\dagger b),\nonumber\\
+\gamma_s(t)&=\frac{|u(t)|^2}{1-\int_0^t|u(t')|^2\mathrm dt'}.\label{eq:cascade}
+\end{align}
+El signo del t\'ermino coherente fija la direcci\'on de la cascada. La carga usa un paquete exponencial creciente truncado tras una ventana $T_L$, motivado por la emisi\'on de una cavidad invertida en el tiempo y la transferencia con adaptaci\'on de impedancia~\cite{cirac1997}, de modo que queda una fracci\'on $\epsilon$ en la fuente al final. La lectura invierte los pulsos Raman y abre un puerto de salida $\kappa_{\rm out}$ que captura un paquete exponencial decreciente en una cavidad sumidero, regularizado con el mismo $\epsilon$. Las eficiencias de estos puertos aislados, $\eta_L$ y $\eta_R$, son cerca de $0.96$ para $\kappa_{\rm in}T_L=\kappa_{\rm out}t=4$ y $\epsilon=0.02$; el canal completo incluye adem\'as la escritura Raman, la espera y la lectura Raman. Durante la espera usamos $\kappa=10^{-3}\,\omega_b$, y durante la carga y la extracci\'on $\kappa_{\rm in}=\kappa_{\rm out}=10\kappa$, con una conmutaci\'on instant\'anea del puerto.
+
+La Figura~\ref{fig:protocol} muestra la secuencia completa para una espera $T\omega_b=2000$. La ocupaci\'on del modo sube durante cada carga y cae cuando el pulso Raman transfiere el fon\'on a su ranura; la poblaci\'on de $D_1$ condicionada a $R=0$ aparece en la primera escritura y la de $D_2$ condicionada a $R=1$ en la segunda. La coherencia entre las dos componentes existe solo mientras ambas est\'an almacenadas: aparece tras la segunda escritura, se mantiene casi constante durante la espera, de acuerdo con la Fig.~\ref{fig:storage}(b), y desaparece cuando la lectura vac\'ia las ranuras. Su valor es menor del que permitir\'ian las poblaciones por s\'i solas: la visibilidad se pierde sobre todo mientras la segunda componente se carga y se escribe, cuando una rama contiene un ex\'citon y la otra no, y apenas durante la espera.
+
+\begin{figure}[t]
+\centering
+\resizebox{\columnwidth}{!}{\input{../../figs/figM4_protocol_dynamics.pgf}}
+\caption{(En color en l\'inea) Protocolo completo para $T\omega_b=2000$: ocupaci\'on del modo $\langle b^\dagger b\rangle$ (negro, punteado), y poblaciones de $D_1$ condicionada a la rama $R=0$ (azul, continua) y de $D_2$ condicionada a $R=1$ (rojo, punto-raya), y coherencia almacenada $2|\rho_{R0D_1,R1D_2}|$ (dorado). Las etiquetas marcan las etapas: carga (L1, L2), escritura Raman (W1, W2), almacenamiento, lectura Raman (R1, R2) y salida (O1, O2); el n\'umero es el intervalo temporal. El sombreado azul marca las ventanas de carga y emisi\'on; el verde marca la espera. La coherencia se define solo mientras ambas componentes est\'an almacenadas. Par\'ametros del sistema: como en la Fig.~\ref{fig:storage}, con $\kappa_{\rm in}/\kappa=\kappa_{\rm out}/\kappa=10$ y una separaci\'on de $100/\omega_b$ entre los dos intervalos temporales.}
+\label{fig:protocol}
+\end{figure}
+
+Sea $\rho_{R,{\rm out}}$ el estado conjunto de la referencia y las dos ventanas de salida, incluyendo el vac\'io, y $\Pi_1$ el proyector sobre exactamente un fon\'on en la salida. Definimos
+\begin{align}
+s&=\mathrm{Tr}(\Pi_1\rho_{R,{\rm out}}),\qquad
+F_h=F/s,\nonumber\\
+F&=\bra{\Psi_{\rm id}}\rho_{R,{\rm out}}\ket{\Psi_{\rm id}},\label{eq:metrics}
+\end{align}
+con $\ket{\Psi_{\rm id}}$ el estado de salida ideal de la Ec.~\eqref{eq:input}; la fase determinista del qubit l\'ogico se calibra antes de evaluar $F$. La fidelidad condicional $F_h$ no es una eficiencia y no implica que cada intento produjo el qubit. Es el solapamiento de la salida normalizada de un fon\'on y su referencia con un estado de dos qubits m\'aximamente entrelazado, una medida de fidelidad de entrelazamiento apropiada para una memoria de un solo cuanto~\cite{surmacz2006}, y un valor $F_h>1/2$ certifica que este estado condicional est\'a entrelazado, entrelazamiento que es destilable en principio~\cite{bennett1996,horodecki1997}. Para probabilidades de recuperaci\'on $P_0,P_1$ por rama y visibilidad residual $\mathcal V$, sin errores de poblaci\'on adicionales, $F=(P_0+P_1)/4+\sqrt{P_0P_1}\,\mathcal V/2$ y $s=(P_0+P_1)/2$, de modo que $F_h=(1+\mathcal V)/2$ para $P_0=P_1$. Esta identidad separa la p\'erdida de excitaciones de la p\'erdida de coherencia: un aumento de $F$ puede provenir de una mayor probabilidad de \'exito aun si $F_h$ disminuye.
+
+La referencia pasiva se simula como dos modos ac\'usticos independientes con la misma p\'erdida intr\'inseca $\kappa$ y los mismos puertos, uno por intervalo temporal. Cada modo tiene a lo sumo una excitaci\'on y solo decae por amplitud, de modo que el resultado se escribe con las probabilidades de recuperaci\'on de cada intervalo y la coherencia entre ellos:
+\begin{align}
+p_1&=\eta_{L1}\eta_R\,e^{-\kappa(\tau_{12}+t_{L2}+T+t_E)},\qquad
+p_2=\eta_{L2}\eta_R\,e^{-\kappa T},\nonumber\\
+s_{\rm pas}&=\frac{p_1+p_2}{2},\qquad
+F_{\rm pas}=\frac{p_1+p_2}{4}+\frac{\sqrt{p_1p_2}}{2},\label{eq:passive}
+\end{align}
+con $\tau_{12}$ la separaci\'on entre las dos ventanas de carga y $t_{L2}$ y $t_E$ las duraciones de la segunda carga y de la primera extracci\'on: el primer intervalo espera durante todo ese tiempo y el segundo solo durante $T$.
+
+\section{Resultados y referencia pasiva}
+\label{sec:results}
+
+Los resultados de esta secci\'on provienen de la din\'amica abierta del modelo reducido con los par\'ametros de la Fig.~\ref{fig:raman_map} y los pulsos de la Sec.~\ref{sec:raman} optimizados una sola vez; los par\'ametros se var\'ian de uno en uno con los pulsos fijos, salvo al escalar el acoplo por deformaci\'on. La tolerancia relativa de integraci\'on es $10^{-9}$, ya que con $10^{-6}$ el modelo completo devolvi\'o matrices de densidad con autovalores negativos; todas las matrices reportadas tienen autovalores no negativos y cumplen $|\rho_{01}|^2\le\rho_{00}\rho_{11}$. Truncar el modo de fonones en $N_{\rm cut}=3$ en lugar de $2$ cambia $F_h$ en cerca de $0.016$ y $s$ en cerca de $0.012$ a $T\omega_b=2000$, una incertidumbre que se aplica a la segunda cifra decimal de los resultados; las corridas completas usan $N_{\rm cut}=2$.
+
+\begin{figure}[h]
+	\centering
+	\resizebox{\columnwidth}{!}{\input{../../figs/figM2_operational_sweep.pgf}}
+	\caption{(En color en l\'inea) (a) Fidelidad incondicional $F$, (b) probabilidad de recuperaci\'on $s$ y (c) fidelidad condicional $F_h=F/s$ en funci\'on de la espera $T\omega_b$, con carga y lectura reales, para la memoria de estados oscuros (rojo; los c\'irculos abiertos son los puntos calculados a esperas equiespaciadas) y para dos modos ac\'usticos pasivos con los mismos puertos (negro, discontinuo). Las l\'ineas verticales de puntos marcan $T\omega_b=2000$. Par\'ametros del sistema: como en la Fig.~\ref{fig:storage}, con $\kappa_{\rm in}/\kappa=\kappa_{\rm out}/\kappa=10$, $\chi=1$, una separaci\'on de $100/\omega_b$ entre los dos intervalos temporales y los pulsos optimizados de la Fig.~\ref{fig:raman_map}.}
+	\label{fig:sweep}
+\end{figure}
+
+La Figura~\ref{fig:sweep} compara la memoria con la referencia pasiva en funci\'on de la espera $T$. La fidelidad incondicional $F$ y la probabilidad de recuperaci\'on $s$ de los modos pasivos decaen con el tiempo de vida de la cavidad, ya que la excitaci\'on se mantiene como fon\'on durante toda la espera. En la memoria el fon\'on se convierte en un ex\'citon oscuro, de modo que el decaimiento de la cavidad ya no limita la amplitud almacenada y $F$ y $s$ son casi independientes de $T$. Para $F$ las dos curvas se cruzan a una espera muy corta, donde los modos pasivos a\'un conservan casi toda la excitaci\'on, y $s$ de la memoria ya es mayor a espera cero; m\'as all\'a la ventaja crece con $T$. La meseta queda por debajo de la unidad porque $s$ est\'a acotada por el producto de las eficiencias de carga, escritura, lectura y emisi\'on, ninguna de las cuales depende de $T$.
+
+El panel (c) muestra lo que la memoria no hace. La fidelidad condicional, que mide la coherencia del qubit una vez recuperado, queda por debajo del valor pasivo incluso a espera cero y disminuye lentamente con $T$. Una cavidad pasiva pierde amplitud pero conserva la fase, de modo que su fidelidad condicional est\'a limitada solo por los puertos. La brecha a espera cero no la causa el almacenamiento: proviene de la escritura y la lectura secuenciales, durante las cuales una rama contiene un ex\'citon y la otra ninguno, y de las transferencias Raman imperfectas (Fig.~\ref{fig:protocol}). La disminuci\'on lenta con $T$ es el costo adicional de la relajaci\'on y el desfase residuales de las ranuras durante la espera. La ventaja de la memoria es por tanto la probabilidad de recuperar el qubit tras una espera en la que los modos pasivos pierden la excitaci\'on, no una mayor fidelidad por qubit recuperado.
+
+La Figura~\ref{fig:ports}(a),(b) var\'ia la velocidad de los puertos. La carga es el paso cr\'itico. Mientras el primer intervalo temporal est\'a almacenado y el segundo a\'un se est\'a cargando, una rama contiene un ex\'citon y la otra ninguno, y este intervalo sin protecci\'on no est\'a cubierto por la cancelaci\'on de modo com\'un (Ec.~\eqref{eq:visibility}). Un puerto de entrada m\'as r\'apido lo acorta, y $F_h$ aumenta con $\kappa_{\rm in}/\kappa$. El puerto de salida tiene la misma estructura, pues la primera componente sigue almacenada mientras se emite la segunda, y tiene un efecto comparable, aunque su ganancia satura antes. La dependencia con las tasas de los puertos es casi la misma para todas las esperas y las curvas difieren por un desplazamiento vertical, de modo que la espera solo a\~nade la lenta decoherencia de la Fig.~\ref{fig:sweep}(c) sobre lo que dejan la carga y la lectura.
+
+El acoplo por deformaci\'on fija el acoplo Raman efectivo $g_s$ y con ello el tiempo necesario para escribir y leer. Para comprobar el requisito de la Ec.~\eqref{eq:gmin}, escalamos todos los acoplos por deformaci\'on por un factor $S$, lo que escala $g_s$ de la misma manera, y reoptimizamos la amplitud, la duraci\'on y la desintonizaci\'on de ambos pulsos para cada $S$ con puertos ideales y amplitud acotada; donde se hicieron dos optimizaciones se conservan los pulsos con mayor $F_h$ con puertos reales. La Figura~\ref{fig:ports}(d) muestra que $F_h$ es casi independiente de $S$ para acoplos grandes y disminuye por debajo de un umbral ($g_s\simeq0.03\,\omega_b$). La disminuci\'on con puertos reales ocurre en escalones, que corresponden a distintos reg\'imenes de amplitud encontrados por el optimizador de pulsos, de modo que la posici\'on de cada escal\'on no debe sobreinterpretarse; lo robusto es que por debajo del umbral la fidelidad condicional cae. La raz\'on es la anticipada en la Sec.~\ref{sec:raman}: un $g_s$ menor requiere un pulso m\'as intenso o m\'as largo, y una vez alcanzado el l\'imite de amplitud, la poblaci\'on virtual del estado brillante y el desplazamiento por luz crecen y limitan la transferencia aun cuando la memoria siga superando a los modos pasivos en $F$ y $s$. La curva con puertos ideales queda por encima de la de puertos reales por el costo de la carga y la emisi\'on, que es peque\~no para acoplos grandes y crece cuando los pulsos se alargan. La curva con ruido no correlacionado es baja y plana: un acoplo mayor acorta los pulsos pero no puede reemplazar la protecci\'on contra el ruido.
+
+\begin{figure}[t]
+\centering
+\resizebox{\columnwidth}{!}{\input{../../figs/figM7_ports_noise.pgf}}
+\caption{(En color en l\'inea) Fidelidad condicional $F_h$ de la memoria en funci\'on de (a) la tasa del puerto de entrada $\kappa_{\rm in}/\kappa$ con lectura ideal, (b) la tasa del puerto de salida $\kappa_{\rm out}/\kappa$, (c) el factor de correlaci\'on del ruido $\chi$ (Sec.~\ref{sec:noise}) y (d) la escala $S$ de los acoplos por deformaci\'on $\lambda_i\to S\lambda_i$. En (a)--(c) los s\'imbolos corresponden a las esperas $T\omega_b=500$, $2000$ y $8000$; en (d), a $T\omega_b=2000$ con los pulsos reoptimizados para cada $S$, las curvas son para puertos ideales (cuadrados), puertos reales (c\'irculos) y puertos ideales con ruido no correlacionado, $\chi=0$ (cruces). Las l\'ineas negras son la referencia pasiva. Las l\'ineas son interpolaciones mon\'otonas de los puntos calculados. Par\'ametros del sistema: modelo reducido, los mismos que en la Fig.~\ref{fig:sweep} salvo los que se var\'ian en cada panel ($S=1$ por defecto); tolerancia de integraci\'on $10^{-9}$.}
+\label{fig:ports}
+\end{figure}
+
+La Figura~\ref{fig:ports}(c) y la Fig.~\ref{fig:requirements}(a) muestran qu\'e supuestos sobre el entorno determinan la fidelidad condicional. La Fig.~\ref{fig:ports}(c) var\'ia el grado $\chi$ de correlaci\'on entre el ruido que act\'ua sobre las dos ranuras: $F_h$ crece mon\'otonamente con $\chi$, porque las fluctuaciones de modo com\'un desplazan ambas ranuras por igual y dejan invariante la fase relativa almacenada, mientras que la parte no correlacionada la desfasa. La protecci\'on de la coherencia descansa por tanto en la correlaci\'on del ruido, que es una condici\'on del modelo y no una propiedad derivada (Sec.~\ref{sec:noise}). Para ruido no correlacionado y esperas largas la memoria aun supera a los modos pasivos en $F$ y $s$, pero su fidelidad condicional est\'a muy por debajo del valor pasivo, lo que muestra que la protecci\'on por ruido com\'un, y no solo el car\'acter oscuro de los estados, es lo que preserva el qubit. La dependencia con $\chi$ se acent\'ua con la espera: tras una espera corta el ruido no correlacionado a\'un no ha desfasado la fase almacenada y $F_h$ es casi plana en $\chi$, mientras que tras una espera larga es la correlaci\'on del ruido la que decide cu\'anta coherencia sobrevive, como se espera de la tasa de desfase entre las ranuras, proporcional a $1-\chi$ (Ec.~\eqref{eq:gamma_dark}).
+
+La Figura~\ref{fig:requirements}(a) representa $F_h$ en el plano de $\chi$ y la espera, con los contornos $F_h=0.8$ y $F_h=1/2$, por encima del cual el estado condicional es entrelazado. Los contornos se curvan hacia $\chi=1$ al crecer la espera: cuanto m\'as largo es el almacenamiento, m\'as cerca de un ruido perfectamente com\'un debe estar el entorno, y para las esperas m\'as largas la regi\'on de entrelazamiento certificado se reduce a $\chi$ grandes.
+
+Un segundo supuesto es que el ruido se acopla con igual intensidad a todos los puntos. La Figura~\ref{fig:requirements}(b) lo relaja tomando el operador de ruido como $\sum_i a_i n_i$ con respuestas Stark desiguales $a_i$ y ruido perfectamente correlacionado. Cuando un punto se desv\'ia de los dem\'as (patr\'on A), las dos ranuras adquieren desplazamientos de ruido ligeramente distintos, un efecto de segundo orden en $\delta$, y la p\'erdida de $F_h$ es peque\~na. Cuando dos puntos se desv\'ian en sentidos opuestos (patr\'on B), el ruido adquiere un elemento de matriz entre las dos ranuras e induce transiciones entre ellas, que se acumulan con la espera y dan una p\'erdida mayor. En ambos casos las desviaciones del orden del diez por ciento cuestan poco. El requisito es por tanto la correlaci\'on espacial del campo que act\'ua sobre los puntos, no una igualdad exacta de sus respuestas Stark.
+
+\begin{figure}[t]
+\centering
+\resizebox{\columnwidth}{!}{\input{../../figs/figM9_requirements.pgf}}
+\caption{(En color en l\'inea) (a) Fidelidad condicional $F_h$ en funci\'on del factor de correlaci\'on del ruido $\chi$ y de la espera $T\omega_b$; los contornos son $F_h=0.5$ y $0.8$, interpolados entre los puntos calculados. (b) $F_h$ en funci\'on de la desviaci\'on $\delta$ de las respuestas Stark, con operador de ruido $\sum_i a_i n_i$ y $\chi=1$: patr\'on A, $a=(1+\delta,1,1)$ (cuadrados), y patr\'on B, $a=(1,1+\delta,1-\delta)$ (cruces), para $T\omega_b=2000$ (rojo) y $8000$ (verde); la l\'inea negra es la referencia pasiva. Las l\'ineas en (b) son interpolaciones mon\'otonas. Par\'ametros del sistema: modelo reducido, los mismos que en la Fig.~\ref{fig:sweep}; tolerancia de integraci\'on $10^{-9}$.}
+\label{fig:requirements}
+\end{figure}
+
+Cuando una rama ya contiene un ex\'citon, el siguiente pulso puede alcanzar la variedad de dos excitones, que el modelo reducido omite. La Figura~\ref{fig:biexciton} muestra el efecto sobre el protocolo completo con puertos reales para valores seleccionados del desplazamiento de dos excitones entre puntos $\Delta_{xx}$. Para desplazamientos grandes la fidelidad condicional se aproxima al valor del modelo reducido, mientras que la probabilidad de recuperaci\'on disminuye antes a medida que la variedad adicional se hace accesible: el pulso que debe escribir el segundo intervalo temporal empieza a excitar estados de dos excitones de la otra rama y retira poblaci\'on de la amplitud almacenada. El biexcit\'on reduce por tanto la probabilidad de \'exito antes de reducir la calidad del qubit recuperado.
+
+El modelo reducido es v\'alido para desplazamientos grandes, y la separaci\'on requerida depende de los par\'ametros del pulso adem\'as de $\Delta_{xx}$. El modelo completo con un desplazamiento grande tambi\'en reproduce la dependencia con la espera de la Fig.~\ref{fig:sweep} (comprobado a tres esperas), y proyectado sobre el subespacio de un ex\'citon reproduce los resultados reducidos.
+
+\begin{figure}[h]
+\centering
+\resizebox{0.6\columnwidth}{!}{\input{../../figs/figM8_biexciton.pgf}}
+\caption{(En color en l\'inea) Probabilidad de recuperaci\'on $s$ (cuadrados) y fidelidad condicional $F_h$ (c\'irculos) del modelo completo de ocho estados con puertos reales a $T\omega_b=2000$ en funci\'on del desplazamiento de dos excitones entre puntos $\Delta_{xx}$; las l\'ineas discontinuas son el modelo reducido. Otros par\'ametros: los mismos que en la Fig.~\ref{fig:sweep}, con $N_{\rm cut}=2$ y tolerancia de integraci\'on $10^{-9}$.}
+\label{fig:biexciton}
+\end{figure}
+
+\section{Requisitos de plataforma}
+\label{sec:platform}
+
+Los resultados valen bajo cinco condiciones, independientes entre s\'i. Damos las conversiones de los par\'ametros del modelo a $f_b=\omega_b/2\pi=100$~GHz ($\hbar\omega_b=0.414$~meV) y a 10~GHz ($0.0414$~meV), que se siguen de las definiciones y no son propiedades medidas de un dispositivo, junto con los precedentes parciales que conocemos. La primera es el factor de calidad fon\'onico, $Q=\omega_b/\kappa=10^3$. Se han reportado resonancias ac\'usticas con $Q\sim10^3$ cerca de 100~GHz en microcavidades de Bragg de GaAs/AlAs~\cite{czerniuk2014}, y productos frecuencia--factor de calidad altos en otros materiales~\cite{zalalutdinov2021}; ninguno concierne a una estructura de tres puntos. La segunda es el acoplo por deformaci\'on, $g_s\gtrsim0.03\,\omega_b$ (Fig.~\ref{fig:ports}(d)), es decir $\hbar g_s\gtrsim12.4~\mu$eV a 100~GHz y $1.24~\mu$eV a 10~GHz; el mecanismo de un punto acoplado a un modo de cristal fon\'onico se ha mostrado a 1.466~GHz~\cite{spinnler2024}, pero el umbral en s\'i es una estimaci\'on nuestra. La tercera son los puertos conmutables r\'apidos, $\kappa_{\rm in},\kappa_{\rm out}\gtrsim10\kappa$ (Fig.~\ref{fig:ports}); existen acopladores conmutables de este tipo en circuitos superconductores y de ondas ac\'usticas superficiales a unos pocos GHz, no para fonones a 10--100~GHz.
+
+Las otras dos condiciones dependen de la estructura y de su entorno. La cuarta es el desplazamiento de dos excitones entre puntos, $|\Delta_{xx}|\gtrsim6\,\omega_b$ (Fig.~\ref{fig:biexciton}), es decir, cerca de 2.5~meV a 100~GHz y 0.25~meV a 10~GHz, y no conocemos ninguna medida de esta cantidad para puntos apilados en el rango requerido. La quinta es la correlaci\'on del ruido, $\chi$ cercano a uno, con el valor exacto dependiendo de la espera (Fig.~\ref{fig:requirements}) y tolerante a desajustes moderados de las respuestas Stark; depende de la fuente de ruido y de la geometr\'ia, y no tenemos ninguna medida para esta estructura. Si una estructura puede cumplir las cinco a la vez es una pregunta abierta que este trabajo no aborda.
+
+La mayor probabilidad de recuperaci\'on sugiere la sincronizaci\'on local de operaciones fon\'onicas probabil\'isticas como un posible uso, con purificaci\'on solo si se dispone de varios pares recuperados y de compuertas adecuadas; las memorias cu\'anticas pueden aumentar la tasa de eventos probabil\'isticos sincronizados, mientras que los errores de la memoria limitan el beneficio de la purificaci\'on~\cite{nunn2013,briegel1998,razavi2009}. Nuestro c\'alculo no implementa esas operaciones ni aporta una bandera no destructiva para la proyecci\'on de un fon\'on que define $F_h$. Los tiempos de almacenamiento cortos considerados aqu\'i tampoco establecen una aplicaci\'on a repetidores de larga distancia. Por tanto afirmamos un recurso de entrelazamiento condicional y una ventaja en la probabilidad de recuperaci\'on dentro del modelo, no una memoria tolerante a fallos ni un protocolo operacional de purificaci\'on.
+
+\section{Conclusiones}
+\label{sec:conclusions}
+Hemos mostrado que tres puntos cu\'anticos acoplados por F\"orster pueden almacenar las dos componentes de un qubit fon\'onico de intervalos temporales en dos excitones oscuros colectivos. El tercer punto es lo que hace posible el esquema: coloca ambas componentes en la misma variedad de un ex\'citon, de modo que las fluctuaciones de energ\'ia de modo com\'un dejan invariante su fase relativa, y las energ\'ias distintas de los dos excitones oscuros permiten direccionarlos por frecuencia con pulsos Raman, sin conmutar ninguna interacci\'on. La deformaci\'on no uniforme, que conecta los estados oscuros con el brillante, es la que permite escribir y leer.
+
+Frente a dos modos ac\'usticos pasivos con los mismos puertos, la memoria mantiene una probabilidad de recuperaci\'on cercana a $0.7$ y una fidelidad incondicional casi constante durante esperas en las que la referencia pasiva pierde casi toda la excitaci\'on. La fidelidad condicionada a la recuperaci\'on, de $0.83$ a $0.88$ para la memoria frente a $0.95$ para la referencia, no mejora: la limitan la escritura y la lectura secuenciales, no el almacenamiento. La ganancia es por tanto la probabilidad de recuperar el qubit, y no una mayor calidad por qubit recuperado.
+
+Esta ventaja depende de condiciones que el c\'alculo hace expl\'icitas: un ruido casi perfectamente correlacionado entre los puntos, pues con ruido local la fidelidad condicional cae por debajo de $0.35$ a la espera m\'as larga; puertos de entrada y salida unas diez veces m\'as r\'apidos que la p\'erdida del modo; un acoplo por deformaci\'on por encima de un umbral; y un desplazamiento de dos excitones entre puntos grande (Sec.~\ref{sec:platform}). Si una sola estructura puede reunirlas queda abierto. El paso siguiente m\'as directo es derivar la correlaci\'on del ruido para una fuente y una geometr\'ia concretas en lugar de tratarla como un par\'ametro, y dotar a la lectura de una bandera no destructiva para la proyecci\'on de un fon\'on, sin la cual una fidelidad condicional por encima de un medio, que certifica entrelazamiento condicional, a\'un no es un recurso operacional.
+
+\bibliography{../referencias_intro}% el estilo apsrev4-2 lo elige la opci\'on aps
+
+\end{document}
