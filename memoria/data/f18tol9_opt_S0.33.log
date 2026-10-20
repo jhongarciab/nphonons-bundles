@@ -1,0 +1,9 @@
+[S=0.33] inicio F=0.6764 p=[0.597, 203.3367, -0.2632, 0.597, 223.1788, -0.2192]
+it0: sin mejora, paso/2
+it1: sin mejora, paso/2
+it2: sin mejora, paso/2
+it3: sin mejora, paso/2
+[S=0.33] ideal I/O T=500: F=0.674 s=0.763 F|h=0.884
+[S=0.33] ideal I/O T=2000: F=0.676 s=0.765 F|h=0.884
+[S=0.33] ideal I/O T=8000: F=0.666 s=0.769 F|h=0.866
+[S=0.33] real I/O 10κ T=2000: F=0.468 s=0.634 F|h=0.737 | pasivo F=0.086 s=0.089
