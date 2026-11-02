@@ -1,0 +1,24 @@
+n=2 exact grid (8, 8): max|dP|/P=0.149 mean=0.025; impureza mediana rel err=0.23; t=157s
+n=3 exact grid (6, 6): max|dP|/P=1.608 mean=0.334; impureza mediana rel err=0.72; t=39s
+n=2 lam=0.08 Om=0.05: analit -1.99748 num -1.99748 err +2.0e-06 (+0.001 anchuras) | Bin-III err +1.6e-05
+n=2 lam=0.08 Om=0.1: analit -1.98994 num -1.98991 err +2.7e-05 (+0.008 anchuras) | Bin-III err +6.5e-05
+n=2 lam=0.08 Om=0.2: analit -1.95975 num -1.95933 err +4.2e-04 (+0.127 anchuras) | Bin-III err +2.6e-04
+Traceback (most recent call last):
+  File "/home/user/nphonons-bundles/nuevo/scoutB/maps.py", line 40, in <module>
+    r=minimize_scalar(lambda d:-flux(d,lam,Om,kap,n),bracket=(d0-2e-3,d0,d0+2e-3),tol=1e-7)
+  File "/usr/local/lib/python3.13/site-packages/scipy/optimize/_minimize.py", line 1021, in minimize_scalar
+    res = _recover_from_bracket_error(_minimize_scalar_brent,
+                                      fun, bracket, args, **options)
+  File "/usr/local/lib/python3.13/site-packages/scipy/optimize/_optimize.py", line 3136, in _recover_from_bracket_error
+    res = solver(fun, bracket, args, **options)
+  File "/usr/local/lib/python3.13/site-packages/scipy/optimize/_optimize.py", line 2735, in _minimize_scalar_brent
+    brent.optimize()
+    ~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/site-packages/scipy/optimize/_optimize.py", line 2500, in optimize
+    xa, xb, xc, fa, fb, fc, funcalls = self.get_bracket_info()
+                                       ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/site-packages/scipy/optimize/_optimize.py", line 2484, in get_bracket_info
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: Bracketing values (xa, xb, xc) do not fulfill this requirement: (f(xb) < f(xa)) and (f(xb) < f(xc))

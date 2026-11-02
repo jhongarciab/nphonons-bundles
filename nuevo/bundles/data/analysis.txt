@@ -1,0 +1,304 @@
+## D2: cerrada vs exacta (episodios), malla 20x20 Om in [0.02,0.3], kap in [3e-4,1e-2], gam=2e-4, gph=4e-4
+n=2 lam=0.1  [toda la malla, 400 pts]
+   P cerrada v2 (floor e^-l2) max 0.224 medio 0.024 mediana 0.007 | <5%: 0.86 <10%: 0.92
+   P cerrada v2 (floor 1/(2-e^-l2)) max 0.224 medio 0.024 mediana 0.007 | <5%: 0.86 <10%: 0.92
+   P cerrada v1 (scout, sin termino FC a mitad de cascada) max 0.223 medio 0.026 mediana 0.010 | <5%: 0.85 <10%: 0.93 | 1-P max 0.355 medio 0.179 mediana 0.186 | <5%: 0.10 <10%: 0.24
+   impureza 1-P (e^-l2)  max 0.325 medio 0.112 mediana 0.112 | <5%: 0.31 <10%: 0.46 | con floor ep: max 0.325 medio 0.113 mediana 0.113 | <5%: 0.31 <10%: 0.46
+   flujo                 max 0.506 medio 0.055 mediana 0.022 | <5%: 0.70 <10%: 0.82
+   [modelo de tasas lorentziano] P max 0.104 medio 0.012 mediana 0.005 | <5%: 0.95 <10%: 1.00 | 1-P max 0.653 medio 0.081 mediana 0.050 | <5%: 0.50 <10%: 0.80 | J max 0.229 medio 0.037 mediana 0.018 | <5%: 0.73 <10%: 0.90
+   sesgo medio con signo: closed-exact en P: -0.0074 ; rate-exact: -0.0025
+   [region de tasas xi<0.5: 282 pts]  P max 0.042 medio 0.007 mediana 0.004 | <5%: 1.00 <10%: 1.00 | 1-P max 0.305 medio 0.100 mediana 0.103 | <5%: 0.35 <10%: 0.49 | J max 0.111 medio 0.016 mediana 0.011 | <5%: 0.95 <10%: 0.99
+   [region de tasas xi<0.5, modelo de tasas] P max 0.037 medio 0.006 mediana 0.002 | <5%: 1.00 <10%: 1.00 | 1-P max 0.653 medio 0.069 mediana 0.049 | <5%: 0.50 <10%: 0.85 | J max 0.170 medio 0.025 mediana 0.010 | <5%: 0.81 <10%: 0.95
+   [Rabi coherente xi>=0.5: 118 pts] P max 0.224 medio 0.062 mediana 0.046 | <5%: 0.53 <10%: 0.74 | J max 0.506 medio 0.149 mediana 0.121 | <5%: 0.10 <10%: 0.41
+   P exacta rango 0.560-0.986 | P cerrada rango 0.450-0.985
+n=2 lam=0.14  [toda la malla, 400 pts]
+   P cerrada v2 (floor e^-l2) max 0.201 medio 0.032 mediana 0.008 | <5%: 0.78 <10%: 0.88
+   P cerrada v2 (floor 1/(2-e^-l2)) max 0.200 medio 0.032 mediana 0.009 | <5%: 0.78 <10%: 0.88
+   P cerrada v1 (scout, sin termino FC a mitad de cascada) max 0.200 medio 0.034 mediana 0.013 | <5%: 0.79 <10%: 0.89 | 1-P max 0.364 medio 0.156 mediana 0.166 | <5%: 0.11 <10%: 0.27
+   impureza 1-P (e^-l2)  max 0.337 medio 0.108 mediana 0.097 | <5%: 0.29 <10%: 0.52 | con floor ep: max 0.344 medio 0.109 mediana 0.100 | <5%: 0.30 <10%: 0.49
+   flujo                 max 0.411 medio 0.068 mediana 0.024 | <5%: 0.64 <10%: 0.76
+   [modelo de tasas lorentziano] P max 0.082 medio 0.013 mediana 0.006 | <5%: 0.95 <10%: 1.00 | 1-P max 0.636 medio 0.079 mediana 0.042 | <5%: 0.56 <10%: 0.81 | J max 0.163 medio 0.033 mediana 0.017 | <5%: 0.78 <10%: 0.91
+   sesgo medio con signo: closed-exact en P: -0.0161 ; rate-exact: -0.0045
+   [region de tasas xi<0.5: 203 pts]  P max 0.024 medio 0.005 mediana 0.004 | <5%: 1.00 <10%: 1.00 | 1-P max 0.337 medio 0.076 mediana 0.069 | <5%: 0.40 <10%: 0.67 | J max 0.034 medio 0.010 mediana 0.010 | <5%: 1.00 <10%: 1.00
+   [region de tasas xi<0.5, modelo de tasas] P max 0.035 medio 0.005 mediana 0.001 | <5%: 1.00 <10%: 1.00 | 1-P max 0.552 medio 0.055 mediana 0.037 | <5%: 0.58 <10%: 0.92 | J max 0.155 medio 0.019 mediana 0.008 | <5%: 0.89 <10%: 0.98
+   [Rabi coherente xi>=0.5: 197 pts] P max 0.201 medio 0.059 mediana 0.041 | <5%: 0.54 <10%: 0.76 | J max 0.411 medio 0.128 mediana 0.098 | <5%: 0.26 <10%: 0.51
+   P exacta rango 0.547-0.976 | P cerrada rango 0.442-0.975
+n=2 lam=0.2  [toda la malla, 400 pts]
+   P cerrada v2 (floor e^-l2) max 0.181 medio 0.040 mediana 0.013 | <5%: 0.70 <10%: 0.83
+   P cerrada v2 (floor 1/(2-e^-l2)) max 0.180 medio 0.040 mediana 0.012 | <5%: 0.70 <10%: 0.84
+   P cerrada v1 (scout, sin termino FC a mitad de cascada) max 0.180 medio 0.041 mediana 0.016 | <5%: 0.72 <10%: 0.84 | 1-P max 0.334 medio 0.128 mediana 0.131 | <5%: 0.14 <10%: 0.34
+   impureza 1-P (e^-l2)  max 0.317 medio 0.105 mediana 0.089 | <5%: 0.35 <10%: 0.53 | con floor ep: max 0.333 medio 0.105 mediana 0.091 | <5%: 0.33 <10%: 0.53
+   flujo                 max 0.386 medio 0.087 mediana 0.043 | <5%: 0.53 <10%: 0.69
+   [modelo de tasas lorentziano] P max 0.073 medio 0.012 mediana 0.006 | <5%: 0.95 <10%: 1.00 | 1-P max 0.477 medio 0.064 mediana 0.030 | <5%: 0.68 <10%: 0.81 | J max 0.159 medio 0.030 mediana 0.013 | <5%: 0.81 <10%: 0.91
+   sesgo medio con signo: closed-exact en P: -0.0238 ; rate-exact: -0.0065
+   [region de tasas xi<0.5: 116 pts]  P max 0.010 medio 0.003 mediana 0.003 | <5%: 1.00 <10%: 1.00 | 1-P max 0.152 medio 0.040 mediana 0.037 | <5%: 0.74 <10%: 0.97 | J max 0.030 medio 0.010 mediana 0.009 | <5%: 1.00 <10%: 1.00
+   [region de tasas xi<0.5, modelo de tasas] P max 0.013 medio 0.002 mediana 0.001 | <5%: 1.00 <10%: 1.00 | 1-P max 0.128 medio 0.024 mediana 0.017 | <5%: 0.84 <10%: 0.99 | J max 0.046 medio 0.007 mediana 0.004 | <5%: 1.00 <10%: 1.00
+   [Rabi coherente xi>=0.5: 284 pts] P max 0.181 medio 0.056 mediana 0.036 | <5%: 0.57 <10%: 0.77 | J max 0.386 medio 0.118 mediana 0.086 | <5%: 0.34 <10%: 0.56
+   P exacta rango 0.527-0.957 | P cerrada rango 0.433-0.954
+n=3 lam=0.1  [toda la malla, 400 pts]
+   P cerrada v2 (floor e^-l2) max 0.060 medio 0.007 mediana 0.003 | <5%: 0.99 <10%: 1.00
+   P cerrada v2 (floor 1/(2-e^-l2)) max 0.060 medio 0.007 mediana 0.003 | <5%: 0.99 <10%: 1.00
+   P cerrada v1 (scout, sin termino FC a mitad de cascada) max 0.095 medio 0.015 mediana 0.010 | <5%: 0.95 <10%: 1.00 | 1-P max 0.597 medio 0.189 mediana 0.106 | <5%: 0.38 <10%: 0.48
+   impureza 1-P (e^-l2)  max 0.273 medio 0.059 mediana 0.032 | <5%: 0.61 <10%: 0.77 | con floor ep: max 0.271 medio 0.059 mediana 0.031 | <5%: 0.61 <10%: 0.77
+   flujo                 max 0.468 medio 0.068 mediana 0.028 | <5%: 0.61 <10%: 0.78
+   [modelo de tasas lorentziano] P max 0.076 medio 0.006 mediana 0.005 | <5%: 1.00 <10%: 1.00 | 1-P max 0.259 medio 0.045 mediana 0.042 | <5%: 0.58 <10%: 0.96 | J max 0.702 medio 0.025 mediana 0.008 | <5%: 0.89 <10%: 0.95
+   sesgo medio con signo: closed-exact en P: +0.0022 ; rate-exact: -0.0026
+   [region de tasas xi<0.5: 400 pts]  P max 0.060 medio 0.007 mediana 0.003 | <5%: 0.99 <10%: 1.00 | 1-P max 0.273 medio 0.059 mediana 0.032 | <5%: 0.61 <10%: 0.77 | J max 0.468 medio 0.068 mediana 0.028 | <5%: 0.61 <10%: 0.78
+   [region de tasas xi<0.5, modelo de tasas] P max 0.076 medio 0.006 mediana 0.005 | <5%: 1.00 <10%: 1.00 | 1-P max 0.259 medio 0.045 mediana 0.042 | <5%: 0.58 <10%: 0.96 | J max 0.702 medio 0.025 mediana 0.008 | <5%: 0.89 <10%: 0.95
+   P exacta rango 0.413-0.964 | P cerrada rango 0.437-0.958
+n=3 lam=0.14  [toda la malla, 400 pts]
+   P cerrada v2 (floor e^-l2) max 0.152 medio 0.012 mediana 0.004 | <5%: 0.93 <10%: 0.99
+   P cerrada v2 (floor 1/(2-e^-l2)) max 0.152 medio 0.012 mediana 0.004 | <5%: 0.93 <10%: 0.99
+   P cerrada v1 (scout, sin termino FC a mitad de cascada) max 0.161 medio 0.030 mediana 0.016 | <5%: 0.81 <10%: 0.94 | 1-P max 0.627 medio 0.248 mediana 0.227 | <5%: 0.20 <10%: 0.33
+   impureza 1-P (e^-l2)  max 0.222 medio 0.075 mediana 0.058 | <5%: 0.47 <10%: 0.69 | con floor ep: max 0.223 medio 0.074 mediana 0.054 | <5%: 0.49 <10%: 0.70
+   flujo                 max 0.264 medio 0.042 mediana 0.022 | <5%: 0.70 <10%: 0.89
+   [modelo de tasas lorentziano] P max 0.119 medio 0.008 mediana 0.003 | <5%: 0.97 <10%: 1.00 | 1-P max 0.154 medio 0.043 mediana 0.031 | <5%: 0.74 <10%: 0.88 | J max 0.301 medio 0.025 mediana 0.008 | <5%: 0.83 <10%: 0.95
+   sesgo medio con signo: closed-exact en P: +0.0048 ; rate-exact: +0.0016
+   [region de tasas xi<0.5: 400 pts]  P max 0.152 medio 0.012 mediana 0.004 | <5%: 0.93 <10%: 0.99 | 1-P max 0.222 medio 0.075 mediana 0.058 | <5%: 0.47 <10%: 0.69 | J max 0.264 medio 0.042 mediana 0.022 | <5%: 0.70 <10%: 0.89
+   [region de tasas xi<0.5, modelo de tasas] P max 0.119 medio 0.008 mediana 0.003 | <5%: 0.97 <10%: 1.00 | 1-P max 0.154 medio 0.043 mediana 0.031 | <5%: 0.74 <10%: 0.88 | J max 0.301 medio 0.025 mediana 0.008 | <5%: 0.83 <10%: 0.95
+   P exacta rango 0.544-0.957 | P cerrada rango 0.477-0.952
+n=3 lam=0.2  [toda la malla, 400 pts]
+   P cerrada v2 (floor e^-l2) max 0.206 medio 0.019 mediana 0.007 | <5%: 0.89 <10%: 0.97
+   P cerrada v2 (floor 1/(2-e^-l2)) max 0.205 medio 0.019 mediana 0.007 | <5%: 0.89 <10%: 0.97
+   P cerrada v1 (scout, sin termino FC a mitad de cascada) max 0.200 medio 0.044 mediana 0.027 | <5%: 0.69 <10%: 0.86 | 1-P max 0.547 medio 0.228 mediana 0.217 | <5%: 0.11 <10%: 0.25
+   impureza 1-P (e^-l2)  max 0.179 medio 0.069 mediana 0.067 | <5%: 0.40 <10%: 0.71 | con floor ep: max 0.178 medio 0.066 mediana 0.060 | <5%: 0.44 <10%: 0.72
+   flujo                 max 0.312 medio 0.044 mediana 0.020 | <5%: 0.73 <10%: 0.86
+   [modelo de tasas lorentziano] P max 0.084 medio 0.012 mediana 0.004 | <5%: 0.95 <10%: 1.00 | 1-P max 0.173 medio 0.043 mediana 0.028 | <5%: 0.65 <10%: 0.88 | J max 0.141 medio 0.028 mediana 0.014 | <5%: 0.76 <10%: 0.95
+   sesgo medio con signo: closed-exact en P: +0.0011 ; rate-exact: +0.0030
+   [region de tasas xi<0.5: 368 pts]  P max 0.079 medio 0.013 mediana 0.006 | <5%: 0.95 <10%: 1.00 | 1-P max 0.143 medio 0.066 mediana 0.063 | <5%: 0.42 <10%: 0.73 | J max 0.262 medio 0.038 mediana 0.017 | <5%: 0.78 <10%: 0.89
+   [region de tasas xi<0.5, modelo de tasas] P max 0.071 medio 0.011 mediana 0.003 | <5%: 0.96 <10%: 1.00 | 1-P max 0.173 medio 0.043 mediana 0.026 | <5%: 0.65 <10%: 0.88 | J max 0.141 medio 0.027 mediana 0.012 | <5%: 0.78 <10%: 0.96
+   [Rabi coherente xi>=0.5: 32 pts] P max 0.206 medio 0.088 mediana 0.081 | <5%: 0.28 <10%: 0.59 | J max 0.312 medio 0.117 mediana 0.092 | <5%: 0.22 <10%: 0.53
+   P exacta rango 0.456-0.940 | P cerrada rango 0.369-0.934
+
+## D1: posicion del pico de flujo (exacto) vs analitico
+n=1: pico exacto dL=-0.96048 analitico -0.96098 (Bin-III+lam^2 -0.96020) dif=+5.0e-04 = +0.28 gamma_c ; J_pico=1.914e-04 Pdom=0.947 (k=1) ; paso rejilla 5e-4
+      lineshape lorentziano: J_pico=2.037e-04
+n=2: pico exacto dL=-1.97021 analitico -1.97021 (Bin-III+lam^2 -1.97037) dif=-4.7e-07 = -0.00 gamma_c ; J_pico=3.363e-04 Pdom=0.938 (k=2) ; paso rejilla 5e-4
+      lineshape lorentziano: J_pico=3.436e-04
+n=3: pico exacto dL=-2.97367 analitico -2.97367 (Bin-III+lam^2 -2.97373) dif=-2.1e-07 = -0.00 gamma_c ; J_pico=1.511e-05 Pdom=0.939 (k=3) ; paso rejilla 5e-4
+      lineshape lorentziano: J_pico=1.528e-05
+n=4: pico exacto dL=-3.97537 analitico -3.97537 (Bin-III+lam^2 -3.97540) dif=+7.3e-09 = +0.00 gamma_c ; J_pico=1.615e-07 Pdom=0.782 (k=1) ; paso rejilla 5e-4
+      lineshape lorentziano: J_pico=1.611e-07
+
+## D4: maestra local vs vestida
+n=2: exceso de fonones/ciclo (local-vestida) vs nube kap*lam^2/gam  [kap, medido, predicho, ratio]
+   0.0005 0.049 0.049 0.996   Pcyc dress 0.404 loc 0.384 pred 0.385 | Pep dress 0.672 loc 0.632
+   0.0008 0.079 0.079 0.996   Pcyc dress 0.528 loc 0.484 pred 0.488 | Pep dress 0.770 loc 0.703
+   0.0013 0.128 0.128 0.996   Pcyc dress 0.649 loc 0.566 pred 0.571 | Pep dress 0.848 loc 0.742
+   0.0021 0.207 0.208 0.996   Pcyc dress 0.749 loc 0.608 pred 0.608 | Pep dress 0.908 loc 0.744
+   0.0034 0.334 0.336 0.996   Pcyc dress 0.823 loc 0.604 pred 0.588 | Pep dress 0.947 loc 0.705
+   0.0055 0.540 0.543 0.994   Pcyc dress 0.873 loc 0.555 pred 0.507 | Pep dress 0.966 loc 0.627
+   0.0090 0.865 0.879 0.984   Pcyc dress 0.904 loc 0.473 pred 0.375 | Pep dress 0.971 loc 0.520
+   0.0145 1.340 1.422 0.942   Pcyc dress 0.918 loc 0.376 pred 0.221 | Pep dress 0.966 loc 0.405
+   P_loc(ciclos) ~ P_dr e^{-cloud}: error rel  max 0.584 medio 0.119 mediana 0.020 | <5%: 0.58 <10%: 0.67
+n=3: exceso de fonones/ciclo (local-vestida) vs nube kap*lam^2/gam  [kap, medido, predicho, ratio]
+   0.0005 0.049 0.049 1.001   Pcyc dress 0.329 loc 0.312 pred 0.313 | Pep dress 0.732 loc 0.691
+   0.0008 0.080 0.079 1.013   Pcyc dress 0.449 loc 0.411 pred 0.415 | Pep dress 0.860 loc 0.793
+   0.0013 0.132 0.128 1.030   Pcyc dress 0.563 loc 0.491 pred 0.495 | Pep dress 0.925 loc 0.818
+   0.0021 0.218 0.208 1.051   Pcyc dress 0.644 loc 0.527 pred 0.523 | Pep dress 0.942 loc 0.782
+   0.0034 0.360 0.336 1.072   Pcyc dress 0.674 loc 0.507 pred 0.482 | Pep dress 0.927 loc 0.702
+   0.0055 0.588 0.543 1.083   Pcyc dress 0.644 loc 0.439 pred 0.374 | Pep dress 0.874 loc 0.587
+   0.0090 0.931 0.879 1.059   Pcyc dress 0.548 loc 0.344 pred 0.227 | Pep dress 0.758 loc 0.447
+   0.0145 1.385 1.422 0.974   Pcyc dress 0.402 loc 0.248 pred 0.097 | Pep dress 0.564 loc 0.300
+   P_loc(ciclos) ~ P_dr e^{-cloud}: error rel  max 0.785 medio 0.180 mediana 0.041 | <5%: 0.50 <10%: 0.58
+
+## D5: cota FC
+n=2: lam | P_ep^max exacto (kap*, borde) | cerrada (kap*) | floor e^-l2 | floor ep | P_cyc^max exacto
+   0.050 | 0.9910 (0.0026,0) | 0.9917 (0.0024) | 0.9975 | 0.9975 | 0.7819
+   0.075 | 0.9869 (0.0043,0) | 0.9877 (0.0040) | 0.9944 | 0.9944 | 0.8743
+   0.100 | 0.9815 (0.0061,0) | 0.9827 (0.0057) | 0.9900 | 0.9901 | 0.9054
+   0.125 | 0.9751 (0.0078,0) | 0.9765 (0.0075) | 0.9845 | 0.9847 | 0.9165
+   0.150 | 0.9675 (0.0096,0) | 0.9692 (0.0093) | 0.9778 | 0.9782 | 0.9191
+   0.175 | 0.9588 (0.0113,0) | 0.9609 (0.0112) | 0.9698 | 0.9707 | 0.9170
+   0.200 | 0.9491 (0.0129,0) | 0.9515 (0.0130) | 0.9608 | 0.9623 | 0.9117
+   0.225 | 0.9385 (0.0145,0) | 0.9411 (0.0149) | 0.9506 | 0.9530 | 0.9040
+   0.250 | 0.9270 (0.0159,0) | 0.9297 (0.0167) | 0.9394 | 0.9429 | 0.8944
+   0.275 | 0.9148 (0.0174,0) | 0.9173 (0.0185) | 0.9272 | 0.9321 | 0.8832
+   0.300 | 0.9019 (0.0189,0) | 0.9040 (0.0202) | 0.9139 | 0.9208 | 0.8705
+   error rel. impureza cerrada vs exacta max 0.071 medio 0.049 mediana 0.051 | <5%: 0.45 <10%: 1.00
+n=3: lam | P_ep^max exacto (kap*, borde) | cerrada (kap*) | floor e^-l2 | floor ep | P_cyc^max exacto
+   0.050 | 0.9091 (0.0003,1) | 0.9284 (0.0002) | 0.9975 | 0.9975 | 0.0462
+   0.075 | 0.9448 (0.0005,0) | 0.9478 (0.0005) | 0.9944 | 0.9944 | 0.2275
+   0.100 | 0.9472 (0.0010,0) | 0.9501 (0.0010) | 0.9900 | 0.9901 | 0.4451
+   0.125 | 0.9447 (0.0017,0) | 0.9476 (0.0016) | 0.9845 | 0.9847 | 0.6082
+   0.150 | 0.9397 (0.0024,0) | 0.9427 (0.0023) | 0.9778 | 0.9782 | 0.7076
+   0.175 | 0.9329 (0.0033,0) | 0.9360 (0.0031) | 0.9698 | 0.9707 | 0.7641
+   0.200 | 0.9246 (0.0042,0) | 0.9279 (0.0040) | 0.9608 | 0.9623 | 0.7952
+   0.225 | 0.9152 (0.0052,0) | 0.9186 (0.0050) | 0.9506 | 0.9530 | 0.8114
+   0.250 | 0.9046 (0.0062,0) | 0.9082 (0.0060) | 0.9394 | 0.9429 | 0.8181
+   0.275 | 0.8930 (0.0071,0) | 0.8968 (0.0071) | 0.9272 | 0.9321 | 0.8186
+   0.300 | 0.8805 (0.0081,0) | 0.8844 (0.0082) | 0.9139 | 0.9208 | 0.8145
+   error rel. impureza cerrada vs exacta max 0.213 medio 0.060 mediana 0.047 | <5%: 0.64 <10%: 0.91
+
+## D3: puntos del frente cerrado evaluados exactamente
+n2_lam0.1 Om,kap,Jcl,Pcl,Jex,Pex
+   0.300 0.0003 3.97e-04 0.4503 2.63e-04 0.5801
+   0.300 0.0017 3.85e-04 0.8667 3.46e-04 0.8853
+   0.282 0.0076 3.35e-04 0.9768 3.23e-04 0.9679
+   0.173 0.0065 2.76e-04 0.9801 2.70e-04 0.9764
+   0.100 0.0051 1.93e-04 0.9824 1.90e-04 0.9810
+   0.064 0.0049 1.11e-04 0.9839 1.11e-04 0.9837
+   0.037 0.0040 5.37e-05 0.9848 5.35e-05 0.9852
+   0.020 0.0039 1.82e-05 0.9853 1.82e-05 0.9860
+n2_lam0.14 Om,kap,Jcl,Pcl,Jex,Pex
+   0.300 0.0003 4.02e-04 0.4425 2.85e-04 0.5535
+   0.300 0.0015 4.00e-04 0.8200 3.67e-04 0.8488
+   0.300 0.0079 3.85e-04 0.9608 3.80e-04 0.9452
+   0.168 0.0096 3.41e-04 0.9699 3.37e-04 0.9640
+   0.107 0.0085 2.86e-04 0.9720 2.83e-04 0.9700
+   0.064 0.0070 2.06e-04 0.9735 2.04e-04 0.9733
+   0.038 0.0062 1.18e-04 0.9744 1.18e-04 0.9752
+   0.020 0.0060 4.32e-05 0.9750 4.32e-05 0.9762
+n2_lam0.2 Om,kap,Jcl,Pcl,Jex,Pex
+   0.300 0.0003 4.08e-04 0.4326 2.94e-04 0.5272
+   0.300 0.0009 4.07e-04 0.7015 3.58e-04 0.7462
+   0.300 0.0025 4.06e-04 0.8592 3.90e-04 0.8645
+   0.300 0.0076 4.03e-04 0.9304 4.04e-04 0.9081
+   0.163 0.0100 3.88e-04 0.9460 3.87e-04 0.9370
+   0.070 0.0100 3.20e-04 0.9522 3.18e-04 0.9523
+   0.033 0.0096 1.84e-04 0.9537 1.83e-04 0.9563
+   0.020 0.0096 9.66e-05 0.9541 9.65e-05 0.9571
+n3_lam0.1 Om,kap,Jcl,Pcl,Jex,Pex
+   0.300 0.0003 9.95e-05 0.7548 6.78e-05 0.7729
+   0.300 0.0010 4.67e-05 0.9435 3.90e-05 0.9334
+   0.221 0.0009 2.72e-05 0.9488 2.59e-05 0.9438
+   0.158 0.0009 1.51e-05 0.9525 1.49e-05 0.9510
+   0.110 0.0008 8.12e-06 0.9551 8.10e-06 0.9561
+   0.074 0.0007 3.82e-06 0.9569 3.83e-06 0.9600
+   0.045 0.0007 1.54e-06 0.9579 1.55e-06 0.9626
+   0.020 0.0007 2.99e-07 0.9586 3.00e-07 0.9639
+n3_lam0.14 Om,kap,Jcl,Pcl,Jex,Pex
+   0.300 0.0003 3.60e-04 0.4774 2.85e-04 0.5633
+   0.300 0.0010 2.28e-04 0.8880 2.08e-04 0.8674
+   0.266 0.0021 1.23e-04 0.9414 1.15e-04 0.9347
+   0.179 0.0018 7.11e-05 0.9456 6.97e-05 0.9426
+   0.124 0.0016 3.90e-05 0.9484 3.87e-05 0.9484
+   0.081 0.0016 1.79e-05 0.9504 1.79e-05 0.9529
+   0.050 0.0015 7.11e-06 0.9515 7.13e-06 0.9555
+   0.020 0.0015 1.16e-06 0.9521 1.16e-06 0.9569
+n3_lam0.2 Om,kap,Jcl,Pcl,Jex,Pex
+   0.300 0.0003 5.62e-04 0.3691 4.28e-04 0.4651
+   0.300 0.0011 5.02e-04 0.7674 4.75e-04 0.7754
+   0.300 0.0042 3.54e-04 0.9233 3.38e-04 0.9133
+   0.202 0.0037 2.52e-04 0.9276 2.46e-04 0.9235
+   0.132 0.0035 1.49e-04 0.9308 1.48e-04 0.9310
+   0.079 0.0032 6.74e-05 0.9328 6.74e-05 0.9361
+   0.039 0.0032 1.81e-05 0.9340 1.82e-05 0.9389
+   0.020 0.0031 5.04e-06 0.9342 5.06e-06 0.9398
+
+## C: MC (400 trayectorias, maestra vestida) vs exacta por episodios vs cerrada (v2, v1) vs prediccion operativa P_ep(1-q)(1-s)/(1+s)
+n=2 Om=0.1 kap=0.003 gam=2e-04 (kap/gam=15) T=2.0e+05 | P_ep=0.9381 P_cl(v2)=0.9442 P_cl(v1)=0.9485 | J mc 3.351e-04+-2.4e-06 ex 3.363e-04 (-0.5 sigma)
+      tau_c=2/k: P_MC=0.6988+-0.0039 (nb=13706) pred_op=0.6968 (-0.5 sigma) ; P_MC-P_ep=-0.2393
+      tau_c=5/k: P_MC=0.7824+-0.0040 (nb=10442) pred_op=0.7956 (+3.3 sigma) ; P_MC-P_ep=-0.1557
+      tau_c=10/k: P_MC=0.5879+-0.0057 (nb=7523) pred_op=0.5986 (+1.9 sigma) ; P_MC-P_ep=-0.3502
+n=2 Om=0.05 kap=0.003 gam=2e-04 (kap/gam=15) T=2.0e+05 | P_ep=0.9607 P_cl(v2)=0.9636 P_cl(v1)=0.9693 | J mc 2.369e-04+-1.8e-06 ex 2.349e-04 (+1.2 sigma)
+      tau_c=2/k: P_MC=0.7239+-0.0044 (nb=10207) pred_op=0.7264 (+0.6 sigma) ; P_MC-P_ep=-0.2368
+      tau_c=5/k: P_MC=0.8900+-0.0034 (nb=8415) pred_op=0.8996 (+2.8 sigma) ; P_MC-P_ep=-0.0708
+      tau_c=10/k: P_MC=0.7861+-0.0049 (nb=7087) pred_op=0.7928 (+1.4 sigma) ; P_MC-P_ep=-0.1747
+n=2 Om=0.2 kap=0.003 gam=2e-04 (kap/gam=15) T=2.0e+05 | P_ep=0.9160 P_cl(v2)=0.9163 P_cl(v1)=0.9185 | J mc 3.775e-04+-3.0e-06 ex 3.750e-04 (+0.8 sigma)
+      tau_c=2/k: P_MC=0.6793+-0.0038 (nb=14755) pred_op=0.6556 (-6.2 sigma) ; P_MC-P_ep=-0.2367
+      tau_c=5/k: P_MC=0.7043+-0.0044 (nb=10563) pred_op=0.7005 (-0.8 sigma) ; P_MC-P_ep=-0.2117
+      tau_c=10/k: P_MC=0.5129+-0.0058 (nb=7327) pred_op=0.5087 (-0.7 sigma) ; P_MC-P_ep=-0.4031
+n=2 Om=0.1 kap=0.006 gam=2e-04 (kap/gam=30) T=2.0e+05 | P_ep=0.9674 P_cl(v2)=0.9700 P_cl(v1)=0.9729 | J mc 2.992e-04+-2.3e-06 ex 2.990e-04 (+0.1 sigma)
+      tau_c=2/k: P_MC=0.7377+-0.0038 (nb=13110) pred_op=0.7339 (-1.0 sigma) ; P_MC-P_ep=-0.2297
+      tau_c=5/k: P_MC=0.9190+-0.0026 (nb=11206) pred_op=0.9278 (+3.4 sigma) ; P_MC-P_ep=-0.0484
+      tau_c=10/k: P_MC=0.8593+-0.0035 (nb=10095) pred_op=0.8702 (+3.1 sigma) ; P_MC-P_ep=-0.1080
+n=2 Om=0.1 kap=0.01 gam=2e-04 (kap/gam=50) T=2.0e+05 | P_ep=0.9704 P_cl(v2)=0.9719 P_cl(v1)=0.9738 | J mc 2.618e-04+-2.0e-06 ex 2.586e-04 (+1.6 sigma)
+      tau_c=2/k: P_MC=0.7480+-0.0040 (nb=11651) pred_op=0.7384 (-2.4 sigma) ; P_MC-P_ep=-0.2224
+      tau_c=5/k: P_MC=0.9467+-0.0022 (nb=10249) pred_op=0.9508 (+1.8 sigma) ; P_MC-P_ep=-0.0236
+      tau_c=10/k: P_MC=0.9385+-0.0024 (nb=9851) pred_op=0.9434 (+2.0 sigma) ; P_MC-P_ep=-0.0319
+n=2 Om=0.1 kap=0.0015 gam=2e-04 (kap/gam=8) T=2.0e+05 | P_ep=0.8671 P_cl(v2)=0.8624 P_cl(v1)=0.8665 | J mc 3.494e-04+-2.5e-06 ex 3.508e-04 (-0.5 sigma)
+      tau_c=2/k: P_MC=0.6150+-0.0044 (nb=12243) pred_op=0.5870 (-6.4 sigma) ; P_MC-P_ep=-0.2521
+      tau_c=5/k: P_MC=0.5301+-0.0060 (nb=7020) pred_op=0.5201 (-1.7 sigma) ; P_MC-P_ep=-0.3371
+      tau_c=10/k: P_MC=0.2868+-0.0078 (nb=3326) pred_op=0.2707 (-2.1 sigma) ; P_MC-P_ep=-0.5803
+n=2 Om=0.1 kap=0.003 gam=2e-05 (kap/gam=150) T=1.1e+06 | P_ep=0.9724 P_cl(v2)=0.9762 P_cl(v1)=0.9767 | J mc 4.195e-05+-4.5e-07 ex 4.144e-05 (+1.2 sigma)
+      tau_c=2/k: P_MC=0.7429+-0.0043 (nb=10237) pred_op=0.7387 (-1.0 sigma) ; P_MC-P_ep=-0.2296
+      tau_c=5/k: P_MC=0.9423+-0.0025 (nb=8901) pred_op=0.9443 (+0.8 sigma) ; P_MC-P_ep=-0.0302
+      tau_c=10/k: P_MC=0.9249+-0.0029 (nb=8496) pred_op=0.9281 (+1.1 sigma) ; P_MC-P_ep=-0.0475
+n=2 Om=0.1 kap=0.01 gam=2e-05 (kap/gam=500) T=1.1e+06 | P_ep=0.9655 P_cl(v2)=0.9750 P_cl(v1)=0.9752 | J mc 3.966e-05+-4.0e-07 ex 4.025e-05 (-1.5 sigma)
+      tau_c=2/k: P_MC=0.7397+-0.0043 (nb=10222) pred_op=0.7352 (-1.0 sigma) ; P_MC-P_ep=-0.2258
+      tau_c=5/k: P_MC=0.9549+-0.0022 (nb=9051) pred_op=0.9519 (-1.4 sigma) ; P_MC-P_ep=-0.0106
+      tau_c=10/k: P_MC=0.9641+-0.0020 (nb=8931) pred_op=0.9625 (-0.8 sigma) ; P_MC-P_ep=-0.0014
+n=3 Om=0.2 kap=0.0015 gam=2e-04 (kap/gam=8) T=7.1e+05 | P_ep=0.9336 P_cl(v2)=0.9409 P_cl(v1)=0.9573 | J mc 9.537e-05+-8.8e-07 ex 9.568e-05 (-0.4 sigma)
+      tau_c=2/k: P_MC=0.6893+-0.0046 (nb=9993) pred_op=0.6853 (-0.9 sigma) ; P_MC-P_ep=-0.2443
+      tau_c=5/k: P_MC=0.8833+-0.0035 (nb=8382) pred_op=0.8938 (+3.0 sigma) ; P_MC-P_ep=-0.0503
+      tau_c=10/k: P_MC=0.8285+-0.0043 (nb=7631) pred_op=0.8404 (+2.8 sigma) ; P_MC-P_ep=-0.1051
+n=3 Om=0.3 kap=0.002 gam=2e-04 (kap/gam=10) T=4.9e+05 | P_ep=0.9297 P_cl(v2)=0.9390 P_cl(v1)=0.9513 | J mc 1.379e-04+-1.3e-06 ex 1.382e-04 (-0.2 sigma)
+      tau_c=2/k: P_MC=0.6857+-0.0046 (nb=10148) pred_op=0.6825 (-0.7 sigma) ; P_MC-P_ep=-0.2441
+      tau_c=5/k: P_MC=0.8845+-0.0035 (nb=8483) pred_op=0.8898 (+1.5 sigma) ; P_MC-P_ep=-0.0453
+      tau_c=10/k: P_MC=0.8325+-0.0043 (nb=7701) pred_op=0.8329 (+0.1 sigma) ; P_MC-P_ep=-0.0973
+n=3 Om=0.4 kap=0.003 gam=2e-04 (kap/gam=15) T=5.0e+05 | P_ep=0.9142 P_cl(v2)=0.9314 P_cl(v1)=0.9398 | J mc 1.384e-04+-1.2e-06 ex 1.372e-04 (+1.0 sigma)
+      tau_c=2/k: P_MC=0.6763+-0.0045 (nb=10588) pred_op=0.6724 (-0.9 sigma) ; P_MC-P_ep=-0.2379
+      tau_c=5/k: P_MC=0.8806+-0.0034 (nb=9080) pred_op=0.8863 (+1.7 sigma) ; P_MC-P_ep=-0.0336
+      tau_c=10/k: P_MC=0.8578+-0.0038 (nb=8546) pred_op=0.8561 (-0.5 sigma) ; P_MC-P_ep=-0.0564
+n=3 Om=0.2 kap=0.003 gam=2e-04 (kap/gam=15) T=1.2e+06 | P_ep=0.9342 P_cl(v2)=0.9359 P_cl(v1)=0.9446 | J mc 5.496e-05+-5.0e-07 ex 5.441e-05 (+1.1 sigma)
+      tau_c=2/k: P_MC=0.6918+-0.0045 (nb=10722) pred_op=0.6884 (-0.8 sigma) ; P_MC-P_ep=-0.2424
+      tau_c=5/k: P_MC=0.9168+-0.0029 (nb=9322) pred_op=0.9175 (+0.3 sigma) ; P_MC-P_ep=-0.0175
+      tau_c=10/k: P_MC=0.9140+-0.0029 (nb=9072) pred_op=0.9183 (+1.4 sigma) ; P_MC-P_ep=-0.0202
+n=3 Om=0.3 kap=0.0015 gam=2e-04 (kap/gam=8) T=4.1e+05 | P_ep=0.9145 P_cl(v2)=0.9285 P_cl(v1)=0.9437 | J mc 1.663e-04+-1.4e-06 ex 1.669e-04 (-0.4 sigma)
+      tau_c=2/k: P_MC=0.6845+-0.0047 (nb=9582) pred_op=0.6676 (-3.6 sigma) ; P_MC-P_ep=-0.2300
+      tau_c=5/k: P_MC=0.8331+-0.0042 (nb=7748) pred_op=0.8452 (+2.9 sigma) ; P_MC-P_ep=-0.0814
+      tau_c=10/k: P_MC=0.7292+-0.0055 (nb=6533) pred_op=0.7301 (+0.2 sigma) ; P_MC-P_ep=-0.1853
+n=3 Om=0.2 kap=0.0008 gam=2e-04 (kap/gam=4) T=4.4e+05 | P_ep=0.8582 P_cl(v2)=0.8885 P_cl(v1)=0.9131 | J mc 1.540e-04+-1.4e-06 ex 1.550e-04 (-0.7 sigma)
+      tau_c=2/k: P_MC=0.6194+-0.0053 (nb=8468) pred_op=0.6173 (-0.4 sigma) ; P_MC-P_ep=-0.2388
+      tau_c=5/k: P_MC=0.7022+-0.0058 (nb=6233) pred_op=0.7304 (+4.9 sigma) ; P_MC-P_ep=-0.1560
+      tau_c=10/k: P_MC=0.5095+-0.0076 (nb=4294) pred_op=0.5406 (+4.1 sigma) ; P_MC-P_ep=-0.3487
+n=3 Om=0.3 kap=0.003 gam=2e-05 (kap/gam=150) T=1.6e+06 | P_ep=0.9292 P_cl(v2)=0.9473 P_cl(v1)=0.9482 | J mc 4.388e-05+-3.3e-07 ex 4.328e-05 (+1.8 sigma)
+      tau_c=2/k: P_MC=0.6816+-0.0044 (nb=10979) pred_op=0.6850 (+0.8 sigma) ; P_MC-P_ep=-0.2476
+      tau_c=5/k: P_MC=0.9107+-0.0029 (nb=9578) pred_op=0.9156 (+1.7 sigma) ; P_MC-P_ep=-0.0184
+      tau_c=10/k: P_MC=0.9221+-0.0028 (nb=9409) pred_op=0.9249 (+1.0 sigma) ; P_MC-P_ep=-0.0071
+n=3 Om=0.2 kap=0.0015 gam=2e-05 (kap/gam=75) T=1.7e+06 | P_ep=0.9627 P_cl(v2)=0.9678 P_cl(v1)=0.9696 | J mc 4.154e-05+-3.1e-07 ex 4.051e-05 (+3.3 sigma)
+      tau_c=2/k: P_MC=0.7034+-0.0044 (nb=10816) pred_op=0.7095 (+1.4 sigma) ; P_MC-P_ep=-0.2593
+      tau_c=5/k: P_MC=0.9445+-0.0024 (nb=9313) pred_op=0.9463 (+0.8 sigma) ; P_MC-P_ep=-0.0182
+      tau_c=10/k: P_MC=0.9451+-0.0024 (nb=9022) pred_op=0.9485 (+1.4 sigma) ; P_MC-P_ep=-0.0176
+pred_op vs MC: |z| medio 1.8, max 6.4; diferencia absoluta media 0.0075, max 0.0311
+flujo MC vs exacto: z medio 1.02, max 3.28; err rel medio 0.009
+   n=2 Om=0.1 kap=0.003 gam=2e-04: mejor tau_c=5/kap  P_MC=0.7824 vs P_ep 0.9381  (dif -0.1557)
+   n=2 Om=0.05 kap=0.003 gam=2e-04: mejor tau_c=5/kap  P_MC=0.8900 vs P_ep 0.9607  (dif -0.0708)
+   n=2 Om=0.2 kap=0.003 gam=2e-04: mejor tau_c=5/kap  P_MC=0.7043 vs P_ep 0.9160  (dif -0.2117)
+   n=2 Om=0.1 kap=0.006 gam=2e-04: mejor tau_c=5/kap  P_MC=0.9190 vs P_ep 0.9674  (dif -0.0484)
+   n=2 Om=0.1 kap=0.01 gam=2e-04: mejor tau_c=5/kap  P_MC=0.9467 vs P_ep 0.9704  (dif -0.0236)
+   n=2 Om=0.1 kap=0.0015 gam=2e-04: mejor tau_c=2/kap  P_MC=0.6150 vs P_ep 0.8671  (dif -0.2521)
+   n=2 Om=0.1 kap=0.003 gam=2e-05: mejor tau_c=5/kap  P_MC=0.9423 vs P_ep 0.9724  (dif -0.0302)
+   n=2 Om=0.1 kap=0.01 gam=2e-05: mejor tau_c=10/kap  P_MC=0.9641 vs P_ep 0.9655  (dif -0.0014)
+   n=3 Om=0.2 kap=0.0015 gam=2e-04: mejor tau_c=5/kap  P_MC=0.8833 vs P_ep 0.9336  (dif -0.0503)
+   n=3 Om=0.3 kap=0.002 gam=2e-04: mejor tau_c=5/kap  P_MC=0.8845 vs P_ep 0.9297  (dif -0.0453)
+   n=3 Om=0.4 kap=0.003 gam=2e-04: mejor tau_c=5/kap  P_MC=0.8806 vs P_ep 0.9142  (dif -0.0336)
+   n=3 Om=0.2 kap=0.003 gam=2e-04: mejor tau_c=5/kap  P_MC=0.9168 vs P_ep 0.9342  (dif -0.0175)
+   n=3 Om=0.3 kap=0.0015 gam=2e-04: mejor tau_c=5/kap  P_MC=0.8331 vs P_ep 0.9145  (dif -0.0814)
+   n=3 Om=0.2 kap=0.0008 gam=2e-04: mejor tau_c=5/kap  P_MC=0.7022 vs P_ep 0.8582  (dif -0.1560)
+   n=3 Om=0.3 kap=0.003 gam=2e-05: mejor tau_c=10/kap  P_MC=0.9221 vs P_ep 0.9292  (dif -0.0071)
+   n=3 Om=0.2 kap=0.0015 gam=2e-05: mejor tau_c=10/kap  P_MC=0.9451 vs P_ep 0.9627  (dif -0.0176)
+
+## C2: ciclos MC vs exactos (vestida / local simulada en marco de laboratorio / local polaron) y agrupacion local
+dressed kap=0.003: P(k=0..5) MC [0.0339 0.0572 0.8031 0.0702 0.0316 0.0036] exacta [0.0328 0.0571 0.805  0.0695 0.032  0.003 ] ; max |z| 1.4 ; J mc/ex 3.350e-04/3.363e-04
+      clustering (2,5,10/kap): [0.6972 0.7854 0.5886] ; P_ep exacta (clasificacion pre-salto) 0.9381
+lab kap=0.003: P(k=0..5) MC [0.0318 0.0566 0.615  0.1984 0.0732 0.0186] exacta [0.0319 0.056  0.6095 0.2055 0.0713 0.0194] ; max |z| 2.4 ; J mc/ex 3.807e-04/3.845e-04
+local kap=0.003: P(k=0..5) MC [0.0306 0.0559 0.6194 0.203  0.0658 0.0186] exacta [0.0319 0.056  0.6095 0.2055 0.0713 0.0194] ; max |z| 3.1 ; J mc/ex 3.831e-04/3.845e-04
+      clustering (2,5,10/kap): [0.5612 0.5915 0.4115] ; P_ep exacta (clasificacion pre-salto) 0.7203
+local kap=0.01: P(k=0..5) MC [0.014  0.0184 0.4508 0.256  0.1356 0.0622] exacta [0.0132 0.0204 0.4518 0.2526 0.131  0.0657] ; max |z| 1.8 ; J mc/ex 3.824e-04/3.824e-04
+      clustering (2,5,10/kap): [0.4139 0.5131 0.514 ] ; P_ep exacta (clasificacion pre-salto) 0.4945
+dressed kap=0.01: P(k=0..5) MC [0.016  0.0255 0.9066 0.037  0.0128 0.002 ] exacta [0.0157 0.0241 0.9088 0.0357 0.0138 0.0017] ; max |z| 1.1 ; J mc/ex 2.572e-04/2.586e-04
+      clustering (2,5,10/kap): [0.7394 0.9498 0.9437] ; P_ep exacta (clasificacion pre-salto) 0.9704
+
+## D6: trayectorias T=2e4
+n=1: eventos de fonon por trayectoria [5, 3, 2, 3, 8, 6, 3, 4] (rep=7), fotones [5, 3, 2, 2, 7, 5, 3, 4]; flujo esperado*T = 3.70
+n=2: eventos de fonon por trayectoria [6, 4, 2, 3, 7, 6, 8, 8] (rep=0), fotones [2, 2, 1, 1, 4, 2, 5, 5]; flujo esperado*T = 6.73
+n=3: eventos de fonon por trayectoria [3, 0, 0, 9, 3, 5, 3, 6] (rep=0), fotones [1, 0, 0, 3, 1, 2, 1, 2]; flujo esperado*T = 3.34
+
+## D7: P_2(episodios) y J vs gph (gam=2e-4) y vs gam (gph=4e-4); exacto (cerrada)
+   gph=1.0e-06: P=0.9378 (0.9480)  J=3.382e-04 (3.468e-04)
+   gph=2.2e-05: P=0.9378 (0.9481)  J=3.381e-04 (3.467e-04)
+   gph=6.8e-05: P=0.9379 (0.9481)  J=3.378e-04 (3.463e-04)
+   gph=2.2e-04: P=0.9380 (0.9483)  J=3.372e-04 (3.451e-04)
+   gph=6.8e-04: P=0.9384 (0.9489)  J=3.350e-04 (3.415e-04)
+   gph=2.2e-03: P=0.9394 (0.9504)  J=3.281e-04 (3.306e-04)
+   gph=6.8e-03: P=0.9407 (0.9531)  J=3.052e-04 (3.002e-04)
+   gam=2.0e-05: P=0.9724 (0.9767)  J=4.144e-05 (3.972e-05)
+   gam=4.1e-05: P=0.9691 (0.9731)  J=8.173e-05 (8.072e-05)
+   gam=8.6e-05: P=0.9604 (0.9660)  J=1.601e-04 (1.611e-04)
+   gam=1.8e-04: P=0.9425 (0.9519)  J=3.038e-04 (3.099e-04)
+   gam=3.7e-04: P=0.9083 (0.9254)  J=5.422e-04 (5.570e-04)
+   gam=7.6e-04: P=0.8497 (0.8802)  J=8.821e-04 (8.903e-04)
+   gam=1.6e-03: P=0.7644 (0.8146)  J=1.280e-03 (1.192e-03)
+mapa 2D (gam,gph): error cerrada vs exacta en P max 0.080 medio 0.026 mediana 0.018 | <5%: 0.81 <10%: 1.00 ; impureza max 0.246 medio 0.184 mediana 0.191 | <5%: 0.00 <10%: 0.00 ; flujo max 0.255 medio 0.033 mediana 0.022 | <5%: 0.80 <10%: 0.91

@@ -1,0 +1,12 @@
+n=2 lam=0.1: kappa* (Omega->0, maximo pureza cerrada)=0.0028, P_max=0.9884, piso e^-lam^2=0.9900
+   X= 0.95 kap=0.002:Om_max=0.116,J=2.99e-04 | kap=0.003:Om_max=0.229,J=3.57e-04 | kap=0.005:Om_max=0.500,J=3.85e-04
+   X= 0.9 kap=0.002:Om_max=0.258,J=3.76e-04 | kap=0.003:Om_max=0.500,J=3.92e-04 | kap=0.005:Om_max=0.500,J=3.85e-04
+n=2 lam=0.14: kappa* (Omega->0, maximo pureza cerrada)=0.0043, P_max=0.9788, piso e^-lam^2=0.9806
+   X= 0.95 kap=0.002:Om_max=0.050,J=2.72e-04 | kap=0.003:Om_max=0.096,J=3.40e-04 | kap=0.005:Om_max=0.237,J=3.85e-04
+   X= 0.9 kap=0.002:Om_max=0.116,J=3.70e-04 | kap=0.003:Om_max=0.376,J=3.99e-04 | kap=0.005:Om_max=0.500,J=3.99e-04
+n=3 lam=0.1: kappa* (Omega->0, maximo pureza cerrada)=0.0003, P_max=0.9836, piso e^-lam^2=0.9900
+   X= 0.95 kap=0.002:Om_max=nan | kap=0.003:Om_max=nan | kap=0.005:Om_max=nan
+   X= 0.9 kap=0.002:Om_max=0.500,J=6.69e-05 | kap=0.003:Om_max=nan | kap=0.005:Om_max=nan
+n=3 lam=0.14: kappa* (Omega->0, maximo pureza cerrada)=0.0006, P_max=0.9760, piso e^-lam^2=0.9806
+   X= 0.95 kap=0.002:Om_max=0.317,J=1.65e-04 | kap=0.003:Om_max=nan | kap=0.005:Om_max=nan
+   X= 0.9 kap=0.002:Om_max=0.500,J=2.91e-04 | kap=0.003:Om_max=0.500,J=2.36e-04 | kap=0.005:Om_max=nan

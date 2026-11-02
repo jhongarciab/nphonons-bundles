@@ -1,0 +1,20 @@
+== Ciclos radiativos (base): P(N) para n=2,3, estados base
+2 dL= -1.97021 P0..5= [0.0328 0.0571 0.805  0.0695 0.032  0.003 ] mean= 2.0216937759628806 e^-l2= 0.9805908312024284 suma 0.999999999978396
+   flujo/Jrad check: J= 0.0003363276507686617
+3 dL= -2.97367 P0..5= [0.1171 0.057  0.0538 0.6808 0.0529 0.0222] mean= 2.6285968466867873 e^-l2= 0.9805908312024284 suma 0.9999999999784577
+   flujo/Jrad check: J= 1.5112663905476966e-05
+== Barrido max P_n (ciclos) sobre kap,Om,gam; lam=0.14, y lam=0.1,0.2 ; n=2
+n=2 lam=0.1: max P_n(ciclo)=0.96171 en kap=0.003,Om=0.03,gam=2e-05; e^-l2=0.99005; (ratio 0.9714)
+n=2 lam=0.14: max P_n(ciclo)=0.96156 en kap=0.01,Om=0.03,gam=2e-05; e^-l2=0.98059; (ratio 0.9806)
+n=2 lam=0.2: max P_n(ciclo)=0.94588 en kap=0.01,Om=0.03,gam=2e-05; e^-l2=0.96079; (ratio 0.9845)
+n=3 lam=0.1: max P_n(ciclo)=0.73763 en kap=0.001,Om=0.03,gam=2e-05; e^-l2=0.99005; (ratio 0.7450)
+n=3 lam=0.14: max P_n(ciclo)=0.87996 en kap=0.001,Om=0.03,gam=2e-05; e^-l2=0.98059; (ratio 0.8974)
+n=3 lam=0.2: max P_n(ciclo)=0.91881 en kap=0.003,Om=0.03,gam=2e-05; e^-l2=0.96079; (ratio 0.9563)
+== Episodios (clustering de huecos tau): base, n=2
+tau=0.5/kap: P1=0.7392 P2=0.2485 P3=0.0099 P4=0.0021 | frac fonones en episodios n=2: 0.3897  e^-l2=0.9806
+tau=1/kap: P1=0.5175 P2=0.4489 P3=0.0218 P4=0.0101 | frac fonones en episodios n=2: 0.5868  e^-l2=0.9806
+tau=2/kap: P1=0.2215 P2=0.7024 P3=0.0283 P4=0.0401 | frac fonones en episodios n=2: 0.7338  e^-l2=0.9806
+tau=3/kap: P1=0.0855 P2=0.7983 P3=0.0235 P4=0.0762 | frac fonones en episodios n=2: 0.7414  e^-l2=0.9806
+tau=5/kap: P1=0.0125 P2=0.7860 P3=0.0164 P4=0.1407 | frac fonones en episodios n=2: 0.6353  e^-l2=0.9806
+tau=8/kap: P1=0.0014 P2=0.6659 P3=0.0127 P4=0.2057 | frac fonones en episodios n=2: 0.4475  e^-l2=0.9806
+tau=12/kap: P1=0.0005 P2=0.5146 P3=0.0099 P4=0.2370 | frac fonones en episodios n=2: 0.2668  e^-l2=0.9806

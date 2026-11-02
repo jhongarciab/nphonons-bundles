@@ -1,0 +1,37 @@
+## resonancia: maximo del flujo exacto vs analitico (2o orden) vs Bin-III
+n=2 lam=0.08 Om=0.05: num -1.99748 | analit(2o) -1.99748 err +2.1e-06 = +0.00 gc | Bin-III(sin lam^2) err +1.6e-05
+n=2 lam=0.08 Om=0.1: num -1.98991 | analit(2o) -1.98994 err +2.7e-05 = +0.01 gc | Bin-III(sin lam^2) err +6.5e-05
+n=2 lam=0.08 Om=0.2: num -1.95933 | analit(2o) -1.95975 err +4.2e-04 = +0.13 gc | Bin-III(sin lam^2) err +2.6e-04
+n=2 lam=0.08 Om=0.3: num -1.90727 | analit(2o) -1.90943 err +2.2e-03 = +0.66 gc | Bin-III(sin lam^2) err +6.1e-04
+n=2 lam=0.14 Om=0.05: num -1.99745 | analit(2o) -1.99745 err +3.7e-06 = +0.00 gc | Bin-III(sin lam^2) err +4.9e-05
+n=2 lam=0.14 Om=0.1: num -1.98978 | analit(2o) -1.98981 err +3.5e-05 = +0.01 gc | Bin-III(sin lam^2) err +2.0e-04
+n=2 lam=0.14 Om=0.2: num -1.95879 | analit(2o) -1.95925 err +4.6e-04 = +0.14 gc | Bin-III(sin lam^2) err +8.0e-04
+n=2 lam=0.14 Om=0.3: num -1.90602 | analit(2o) -1.90831 err +2.3e-03 = +0.70 gc | Bin-III(sin lam^2) err +1.9e-03
+n=2 lam=0.2 Om=0.05: num -1.99740 | analit(2o) -1.99741 err +9.0e-06 = +0.00 gc | Bin-III(sin lam^2) err +9.9e-05
+n=2 lam=0.2 Om=0.1: num -1.98958 | analit(2o) -1.98964 err +5.6e-05 = +0.02 gc | Bin-III(sin lam^2) err +4.0e-04
+n=2 lam=0.2 Om=0.2: num -1.95798 | analit(2o) -1.95854 err +5.6e-04 = +0.17 gc | Bin-III(sin lam^2) err +1.6e-03
+n=2 lam=0.2 Om=0.3: num -1.90415 | analit(2o) -1.90672 err +2.6e-03 = +0.78 gc | Bin-III(sin lam^2) err +3.7e-03
+n=3 lam=0.08 Om=0.05: num -2.99833 | analit(2o) -2.99833 err +2.2e-06 = +0.00 gc | Bin-III(sin lam^2) err +7.1e-06
+n=3 lam=0.08 Om=0.1: num -2.99330 | analit(2o) -2.99331 err +9.2e-06 = +0.00 gc | Bin-III(sin lam^2) err +2.3e-05
+n=3 lam=0.08 Om=0.2: num -2.97313 | analit(2o) -2.97325 err +1.2e-04 = +0.03 gc | Bin-III(sin lam^2) err +8.8e-05
+n=3 lam=0.08 Om=0.3: num -2.93919 | analit(2o) -2.93981 err +6.2e-04 = +0.13 gc | Bin-III(sin lam^2) err +2.0e-04
+n=3 lam=0.14 Om=0.05: num -2.99832 | analit(2o) -2.99832 err +1.1e-06 = +0.00 gc | Bin-III(sin lam^2) err +1.7e-05
+n=3 lam=0.14 Om=0.1: num -2.99326 | analit(2o) -2.99327 err +8.2e-06 = +0.00 gc | Bin-III(sin lam^2) err +6.7e-05
+n=3 lam=0.14 Om=0.2: num -2.97294 | analit(2o) -2.97307 err +1.2e-04 = +0.03 gc | Bin-III(sin lam^2) err +2.7e-04
+n=3 lam=0.14 Om=0.3: num -2.93877 | analit(2o) -2.93940 err +6.3e-04 = +0.13 gc | Bin-III(sin lam^2) err +6.1e-04
+n=3 lam=0.2 Om=0.05: num -2.99830 | analit(2o) -2.99830 err +1.2e-06 = +0.00 gc | Bin-III(sin lam^2) err +3.5e-05
+n=3 lam=0.2 Om=0.1: num -2.99319 | analit(2o) -2.99320 err +9.4e-06 = +0.00 gc | Bin-III(sin lam^2) err +1.4e-04
+n=3 lam=0.2 Om=0.2: num -2.97265 | analit(2o) -2.97278 err +1.4e-04 = +0.03 gc | Bin-III(sin lam^2) err +5.7e-04
+n=3 lam=0.2 Om=0.3: num -2.93809 | analit(2o) -2.93876 err +6.7e-04 = +0.14 gc | Bin-III(sin lam^2) err +1.3e-03
+## n=2: |P_cerrada-P_exacta|/P: max 0.101 media 0.017; fraccion<5% 0.92, <10% 0.98; impureza (1-P) err rel mediano 0.15
+## n=3: |P_cerrada-P_exacta|/P: max 0.128 media 0.029; fraccion<5% 0.78, <10% 0.97; impureza (1-P) err rel mediano 0.15
+Pareto n=2: Om=0.016 kap=0.0053: cerrada (J=3.16e-05,P=0.979) exacta (J=3.16e-05,P=0.976)
+Pareto n=2: Om=0.029 kap=0.0090: cerrada (J=5.83e-05,P=0.976) exacta (J=5.82e-05,P=0.975)
+Pareto n=2: Om=0.029 kap=0.0041: cerrada (J=1.07e-04,P=0.978) exacta (J=1.06e-04,P=0.974)
+Pareto n=2: Om=0.043 kap=0.0033: cerrada (J=1.98e-04,P=0.974) exacta (J=1.96e-04,P=0.967)
+Pareto n=2: Om=0.185 kap=0.0069: cerrada (J=3.63e-04,P=0.967) exacta (J=3.58e-04,P=0.958)
+Pareto n=3: Om=0.015 kap=0.0008: cerrada (J=1.12e-06,P=0.976) exacta (J=1.12e-06,P=0.953)
+Pareto n=3: Om=0.027 kap=0.0005: cerrada (J=4.98e-06,P=0.974) exacta (J=5.03e-06,P=0.939)
+Pareto n=3: Om=0.083 kap=0.0013: cerrada (J=2.19e-05,P=0.968) exacta (J=2.19e-05,P=0.951)
+Pareto n=3: Om=0.198 kap=0.0015: cerrada (J=9.55e-05,P=0.958) exacta (J=9.35e-05,P=0.934)
+Pareto n=3: Om=0.500 kap=0.0007: cerrada (J=4.16e-04,P=0.747) exacta (J=7.11e-05,P=0.844)
