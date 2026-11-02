@@ -1,0 +1,10 @@
+A real kap, Om=0.03      lam=0.0027 kap=2.7e-05 g=5.5e-05 gph=2.6e-04 | exacto P2=0.991 J=5.550e-10 (2.413e+00 Hz) | cerrada P=0.992 J=5.535e-10 [0s]
+A kap=1e-4, Om=0.03      lam=0.0027 kap=1.0e-04 g=5.5e-05 gph=2.6e-04 | exacto P2=0.985 J=3.974e-10 (1.728e+00 Hz) | cerrada P=0.986 J=3.952e-10 [0s]
+B kap=4e-6 Om=0.012      lam=0.0151 kap=4.0e-06 g=3.4e-05 gph=1.6e-04 | exacto P2=0.908 J=1.619e-07 (1.133e+03 Hz) | cerrada P=0.914 J=1.500e-07 [0s]
+B kap=1e-4 Om=0.012      lam=0.0151 kap=1.0e-04 g=3.4e-05 gph=1.6e-04 | exacto P2=0.999 J=7.688e-08 (5.382e+02 Hz) | cerrada P=0.999 J=7.687e-08 [0s]
+C kap=6.3e-3 Om=0.3      lam=0.1200 kap=6.3e-03 g=1.0e-03 gph=0.0e+00 | exacto P2=0.891 J=1.319e-03 (1.319e+05 Hz) | cerrada P=0.901 J=1.471e-03 [0s]
+C kap=6.3e-3 Om=0.15     lam=0.1200 kap=6.3e-03 g=1.0e-03 gph=0.0e+00 | exacto P2=0.938 J=7.985e-04 (7.985e+04 Hz) | cerrada P=0.947 J=8.127e-04 [0s]
+D2 kap=1e-03 Om=0.3: exacto P2=0.657 J=4.85e-04 (2.91e+03 Hz) cerrada P=0.605 J=6.59e-04
+D2 kap=3e-03 Om=0.3: exacto P2=0.919 J=3.35e-04 (2.01e+03 Hz) cerrada P=0.931 J=4.21e-04
+D2 kap=6e-03 Om=0.3: exacto P2=0.959 J=2.31e-04 (1.39e+03 Hz) cerrada P=0.965 J=2.73e-04
+D2 kap=1e-03 Om=0.15: exacto P2=0.792 J=2.40e-04 (1.44e+03 Hz) cerrada P=0.825 J=2.08e-04
