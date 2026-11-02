@@ -1,0 +1,628 @@
+                                                              Correlated frequency noise in a multimode acoustic resonator
+                                                                                              Nuttamas Tubsrinuan∗
+                                                                           Department of Microtechnology and Nanoscience MC2,
+                                                                          Chalmers University of Technology, Göteborg, Sweden and
+                                                     London Centre for Nanotechnology, University College London, Gordon Street, London, WC1H 0AH, UK
+
+                                                                                                   Jared H. Cole
+                                                                                 Chemical and Quantum Physics, School of Science,
+                                                                                 RMIT University, Melbourne, VIC 3001, Australia
+arXiv:2208.13410v5 [quant-ph] 28 May 2024
+
+
+
+
+                                                                                                    Per Delsing
+                                                                              Department of Microtechnology and Nanoscience MC2,
+                                                                          Chalmers University of Technology, SE-41296 Göteborg, Sweden
+
+                                                                                                Gustav Andersson†
+                                                                             Department of Microtechnology and Nanoscience MC2,
+                                                                            Chalmers University of Technology, Göteborg, Sweden and
+                                                          Pritzker School of Molecular Engineering, University of Chicago, Chicago, Illinois 60637, USA
+                                                                                             (Dated: May 29, 2024)
+                                                            Frequency instabilities are a major source of errors in quantum devices. This study investigates
+                                                         frequency fluctuations in a surface acoustic wave (SAW) resonator, where reflection coefficients of
+                                                         14 SAW modes are measured simultaneously for more than seven hours. We report two distinct
+                                                         noise characteristics. Multimode frequency noise caused by interactions with two-level system (TLS)
+                                                         defects shows significant degrees of correlations that diminish with increased detuning. This finding
+                                                         agrees with the current understanding of the parasitic TLS behavior as one of the dominant noise
+                                                         sources in quantum devices. In addition to the TLS-induced noise, we observe strong anomalous
+                                                         frequency fluctuations with slow, anti-correlated dynamics. These noise bursts resemble signatures
+                                                         of cosmic radiation observed in superconducting quantum systems.
+
+
+                                               Decoherence in quantum devices leads to quantum in-           hours, we observe that there are two dominant noise pro-
+                                            formation loss and limits their performance [1, 2]. A            cesses taking place in the device. We further investigate
+                                            number of decoherence channels have been identified,             the noise correlations and their characteristics.
+                                            including various types of parasitic two-level systems
+                                            (TLSs) [3, 4] and quasiparticles [5]. Quasiparticle genera-         Two-level system defects residing at dielectric surfaces
+                                            tion can be induced by stray infrared light [6] and cosmic       and interfaces of superconducting circuits have been con-
+                                            radiation [7], while TLS defects inducing loss and noise         sidered a central problem causing frequency fluctuations
+                                            reside in the circuit [8, 9]. Over long timescales, these        and significant energy dissipation [4, 8, 17]. Despite
+                                            noise sources impact the stability of device parameters          many attempts in the past decades [9], TLS-induced loss
+                                            [2, 3, 10], necessitating frequent calibration or additional     and noise remain persistent issues in superconducting
+                                            mitigation measures [11, 12]. In the past decades, signif-       quantum processors. Although the microscopic nature
+                                            icant enhancement in the coherence of superconducting            of TLSs is not well understood, the standard tunnel-
+                                            devices has been achieved by improved microwave engi-            ing model (STM) [9, 18, 19] has been successfully used
+                                            neering [13], circuit design [14], fabrication methods [15],     as a framework for understanding TLS interaction with
+                                            and materials [16]. In spite of these developments, deco-        quantum circuits. The STM predicts power-dependent
+                                            herence remains a significant issue. A better understand-        losses and temperature-dependent resonance frequency
+                                            ing of noise processes is important in order to mitigate         shifts due to the direct coupling between quantum de-
+                                            decoherence mechanisms and advance the development               vices and coherent TLSs, which have transition ener-
+                                            of solid state quantum processors.                               gies larger than kB T . In addition to coherent TLSs
+                                               In this work, we use a multifrequency signal (a fre-          there are thermal fluctuators, two-level systems with suf-
+                                            quency comb) to simultaneously probe frequency fluc-             ficiently low transition energies to be thermally activated
+                                            tuations in 14 modes of a surface acoustic wave (SAW)            at millikelvin temperatures. Direct interaction between
+                                            resonator at cryogenic temperatures. Tracking the re-            TLSs is a significant effect not accounted for by the STM
+                                            flection coefficient of the SAW resonator for more than 7        [8, 20, 21]. When coherent TLSs couple with surround-
+                                                                                                             ing thermal fluctuators, they are subject to a continu-
+                                                                                                             ous time-dependent energy shift, known as spectral dif-
+                                                                                                             fusion [22]. While undergoing spectral diffusion, they
+                                            ∗ nuttamas.tubsrinuan.20@ucl.ac.uk
+                                                                                                             can couple dispersively to quantum devices, resulting in
+                                            † gandersson@uchicago.edu
+                                                                                                             frequency drift that translates into phase noise [23, 24].
+                                                                                                                       2
+
+   TLSs couple to both electromagnetic [4] and strain          Our SAW resonator, fabricated on a piezoelectric GaAs
+fields [25]. Their behaviors have been studied using         substrate, has two Bragg mirrors, located 1440 µm apart.
+superconducting qubits [4, 21], microwave resonators         Each mirror has 800 fingers. An interdigital transducer
+[26, 27], and mechanical resonators [28–30]. A study         (IDT) is placed at the center of the cavity, serving as both
+of a surface acoustic wave (SAW) device at cryogenic         input and output port. The IDT has a split-finger design
+temperature reveals that energy losses are caused by the     with 50 periods of 1.2 µm, as illustrated in Fig. 1(a) [29].
+coupling to parasitic TLSs [31]. Further two-tone spec-      The device supports 14 resonance modes within the fre-
+troscopy of TLSs using a SAW resonator shows that TLSs       quency range from 2.37 GHz to 2.40 GHz. The free spec-
+dominate the losses [29], suggesting the potential of SAW    tral range between each mode is approximately 2 MHz.
+resonators for investigating TLSs. Due to the slow prop-     The characteristics of the SAW resonator are shown in
+agation, the SAW wavelength is smaller than the electro-     Fig. 1(b)-(c). The resonance linewidths are between 18
+magnetic wavelength by five orders of magnitude at the       and 32 kHz. We extract the resonator parameters based
+same frequency. This characteristic allows SAW resonant      on the expression for the reflection coefficient [44]:
+structures to accommodate many resonant frequencies in                                   "                      #
+a compact design.                                                                −i(π−θ)       2(QL /QC )eiφ0
+   Here, we exploit multiple resonance modes of the SAW           S11 (f ) = −ae           1−                     ,   (2)
+                                                                                              1 + 2iQL ( f −f
+                                                                                                           fr )
+                                                                                                             r
+resonator to probe frequency noise caused by TLSs at
+many different frequencies simultaneously. According
+                                                             where f is the probe frequency and the parameter a is
+to the Jaynes-Cummings model [32], the resonance fre-
+                                                             an amplitude scaling coefficient. A phase shift due to ca-
+quency of a resonator f , which is dispersively coupled to
+                                                             ble delay is denoted by θ. The loaded quality factor and
+an individual TLS, is given by
+                                                             the external quality factor are represented by QL and
+                                g2                           QC , respectively. An impedance mismatch is accounted
+                 f = fr +              σ̂z ,          (1)    for by the parameter φ0 . We drive the SAW resonator
+                            fr − fT LS
+                                                             continuously so that the estimated number of phonons
+where σ̂z is the Pauli spin operator acting on the TLS,      is approximately 1000. The probe frequencies are de-
+and g represents the TLS-resonator coupling strength.        fined from the resonance frequencies extracted from the
+The resonance frequency of the bare resonator and the        resonator profile in Fig. 1(b) using Eq. 2, such that the
+TLS are denoted by fr and fT LS , respectively. In most      phase response is maximally sensitive to frequency shifts.
+realistic cases, the resonator interacts with a TLS ensem-      For this device, the quality factors are slightly differ-
+ble with a frequency distribution spanning the resonator     ent for each frequency, as shown in Fig. 1(d). We mea-
+bandwidth. The effective frequency shift is the sum of the   sure the SAW resonator in the overcoupled regime, where
+dispersive shifts contributed by all the individual TLSs.    Qi > QC . We measure resonance frequency fluctuations
+Due to their small wavelengths and high wavenumbers,         by tracking the amplitude and phase response while driv-
+SAW modes are close to each other in frequency and           ing 14 modes of the SAW resonator simultaneously for
+have a large overlap in real space. Thus, all modes in-      2.6 × 104 seconds, approximately 7 hours and 15 min-
+teract with the same physical TLS ensemble, however,         utes. Additionally, we apply a control tone at 2.41 GHz,
+with slightly different detuning. Therefore, the multi-      off-resonant with every SAW mode. This control tone is
+mode frequency noise in a SAW resonator is expected          used as a reference for the signal fluctuations due to other
+to be correlated. Additionally, the degree of correlation    sources in the environment. For details in experimental
+should depend on the detuning, as suggested by Eq. 1.        setup, see Supplemental Materials [45]. The long mea-
+  In superconducting devices, cosmic rays and other          surement duration is used in order to capture any TLS
+sources of radiation can generate high-energy phonons        telegraphic switching. The rates for such events have
+[33–35]. These phonons break Cooper pairs, leading to an     been observed to be in the range of 75 µHz - 2 mHz [2].
+increased kinetic inductance of the superconducting ma-      We calculate the frequency from the measured reflection
+terial and associated resonance frequency shifts [36]. A     coefficient S11 using the parameters extracted from the
+recent study on superconducting granular aluminum res-       resonance profile in Fig. 1(b) and Eq. 2.
+onators shows that ionizing radiation due to high-energy        The time traces in Fig. 2(a) show resonance frequency
+cosmic rays create phonons that in turn generate quasi-      fluctuations of the 14 different modes within the res-
+particle bursts, resulting in resonance frequency shifts     onator band of 2.37-2.40 GHz. We observe a baseline
+and reduced quality factors [37]. This effect has also       of frequency fluctuations with uniform amplitude, super-
+been observed in transmon qubits with shortened relax-       imposed with occasional striking large-amplitude fluctu-
+ation and dephasing times as a result [7, 38, 39]. Di-       ations. There are “quiet” time windows where only small
+rect measurements of rare events which were attributed       fluctuations are present. For instance, in the time win-
+to cosmic rays have also been observed in gravitational      dow highlighted in Fig. 2(b), there are no burst events.
+wave experiments [40–42]. The frequency noise caused         The noise amplitude is small, 50 Hz on average, compared
+by ionizing radiation can be suppressed by the use of a      to the largest fluctuation of 20 kHz. There is no obvious
+phonon absorber [43], radiation shielding, and conduct-      relationship between fluctuations in different modes. For
+ing experiments at a deep-underground facility [37].         a device having a small mode volume, we would expect
+                                                                                                                                                                 3
+
+(a)                                                                                                     to see a clear telegraphic shift caused by an individual
+                                                                                                        TLS [24]. In contrast, our SAW resonator has a large
+                                                                                                        mode volume. Thus, we can observe frequency drifts re-
+                                                                                                        sulting from many weakly-coupled TLSs, which makes
+                                                                                                        telegraphic features indistinct.
+                                                                                                           We also observe time windows with large fluctuation
+                                                                                                        features. These noise bursts appear randomly in our
+                                                                                                        measurements separated in time by minutes or hours,
+                                                                                                        as shown in Fig. 2(c)-(e). In these periods, we recog-
+                                                                                                        nize similar features in all traces, indicating significant
+                                                                                                        correlations between them. Figure 2(c) shows a series
+(b)                                                 Mode no.
+                                                                                                        of substantial frequency shifts followed by a relaxation
+                       1     2     3   4   5    6    7      8   9 10 11 12 13 14
+                 -70                                                                                    tail. The shifts are negative in the low mode numbers.
+                                                                                   0                    Their magnitude reduces as the mode number increases.
+                                                                                                        Above mode 10, the frequency shift changes sign to pos-
+
+
+
+
+                                                                                          Phase (rad)
+                 -80
+    |S | (dB)
+
+
+
+
+                                                                                                        itive, while the magnitude grows as the mode number
+                                                                                   -50
+                                                                                                        increases further.
+          11
+
+
+
+
+                 -90
+                                                                                                           Figure 2(d) presents frequency noise with a large am-
+                -100                                                               -100                 plitude. At 4:48:35 hours, we observe a frequency in-
+                                                                                                        crease followed by a relaxation tail. This feature su-
+                           2.375       2.380        2.385       2.390   2.395   2.400
+                                               Frequency (GHz)
+                                                                                                        perimposes with a different frequency shift, which has
+                                                                                                        a weaker amplitude and can be either positive or nega-
+(                                                                                                       tive. While the burst event shows positive shifts in all
+                                                                                                        modes, this second event has a negative sign in the first
+                                                                                                        nine modes. Above mode 10, both shifts are positive, re-
+                                                                                                        sulting in anomalously high amplitudes, on the order of
+                                                                                                        a few kilohertz. In Fig. 2(e), we can see the characteris-
+                                                                                                        tic of the noise of the second kind, where the magnitude
+                                                                                                        gradually changes and switches signs. The magnitude of
+                                                                                                        fluctuations decreases with increasing mode number be-
+                                                                                                        fore the frequency shift becomes positive, similar to the
+                                                                                                        features observed in Fig. 2(c).
+                                                                                                           To determine the relationship between frequency noise
+                                                                                                        in different modes i and j, we compute the correlation
+                                                                                                        coefficients Cij , which is given by
+
+                                                                                                                                 h∆fi ∆fj i
+                                                                                                                         Cij = q               ,               (3)
+                                                                                                                                h∆fi2 ih∆fj2 i
+
+                                                                                                        where h i denotes the expectation value. Figure 3(a) il-
+                                                                                                        lustrates the correlation matrix of the frequency noise
+                                                                                                        calculated from the entire measurement (7 hours and 15
+                                                                                                        minutes). The frequency noise correlation reduces with
+                                                                                                        increasing detuning, i.e., modes closer in frequency show
+                                                                                                        stronger correlations than far-detuned modes. As sug-
+FIG. 1. (a) Dimensions of the SAW resonator used in this                                                gested by Eq. 1, at a given frequency fr , a TLS far from
+study (not to scale). The mirrors and the IDT are fabricated                                            resonance contributes to the frequency noise less than a
+from aluminum patterned on a GaAs substrate. The shorted                                                near-resonant TLS. Furthermore, we obtain negative cor-
+Bragg mirrors have 800 fingers each. The IDT has a split-
+                                                                                                        relations at a certain detuning, implying that two modes
+finger design with 50 periods of 1.2 µm. (b) The reflection
+measurement of the SAW resonator, showing the 14 resonance
+                                                                                                        have frequency shifts in opposite directions. This result
+modes lying between the frequency of 2.37 and 2.40 GHz. The                                             is not surprising, given that many large frequency shifts
+indices represent mode numbers arranged from the lowest to                                              shown in Fig. 2(c)-(e) explicitly show opposite signs.
+the highest frequency of the resonator stopband. (c) The                                                   Based on the STM, the anti-correlated noise bursts
+fitted magnitude and phase of resonance mode 2 highlighted                                              are not likely to be induced by TLSs. Under a con-
+by the red box in the top figure. The quality factors are                                               tinuous drive, near-resonant TLSs in the ground state
+extracted using Eq. 2. (d) SAW mode quality factors. The                                                can be excited by the SAW field. If TLSs are saturated,
+coupling coefficient QC ranges from 1.2 × 105 to 2.0 × 105 and                                          they do not contribute to resonance frequency shifts [29].
+the internal quality factor Qi varies from 2.0×105 to 2.5×105 .                                         Thus, saturating TLSs in a specific part of the frequency
+                                                                                                                               4
+
+
+                    (a)
+
+
+
+
+                 (b)                       (c)                           (d)             (e)
+
+
+
+
+FIG. 2. (a) Normalized time traces of SAW resonance frequency fluctuations of the resonator mode 1 up to mode 14. All traces
+are measured simultaneously for approximately 7 hours and 15 minutes. The traces are vertically shifted for better visualization.
+Bottom panel: Time traces in specific time windows highlighted by grey boxes in the top panel. (b) The resonance frequencies
+in the “quiet” time window where fluctuations are small. Note that the traces are shifted by a different proportion from (a).
+(c) - (e) The frequency noise in these time windows show additional burst events superimposed with the TLS-induced noise.
+(See discussion in the main text.)
+
+
+spectrum will result in an effect similar to the removal          away from each other. These frequency shifts will give
+of TLSs and their associated dispersive shift, pushing            rise to negative correlation coefficients, which are similar
+neighboring SAW modes toward the saturated region.                to the effects observed in our experiment. Anti-correlated
+The modes that are positively detuned from the sat-               frequency noise could arise from the sudden appearance
+urated TLSs will experience negative frequency shifts,            or elimination of TLSs at specific frequencies, and such
+while those that are negatively detuned from the satu-            “scrambling” of the TLS distribution has been observed
+rated TLSs will have positive shifts. Therefore, we would         with superconducting qubits [46]. That process, however,
+expect anti-correlated frequency shifts for the modes on          does not show the slow relaxation of mode frequencies
+opposite sides. Such frequency shifts caused by satu-             observed here and is not consistent with stronger anti-
+rating TLSs are in the reverse direction to the results           correlations between further-detuned modes.
+observed in our measurements.                                       Considering the frequency noise only in a quiet period,
+   According to Eq. 1, the dispersive interaction between         we do not observe clear negative correlations, as shown
+a resonator and a ground-state TLS will shift frequencies         in Fig. 3(b). From the correlation matrices, we can cal-
+                                                                                                                                        5
+
+                                                              1               istic agrees with our current understanding of TLS in-
+      (a)                                                                     teraction. However, this mechanism cannot explain the
+                       2
+                                                                              anti-correlations during the burst periods.
+                       4                                      0.5
+                                                                                 We further perform frequency domain analysis by cal-
+                                                                              culating the noise power spectral density Sf . We consider
+            Mode no.
+                       6
+
+                       8
+                                                              0      C
+                                                                         ij
+                                                                              the standard power law noise, where the noise spectrum
+                                                                              is expressed by [47]
+                       10
+                                                              -0.5
+                       12
+                                                                                                             h−1
+                                                                                                 Sf (f ) =       + h0 .               (4)
+                                                                                                              f
+                       14
+                                                              -1
+                            2   4   6   8      10   12   14
+                                    Mode no.
+                                                                              Here, h−1 and h0 denote the 1/f and the white noise
+                                                                              level, respectively. The power spectral density (PSD)
+                                                              1
+      (b)                                                                     of the frequency noise in mode 8 is plotted in Fig. 4.
+                       2
+                                                                              The PSD calculated from the quiet time window ex-
+                       4                                      0.5             hibits 1/f characteristic, which is anticipated for the
+                                                                              TLS-induced frequency noise [48]. For the full trace,
+            Mode no.
+
+
+
+
+                       6
+                                                              0      C
+                                                                              where the frequency bursts are present, the PSD at low
+                       8                                                 ij
+                                                                              frequencies is one order of magnitude higher than that
+                       10                                                     of the quiet window, indicating that the anomalous fre-
+                                                              -0.5            quency fluctuations dominate in this frequency range.
+                       12
+                                                                              See Supplemental Material for time-domain analysis [45].
+                       14
+                                                              -1              We fit a sum of 1/f and Lorentzian frequency noise
+                            2   4   6   8      10   12   14
+                                                                              P SD(f ) = SL (f ) + Sf (f ), where
+                                    Mode no.
+
+      (c)                                                                                                     4A2 τ0
+                                                                                               SL (f ) =                  .           (5)
+                                                                                                           1 + (2πf τ0 )2
+
+                                                                              Here, A and τ0 are the Lorentzian noise amplitude and
+                                                                              the characteristic time scale, respectively. With this
+                                                                              model, we obtain the Lorentzian noise amplitude A =
+                                                                              53.12 Hz, the Lorentzian characteristic time τ0 = 1.22 s,
+                                                                              the 1/f noise power h−1 = 145.0 Hz2 , whereas the white
+                                                                              noise level is negligible. The characteristic time falls in
+                                                                              the range of the characteristic time of relaxation tails
+                                                                              1.2-3.0 s, observed in the time traces in Fig. 2. This fit
+FIG. 3. (a) The matrix showing the correlation coefficients
+                                                                              does not capture the steep rolloff of the PSD at higher
+of the frequency noise measured for 7 hours and 15 minutes,                   frequencies, indicating a non-Lorentzian spectrum of the
+shown in Fig. 2(a). Note that the correlation diminishes and                  slow frequency excursions. Our analysis in both time and
+becomes negative when the pair of modes is far-detuned. (b)                   frequency domains suggests that the frequency noise can-
+The correlation matrix calculated from the quiet time win-                    not be purely induced by TLSs and the large fluctuations
+dow shown in Fig. 2(b). For this specific period, the correla-                are caused by an additional noise source.
+tions between modes still manifest a diminishing trend. How-                     As shown in Fig. 2, frequency noise anomalies have
+ever, we no longer observe clear negative correlations between                an abrupt change followed by a relaxation tail. This
+modes. (c) Averaged correlation coefficients as a function of                 characteristic resembles the effect of ionizing radiation in
+detuning calculated from the whole time trace (blue) and the                  high-kinetic inductance superconducting devices caused
+quiet window (black). For the correlations of the full time
+                                                                              by cosmic rays [37]. In that case, the long-time transient
+trace, the sign of the correlation switches from positive to
+negative when the detuning is approximately 18 MHz. Note                      effects are due to long recombination times of quasipar-
+that the plot is symmetric as Cij = Cji .                                     ticles above the superconducting gap, a mechanism ab-
+                                                                              sent in our mechanical resonator. The expected flux of
+                                                                              high-energy cosmic muons is around 10 per hour across
+                                                                              the chip cross-section [7, 37, 49], a rate consistent with
+culate the average correlation as a function of detuning                      our data, although there is no obvious interaction mech-
+between modes. Figure 3(c) shows that the correlation                         anism. An ionization event induced by radiation could
+coefficients between all pairs of modes show a smooth                         lead to the generation of electron-hole pairs which get
+variation. In the quiet time window, the noise correlation                    trapped in deep-level defects with long relaxation times
+reduces from unity to zero. For the full time trace, the                      similar to the timescale of observed fluctuations [50, 51].
+correlation switches its sign when the detuning exceeds                       The correlations of the frequency noise between different
+18 MHz. The diminishing positive correlation character-                       modes vary smoothly with detuning and show a uniform
+                                                                                                                               6
+
+
+                 10 5
+                                                                   arated modes. Additionally, we observe anomalous fre-
+                                             Full trace            quency fluctuations, whose origins are not clear but show
+                                             Fitted full trace
+                                             Quiet window          some resemblance to the previously observed impact of
+                      4
+                 10                          Fitted quiet window   cosmic radiation. Our multimode probe scheme reveals
+  PSD (Hz2/Hz)
+
+
+
+
+                                                                   striking negative correlations in these fluctuations, whose
+                 10 3                                              noise power spectral densities are approximately repre-
+                                                                   sented by a Lorentzian noise model.
+                 10 2
+
+                                                                                  ACKNOWLEDGMENTS
+                 10 1
+                   10 -2   10   -1
+                                             10   0
+
+                            Frequency (Hz)                            This work was supported by the Knut and Alice Wal-
+                                                                   lenberg foundation through the Wallenberg Center for
+FIG. 4. Noise power spectral density of the frequency fluc-        Quantum Technology (WACQT), and the Swedish Re-
+tuations in mode 8 calculated from the entire trace and from       search Council, VR. JHC is supported by the Aus-
+the quiet time window only (approximately 400 second-long).        tralian Research Council Centre of Excellence pro-
+The lines represent the fitted power law noise model (Eq. 4)       gramme through Grant number CE170100026 and the
+and the sum of the power law noise and the Lorentzian noise        Australian National Computational Infrastructure facil-
+model (Eq. 4 + Eq. 5).
+                                                                   ity.
+
+behaviour where the sign of frequency excursions are con-                          DATA AVAILABILITY
+sistent across different events. This suggests a geometri-
+cal effect arising from the spatial distribution of a single
+or small number of defects and the acoustic field variation          The data generated and analyzed in this study are
+with mode number. Further investigation is necessary in            available upon reasonable request.
+order to pin down the origin of anti-correlated fluctua-
+tions.
+                                                                               AUTHOR CONTRIBUTIONS
+   In conclusion, we have reported two distinctive noise
+processes in a surface acoustic wave resonator. There
+is TLS-induced noise, showing diminishing correlations               NT performed the measurements and analysis. NT
+with increased detuning and a noise spectral density with          and GA developed the conceptual idea behind the ex-
+1/f characteristics. This noise signature provides addi-           periment. JHC provided theory support. PD and GA
+tional evidence for TLSs as the origin of phase noise in           supervised the project. NT wrote the manuscript with
+quantum devices. The correlated nature of phase noise              input from all coauthors.
+suggests that quantum information encoded in differ-
+ent modes of the same resonator undergo reduced rel-
+ative dephasing. In the presence of TLS noise, a multi-                          COMPETING INTERESTS
+mode quantum memory may therefore provide improved
+preservation of entanglement compared to physically sep-             The authors declare no competing interests.
+
+
+
+
+ [1] R. W. Simmonds, K. M. Lang, D. A. Hite,                        [6] R. Barends, J. Wenner, M. Lenander, Y. Chen,
+     S. Nam, D. P. Pappas, and J. M. Martinis,                          R. C. Bialczak, J. Kelly, E. Lucero, P. O’Malley,
+     Phys. Rev. Lett. 93, 077003 (2004).                                M. Mariantoni, D. Sank, H. Wang, T. C. White, Y. Yin,
+ [2] J. J. Burnett, A. Bengtsson, M. Scigliuzzo,                        J. Zhao, A. N. Cleland, J. M. Martinis, and J. J. A.
+     D. Niepce, M. Kudra, P. Delsing, and J. Bylander,                  Baselmans, Appl. Phys. Lett. 99, 113507 (2011).
+     NPJ Quantum Inf. 5, 54 (2019).                                 [7] A. P. Vepsäläinen, A. H. Karamlou, J. L. Orrell, A. S.
+ [3] C. Müller, J. Lisenfeld, A. Shnirman, and S. Poletto,             Dogra, B. Loer, F. Vasconcelos, D. K. Kim, A. J.
+     Phys. Rev. B 92, 035442 (2015).                                    Melville, B. M. Niedzielski, J. L. Yoder, S. Gustavsson,
+ [4] J. M. Martinis, K. B. Cooper, R. McDermott, M. Stef-               J. A. Formaggio, B. A. VanDevender, and W. D. Oliver,
+     fen, M. Ansmann, K. D. Osborn, K. Cicak, S. Oh,                    Nature 584, 551 (2020).
+     D. P. Pappas, R. W. Simmonds, and C. C. Yu,                    [8] J. Burnett, L. Faoro, V. G. I. Wisby, A. Chernykh,
+     Phys. Rev. Lett. 95, 210503 (2005).                                G. Mikhailov, V. Tulin, R. Shaikhaidarov, V. Antonov,
+ [5] C. D. Wilen, S. Abdullah, N. A. Kurinsky, C. Stanford,             P. Meeson, A. Tzalenchuk, and T. Linström,
+     L. Cardani, G. D’Imperio, C. Tomei, L. Faoro, L. B. Ioffe,         Nat. Commun. 5, 4119 (2014).
+     C. H. Liu, A. Opremcak, B. G. Christensen, J. L. DuBois,       [9] C.    Müller,     J.    Cole,    and    J.    Lisenfeld,
+     and R. McDermott, Nature 594, 369 (2021).                          Rep. Prog. Phys. 82, 124501 (2019).
+                                                                                                                                   7
+
+[10] P. V. Klimov, J. Kelly, Z. Chen, M. Neeley,                    [32] E. Jaynes and F. Cummings, Proc. IEEE 51, 89 (1963).
+     A. Megrant, B. Burkett, R. Barends, K. Arya, B. Chiaro,        [33] L. Grünhaupt, N. Maleeva, S. T. Skacel, M. Calvo,
+     Y. Chen, A. Dunsworth, A. Fowler, B. Foxen, C. Gid-                 F. Levy-Bertrand, A. V. Ustinov, H. Rotzinger,
+     ney, M. Giustina, R. Graff, T. Huang, E. Jef-                       A. Monfardini, G. Catelani, and I. M. Pop,
+     frey, E. Lucero, J. Y. Mutus, O. Naaman, C. Neill,                  Phys. Rev. Lett. 121, 117001 (2018).
+     C. Quintana, P. Roushan, D. Sank, A. Vainsencher,              [34] L. J. Swenson, A. Cruciani, A. Benoit, M. Roesch,
+     J. Wenner, T. C. White, S. Boixo, R. Babbush,                       C. S. Yung, A. Bideaud, and A. Monfardini,
+     V. N. Smelyanskiy, H. Neven, and J. M. Martinis,                    Appl. Phys. Lett. 96, 263511 (2010).
+     Phys. Rev. Lett. 121, 090502 (2018).                           [35] D. C. Moore, S. R. Golwala, B. Bumble, B. Cor-
+[11] S. Matityahu, A. Shnirman, and M. Schechter,                        nell, P. K. Day, H. G. LeDuc, and J. Zmuidzinas,
+     Phys. Rev. Applied 16, 044036 (2021).                               Appl. Phys. Lett. 100, 232601 (2012).
+[12] X. You, Z. Huang, U. Alyanak, A. Romanenko, A. Gras-           [36] G. Catelani, R. J. Schoelkopf, M. H. Devoret, and L. I.
+     sellino, and S. Zhu, Phys. Rev. Appl. 18, 044026 (2022).            Glazman, Phys. Rev. B 84, 064517 (2011).
+[13] B. Chiaro, A. Megrant, A. Dunsworth, Z. Chen,                  [37] L. Cardani, F. Valenti, N. Casali, G. Catelani, T. Char-
+     R. Barends, B. Campbell, Y. Chen, A. Fowler,                        pentier, M. Clemenza, I. Colantoni, A. Cruciani,
+     I. C. Hoi, E. Jeffrey, J. Kelly, J. Mutus, C. Neill,                G. D’Imperio, L. Gironi, L. Grünhaupt, D. Gusenkova,
+     P. J. J. O’Malley, C. Quintana, P. Roushan, D. Sank,                F. Henriques, M. Lagoin, M. Martinez, G. Pettinari,
+     A. Vainsencher, J. Wenner, T. C. White, and J. M. Mar-              C. Rusconi, O. Sander, C. Tomei, A. V. Ustinov, M. We-
+     tinis, Supercond. Sci. Technol. 29, 104006 (2016).                  ber, W. Wernsdorfer, M. Vignati, S. Pirro, and I. M. Pop,
+[14] J. Koch, T. M. Yu, J. Gambetta, A. A. Houck, D. I.                  Nat. Commun. 12, 2733 (2021).
+     Schuster, J. Majer, A. Blais, M. H. Devoret, S. M. Girvin,     [38] S. E. de Graaf, L. Faoro, L. B. Ioffe, S. Mahashabde, J. J.
+     and R. J. Schoelkopf, Phys. Rev. A 76, 042319 (2007).               Burnett, T. Lindström, S. E. Kubatkin, A. V. Danilov,
+[15] K. Cicak, D. Li, J. A. Strong, M. S. Allman, F. Altomare,           and A. Y. Tzalenchuk, Sci. Adv. 6, 5055 (2020).
+     A. J. Sirois, J. D. Whittaker, J. D. Teufel, and R. W.         [39] M. McEwen, L. Faoro, K. Arya, A. Dunsworth,
+     Simmonds, Appl. Phys. Lett. 96, 093502 (2010).                      T. Huang, S. Kim, B. Burkett, A. Fowler, F. Arute,
+[16] J. B. Chang, M. R. Vissers, A. D. Córcoles, M. Sandberg,           J. C. Bardin, A. Bengtsson, A. Bilmes, B. B. Buckley,
+     J. Gao, D. W. Abraham, J. M. Chow, J. M. Gambetta,                  N. Bushnell, Z. Chen, R. Collins, S. Demura, A. R. Derk,
+     M. Beth Rothwell, G. A. Keefe, M. Steffen, and D. P.                C. Erickson, M. Giustina, S. D. Harrington, S. Hong,
+     Pappas, Appl. Phys. Lett. 103, 012602 (2013).                       E. Jeffrey, J. Kelly, P. V. Klimov, F. Kostritsa, P. Laptev,
+[17] J. Lisenfeld, A. Bilmes, A. Megrant, R. Barends, J. Kelly,          A. Locharla, X. Mi, K. C. Miao, S. Montazeri, J. Mutus,
+     P. Klimov, G. Weiss, J. M. Martinis, and A. V. Ustinov,             O. Naaman, M. Neeley, C. Neill, A. Opremcak, C. Quin-
+     NPJ Quantum Inf. 5, 105 (2019).                                     tana, N. Redd, P. Roushan, D. Sank, K. J. Satzinger,
+[18] W. Phillips, J. Low Temp. Phys. 7, 351 (1972).                      V. Shvarts, T. White, Z. J. Yao, P. Yeh, J. Yoo, Y. Chen,
+[19] P. W. Anderson, B. I. Halperin, and C. M. Varma,                    S. Vadim, J. M. Martinis, H. Neven, A. Megrant, L. Ioffe,
+     Philos. Mag. 25, 1 (1972).                                          and R. Barends, Nat. Phys. 18, 107 (2021).
+[20] L.         Faoro        and        L.       B.        Ioffe,   [40] P. Astone, M. Bassan, P. Bonifazi, P. Carelli, E. Coccia,
+     Phys. Rev. B 91, 014201 (2015).                                     S. D’Antonio, V. Fafone, G. Federici, A. Marini, G. Mazz-
+[21] J. Lisenfeld, G. J. Grabovskij, C. Müller, J. H. Cole,             itelli, Y. Minenkov, I. Modena, G. Modestino, A. Mo-
+     G. Weiss, and A. V. Ustinov, Nat. Commun. 6, 1 (2015).              leti, G. Pallottino, V. Pampaloni, G. Pizzella, L. Quin-
+[22] J.      L.     Black      and      B.     I.      Halperin,         tieri, F. Ronga, R. Terenzi, M. Visco, and L. Votano,
+     Phys. Rev. B 16, 2879 (1977).                                       Phys. Lett. B 499, 16 (2001).
+[23] J. Gao, J. Zmuidzinas, B. A. Mazin, H. G. LeDuc, and           [41] P. Astone, D. Babusci, M. Bassan, P. Bonifazi, G. Cav-
+     P. K. Day, Appl. Phys. Lett. 90, 102507 (2007).                     allari, E. Coccia, S. D’Antonio, V. Fafone, G. Giordano,
+[24] D. Niepce, J. J. Burnett, M. Kudra, J. H. Cole, and J. By-          C. Ligi, A. Marini, G. Mazzitelli, Y. Minenkov, I. Mod-
+     lander, Science Advances 7, eabh0462 (2021).                        ena, G. Modestino, A. Moleti, G. Pallottino, G. Pizzella,
+[25] G. J. Grabovskij, T. Peichl, J. Lisenfeld, G. Weiss, and            L. Quintieri, A. Rocchi, F. Ronga, R. Terenzi, and
+     A. V. Ustinov, Science 338, 232 (2012).                             M. Visco, Astropart. Phys. 30, 200 (2008).
+[26] J. Gao, M. Daal, A. Vayonakis., S. Kumar, J. Zmuidz-           [42] M. Goryachev, W. M. Campbell, I. S. Heng,
+     inas, B. Sadoulet, B. Mazin, P. Day, and H. Leduc,                  S. Galliou, E. N. Ivanov, and M. E. Tobar,
+     Appl. Phys. Lett. 92, 152505 (2008).                                Phys. Rev. Lett. 127, 071102 (2021).
+[27] D.     P.    Pappas,      M.    R.    Vissers,     D.     S.   [43] K. Karatsu,         A. Endo,        J. Bueno,        P. J.
+     Wisbey,        J.    S.     Kline,    and      J.     Gao,          de Visser, R. Barends, D. J. Thoen, V. Mu-
+     IEEE Trans. Appl. Supercond. 21, 871 (2011).                        rugesan, N. Tomita, and J. J. A. Baselmans,
+[28] D. V. Anghel, T. Kühn, Y. M. Galperin, and M. Manni-               Appl. Phys. Lett. 114, 032601 (2019).
+     nen, Phys. Rev. B 75, 064202 (2007).                           [44] S. Probst, S. Song, P. Bushev, A. Ustinov, and M. Wei-
+[29] G. Andersson, A. L. Bilobran, M. Scigliuzzo,                        des, Rev. Sci. Instrum. 86, 024706 (2015).
+     M. M. de Lima, J. H. Cole, and P. Delsing,                     [45] See Supplemental Material for the experimental setup;
+     NPJ Quantum Inf. 7, 15 (2021).                                      phase fluctuation time traces of the control tone and all
+[30] A. Y. Cleland, E. A. Wollack, and A. H. Safavi-Naeini,              SAW modes; time-domain analysis showing Allan devi-
+     Studying phonon coherence with a quantum sensor                     ation plots of the resonance frequency fluctuations cal-
+     (2023), arXiv:2302.00221 [quant-ph].                                culated from the data in Fig. 2; and power dependence
+[31] R. Manenti, M. J. Peterer, A. Nersisyan, E. B.                      of the frequency noise. The Supplemental Material also
+     Magnusson,        A. Patterson, and P. J. Leek,                     contains Refs.[23, 47, 52–55].
+     Phys. Rev. B 93, 041411(R) (2016).
+                                                                  8
+
+[46] T. Thorbeck, A. Eddins, I. Lauer, D. T. McClure, and
+     M. Carroll, PRX Quantum 4, 020356 (2023).
+[47] E. Rubiola, Phase noise and feedback theory, in
+     Phase Noise and Frequency Stability in Oscillators, The
+     Cambridge RF and Microwave Engineering Series (Cam-
+     bridge University Press, 2008) p. 88–124.
+[48] J. Burnett, T. Lindström, M. Oxborrow, Y. Harada,
+     Y. Sekine, P. Meeson, and A. Y. Tzalenchuk,
+     Phys. Rev. B 87, 140501(R) (2013).
+[49] S.     Tsuji,      T.      Katayama,         K.      Okei,
+     T. Wada, I. Yamamoto, and Y. Yamashita,
+     J. Phys. G: Nucl. Part. Phys. 24, 1805 (1998).
+[50] R. Zuleeg, Chapter 11 - Radiation Effects in GaAs Inte-
+     grated Circuits (Elsevier, 1985) pp. 391–436.
+[51] A. R. Peaker, V. P. Markevich, and J. Coutinho,
+     J. Appl. Phys. 123, 161559 (2018).
+[52] C.    M.     Van     Vliet    and     P.    H.    Handel,
+     Phys. A: Stat. Mech. Appl. 113, 261 (1982).
+[53] J. A. Barnes, A. R. Chi, L. S. Cutler, D. J. Healey, D. B.
+     Leeson, T. E. McGunigal, J. A. Mullen, W. L. Smith,
+     R. L. Sydnor, R. F. C. Vessot, and G. M. R. Winkler,
+     IEEE Trans. Instrum. Meas. IM-20, 105 (1971).
+[54] R. Barends, N. Vercruyssen, A. Endo, P. J. de Visser,
+     T. Zijlstra, T. M. Klapwijk, and J. J. A. Baselmans,
+     Appl. Phys. Lett. 97, 033507 (2010).
+[55] J. Gao, M. Daal, J. M. Martinis, A. Vayonakis,
+     J. Zmuidzinas, B. Sadoulet, B. A. Mazin, P. K. Day, and
+     H. G. Leduc, Appl. Phys. Lett. 92, 212504 (2008).
+                                                                                                                             9
+
+
+                                  Supplemental materials
+                                             I.   EXPERIMENTAL SETUP
+
+The SAW resonator is mounted in a dilution refrigerator and cooled down to around 10 mK. We measure the
+reflection coefficient of the device using a multi-frequency lock-in amplifier (MLA), which can measure signals up to
+32 tones simultaneously. We employ frequency modulation circuits for converting RF signals to the detector
+operating range. A bandpass filter is inserted after the frequency upconversion to eliminate unwanted lower
+sidebands. There are 14 modes of SAW available within the 2.37 - 2.40 GHz range. A schematic representation of
+our experimental setup is given in Fig. S1.
+
+
+
+
+FIG. S1. A schematic of our experimental setup shows a SAW resonator installed in a dilution refrigerator and a circuit diagram
+for measuring the reflection coefficient of the SAW resonator.
+
+
+
+
+                                    II.   PHASE FLUCTUATION TIME TRACES
+
+We extract the resonance frequencies from the SAW resonator profile shown in Fig. 2(a). Additionally, we define a
+control tone at 2.41 GHz, which is outside the SAW bandwidth and located on the positive side relative to all SAW
+modes. The drive power of the control tone is -47 dBm, equal to SAW drive tones. We measure the SAW resonator
+profile shown in Fig.1(b) under the presence of the control tone so that it reflects the same condition as in the
+frequency fluctuation measurement.
+We measure reflection coefficients S11 of 14 SAW resonance modes and the control tone simultaneously for 7 hours
+15 minutes. The control tone serves as a reference for comparing with the SAW probing tones so that we can
+                                                                                                                           10
+
+identify fluctuations from other noise sources in the environment. The SAW probing tones exhibit continuous
+fluctuations while the control tone shows insubstantial frequency drift, as shown in Fig. S2. The amplitude and
+phase fluctuations of the control tone show no correlation with any other SAW modes. Note that the amplitude and
+phase of the control tone cannot be converted to frequency as this is a reference tone that does not correspond to
+any resonance mode.
+
+
+
+
+FIG. S2. Normalized time traces of phase fluctuations of the control tone and 14 modes of the SAW resonator. All traces are
+vertically shifted for better visualization. The resonator probing tones show fluctuations, whereas the control tone is rather
+steady for the entire measurement.
+
+
+
+                                           III.   TIME-DOMAIN ANALYSIS
+
+We perform frequency domain analysis by estimating the noise power spectral density using Welch’s method.
+However, power spectral density can create more artifacts or uncertainty. Thus, we compute the Allan deviation
+(ADEV) σy , which is a time-domain analysis tool for analyzing a slow noise process and addressing the source of
+fluctuation [47]. The mathematical expression of σy of the 1/f and the white noise is written as [53]:
+                                                                  r
+                                                    p                h0
+                                           σy (τ ) = 2 ln(2)h−1 +       ,                                      (S1)
+                                                                     2τ
+while ADEV of the Lorentzian noise process is expressed by [52]:
+                                                                          1/2
+                                          Aτ0      −τ /τ0    −2τ /τ0   τ
+                               σyL (τ ) =       4e        −e         +2 −3      .                                        (S2)
+                                           τ                           τ0
+Figure S3 presents the comparison between the pure 1/f characteristics and the combination of the 1/f with the
+Lorentzian noise type. The ADEV of the resonance frequency of the full time trace has a local maximum, which is a
+characteristic of the Lorentzian noise process, whereas the noise in the quiet window shows a relatively flat ADEV.
+The parameters obtained from fitting are A = 53.12 Hz, τ0 = 1.22 s, h−1 = 145.0 Hz2 , and h0 = 0.
+
+
+                                     IV.    POWER DEPENDENCE ANALYSIS
+
+We also study the frequency fluctuations at different probe powers. The noise power spectral density (PSD) at
+varied drive powers is shown in Fig. S4. The plot shows that the noise level reduces as the drive power increases
+                                                                                                                      11
+
+
+                                 10 2
+                                                                              Full trace
+                                                                              Fitted full trace
+                                                                              Quiet window
+                                                                              Fitted quiet window
+
+
+
+                     ADEV (Hz)
+
+
+
+
+                                 10 1
+
+                                   10 -1         10 0                  10 1                         10 2
+                                                             (s)
+
+FIG. S3. Allan deviation of the resonance frequency mode no.8 calculated from the entire trace and the quiet time window.
+The lines represent the fitted power law noise model (Eq. S1) and the sum of the power law noise and the Lorentzian noise
+model (Eq. S1 + S2).
+
+
+which is in agreement with the prediction of the STM [23] and previous findings [26, 54].
+Deviations from the 1/f trend are most pronounced for the -47 dBm probe power in the 10−4 to 1 Hz frequency
+range, where the Lorentzian noise characteristic is present (See Fig.4 in the main article). At lower power these
+fluctuations are not visible and PSD follow the theoretical prediction of TLS behavior.
+
+
+
+
+FIG. S4. Power spectral density of noise from SAW resonator mode no. 8 obtained using varied drive powers. Generally, the
+noise level is suppressed with increased SAW driving power, except for drive power of -47 dBm. At this power, we observe
+anomalous frequency fluctuations exhibiting non-TLS behaviors.
+

@@ -1,0 +1,1978 @@
+                                                                        Deterministic and programmable generation of
+                                                                          mechanical multipartite entangled states
+                                                              Isabelle Franzen,1 Max-Emanuel Kern,1 Q. Rumman Rahman,2 Igor Kladarić,1
+                                                              Stefano Marti,1 Yiwen Chu,1 Zhi-Yuan Wei (魏志远),3, ∗ and Matteo Fadel4, 1, †
+                                                                         1
+                                                                           Department of Physics, ETH Zürich, Zürich 8093, Switzerland
+                                                                              2
+                                                                                Department of Electrical and Computer Engineering,
+                                                                            Princeton University, Princeton, New Jersey 08540, USA
+                                                           3
+                                                             Joint Quantum Institute and Joint Center for Quantum Information and Computer Science,
+                                                                        NIST/University of Maryland, College Park, Maryland 20742, USA
+                                                       4
+                                                         Institute of Quantum Science and Technology & Frontiers Science Center for Nano-Optoelectronics,
+                                                                           School of Physics, Peking University, Beijing 100871, China
+                                                                                            (Dated: October 14, 2026)
+                                                           Multimode mechanical resonators offer a large set of densely packed, long-lived bosonic modes
+arXiv:2610.18778v1 [quant-ph] 13 Oct 2026
+
+
+
+
+                                                         within a single compact device, making them attractive for quantum simulation, quantum infor-
+                                                         mation processing, and quantum-enhanced sensing. Many such applications rely on multipartite
+                                                         entanglement, yet deterministic mechanical entanglement has so far been largely limited to pairs of
+                                                         modes. Here we demonstrate the deterministic and programmable preparation of multipartite en-
+                                                         tangled states among the phonon modes of a high-overtone bulk acoustic wave resonator coupled to
+                                                         a superconducting transmon qubit. By sequentially applying optimal-control-engineered isometries
+                                                         between the qubit and successive modes, we generate matrix product states of bond dimension two,
+                                                         including W , Greenberger–Horne–Zeilinger (GHZ), and cluster states. We fully characterize these
+                                                         states via quantum state tomography and certify genuine multipartite entanglement among up to
+                                                         four modes. We further demonstrate correlated-noise sensing by exploiting the complementary de-
+                                                         coherence responses of the stored W and GHZ states, isolating inter-mode phase correlations from
+                                                         local decoherence and placing quantitative bounds on collective dephasing. Our results establish a
+                                                         scalable approach to preparing multipartite entangled states in mechanical systems, with promising
+                                                         applications in multiparameter sensing and tests of quantum mechanics with massive objects.
+
+
+                                               Mechanical degrees of freedom are important building         tanglement entropy scaling with the area of a subsystem
+                                            blocks for quantum technologies [1, 2]. Their bosonic           rather than its volume [34]. As a result, one can focus on
+                                            nature provides access to an infinite-dimensional Hilbert       the subset of states that admit efficient representations
+                                            space capable of encoding complex quantum states [3, 4],        in terms of tensor networks [35, 36]. In one-dimensional
+                                            and they can exhibit long coherence times owing to their        systems, this structure is captured by matrix product
+                                            weak coupling to electromagnetic environments [5–7].            states (MPS), where the wavefunction is decomposed into
+                                            Interfacing mechanical resonators with superconducting          a chain of tensors of small bond dimension, providing
+                                            qubits has enabled the preparation and control of non-          a compact and efficient description of many-body states
+                                            classical phonon states in a variety of platforms, including    [37]. For this reason, considerable effort has been devoted
+                                            nanomechanical resonators [8], surface acoustic wave de-        to developing experimental protocols for the preparation
+                                            vices [9–11], phononic crystal cavities [12, 13], and bulk      of MPS [38–45]. A particularly powerful approach relies
+                                            acoustic wave resonators [14–17]. In this context, high-        on using a two-level system to sequentially emit a stream
+                                            overtone bulk acoustic wave resonators (HBARs) consti-          of entangled temporal modes of a propagating field [38],
+                                            tute a compelling platform that can offer hundreds of           as successfully demonstrated in both the optical [46, 47]
+                                            independently addressable long-lived bosonic modes in a         and microwave [48–51] domains.
+                                            compact physical footprint [18–22]. This unique combi-
+                                            nation opens new opportunities for quantum simulation              Within the class of sequentially generated MPS, three
+                                            [23, 24], quantum memories [25, 26], and quantum sens-          families of multipartite entangled states are of particular
+                                            ing [27–33]. However, to fully exploit the potential of         importance: W , GHZ, and cluster states [52]. W states
+                                            multimode mechanical devices for many of these appli-           retain genuine multipartite entanglement even after the
+                                            cations, it is necessary to develop a scalable and pro-         loss of individual particles [53], making them attractive
+                                            grammable approach for the preparation of many-body             for quantum communication and networking tasks in the
+                                            quantum states across modes.                                    presence of loss [54]. GHZ states, in contrast, provide
+                                               Many physically relevant many-body quantum states            the standard resource for fundamental tests of quantum
+                                            have limited entanglement, in the sense of exhibiting en-       nonlocality [55, 56] and for metrology at the Heisenberg
+                                                                                                            limit [57]. Their fragility, whereby the loss of a single
+                                                                                                            constituent destroys the entanglement, makes them a
+                                                                                                            stringent benchmark for source fidelity. Cluster states,
+                                            ∗ zywei@umd.edu
+                                                                                                            a paradigmatic class of graph states [58, 59], are the uni-
+                                            † matteofadel@pku.edu.cn
+                                                                                                            versal resource underlying measurement-based quantum
+                                                                                                                                                                                              2
+
+ a                                        b                       transmon qubit                         c                |g၉
+                                                                                                                                 Ry ș                                                  |g၉
+                                                                        Stark shift
+                                                                                                                                                           V[N-1]      |0၉
+                                              g4          g3            g2        g1
+                                                                                           Ȧq                                             V[1]       |0၉
+                                              Ȧ4         Ȧ3             Ȧ2        Ȧ1            Ȧ
+                                                                                                                                                                                       _Ȍۧ
+
+
+
+
+                                                                                                                                                                                 ...
+                                                                                                                                                           ...
+                                                                                                                          |0၉
+                                                                                       HBAR
+                                  2 mm                                                 modes
+ d                                                                                                       f
+               40                                                                                                                ideal           simulation         experiment    
+                             Re                                                                                          II
+ ȍ/2ʌ [ MHz]
+
+
+
+
+               20            Im                                                                                         IX                                                             0.4
+                                                                                                                        IY
+                                                                                                                        IZ
+                0                                                                                                       XI
+
+
+
+
+                                                                                                    output operators
+                                                                                                                                                                                       0.2
+                                                                                                                       XX
+           í                                                                                                         XY
+                                                                                                                       XZ                                                              0.0
+                    0                              time [µs]                           2                                YI
+                                                                                                                       YX
+                                                                                                                       YY
+ e                                                                                                                     YZ                                                              −0.2
+                 drive                                                                                                  ZI
+                 qubit                        R                    π         π    R                                    ZX
+                                   tOC                    twait    2g        2g                                        ZY                                                              −0.4
+               phonon                                                                                                  ZZ
+                                                                                                                                I X Y Z       I X Y Z               I X Y Z
+               ancilla
+                         init.    pulse            measure        reset swap measure                                                        input operator
+
+FIG. 1. HBAR device and process tomography of the MPS preparation pulses. a) Micrograph of the transmon-
+HBAR device and b) its schematic illustration. The transmon can be frequency-shifted to become resonant with the individual
+phonon modes of the HBAR, to which it couples at rate gk . In this work, we only operate within the {|0⟩, |1⟩} subspace of each
+phonon mode. c) Algorithm to prepare MPS in an HBAR using isometries V̂ and the qubit as an ancilla. d) Pulse shape used
+for implementing the GHZ isometry Eq. (2). e) Gate sequence used to retrieve process maps. f ) Process maps of the ideal,
+simulated, and experimental isometry Eq. (2) used for GHZ state preparation. See main text for details.
+
+
+computation [60, 61], where an entangled substrate is                                                        which we reconstruct via state tomography. Using en-
+prepared once and computation proceeds through a se-                                                         tanglement witnesses, we certify genuine multipartite en-
+quence of adaptive single-qubit measurements.                                                                tanglement (GME) among up to four mechanical modes.
+   Previous experiments with mechanical degrees of free-                                                     Beyond state preparation and entanglement certification,
+dom have shown bipartite entanglement between the mo-                                                        we demonstrate a correlated-noise sensing protocol using
+tional states of trapped-ion oscillators [62], bulk vibra-                                                   the stored mechanical states. Exploiting the complemen-
+tions in diamonds [63], drumhead oscillators [64–66], sili-                                                  tary sensitivity of W and GHZ states to relative and col-
+con nanobeams [67], and circuit quantum acoustodynam-                                                        lective phase fluctuations, we isolate inter-mode correla-
+ics (cQAD) devices [13, 24, 68–70]. Multipartite mechan-                                                     tions in the phonon dephasing from local decoherence,
+ical entanglement, however, has so far been detected only                                                    without requiring calibration of the single-mode decay
+in a few experiments, based on multimode squeezing of                                                        rates. This allows us to bound the collective-dephasing
+surface acoustic wave phonons [71] and dissipative en-                                                       rate to over an order of magnitude below the phonon
+gineering of trapped-ion motional modes [72]. Moreover,                                                      energy-decay rates, an important benchmark for multi-
+efficient techniques to prepare such states in a determinis-                                                 mode quantum memories and error correction [73, 74].
+tic and programmable manner still have to be developed.                                                      Our results establish a scalable route toward determinis-
+                                                                                                             tically preparing broad classes of multipartite entangled
+   In this work, we demonstrate the deterministic                                                            states in mechanical systems, with direct applications to
+and programmable generation of multipartite entangled                                                        quantum simulation [75, 76], multiparameter quantum
+states among the gigahertz-frequency phonon modes of                                                         sensing [77–79], and tests of quantum mechanics in the
+a mechanical resonator, in a cQAD platform where a su-                                                       massive regime [15, 27].
+perconducting transmon qubit is coupled to an HBAR.
+This is achieved through sequential interactions between
+the qubit and successive phonon modes, which realize
+bosonic transformations that prepare arbitrary MPS of                                                                                      I.      THE SYSTEM
+bond dimension two. We characterize the elementary
+building blocks of this protocol via process tomography,                                                      The cQAD device used in this work consists of a trans-
+and use them to prepare W , GHZ, and cluster states,                                                         mon qubit flip-chip bonded to an HBAR [21], see Fig. 1a.
+                                                                                                                                    3
+
+   The qubit has a frequency ωq /2π ≈ 5 GHz, which                         mode, which results in the preparation of an N -partite
+can be tuned via a far-off-resonant AC Stark shift drive.                  phonon state with the qubit disentangled from it.
+At its idle frequency ωq,idle /2π = 5.021 GHz, the qubit
+has an energy relaxation time T1,q = 28(1) µs, Ram-                           To experimentally realize a desired isometry V̂ , we in-
+sey decoherence time T2,q      ∗
+                                  = 15(1) µs, and anharmonicity            troduce a protocol in which the qubit is tuned into res-
+α/2π = 185 MHz.                                                            onance with the target phonon mode, while simultane-
+   The HBAR has a longitudinal free spectral range of                      ously applying a microwave drive also at the same fre-
+12.7 MHz and is coupled to the qubit through a piezo-                      quency. This drive has a complex, time-dependent ampli-
+electric transducer made of aluminum nitride that medi-                    tude Ω(t), obtained from an optimal control (OC) algo-
+ates a Jaynes–Cummings (JC) interaction. The system                        rithm [80–82], see e.g. Fig. 1d. By suitably shaping Ω(t),
+Hamiltonian reads                                                          we can realize an arbitrary isometry between the qubit
+                                                                           and the phonon’s computational subspace, thereby en-
+                        α
+   Ĥ/ℏ = ωq q̂ † q̂ − q̂ †2 q̂ 2                                          abling the preparation of arbitrary matrix product states
+                        2                                                  of phononic modes with bond dimension D = 2. In the
+           Xh                                           i
+         +         ωk â†k âk + gk (q̂â†k + q̂ † âk ) + Ĥqd /ℏ , (1)   following, we will investigate specific instances of such
+              k                                                            states, namely W , GHZ, and cluster states.
+
+where q̂ and âk are the bosonic annihilation operators                       In the ideal case of a closed system, our simulations
+for the qubit and the phonon modes k ∈ {1, 2, 3, 4},                       predict that the isometry Eq. (2) can be realized with
+respectively, and gk is the coupling strength. To good                     > 99 % fidelity in a time t ∼ π/g. Its experimental im-
+approximation we find gk /2π = 273 kHz, independently                      plementation, however, is unavoidably affected by deco-
+of k. The term Ĥqd /ℏ = Ω(t)e−iωd t q̂ † + h.c. describes                 herence. To benchmark the fidelity of the implemented
+a microwave drive at frequency ωd and time-dependent                       operation, we perform process tomography [80]. We pre-
+complex amplitude Ω(t) applied to the qubit. This drive                    pare the qubit in one of the six cardinal points of the
+will be used to implement qubit-phonon operations as de-                   Bloch sphere, {|g/e⟩, |±⟩, |±i⟩}, then apply the OC pulse
+scribed in the following. The four phonon modes we con-                    realizing the desired isometry, and finally perform full
+sider in this work have frequencies ωk /2π = {5.0232 GHz,                  state tomography of the joint qubit-phonon system, see
+5.0359 GHz, 5.0486 GHz, 5.0613 GHz}, energy relaxation                     Fig. 1e for a sketch of this sequence. By repeating this
+times T1,k = {75(5) µs, 82(2) µs, 57(7) µs, 117(7) µs} and                 experiment ∼ 104 times for each of the six initial qubit
+Ramsey decoherence times T2,k  ∗
+                                  = {149(8) µs, 159(6) µs,                 states we are able to reconstruct the process map χ asso-
+112(18) µs, 216(14) µs}.                                                   ciated with the OC pulse [46, 80]. The resulting process
+                                                                           map is illustrated in Fig. 1f, and it shows a fidelity of
+                                                                           90.8(4) % (89.2(4) % including SPAM errors) compared
+    II.    SEQUENTIAL STATE-PREPARATION                                    to the ideal map. This is comparable to the 93.5 % fi-
+                   PROTOCOL                                                delity of the simulated map, which takes into account
+                                                                           decoherence of the system during the OC pulse.
+   Our goal is to demonstrate a scalable and pro-                             We perform a similar characterization for the qubit-
+grammable approach for preparing many-body entangled                       phonon iSWAP operation, which is implemented by let-
+states |Ψ⟩ of phononic modes. We focus here on states                      ting the qubit and phonon mode interact resonantly
+encoded in the two lowest Fock states of each mode,                        according to the JC Hamiltonian for a time tswap =
+{|0⟩k , |1⟩k }, which we refer to as the computational sub-                π/2g. Process tomography gives us a fidelity of 96.1(4) %
+space, and discuss the generalization to larger subspaces                  (94.4(4) % including SPAM errors) for the experimental
+later. The state preparation approach we consider con-                     operation and of 96.5 % for the simulated one [80].
+sists of sequential interactions with the qubit [38], as il-
+lustrated in Fig. 1c. Specifically, we sequentially imple-                   To correct for the SPAM error contribution to a mea-
+ment a set of isometries {V̂[i] } acting as maps between                   sured gate fidelity, we divide the measured gate fidelity
+the qubit {|g⟩q , |e⟩q } states and (the computational sub-                by the identity gate fidelity of 98.2(2) % [83]. We have
+space of) each phonon mode. For example, to prepare                        verified that the results obtained using this method are
+GHZ states, we are interested in the isometry defined by                   consistent with the benchmarking protocol of repeating
+                                                                           a gate NG times and fitting the measured gate fidelities
+     V̂ : |g⟩q |0⟩k → |g⟩q |0⟩k ,     |e⟩q |0⟩k → |e⟩q |1⟩k .       (2)    for each repetition number to the exponential function
+                                                                           F(NG ) = A(Fgate )NG +B, where Fgate is the gate fidelity
+Note that, although similar to the action of a CNOT                        excluding SPAM errors and A, B are free parameters that
+gate, here we do not specify the mapping of the other                      account for the latter.
+basis states |g⟩q |1⟩k and |e⟩q |1⟩k . This crucial reduction
+of constraints allows for implementing isometries consid-                     Having demonstrated the realization and characteriza-
+erably faster than unitaries [80]. As shown in Fig. 1c, af-                tion of one step of the state preparation protocol shown
+ter having implemented N − 1 isometries we perform an                      in Fig. 1c, in the following we will show the preparation
+iSWAP operation between the qubit state and a phonon                       of paradigmatic classes of multipartite entangled states.
+                                                                                                                                                                                                 4
+
+
+                                                                               Experiment                         Simulation
+               a                                                          d                                                         g
+                                      W States                                                 GHZ States                                             Cluster States
+              1.00
+   Fidelity
+
+
+
+
+              0.75
+
+
+              0.50
+
+                                                                                         Number of modes
+
+               b                                                          e                                                         h
+
+                                                              0.4                                                      0.4                                                     0.2
+                                                             0.2                                                       0.2                                                     0.0
+                                                             0.0                                                       0.0                                                    −0.2
+                     00                                 11                    00                                  11                     00                                 11
+                          ...                     ...                              ...                      ...                               ...                     ...
+                                11          00                                           11           00                                            11          00
+                   ()
+       0.6                c                                                        f                                                          i
+
+       0.4                                                              0.4
+                                                                                                                                   0.4                                                     0.2
+       0.2                                                              0.2                                                       0.2                                                     0.0
+                                                                        0.0                                                       0.0
+                                                                                                                                                                                          −0.2
+       0.0                      000                                  111                 000                                   111                  000                                 111
+                                      ...                      ...                              ...                      ...                              ...                     ...
+    −0.2                                    111         000                                           111         000                                           111         000
+
+
+FIG. 2. Fidelities of the prepared W , GHZ and cluster states, and density matrices. a) Experimental and simulated
+fidelities for W states prepared on different numbers of modes. b,c) Real part of representative density matrices for W2 and
+W3 states reconstructed from full state tomography. d,e,f ) and g,h,i) show the same for GHZ and cluster states, respectively.
+Simulations include decoherence during the state-preparation sequence but not the sequential tomographic readout. For W
+states the decrease of the measured fidelities thus originates mainly from the readout, while for GHZ and cluster states the
+decrease reflects decoherence during the optimal-control pulses (see main text).
+
+
+                   III.    STATE PREPARATION AND                                                      in the initial qubit state and in the choice of isometries.
+                              TOMOGRAPHY                                                                 W states. The simplest case to consider is the prepa-
+                                                                                                      ration of W states, namely states    √     |WN ⟩ = (|10 . . . 0⟩ +
+   The protocol we use to prepare phononic many-body                                                  |01 . . . 0⟩ + · · · + |0 . . . 01⟩)/ N where one excitation
+states is illustrated in Fig. 1c. First, the qubit is initial-                                        is delocalized over N modes. The protocol for their
+ized in a desired state |ϕ0 ⟩q by a single-qubit operation                                            preparation relies on initializing the qubit in the ex-
+R̂y (θ). Then, an isometry V̂[1] between the qubit and                                                cited state |ϕ0 ⟩q = |e⟩, followed by the implementa-
+the first phonon mode is implemented by tuning the two                                                tion of isometries V̂[i] , for i = 1, . . . , N − 1, effec-
+systems into resonance and sending the corresponding                                                  tively equivalent     to an iSWAP(θ    i ) gate with angles θi =
+                                                                                                      2 arcsin (N − i + 1)−1/2 . These partial-iSWAP isome-
+                                                                                                                                      
+OC pulse, as discussed in detail in the previous section.
+This step is repeated on each of the phonon modes par-                                                tries do not require an OC pulse: with the qubit drive
+ticipating in the many-body state we want to prepare,                                                 switched off, Ω(t) = 0, the qubit and the phonon mode
+with in general different isometries V̂[i] . Finally, the state                                       simply evolve on resonance under the JC Hamiltonian for
+preparation sequence is concluded by swapping the qubit                                               a time ti = θi /2g.
+state to the last phonon mode, which disentangles the                                                    GHZ states.             The preparation
+                                                                                                                                             √        of GHZ states
+qubit from the mechanics. In the following, we describe                                               |GHZN ⟩ = (|0 . . . 0⟩ + |1 . . . 1⟩)/ 2 √   begins with initial-
+how this general scheme is specialized to prepare three                                               izing the qubit in |ϕ0 ⟩q = (|g⟩ + |e⟩)/ 2, followed by the
+paradigmatic families of multipartite entangled states,                                               implementation of the isometry V̂ defined in Eq. (2) on
+namely W , GHZ, and linear cluster states, which differ                                               each of the first N − 1 modes. Finally, the iSWAP op-
+                                                                                                                              5
+
+eration between the qubit and the N th mode results in                         N     criterion      Tr[Ŵρ]     Tr[Ŵ ′ ρ]
+an N -partite GHZ state between the phonon modes. We                           2       Ŵ1         −0.37(1)    −0.46(1)
+note that the duration, and thus infidelity, of this state
+
+
+
+
+                                                                    W
+                                                                               3       Ŵ1         −0.16(3)    −0.19(3)
+preparation sequence can be further reduced by replac-
+ing the first isometry with                                                    4       Ŵ2          0.03(2)    −0.09(2)
+                        √ a gate sequence that prepares
+the state (|g0⟩+|e1⟩)/ 2 between qubit and first phonon                        2       Ŵ3         −0.41(2)    −0.42(2)
+
+
+
+
+                                                                    GHZ
+mode. This is achieved by first preparing the two systems                      3       Ŵ3         −0.25(5)    −0.28(8)
+in a W state, as discussed in the previous paragraph, and                      4       Ŵ3         −0.07(3)    −0.23(10)
+then applying a local π-pulse to the qubit.
+                                                                               2       Ŵ3         −0.28(2)    −0.30(2)
+
+
+
+
+                                                                    Cluster
+   Cluster states. The preparation of linear cluster                           3       Ŵ3         −0.19(3)    −0.28(4)
+states√ begins by initializing the qubit in |ϕ0 ⟩q = (|g⟩ +
+                                                                               4       Ŵ3          0.09(9)     0.08(9)
+|e⟩)/ 2, followed by the isometry that maps |g⟩q |0⟩k →
+√1 (|g⟩q + |e⟩q )|0⟩k and |e⟩q |0⟩k → √1 (|g⟩q − |e⟩q )|1⟩k .
+  2                                     2                       TABLE I: GME witnessing results. Expectation val-
+This is equivalent to using the isometry Eq. (2) followed       ues of GME witnesses tailored to the state under in-
+by a Hadamard gate applied to the qubit. As for the             vestigation, without and with filtering (indicated with
+GHZ case, the duration of this protocol can also be re-         a prime). Uncertainties are standard deviations (STD)
+duced by replacing the first isometry with a set of gates       estimated from independent state preparations. For the
+that prepare a qubit-phonon cluster state.                      N = 4 cluster state, neither witness certifies GME. Neg-
+                                                                ative values reveal GME.
+   In order to characterize the prepared many-body
+states, we use the qubit to perform full state tomography
+[24]. For this, we swap the state of phonon mode k to           states, the preparation relies on considerably longer OC
+the qubit initialized in |g⟩, apply a single-qubit unitary to   pulses, and decoherence during these pulses becomes the
+set the measurement axis, and then perform a single-shot        main limitation, as reflected by the decrease of the simu-
+readout of the qubit state with a 4 µs-long pulse on the        lated fidelities with N . While the measured GHZ fideli-
+readout resonator. We then wait 2 µs for the latter res-        ties agree with the simulation within the experimental
+onator to return to its ground state, and swap the qubit        uncertainty, the cluster-state fidelities lie systematically
+state back to mode k, which resets the qubit to |g⟩ while       below it, which we attribute to their more complex struc-
+the already-measured mode takes up the residual exci-           ture and correspondingly higher sensitivity to residual
+tation. Each measured mode therefore adds about 6 µs            preparation errors not included in the simulation.
+to the sequence, during which the modes still awaiting
+readout decay. Within a single experimental shot, this
+sequence is applied sequentially to all modes, yielding                       IV.   GENUINE MULTIPARTITE
+one joint measurement outcome for all N modes. The                                   ENTANGLEMENT
+full shot is then repeated for all combinations of qubit
+measurement axes, so as to estimate the N -body corre-             Entanglement in many-body systems can exhibit rich
+lators from which the density matrix is reconstructed.          and complex structures. Its strongest form, genuine mul-
+   For all prepared states, we quantify the agreement be-       tipartite entanglement (GME), arises when a state can-
+tween the reconstructed density matrix ρexpp   and the ideal    not be written as a convex combination of states that
+target state |Ψ⟩ through the fidelity F = ⟨Ψ|ρexp |Ψ⟩,          are each separable with respect to some bipartition of
+after compensating, via local virtual rotations, the rel-       the parties (biseparable states), implying quantum cor-
+ative phases between the branches of the superposition          relations shared among all parties. Operationally, GME
+that arise from the different mode frequencies and from         can be revealed through a witness operator Ŵ satisfy-
+the qubit-phonon interactions. We show in Fig. 2 the            ing Tr[Ŵσ] ≥ 0 for all biseparable states σ. Therefore,
+resulting fidelities for W , GHZ, and cluster states, to-       observing Tr[Ŵρ] < 0 implies that ρ is GME.
+gether with the real parts of representative reconstructed         Several GME witnesses are known, each tailored to
+density matrices for N = 2, 3. We compare the mea-              some target state of interest. For the case of W states,
+sured fidelities with a simulation of the state-preparation     one possible choice is the operator [84, 85]
+sequence, which includes decoherence of the qubit and                                       N −1
+phonon modes but not the tomographic readout. This                             Ŵ1 (N ) =        1 − |WN ⟩⟨WN | ,            (3)
+                                                                                             N
+comparison shows that the dominant sources of infidelity
+differ between the state families. For W states, the            where (N −1)/N is the maximal overlap of |WN ⟩ with any
+partial-iSWAP operations are short, and the simulated           biseparable state. With our fidelity convention, this cor-
+fidelities remain above 0.95 for all N ≤ 4. The decrease        responds
+                                                                      p to saying that observing a state fidelity larger
+of the measured fidelities therefore originates from errors     than    (N − 1)/N witnesses GME. According to this
+outside the preparation, which we attribute to the se-          condition, our prepared states show GME up to N = 3,
+quential tomographic readout, whose duration and num-           see Fig. 2a. For N = 4, this fidelity threshold becomes
+ber of operations grow with N . For GHZ and cluster             too demanding to certify GME from our data alone, and
+                                                                                                                                                         6
+
+                   a                                              b          W pairwise coherence
+                                                                                                              c
+                                        W States                                                                               GHZ States
+
+                                           = , =   ( ) µs                                , =   ( ) µs                            = , =     ( ) µs
+                       1
+   Coherence ( )
+
+                                           = , =   ( ) µs                                , =   ( ) µs                            = , =     ( ) µs
+                   0.75                                                                   , =   ( ) µs
+
+                    0.5
+
+                   0.25
+
+                       0
+                             0              200           400           0               200           400           0               200           400
+                                 Free evolution time (µs)                    Free evolution time (µs)                    Free evolution time (µs)
+
+
+FIG. 3. Free evolution of W and GHZ coherences. a) Coherence C(t), normalized to its value at t = 0, of W states
+with N = 2, 3 modes as a function of the free evolution time t. Lines show fits to Ae−t/τ + B, with the extracted decay times
+τ given in the legend. b) Pairwise coherences ckl (t) of the W3 state, fitted in the same way. c) Same as panel a, but for GHZ
+states. Unlike for W states, the GHZ decay rate depends on N . This dependence is here quantitatively explained by local
+decoherence alone, without any contribution from correlated dephasing (see main text for details).
+
+
+we instead construct a witness that exploits additional                                 significance of each violation by its ratio to the statistical
+information about the state [85]. We define the operator                                uncertainty. For W states, we optimize β and the filter
+                                                                                        simultaneously, so as to obtain a single witness maxi-
+                                                      N
+                                                      X                                 mizing the average violation over all experimental runs.
+                   Q̂(N, β) = |WN ⟩⟨WN | − β                 |BSk ⟩⟨BSk |,       (4)    For our 18 experimental preparations of four-partite W
+                                                      k=1                               states, we obtain an average violation of −0.09(2) for
+                                                                                        β = 0.30, where the uncertainty denotes the standard
+where |BSk ⟩ = |0⟩k |WN −1 ⟩ denotes the biseparable                                    deviation over the experimental preparations. This vi-
+state with no excitation in mode k and a single ex-                                     olation by more than three standard deviations extends
+citation delocalized over the remaining N − 1 modes,                                    our certification of GME in W states to N = 4.
+which has maximal overlap with |WN ⟩, and β ≥ 0
+                                                                                           For N -partite graph states |GN ⟩, which include GHZ
+is a free parameter.      For a given β, we compute
+                                                                                        and cluster states, we use the GME witness operator [87]
+γ(N, β) = maxσ∈bisep Tr[Q̂(N, β) σ], the maximum ex-
+pectation value of Q̂(N, β) over all biseparable states                                                                  1
+(see the Supplementary Material [80] for the full con-                                                      Ŵ3 (N ) =     1 − |GN ⟩⟨GN | ,             (6)
+                                                                                                                         2
+struction). This allows us to construct the GME witness
+operator                                                                                where 1/2 is the maximal overlap of a graph state with
+                                                                                        any biseparable state. With our convention, this cor-
+                           Ŵ2 (N, β) = γ(N, β)1(2) − Q̂(N, β) ,                 (5)    responds√to saying that observing a state fidelity larger
+                                                                                        than 1/ 2 reveals GME. Applying this criterion to the
+with 1(2) the identity operator restricted to at most two                               data shown in Fig. 2d,g reveals GME up to N = 3 for
+excitations. Since Ŵ2 (N, β) is a valid GME witness for                                both GHZ and cluster states with a significance exceeding
+every β ≥ 0, we numerically optimize β so as to minimize                                three standard deviations. As for the W states above, the
+its expectation value on the reconstructed state ρ.                                     detection can be improved via a local-filtering-optimized
+   The detection capability of a witness Ŵ can be fur-                                 witness. This allows us to certify GME also for N = 4
+ther enhanced by applying a local filtering operation                                   GHZ states, while for N = 4 cluster states the noise is
+F̂ = Â1 ⊗· · ·⊗ ÂN , where each Âk is an arbitrary (in gen-                          too large to certify GME with either the filtered or unfil-
+eral non-unitary) operator acting on mode k, and defin-                                 tered witness. A summary of the GME witness violations
+ing the filtered operator Ŵ ′ = F̂ † Ŵ F̂ [85, 86]. Since local                       is presented in Tab. I.
+operations map biseparable states onto (unnormalized)
+biseparable states, Tr[Ŵ ′ σ] = Tr[Ŵ F̂ σ F̂ † ] ≥ 0 holds for
+every biseparable σ, so that Ŵ ′ is again a valid GME wit-                                        V. STATE DECOHERENCE AND
+ness. Observing Tr[Ŵ ′ ρ] < 0 therefore certifies GME of                                           CORRELATED NOISE SENSING
+ρ, and a suitably chosen filter can detect GME in states
+for which the unfiltered witness fails, by compensating                                    A key feature of our platform, compared to the se-
+for the specific imperfections of the measured state (see                               quential emission of MPS into propagating optical or mi-
+Supplementary Material [80]). Since the magnitude of                                    crowave modes, is that the prepared states remain stored
+Tr[Ŵ ′ ρ] depends on the normalization of F̂ , we normal-                              in long-lived mechanical modes. This enables applica-
+ize the filter such that Tr[F̂ ρF̂ † ] = 1 and we assess the                            tions in quantum simulation and metrology where the
+                                                                                                                                         7
+
+entire many-body state can be further manipulated or                    additional local dephasing, while only the off-diagonal
+left to evolve in time.                                                 elements Kk̸=l reflect noise correlations between modes.
+   We exploit this capability to use the prepared states as                The two families of states probe this covariance in com-
+probes of correlated noise among the mechanical modes.                  plementary ways. Every coherence of WNPconnects states
+Such correlations are of central importance for multi-                  with the same total excitation number ( k dk = 0), and
+mode devices: they cause the superdecoherence of highly                 is therefore sensitive only to phase differences Φk − Φl .
+entangled states [88] and violate the assumption of in-                 In particular, W states are decoherence-free under col-
+dependent errors that underlies quantum error correc-                   lective dephasing [93]. In contrast, the two branches of
+tion [73, 74], yet single-mode measurements cannot dis-                 P N differ by N excitations and probe the total phase
+                                                                        GHZ
+tinguish them from local dephasing. Entangled states are                   k Φk , making them maximally sensitive to common-
+natural probes of this structure, since their coherences                mode noise. Comparing the two on the same set of modes
+depend directly on the relative or total phases of the                  cancels all local contributions exactly. For N = 2, we find
+modes [89], and they can even outperform product states
+when the noise is close to maximally correlated [90, 91].                                     CGHZ2 (t)
+                                                                                   R2 (t) ≡             = exp [−2 K12 (t)] ,          (10)
+We prepare W and GHZ states of N = 2, 3 modes, let                                             CW2 (t)
+them evolve freely for a time t, and perform full state                 while for N = 3 the square root of the product of the
+tomography. From the reconstructed density matrix we                    three pairwise W3 coherences reproduces exactly the local
+compute the coherence normalized to its initial value,                  decay of the GHZ3 coherence, giving
+                      P
+                         m̸=n Mmn |ρmn (t)|                                                CGHZ3 (t)                  h     X           i
+              C(t) = P                       ,          (7)               R3 (t) ≡ p                           = exp − 23        Kkl (t) .
+                         m̸=n Mmn |ρmn (0)|                                            c12 (t) c13 (t) c23 (t)               k<l
+where Mmn = 1 if the off-diagonal element ρmn is non-                                                                                  (11)
+zero in the ideal state and Mmn = 0 otherwise. For                      Equations (10) and (11) hold for arbitrary, mode-
+W3 states we additionally consider the three individual                 dependent loss and local dephasing rates. Moreover,
+pairwise coherences ckl (t) = |ρ1k ,1l (t)| / |ρ1k ,1l (0)|, where      for statistically independent phase noise on each mode,
+1k denotes a single excitation in mode k.                               R2 = R3 = 1 for arbitrary noise statistics and spec-
+  To interpret the coherence dynamics, we model the                     tra, since the single-mode contributions cancel exactly in
+evolution of the state with the master equation                         both ratios. They therefore require no independent cali-
+               "N                     #                                 bration of the loss and pure-dephasing rates, and deviate
+                                          N                             from unity only in the presence of inter-mode phase cor-
+                                                (k)
+                X                        X
+  ρ̇ξ (t) = −i     ξk (t) n̂k , ρξ (t) +      γ1 D[âk ]ρξ (t)          relations. For purely collective noise, Kkl = ⟨δΦ(t)2 ⟩ and
+                  k=1                           k=1                     RN (t) = exp[−N 2 ⟨δΦ(t)2 ⟩/2], recovering the character-
+                  N
+                  X                                                     istic N 2 scaling of GHZ superdecoherence [88].
+              +         2γφ(k) D[n̂k ]ρξ (t),                     (8)      Experimentally, all measured coherences are well de-
+                  k=1                                                   scribed by exponential decays A e−t/τ + B, where the
+                                                      (k)   (k)
+                                                                        offset B accounts for the positive bias of |ρmn | when esti-
+where D[L̂]ρ = L̂ρL̂† − 12 {L̂† L̂, ρ}, and γ1 , γφ are                 mated from noisy data. Fitting our data with this model
+the local loss and pure-dephasing rates of mode k. The                  gives the decay times τ shown in Fig. 3. The pairwise
+classical stochastic detunings ξk (t) describe additional               decay times τkl of the W3 coherences ckl are mutually
+phase noise of arbitrary strength, temporal correlations,               consistent, and their mean decay rate is in agreement
+and inter-mode
+          Rt       correlations, with accumulated phases                with the directly fitted τW3 . Within this exponential de-
+Φk (t) = 0 ξk (t′ ) dt′ . Purely collective dephasing corre-            scription, the ratios decay as RNP       (t) = e−ΓN t , with Γ2 =
+                                                                          −1        −1                −1       1        −1
+sponds to the special case ξk (t) = ξ(t) for all k. For noise           τGHZ  2
+                                                                                − τW2  and  Γ 3 =   τGHZ3   −  2   k<l τkl . Without any
+that is white on the timescale of the experiment, averag-               free parameter, the pairwise lifetimes predict a purely lo-
+ing over ξ yields the correlated-dephasing Lindbladian                                                                 −1 −1
+                                                                        cal GHZ3 lifetime of τloc = 21 k<l τkl
+                                                                                                               P          
+                                                                                                                               = 37(2) µs,
+describing spatially correlated noise [89, 91, 92].                     which accounts for 94(10) % of the measured GHZ3 de-
+   For a coherence ρmn = ⟨m|ρ|n⟩ of a W or GHZ state,                   cay rate. The faster decay of GHZ3 relative to W3 is
+with occupation difference d = m − n, the stochastic                    thus consistent, within uncertainty, with local decoher-
+phases factor out of the local dynamics, and for Gaussian               ence alone, whose contribution grows with the number
+phase noise one finds [80]                                              of excited modes. We find Γ2 = −1.0(1.2) ms−1 and
+                                                                        Γ3 = 1.8(3.0) ms−1 , both compatible with zero, so that
+  |ρmn (t)|         h X                1X                i
+             = exp −        d2k λk t −      dk dl Kkl (t) , (9)         no inter-mode phase correlations are resolved.
+  |ρmn (0)|                            2                                   Since RN depends only on the inter-mode phase covari-
+                             k                  k,l
+                                                                        ances, these results bound correlated phase noise with-
+                  (k)            (k)
+where λk = γ1 /2 + γφ is the local coherence de-                        out assumptions on its spatial structure. If the covari-
+cay rate of mode k, and Kkl (t) = ⟨δΦk (t) δΦl (t)⟩, with               ances grow linearly in time on the timescale of the ex-
+δΦk = Φk − ⟨Φk ⟩, is the covariance matrix of the ac-                   periment, Kkl (t) = 2Dkl t, as suggested by the observed
+cumulated phases. The diagonal elements Kkk act as                      exponential decays, the off-diagonal elements Dkl act as
+                                                                                                                        8
+
+         Quantity               Value           95 % limit     In our approach, a transmon qubit interacts sequentially
+          −1
+    Γ2 = τGHZ     −1
+               − τW         −1.0(1.2) ms   −1                  with successive phonon modes of an HBAR, and during
+             2      2
+                                                               each interaction an optimal-control pulse realizes a qubit-
+       D12 = Γ2 /4          −0.24(30) ms−1      < 0.26 ms−1
+                                                               phonon isometry, the building block for preparing matrix
+             −1      −1
+     Γ3 = τGHZ   − τloc      1.8(3.0) ms−1                     product states of bond dimension two. We used this pro-
+           1
+             P 3 −1   −1
+  τloc = 2 k<l τkl             37(2) µs                        tocol to prepare mechanical W , GHZ, and cluster states,
+     P
+        k<l Dkl = Γ3 /3      0.6(1.0) ms−1      < 2.3 ms−1     and certified GME among up to four modes.
+        Γc = Γ2 /2           −0.5(6) ms   −1                      The number of modes for which GME can be certi-
+                                                               fied is currently limited by decoherence and errors dur-
+       Γc = 2Γ3 /9           0.4(7) ms−1
+                                                               ing both the state preparation and the sequential tomo-
+            Γ̄c              −0.1(4) ms−1       < 0.7 ms−1     graphic readout, whose durations grow with N . A larger
+                                                               qubit-phonon coupling g, which shortens the preparation
+TABLE II: Correlated-noise sensing. Quantities de-             sequence, longer coherence times, faster qubit readout,
+rived from the fitted decay times of Fig. 3. Uncertainties     and characterization schemes requiring only partial in-
+are standard deviations propagated from the fit uncer-         formation about the state [94] should therefore allow en-
+tainties. Upper limits are one-sided at 95 % confidence.       tanglement to be certified among more modes.
+The collective-dephasing rate Γc assumes purely collec-           Since the prepared states remain stored in the mechan-
+tive noise, and Γ̄c is the inverse-variance weighted mean      ical modes, we further tracked their free evolution in a
+of the N = 2 and N = 3 estimates.                              sensing application, using the complementary sensitivity
+                                                               of W and GHZ states to correlated phase noise to probe
+correlated dephasing rates. Equations                          the spatial correlations of the phonon dephasing without
+                                      P(10) and (11) then      calibrating the single-mode decay rates. For both N = 2
+give D12 = Γ2 /4 < 0.26 ms−1 and k<l Dkl = Γ3 /3 <
+2.3 ms−1 at the 95 % confidence level (one-sided). For         and N = 3, the inferred collective-dephasing rate is com-
+purely collective noise, all Dkl are equal to Γc /2, with Γc   patible with zero, bounding it to Γc < 0.7 ms−1 at the
+the collective-dephasing rate defined by ⟨δΦ(t)2 ⟩ = Γc t.     95 % confidence level. The decoherence is thus dominated
+The two data sets then measure the same parameter,             by local, uncorrelated processes, which, together with the
+giving Γc = Γ2 /2 = −0.5(6) ms−1 for N = 2 and                 measured Ramsey times T2∗ ≃ 2T1 , can be attributed to
+Γc = 2Γ3 /9 = 0.4(7) ms−1 for N = 3, which agree               amplitude damping.
+within one standard deviation. Although the negative              Storing the states also means that the qubit is not
+N = 2 value is unphysical, it is consistent with a sta-        restricted to a single pass over the modes, but can
+tistical fluctuation. The inverse-variance weighted mean,      interact repeatedly with any of them. Revisiting al-
+Γ̄c = −0.1(4) ms−1 , is compatible with zero and bounds        ready entangled modes would establish bonds between
+the collective-dephasing rate to Γc < 0.7 ms−1 at the          arbitrary pairs of modes, analogously to time-delayed
+95 % confidence level (one-sided). Collective noise there-     feedback in photonic sources [50], enabling multipar-
+fore contributes at most Γc /2 < 0.3 ms−1 to the pure-         tite entangled states with graph connectivity beyond the
+dephasing rate of each mode, corresponding to a collec-        one-dimensional, bond-dimension-two case explored here.
+tive dephasing time exceeding 3 ms, which is up to 50          These include two-dimensional cluster states, a universal
+times longer than the phonon energy-relaxation times.          resource for measurement-based quantum computation
+A summary of estimated parameters is given in Tab. II.         [60], and other tensor-network states relevant for multi-
+   We note that the measured W -state lifetimes are            parameter quantum metrology [78, 79]. Looking further
+slightly shorter than predicted from the independently         ahead, extending the sequential-isometry approach be-
+calibrated single-mode decay times, possibly because of        yond the two-level subspace of each mode offers a route
+drifts between calibration and measurement. This dis-          toward entangled states of higher-dimensional bosonic
+crepancy does not affect our conclusions, since local con-     modes, including continuous-variable cluster states [95],
+tributions cancel exactly in Eqs. (10) and (11). These         broadening the applications of HBAR devices.
+ratios have the advantage of being insensitive to such
+drifts as long as the data are acquired under the same                           Acknowledgments
+conditions. Overall, the coherence dynamics of both W
+and GHZ states are consistent with independent local de-       The authors thank Géza Tóth for useful discussions on
+coherence, with no statistically significant contribution      the entanglement witnesses. ZYW was supported in part
+from correlated dephasing among the phonon modes.              by the NSF STAQ program (awards No. 1818914 and
+                                                               No. 2325080). MF was supported by the Swiss National
+                                                               Science Foundation Ambizione Grant No. 208886, Spark
+      VI.    CONCLUSIONS AND OUTLOOK                           Grant No. 237484, and The Branco Weiss Fellowship –
+                                                               Society in Science, administered by the ETH Zürich.
+  We have demonstrated a scalable and programmable
+protocol for the deterministic preparation of multipartite
+entangled states in a multimode mechanical resonator.
+                                                                                                                                9
+
+
+
+
+ [1] A. A. Clerk, K. W. Lehnert, P. Bertet, J. R. Petta,         [15] M. Bild, M. Fadel, Y. Yang, U. von Lüpke, P. Mar-
+     and Y. Nakamura, Hybrid quantum systems with cir-                tin, A. Bruno, and Y. Chu, Schrödinger cat states of
+     cuit quantum electrodynamics, Nature Physics 16, 257             a 16-microgram mechanical oscillator, Science 380, 274
+     (2020).                                                          (2023).
+ [2] S. Barzanjeh, A. Xuereb, S. Gröblacher, M. Paternostro,     [16] S. Marti, U. von Lüpke, O. Joshi, Y. Yang, M. Bild,
+     C. A. Regal, and E. M. Weig, Optomechanics for quan-             A. Omahen, Y. Chu, and M. Fadel, Quantum squeezing
+     tum technologies, Nature Physics 18, 15 (2022).                  in a nonlinear mechanical oscillator, Nature Physics 20,
+ [3] N. Ofek, A. Petrenko, R. Heeres, P. Reinhold, Z. Leghtas,        1448 (2024).
+     B. Vlastakis, Y. Liu, L. Frunzio, S. M. Girvin, L. Jiang,   [17] Y. Yang, I. Kladarić, M. Drimmer, U. von Lüpke,
+     M. Mirrahimi, M. H. Devoret, and R. J. Schoelkopf, Ex-           D. Lenterman, J. Bus, S. Marti, M. Fadel, and Y. Chu,
+     tending the lifetime of a quantum bit with error correc-         A mechanical qubit, Science 386, 783 (2024).
+     tion in superconducting circuits, Nature 536, 441 (2016).   [18] Y. Chu, P. Kharel, W. H. Renninger, L. D. Burkhart,
+ [4] C. Flühmann, T. L. Nguyen, M. Marinelli, V. Negnevit-            L. Frunzio, P. T. Rakich, and R. J. Schoelkopf, Quantum
+     sky, K. Mehta, and J. P. Home, Encoding a qubit in               acoustics with superconducting qubits, Science 358, 199
+     a trapped-ion mechanical oscillator, Nature 566, 513             (2017).
+     (2019).                                                     [19] M. Kervinen, I. Rissanen, and M. Sillanpää, Interfacing
+ [5] G. S. MacCabe, H. Ren, J. Luo, J. D. Cohen, H. Zhou,             planar superconducting qubits with high overtone bulk
+     A. Sipahigil, M. Mirhosseini, and O. Painter, Nano-              acoustic phonons, Physical Review B 97, 205443 (2018).
+     acoustic resonator with ultralong phonon lifetime, Sci-     [20] V. J. Gokhale, B. P. Downey, D. S. Katzer, N. Nepal,
+     ence 370, 840 (2020).                                            A. C. Lang, R. M. Stroud, and D. J. Meyer, Epitaxial
+ [6] A. B. Bozkurt, O. Golami, Y. Yu, H. Tian, and                    bulk acoustic wave resonators as highly coherent multi-
+     M. Mirhosseini, A mechanical quantum memory for mi-              phonon sources for quantum acoustodynamics, Nature
+     crowave photons, Nature Physics 21, 1469 (2025).                 Communications 11, 2314 (2020).
+ [7] H. H. Diamandi, Y. Luo, D. Mason, T. B. Kanmaz,             [21] U. von Lüpke, Y. Yang, M. Bild, L. Michaud, M. Fadel,
+     S. Ghosh, M. Pavlovich, T. Yoon, R. Behunin, S. Puri,            and Y. Chu, Parity measurement in the strong disper-
+     J. G. E. Harris, and P. T. Rakich, Optomechanical con-           sive regime of circuit quantum acoustodynamics, Nature
+     trol of long-lived bulk acoustic phonons in the quantum          Physics 18, 794 (2022).
+     regime, Nature Physics 21, 1482 (2025).                     [22] R. Garcia-Belles, A. Anferov, L. F. Deeg, L. Colic-
+ [8] A. D. O’Connell, M. Hofheinz, M. Ansmann, R. C. Bial-            chio, A. Brooks, T. Schatteburg, M. Drimmer, I. C. Ro-
+     czak, M. Lenander, E. Lucero, M. Neeley, D. Sank,                drigues, R. Benevides, M. Liffredo, J. Patidar, O. Pshyk,
+     H. Wang, M. Weides, J. Wenner, J. M. Martinis, and               M. Fadel, L. G. Villanueva, S. Siol, G. Kirchmair, and
+     A. N. Cleland, Quantum ground state and single-phonon            Y. Chu, Loss Mechanisms in High-Coherence Multimode
+     control of a mechanical resonator, Nature 464, 697               Mechanical Resonators Coupled to Superconducting Cir-
+     (2010).                                                          cuits, PRX Quantum 7, 033013 (2026).
+ [9] M. V. Gustafsson, T. Aref, A. Frisk Kockum, M. K.           [23] W. Chen, Y. Lu, S. Zhang, K. Zhang, G. Huang, M. Qiao,
+     Ekström, G. Johansson, and P. Delsing, Propagating               X. Su, J. Zhang, J.-N. Zhang, L. Banchi, M. S. Kim, and
+     phonons coupled to an artificial atom, Science 346, 207          K. Kim, Scalable and programmable phononic network
+     (2014).                                                          with trapped ions, Nature Physics 19, 877 (2023).
+[10] K. J. Satzinger, Y. P. Zhong, H.-S. Chang, G. A. Peairs,    [24] U. von Lüpke, I. C. Rodrigues, Y. Yang, M. Fadel,
+     A. Bienfait, M.-H. Chou, A. Y. Cleland, C. R. Conner,            and Y. Chu, Engineering multimode interactions in cir-
+     E. Dumur, J. Grebel, I. Gutierrez, B. H. November, R. G.         cuit quantum acoustodynamics, Nature Physics 20, 564
+     Povey, S. J. Whiteley, D. D. Awschalom, D. I. Schuster,          (2024).
+     and A. N. Cleland, Quantum control of surface acoustic-     [25] C. T. Hann, C.-L. Zou, Y. Zhang, Y. Chu, R. J.
+     wave phonons, Nature 563, 661 (2018).                            Schoelkopf, S. M. Girvin, and L. Jiang, Hardware-
+[11] A. Bienfait, K. J. Satzinger, Y. P. Zhong, H.-S. Chang,          efficient quantum random access memory with hybrid
+     M.-H. Chou, C. R. Conner, É. Dumur, J. Grebel, G. A.             quantum acoustic systems, Physical Review Letters 123,
+     Peairs, R. G. Povey, and A. N. Cleland, Phonon-mediated          250501 (2019).
+     quantum state transfer and remote qubit entanglement,       [26] C. Chamberland, K. Noh, P. Arrangoiz-Arriola, E. T.
+     Science 364, 368 (2019).                                         Campbell, C. T. Hann, J. Iverson, H. Putterman, T. C.
+[12] P. Arrangoiz-Arriola, E. A. Wollack, Z. Wang, M. Pechal,         Bohdanowicz, S. T. Flammia, A. Keller, G. Refael,
+     W. Jiang, T. P. McKenna, J. D. Witmer, R. Van Laer,              J. Preskill, L. Jiang, A. H. Safavi-Naeini, O. Painter, and
+     and A. H. Safavi-Naeini, Resolving the energy levels of a        F. G. S. L. Brandão, Building a fault-tolerant quantum
+     nanomechanical oscillator, Nature 571, 537 (2019).               computer using concatenated cat codes, PRX Quantum
+[13] E. A. Wollack, A. Y. Cleland, R. G. Gruenke, Z. Wang,            3, 010329 (2022).
+     P. Arrangoiz-Arriola, and A. H. Safavi-Naeini, Quantum      [27] B. Schrinski, Y. Yang, U. von Lüpke, M. Bild, Y. Chu,
+     state preparation and tomography of entangled mechan-            K. Hornberger, S. Nimmrichter, and M. Fadel, Macro-
+     ical resonators, Nature 604, 463 (2022).                         scopic quantum test with bulk acoustic wave resonators,
+[14] Y. Chu, P. Kharel, T. Yoon, L. Frunzio, P. T. Rakich, and        Physical Review Letters 130, 133604 (2023).
+     R. J. Schoelkopf, Creation and control of multi-phonon      [28] Q. R. Rahman, I. Kladarić, M.-E. Kern, L. Lachman,
+     Fock states in a bulk acoustic-wave resonator, Nature            Y. Chu, R. Filip, and M. Fadel, Genuine quantum non-
+     563, 666 (2018).                                                 gaussianity and metrological sensitivity of fock states pre-
+                                                                                                                             10
+
+     pared in a mechanical resonator, Physical Review Letters    [46] I. Schwartz, D. Cogan, E. R. Schmidgall, Y. Don,
+     134, 180801 (2025).                                              L. Gantz, O. Kenneth, N. H. Lindner, and D. Gershoni,
+[29] R. Linehan, T. Trickle, C. R. Conner, S. Ghosh, T. Lin,          Deterministic generation of a cluster state of entangled
+     M. Sholapurkar, and A. N. Cleland, Listening for new             photons, Science 354, 434 (2016).
+     physics with quantum acoustics, Physical Review D 112,      [47] P. Thomas, L. Ruscio, O. Morin, and G. Rempe, Efficient
+     115005 (2025).                                                   generation of entangled multiphoton graph states from a
+[30] D. Carney, G. Krnjaic, D. C. Moore, C. A. Regal,                 single atom, Nature 608, 677 (2022).
+     G. Afek, S. Bhave, B. Brubaker, T. Corbitt, J. Cripe,       [48] J.-C. Besse, K. Reuer, M. C. Collodo, A. Wulff, L. Wernli,
+     N. Crisosto, A. Geraci, S. Ghosh, J. G. E. Harris,               A. Copetudo, D. Malz, P. Magnard, A. Akin, M. Gabu-
+     A. Hook, E. W. Kolb, J. Kunjummen, R. F. Lang, T. Li,            reac, G. J. Norris, J. I. Cirac, A. Wallraff, and C. Eich-
+     T. Lin, Z. Liu, J. Lykken, L. Magrini, J. Manley, N. Mat-        ler, Realizing a deterministic source of multipartite-
+     sumoto, A. Monte, F. Monteiro, T. Purdy, C. J. Riedel,           entangled photonic qubits, Nature Communications 11,
+     R. Singh, S. Singh, K. Sinha, J. M. Taylor, J. Qin, D. J.        4877 (2020).
+     Wilson, and Y. Zhao, Mechanical quantum sensing in the      [49] C. Eichler, J. Mlynek, J. Butscher, P. Kurpiers, K. Ham-
+     search for dark matter, Quantum Science and Technology           merer, T. J. Osborne, and A. Wallraff, Exploring Inter-
+     6, 024002 (2021).                                                acting Quantum Many-Body Systems by Experimentally
+[31] M. Goryachev and M. E. Tobar, Gravitational wave de-             Creating Continuous Matrix Product States in Supercon-
+     tection with high frequency phonon trapping acoustic             ducting Circuits, Physical Review X 5, 041044 (2015).
+     cavities, Physical Review D 90, 102005 (2014).              [50] V. S. Ferreira, G. Kim, A. Butler, H. Pichler, and
+[32] A. Lo, P. Haslinger, E. Mizrachi, L. Anderegg, H. Müller,        O. Painter, Deterministic generation of multidimensional
+     M. Hohensee, M. Goryachev, and M. E. Tobar, Acoustic             photonic cluster states with a single quantum emitter,
+     tests of Lorentz symmetry using quartz oscillators, Phys-        Nature Physics 20, 865 (2024).
+     ical Review X 6, 011018 (2016).                             [51] J. O’Sullivan, K. Reuer, A. Grigorev, X. Dai,
+[33] A. Omahen, S. Storz, M. Bild, D. Scheiwiller, M. Fadel,          A. Hernandez-Anton, M. H. Munoz-Arias, C. Hellings,
+     and Y. Chu, Ultracold Mechanical Quantum Sensor for              A. Flasby, D. Colao Zanuz, J.-C. Besse, A. Blais, D. Malz,
+     Tests of New Physics, Physical Review Letters 136,               C. Eichler, and A. Wallraff, Deterministic generation
+     180802 (2026).                                                   of two-dimensional multi-photon cluster states, Nature
+[34] J. Eisert, M. Cramer, and M. B. Plenio, Colloquium:              Communications 16, 5505 (2025).
+     Area laws for the entanglement entropy, Reviews of Mod-     [52] R. Horodecki, P. Horodecki, M. Horodecki, and
+     ern Physics 82, 277 (2010).                                      K. Horodecki, Quantum entanglement, Reviews of Mod-
+[35] R. Orus, A practical introduction to tensor networks:            ern Physics 81, 865 (2009).
+     Matrix product states and projected entangled pair          [53] W. Dür, G. Vidal, and J. I. Cirac, Three qubits can be
+     states, Annals of Physics 349, 117 (2014).                       entangled in two inequivalent ways, Physical Review A
+[36] J. I. Cirac, D. Pérez-García, N. Schuch, and F. Ver-             62, 062314 (2000).
+     straete, Matrix product states and projected entangled      [54] V. Lipinska, G. Murta, and S. Wehner, Anonymous
+     pair states: Concepts, symmetries, theorems, Reviews of          transmission in a noisy quantum network using the W
+     Modern Physics 93, 045003 (2021).                                state, Physical Review A 98, 052320 (2018).
+[37] D. Pérez-García, F. Verstraete, M. M. Wolf, and J. I.       [55] D. M. Greenberger, M. A. Horne, and A. Zeilinger, Go-
+     Cirac, Matrix product state representations, Quantum             ing Beyond Bell’s Theorem, in Bell’s Theorem, Quan-
+     Information and Computation 7, 401 (2007).                       tum Theory and Conceptions of the Universe, edited by
+[38] C. Schön, E. Solano, F. Verstraete, J. I. Cirac, and             M. Kafatos (Springer Netherlands, Dordrecht, 1989) pp.
+     M. M. Wolf, Sequential Generation of Entangled Multi-            69–72.
+     qubit States, Physical Review Letters 95, 110503 (2005).    [56] N. D. Mermin, Extreme quantum entanglement in a su-
+[39] F. Verstraete, M. M. Wolf, and J. Ignacio Cirac, Quan-           perposition of macroscopically distinct states, Physical
+     tum computation and quantum-state engineering driven             Review Letters 65, 1838 (1990).
+     by dissipation, Nature Physics 5, 633 (2009).               [57] J. J. Bollinger, W. M. Itano, D. J. Wineland, and D. J.
+[40] S. J. Ran, Encoding of matrix product states into quan-          Heinzen, Optimal frequency measurements with maxi-
+     tum circuits of one- A nd two-qubit gates, Physical Re-          mally correlated states, Physical Review A 54, R4649
+     view A 101, 1 (2020).                                            (1996).
+[41] Z.-Y. Wei, D. Malz, and J. I. Cirac, Efficient adiabatic    [58] H. J. Briegel and R. Raussendorf, Persistent entangle-
+     preparation of tensor network states, Physical Review            ment in arrays of interacting particles, Physical Review
+     Research 5, L022037 (2023).                                      Letters 86, 910 (2001).
+[42] D. Malz, G. Styliaris, Z.-Y. Wei, and J. I. Cirac, Prepa-   [59] M. Hein, J. Eisert, and H. J. Briegel, Multiparty entan-
+     ration of matrix product states with log-depth quantum           glement in graph states, Physical Review A 69, 062311
+     circuits, Physical Review Letters 132, 040404 (2024).            (2004).
+[43] K. C. Smith, A. Khan, B. K. Clark, S. M. Girvin, and T.-    [60] R. Raussendorf and H. J. Briegel, A one-way quantum
+     C. Wei, Constant-depth preparation of matrix product             computer, Physical Review Letters 86, 5188 (2001).
+     states with adaptive quantum circuits, PRX Quantum          [61] R. Raussendorf, D. E. Browne, and H. J. Briegel,
+     5, 030344 (2024).                                                Measurement-based quantum computation on cluster
+[44] Z.-Y. Wei and D. Malz, State preparation with parallel-          states, Physical Review A 68, 022312 (2003).
+     sequential circuits, Quantum 10, 2079 (2026).               [62] J. D. Jost, J. P. Home, J. M. Amini, D. Hanneke, R. Oz-
+[45] J. Tang, X. Chen, and Z.-Y. Wei, Weighted nested com-            eri, C. Langer, J. J. Bollinger, D. Leibfried, and D. J.
+     mutators for scalable counterdiabatic state preparation,         Wineland, Entangled mechanical oscillators, Nature 459,
+     arXiv preprint arXiv:2603.25625 (2026).                          683 (2009).
+                                                                                                                              11
+
+[63] K. C. Lee, M. R. Sprague, B. J. Sussman, J. Nunn, N. K.           A. C. Potter, Sequential quantum simulation of spin
+     Langford, X.-M. Jin, T. Champion, P. Michelberger,                chains with a single circuit QED device, Physical Review
+     K. F. Reim, D. England, D. Jaksch, and I. A. Walmsley,            A 109, 022606 (2024).
+     Entangling macroscopic diamonds at room temperature,         [77] T. J. Proctor, P. A. Knott, and J. A. Dunningham, Mul-
+     Science 334, 1253 (2011).                                         tiparameter estimation in networked quantum sensors,
+[64] C. F. Ockeloen-Korppi,          E. Damskägg,         J.-M.        Physical Review Letters 120, 080501 (2018).
+     Pirkkalainen, M. Asjad, A. A. Clerk, F. Massel,              [78] N. Shettell and D. Markham, Graph states as a resource
+     M. J. Woolley, and M. A. Sillanpää, Stabilized entangle-          for quantum metrology, Physical Review Letters 124,
+     ment of massive mechanical oscillators, Nature 556, 478           110502 (2020).
+     (2018).                                                      [79] N. Friis, D. Orsucci, M. Skotiniotis, P. Sekatski, V. Dun-
+[65] S. Kotler, G. A. Peterson, E. Shojaee, F. Lecocq, K. Ci-          jko, H. J. Briegel, and W. Dür, Flexible resources for
+     cak, A. Kwiatkowski, S. Geller, S. Glancy, E. Knill, R. W.        quantum metrology, New Journal of Physics 19, 063044
+     Simmonds, J. Aumentado, and J. D. Teufel, Direct ob-              (2017).
+     servation of deterministic macroscopic entanglement, Sci-    [80] See Supplementary Information.
+     ence 372, 622 (2021).                                        [81] Z.-Y. Wei, J. I. Cirac, and D. Malz, Generation of pho-
+[66] L. Mercier de Lépinay, C. F. Ockeloen-Korppi, M. J.               tonic tensor network states with circuit qed, Physical Re-
+     Woolley, and M. A. Sillanpää, Quantum mechanics–free              view A 105, 022611 (2022).
+     subsystem with mechanical oscillators, Science 372, 625      [82] Z.-Y. Wei, D. Malz, A. González-Tudela, and J. I. Cirac,
+     (2021).                                                           Generation of photonic matrix product states with Ryd-
+[67] R. Riedinger, A. Wallucks, I. Marinkovic, C. Löschnauer,          berg atomic arrays, Physical Review Research 3, 023021
+     M. Aspelmeyer, S. Hong, and S. Gröblacher, Remote                 (2021).
+     quantum entanglement between two micromechanical os-         [83] A. N. Korotkov, Error matrices in quantum process to-
+     cillators, Nature 556, 473 (2018).                                mography (2013), arXiv:1309.6405.
+[68] H. Qiao, E. Dumur, G. Andersson, H. Yan, M.-H. Chou,         [84] M. Bourennane, M. Eibl, C. Kurtsiefer, S. Gaertner,
+     J. Grebel, C. R. Conner, Y. J. Joshi, J. M. Miller, R. G.         H. Weinfurter, O. Gühne, P. Hyllus, D. Bruß, M. Lewen-
+     Povey, X. Wu, and A. N. Cleland, Splitting phonons:               stein, and A. Sanpera, Experimental Detection of Multi-
+     Building a platform for linear mechanical quantum com-            partite Entanglement using Witness Operators, Physical
+     puting, Science 380, 1030 (2023).                                 Review Letters 92, 087902 (2004).
+[69] M.-H. Chou, H. Qiao, H. Yan, G. Andersson, C. R.             [85] H. Häffner, W. Hänsel, C. F. Roos, J. Benhelm, D. Chek-
+     Conner, J. Grebel, Y. J. Joshi, J. M. Miller, R. G.               al kar, M. Chwalla, T. Körber, U. D. Rapol, M. Riebe,
+     Povey, X. Wu, and A. N. Cleland, Deterministic multi-             P. O. Schmidt, C. Becher, O. Gühne, W. Dür, and
+     phonon entanglement between two mechanical resonators             R. Blatt, Scalable multiparticle entanglement of trapped
+     on separate substrates, Nature Communications 16, 1450            ions, Nature 438, 643 (2005).
+     (2025).                                                      [86] N. Kiesel, C. Schmid, G. Tóth, E. Solano, and H. We-
+[70] M.-E. Kern, S. Marti, R. Garcia-Belles, A. Omahen,                infurter, Experimental Observation of Four-Photon En-
+     I. Kladaric, A. Brooks, Y. Chu, and M. Fadel, Einstein-           tangled Dicke State with High Fidelity, Physical Review
+     Podolsky-Rosen correlations between mechanical oscil-             Letters 98, 063604 (2007).
+     lators revealed through SU(1,1) interferometry (2026),       [87] G. Tóth and O. Gühne, Detecting genuine multipartite
+     arXiv:2606.18202 [quant-ph], arXiv:2606.18202.                    entanglement with two local measurements, Physical Re-
+[71] G. Andersson, S. W. Jolin, M. Scigliuzzo, R. Borgani,             view Letters 94, 060501 (2005).
+     M. O. Tholén, J. C. Rivera Hernández, V. Shumeiko,           [88] T. Monz, P. Schindler, J. T. Barreiro, M. Chwalla,
+     D. B. Haviland, and P. Delsing, Squeezing and Multi-              D. Nigg, W. A. Coish, M. Harlander, W. Hänsel, M. Hen-
+     mode Entanglement of Surface Acoustic Wave Phonons,               nrich, and R. Blatt, 14-qubit entanglement: Creation and
+     PRX Quantum 3, 010312 (2022).                                     coherence, Physical Review Letters 106, 130506 (2011),
+[72] Y. Li, Y. Li, X. Cheng, L. Wang, X. Zhao, W. Hou,                 1009.6126.
+     K. Rehan, M. Zhu, L. Yan, X. Qin, X. Peng, H. Yuan,          [89] J. H. Reina, L. Quiroga, and N. F. Johnson, Decoher-
+     Y. Lin, and J. Du, Programmable multi-mode entan-                 ence of quantum registers, Physical Review A 65, 032326
+     glement via dissipative engineering in vibrating trapped          (2002), quant-ph/0105029.
+     ions, Science Advances 11, eadv7838 (2025).                  [90] J. W. Gardner, S. A. Haine, J. J. Hope, Y. Chen,
+[73] R. Klesse and S. Frank, Quantum error correction in spa-          and T. Gefen, Lindblad estimation with fast and precise
+     tially correlated quantum noise, Physical Review Letters          quantum control, Phys. Rev. Appl. 24, 044055 (2025).
+     95, 230503 (2005), quant-ph/0505153.                         [91] Y.-X. Wang, J. Bringewatt, A. Seif, A. J. Brady, C. Oh,
+[74] C. D. Wilen, S. Abdullah, N. A. Kurinsky, C. Stanford,            and A. V. Gorshkov, Exponential entanglement advan-
+     L. Cardani, G. D’Imperio, C. Tomei, L. Faoro, L. B.               tage in sensing correlated noise, Physical Review Letters
+     Ioffe, C. H. Liu, A. Opremcak, B. G. Christensen, J. L.           137, 150803 (2026), 2410.05878.
+     DuBois, and R. McDermott, Correlated charge noise and        [92] A. Seif, Y.-X. Wang, and A. A. Clerk, Distinguishing be-
+     relaxation errors in superconducting qubits, Nature 594,          tween quantum and classical Markovian dephasing dis-
+     369 (2021), 2012.06029.                                           sipation, Physical Review Letters 128, 070402 (2022),
+[75] M. Foss-Feig, D. Hayes, J. M. Dreiling, C. Figgatt, J. P.         2109.06155.
+     Gaebler, S. A. Moses, J. M. Pino, and A. C. Potter,          [93] J. Jeske, J. H. Cole, and S. F. Huelga, Quantum metrol-
+     Holographic quantum algorithms for simulating corre-              ogy subject to spatially correlated Markovian noise:
+     lated spin systems, Physical Review Research 3, 033002            restoring the Heisenberg limit, New Journal of Physics
+     (2021).                                                           16, 073039 (2014), 1307.6301.
+[76] Y. Zhang, S. Jahanbani, A. Riswadkar, S. Shankar, and        [94] I. Frérot, M. Fadel, and M. Lewenstein, Probing quan-
+                                                                 12
+
+     tum correlations in many-body systems: a review of scal-
+     able methods, Reports on Progress in Physics 86, 114001
+     (2023).
+[95] M. Gu, C. Weedbrook, N. C. Menicucci, T. C. Ralph,
+     and P. van Loock, Quantum computing with continuous-
+     variable clusters, Physical Review A 79, 062318 (2009).
+[96] S. Machnes, E. Assémat, D. Tannor, and F. K. Wilhelm,
+     Tunable, Flexible, and Efficient Optimization of Control
+     Pulses for Practical Qubits, Physical Review Letters 120,
+     150401 (2018).
+[97] O. Gühne and G. Tóth, Entanglement detection, Physics
+     Reports 474, 1 (2009).
+[98] G. A. Paz-Silva, L. M. Norris, and L. Viola, Multiqubit
+     spectroscopy of Gaussian quantum noise, Physical Re-
+     view A 95, 022121 (2017), 1609.01792.
+                                                                    S1
+
+                             Supplementary Material for
+                    “Deterministic and programmable generation of
+                      mechanical multipartite entangled states”
+
+
+
+
+                                                    CONTENTS
+
+ I. Sequential MPS preparation in cQAD with optimal control         S2
+    A. Sequential generation of phononic MPS                        S2
+    B. Isometry implementation with optimal control                 S3
+       1. Advantage of isometry synthesis over unitary synthesis    S4
+
+II. Quantum process tomography                                      S5
+
+III. Witnessing genuine multipartite entanglement                   S7
+     A. Fidelity-based witnesses                                    S7
+     B. Tailored witness for W states                               S8
+     C. Local-filtering-optimized witnesses                         S9
+
+IV. Definition of multimode W , GHZ and cluster states              S10
+    A. W states                                                     S10
+    B. GHZ states                                                   S10
+    C. Cluster states                                               S11
+
+V. Decoherence of multimode states under local loss and dephasing   S13
+   A. Notation                                                      S13
+   B. W states                                                      S14
+   C. GHZ states                                                    S14
+   D. Cluster and general graph states                              S14
+   E. Comparison of the three families                              S15
+
+VI. Correlated phase noise and the ratio method                     S16
+    A. Factorization of phase noise and local decoherence           S16
+    B. Coherences of WN and GHZN states                             S16
+    C. Ratios RN                                                    S17
+    D. Purely collective noise                                      S17
+    E. Analysis of the measured decay times                         S18
+                                                                                                                     S2
+
+                I.   SEQUENTIAL MPS PREPARATION IN CQAD WITH OPTIMAL CONTROL
+
+   We implement the sequential state-preparation protocol [38] using quantum optimal-control (OC) pulses adapted
+from Refs. [81, 82] and based on the gradient-optimization approach of GOAT [96]. The protocol uses the transmon
+qubit as an ancilla that interacts sequentially with phonon modes initially prepared in the vacuum.
+
+
+                                    A.     Sequential generation of phononic MPS
+
+  For each phonon mode âk , we define the local computational subspace
+
+                                                     Hk,2 = span{|0⟩k , |1⟩k } .                                    (S1)
+
+Before its interaction with the qubit, every mode is in |0⟩k . The physically populated input subspace in round k is
+                                                         (k)
+                                                    Hin = Hq ⊗ span{|0⟩k } .                                        (S2)
+
+The desired operation is an isometry
+                                                                  (k)
+                                                   V̂[k] : Hin −→ Hq ⊗ Hk,2 ,                                       (S3)
+
+whose action on an arbitrary ancilla state |φ⟩q is
+                                                                         1 
+                                                                         X               
+                                                                                  j
+                                            V̂[k] (|φ⟩q |0⟩k ) =                V[k] |φ⟩q |j⟩k .                    (S4)
+                                                                         j=0
+
+       j
+Here V[k] acts on the qubit Hilbert space. Preservation of inner products by V̂[k] requires
+
+                                                           1
+                                                           X        j† j
+                                                                  V[k] V[k] = 1q .                                  (S5)
+                                                           j=0
+
+  Starting from the ancilla state |φI ⟩q , the joint state after applying isometries to the first k modes is
+                                                     1
+                                                     X              jk         j1
+                                 |Ψk ⟩q,1...k =                   V[k] · · · V[1] |φI ⟩q ⊗ |j1 · · · jk ⟩1...k .    (S6)
+                                                  j1 ,...,jk =0
+
+At this stage the qubit remains entangled with the phonon modes and carries the uncontracted MPS bond index.
+In the experimental protocol, isometries are applied to the first N − 1 modes, followed by a resonant state-transfer
+operation Ŝq,N between the qubit and the initially empty N th mode. Restricted to the physically populated input
+subspace, this operation defines the tensors of the final MPS site according to
+                                            jN
+                                          V[N ] ≡ N⟨jN |Ŝq,N |0⟩N ,                jN ∈ {0, 1}.                    (S7)
+
+Equivalently,
+                                                                        1 
+                                                                        X            
+                                                                             jN
+                                         Ŝq,N (|φ⟩q |0⟩N ) =              V[N ] |φ⟩q |jN ⟩N .                      (S8)
+                                                                        jN =0
+
+                                                       0         1
+For ideal complete state transfer, the range of both V[N ] and V[N ] is the one-dimensional subspace spanned by |g⟩q .
+Consequently,
+
+                                         Ŝq,N (|ΨN −1 ⟩q,1...N −1 |0⟩N ) = |g⟩q |ψMPS ⟩,                           (S9)
+
+where the purely phononic state has the standard open-boundary MPS form
+                                             1
+                                                                         j
+                                             X               jN                  j1
+                                                                    N −1
+                             |ψMPS ⟩ =                ⟨g|q V[N ] V[N −1] · · · V[1] |φI ⟩q |j1 · · · jN ⟩1...N .   (S10)
+                                         j1 ,...,jN =0
+                                                                                                                                S3
+
+Thus the qubit provides the bond space of dimension D = 2, while the final resonant state transfer implements the
+terminating MPS tensor and disentangles the qubit from the phonon modes.
+  For the GHZ and linear-cluster states, the same isometry can be used in each intermediate round. In the input
+basis {|g⟩q |0⟩k , |e⟩q |0⟩k } and the output basis
+
+                                            Bout = {|g⟩q |0⟩k , |e⟩q |0⟩k , |g⟩q |1⟩k , |e⟩q |1⟩k } ,                        (S11)
+
+the two isometries are
+                                                   1 0                                                1 0
+                                                                                                       
+                                            !                                                !
+                                       0                                                0
+                                     V[k]        0 0                                V[k]         1 1 0 
+                         V̂GHZ =       1        =      ,             V̂cluster =       1        =√      .                 (S12)
+                                     V[k]          0 0                               V[k]          2 0 1
+                                                   0 1                                                0 −1
+
+Their action is equivalently
+
+                    V̂GHZ |g⟩q |0⟩k = |g⟩q |0⟩k ,                      V̂GHZ |e⟩q |0⟩k = |e⟩q |1⟩k ,              (S13)
+                                        |g⟩q + |e⟩q                                        |g⟩q − |e⟩q
+                  V̂cluster |g⟩q |0⟩k =     √       |0⟩k ,           V̂cluster |e⟩q |0⟩k =     √       |1⟩k .     (S14)
+                                              2                                                  2
+                                          √
+Together with |φI ⟩q = (|g⟩q + |e⟩q )/ 2 and the final iSWAP, these maps generate the corresponding phononic GHZ
+and linear-cluster states. The W -state protocol instead uses round-dependent partial-swap isometries, with interaction
+angles θi = 2 arcsin[(N − i + 1)−1/2 ], as described in the main text.
+
+
+                                   B.     Isometry implementation with optimal control
+
+   The pulse-synthesis calculation models the resonant qubit-phonon system using a two-level qubit. In the interaction
+frame of the resonant qubit and target phonon mode, the control Hamiltonian is
+                                                             
+                              Hint (t)/ℏ = gk σ − a†k + σ + ak + Re[Ω(t)] σx − Im[Ω(t)] σy .                     (S15)
+
+Here ak annihilates an excitation in the target phonon mode, gk is the fixed resonant Jaynes–Cummings exchange
+coupling, and Ω(t) = Ωx (t)+iΩy (t) is the complex qubit drive. Its real and imaginary parts provide two independently
+parameterized control quadratures. The pulse optimization itself does not include the transmon state |f ⟩ or finite
+transmon anharmonicity. These effects are restored separately when the optimized pulse is evaluated using the
+multilevel noisy model employed for comparison with experiment.
+  The relevant input subspace for each isometry is not the full qubit-phonon computational space, because the phonon
+mode is initially in vacuum. We define
+
+                                   Hin = span{|g⟩q |0⟩k , |e⟩q |0⟩k } ,             D ≡ dim Hin = 2,                         (S16)
+
+and the desired output subspace
+
+                                        Hout = Hq ⊗ span{|0⟩k , |1⟩k } ,              dim Hout = 4.                          (S17)
+
+For the OC pulse synthesis, the phonon Hilbert space is truncated to the levels n = 0, . . . , 7, such that Nk = 8.
+Together with the two-level qubit, this gives a total optimization Hilbert-space dimension Nh = 2Nk = 16.
+  We seek any unitary evolution whose action on Hin realizes the target isometry and whose corresponding output
+has no component outside Hout . We order the first four basis vectors as {|g⟩q |0⟩k , |e⟩q |0⟩k , |g⟩q |1⟩k , |e⟩q |1⟩k }, followed
+by the remaining states of the numerical truncation. The first two columns then span Hin , while the first four rows
+span Hout , and the propagated unitary can be partitioned as
+                                                         ′
+                                                         V (⃗c, T ) B1′ (⃗c, T )
+                                                                                  
+                                           U (⃗c, T ) =                             .                                         (S18)
+                                                         O′ (⃗c, T ) B2′ (⃗c, T )
+
+The block dimensions are
+                                    V ′ : 4 × 2,                        O′ : (Nh − 4) × 2,
+                                                                                                                             (S19)
+                                    B1′ : 4 × (Nh − 2),                 B2′ : (Nh − 4) × (Nh − 2).
+                                                                                                                   S4
+
+Only the first block column is constrained by the isometry-synthesis task:
+                                           V ′ (⃗c, T ) = V̂[k] ,       O′ (⃗c, T ) = 0.                        (S20)
+The remaining blocks B1′ and B2′ are not specified, apart from the restrictions imposed by the unitarity of the full
+propagator.
+  Following Refs. [81, 82], we quantify the target-isometry overlap and the final leakage by
+                                                        h                   i
+                                                            †
+                                            FV (⃗c) = Tr V̂[k] V ′ (⃗c, T ) ,                                 (S21)
+                                                         ′†              ′
+                                                                              
+                                            FO (⃗c) = Tr O (⃗c, T )O (⃗c, T ) .                               (S22)
+The control parameters are obtained by minimizing
+                                                   1
+                                     C(⃗c) = 1 −     |FV (⃗c)| + λFO (⃗c),     D = 2,                            (S23)
+                                                   D
+where |FV |/D is the normalized isometry overlap and λ > 0 is the weight of the soft leakage penalty. This quantity is
+an optimization overlap and should not be identified with the process fidelity reconstructed from experimental process
+tomography.
+  To obtain gradients without finite-differencing the control parameters, we propagate the GOAT sensitivity equations
+together with the Schrödinger equation. For every parameter ck ,
+                                                                            
+                                              U                H    0       U
+                                        ∂t           = −i                          ,                             (S24)
+                                             ∂ck U            ∂ck H H      ∂ck U
+where H = Hint /ℏ in the units used for numerical propagation. The blocks V ′ , O′ and their derivatives are extracted
+from U (T ) and ∂ck U (T ), and are then used to evaluate C and its analytic sensitivity gradient, up to the numerical
+accuracy of the ODE integration. This continuous-time construction does not require a piecewise-constant control
+ansatz.
+   The two drive quadratures are parameterized independently by analytic Fourier series. Denoting µ ∈ {x, y},
+                                                           jX
+                                                            max
+
+                                               fµ (t) =             Aµj sin(jωµ t).                             (S25)
+                                                           j=1
+
+As in Refs. [81, 82], the raw Fourier functions are passed through a smooth amplitude-bounding function and a turn-off
+envelope,
+                                                                                  
+                                                                       2
+                                         S1 [fµ (t)] = b 1 −                         ,                          (S26)
+                                                              1 + exp(g1 fµ (t)/b)
+                                                                    2
+                                          S2 (t, T ) = 1 −                     ,                                (S27)
+                                                           1 + exp[g2 (T − t)]
+so that
+                                        Ωµ (t) = S1 [fµ (t)]S2 (t, T ),          µ = x, y.                      (S28)
+Here b sets the saturation amplitude of each quadrature, g1 controls the steepness of the amplitude-bounding function,
+and g2 sets the turn-off rate of the final envelope. Because the sine series vanishes at t = 0 and S2 (T, T ) = 0, the
+resulting controls start and end at zero. The Fourier amplitudes Aµj and frequencies ωµ constitute the optimization
+parameters ⃗c; the amplitude bounds and smoothing constants are fixed pulse-parameterization settings.
+  We supply the analytic gradient to MATLAB’s fminunc routine and use its quasi-Newton algorithm with a BFGS
+Hessian update. The Fourier coefficients and quadrature frequencies are initialized randomly. The optimized pulse
+implementing V̂GHZ is shown in Fig. 1d of the main text.
+
+
+                               1.   Advantage of isometry synthesis over unitary synthesis
+
+  The essential distinction between the present optimization and fully specified unitary synthesis is the number of
+constrained input columns. A specified unitary fixes the evolution of an entire basis, whereas the isometry fixes
+only the D = 2 columns associated with the physically populated input subspace Hin . The other Nh − D columns,
+represented by B1′ and B2′ in Eq. (S18), remain free. This enlarges the manifold of acceptable unitary extensions
+and gives the optimizer additional freedom to find controls that can be shorter or easier to realize than pulses for a
+particular fully specified unitary, such as a chosen CNOT extension [81, 82].
+                                                                                                                         S5
+
+                                    II.    QUANTUM PROCESS TOMOGRAPHY
+
+  The dynamics of a quantum system can be described by a completely positive (CP) linear map
+                                                    X
+                                            E(ρ) =     Ar ρA†r ,                                                      (S29)
+                                                                  r
+
+                                     system. The condition r A†r Ar ≤ 1 ensures that Tr[E(ρ)] ≤ Tr[ρ], such that E
+                                                               P
+where ρ is the initial state
+                           Pof the
+is trace-nonincreasing. If r A†r Ar = 1, then E is trace-preserving (TP). A completely positive and trace-preserving
+map is referred to as a quantum channel.
+   Consider an input Hilbert space of dimension din and an output Hilbert space of dimension dout , together with
+                                  2
+                              in din −1           d2out −1
+Hermitian operator bases {Em    }m=0 and {Enout }n=0       satisfying
+                                 in † in 
+                                                                Tr (Enout )† Enout
+                                                                                  
+                             Tr (Em   ) Em′ = din δmm′ ,                        ′    = dout δnn′ .             (S30)
+
+For example, for a qubit
+                     P one may   choose the three Pauli matrices together with the 2 × 2 identity matrix. Expanding
+                            in
+an input state as ρ = m ρm Em  , the linearity of E allows the output state to be written as
+                                                                  !
+                                                  X X
+                                          E(ρ) =            χn ρm Enout ,
+                                                             m
+                                                                                                              (S31)
+                                                           n      m
+
+where χ is the matrix representation of the process E in the chosen input and output operator bases. It is a d2out × d2in
+matrix. For a Hermiticity-preserving map and Hermitian operator bases, the coefficients χmn are real.
+                                                                                                                      d2 −1
+  The central idea behind process tomography (PT) is to prepare d2in linearly independent input states {ρk }k=0 in
+                                                                                                                    ,
+which span the operator space of the input system, and measure each output E(ρk ) by standard quantum state
+tomography. Since E is a linear map, its matrix representation χ can then be reconstructed from this set of measured
+input-output pairs.
+  We now specialize this framework to the process realized in our experiment, which maps an input state of the qubit
+to an output state of the joint qubit-phonon system,
+
+                                                         E : ρin    out
+                                                              Q −→ ρQP .                                              (S32)
+
+Since our experiment deals with controlling the two lowest Fock states of the phonon mode, we describe it as a
+two-level system throughout, although the approach below generalizes straightforwardly to multilevel scenarios. We
+therefore have din = 2 and dout = 4, such that χ is a 16 × 4 matrix mapping the four input-qubit Pauli coefficients
+onto the sixteen output qubit-phonon Pauli coefficients.
+  Writing the elements of χ as χγαβ , where γ ∈ {0, x, y, z} labels the input-qubit Pauli operator and α, β ∈ {0, x, y, z}
+label the output qubit and phonon Pauli operators, respectively (with σ0 ≡ 1), an input state
+                                              X
+                                         ρ=      ργ σγ ,       ργ = 12 Tr[ρ σγ ] ,                                 (S33)
+                                                   γ
+
+is mapped as
+                                   X                                                          X
+                          E(ρ) =         rαβ σα ⊗ σβ ,         rαβ = 41 Tr[E(ρ) σα ⊗ σβ ] =       χγαβ ργ .           (S34)
+                                   α,β                                                        γ
+
+We identify the pair (α, β) with the row index of χ and γ with its column index.
+  In order to experimentally reconstruct χ, it would be sufficient to prepare four linearly independent qubit states
+{ρin,i 4                                                            out,i 4
+  Q }i=1 and measure the corresponding output states {ρQP }i=1 . For each input state, we collect its four Pauli
+                              in,i
+coefficients into the vector rQ    , and similarly collect the sixteen two-qubit Pauli coefficients rαβ of the corresponding
+                     out,i
+output state into rQP . Constructing
+                                         h                      i           h                        i
+                                           in,1            in,4               out,1            out,4
+                                 Rin = rQ       , . . . , rQ      , Rout = rQP      , . . . , rQP      ,               (S35)
+
+the linear relation Rout = χRin gives
+
+                                                         χ = Rout (Rin )−1 .                                          (S36)
+                                                                                                                         S6
+
+Since the Pauli coefficients of Hermitian operators are real, Rin and Rout are real matrices, which is why ordinary rather
+than conjugate transposes appear below. This minimal approach, however, is sensitive to experimental imperfections,
+since it relies on only four noisy input-output measurements. We therefore reconstruct χ from an overcomplete set
+by preparing the qubit in the six cardinal points of the Bloch sphere, ρin,i
+                                                                           Q = |ψi ⟩⟨ψi | with
+                                                                                            
+                                    6              |g⟩ + |e⟩ |g⟩ − |e⟩ |g⟩ + i|e⟩ |g⟩ − i|e⟩
+                             {|ψi ⟩}i=1 = |g⟩, |e⟩, √       , √       ,   √      ,   √         ,                     (S37)
+                                                        2         2         2          2
+and measuring the corresponding six output density matrices {ρout,i    6
+                                                                  QP }i=1 . The matrices R
+                                                                                             in
+                                                                                                and Rout are then of
+dimension 4 × 6 and 16 × 6, respectively. The resulting system of equations for χ is overdetermined, and we obtain a
+least-squares estimate
+                                                                                     2
+                                            χLS ≡ argmin Rout − χRin F ,                                              (S38)
+                                                       χ
+
+where
+                                                               sX
+                                                     ∥A∥F =                |Aij |2                                    (S39)
+                                                                      ij
+
+is the Frobenius norm. Since the six cardinal states span the qubit operator space, Rin has full row rank, such that
+Rin (Rin )T is invertible and the analytical least-squares solution is
+                                                                           −1
+                                            χLS = Rout (Rin )T Rin (Rin )T
+                                                               
+                                                                               .                               (S40)
+  The least-squares estimate is not guaranteed to correspond to a physical quantum channel. To impose complete
+positivity and trace preservation, we introduce the Choi matrix associated with χ,
+                                                           1
+                                                           X
+                                                    Cχ =           eij ⊗ E(eij ) ,                                    (S41)
+                                                           i,j=0
+
+where eij = |i⟩⟨j| acts on the input-qubit Hilbert space. Using Eq. (S34), this can be written as
+                                                                               
+                                           X1          X γ
+                                     Cχ =      eij ⊗      χαβ Λγ (eij )σα ⊗ σβ  ,                                   (S42)
+                                            i,j=0           α,β,γ
+
+where Λγ (eij ) = 21 Tr[eij σγ ] is the coefficient of eij in the Pauli basis. Although eij is not Hermitian for i ̸= j,
+Eq. (S34) extends to these operators by linearity. Since the Choi matrix acts on the tensor-product space of the input
+qubit and the output qubit-phonon system, its dimension is (2 × 4) × (2 × 4) = 8 × 8. In the tensor products below,
+we use the ordering input qubit ⊗ output qubit ⊗ output phonon.
+  Choi’s theorem states that E is completely positive if and only if the associated Choi matrix is positive semidefinite,
+                                                            Cχ ⪰ 0 .                                                  (S43)
+Trace preservation requires Tr[E(ρ)] = Tr[ρ] for every input operator ρ. From Eq. (S34), this condition gives χ000 = 21 ,
+χγ00 = 0, for γ ̸= 0. Equivalently, the Choi matrix must satisfy Trout [C χ ] = 1in . In the Pauli basis and with the tensor
+ordering specified above, this is equivalent to
+                         Tr[C χ σ0 ⊗ σ0 ⊗ σ0 ] = 2 ,        Tr[C χ σγ ⊗ σ0 ⊗ σ0 ] = 0 for   γ ̸= 0 .                  (S44)
+  To obtain a physical process from the experimentally estimated χLS , we first construct the corresponding Choi
+matrix C χLS and then use a semidefinite program, implemented in Python with CVXPY, to find the Choi matrix C χ
+minimizing
+                                                       ∥C χ − C χLS ∥F                                                (S45)
+subject to the trace-preservation constraints of Eq. (S44) and the complete-positivity constraint C χ ⪰ 0. The
+corresponding physical process matrix χ is then obtained from C χ through the inverse of the linear transformation
+defined above.
+  The process fidelity between the reconstructed and ideal processes is computed from their Choi matrices. Using
+the square-root fidelity convention employed throughout this work, we define
+                                                     √            √
+                                                  q                     
+                                                              χ
+                                                Tr     C χ Cideal   Cχ
+                                           F = p                 χ         .                                 (S46)
+                                                    Tr[C χ ] Tr[Cideal ]
+                                                                                                                      S7
+
+                    III.   WITNESSING GENUINE MULTIPARTITE ENTANGLEMENT
+
+  An N -partite state σ is called biseparable if it can be written as a convex mixture of states that are each separable
+with respect to some bipartition of the N parties,
+                                                              (k)    (k)
+                                                       X
+                                                  σ=      pk σAk ⊗ σBk ,                                           (S47)
+                                                          k
+                P
+where pk ≥ 0, k pk = 1, Ak ∪ Bk = {1, . . . , N }, Ak ∩ Bk = ∅, and different terms may correspond to different
+bipartitions. A state that is not biseparable is called genuinely multipartite entangled (GME). Note that GME is
+strictly stronger than entanglement across every bipartition, since a mixture of states that are each separable across
+a different bipartition can be entangled across all bipartitions while still being biseparable [97].
+   A Hermitian operator Ŵ is a GME witness if
+                                         Tr[Ŵσ] ≥ 0 for all biseparable states σ,                                 (S48)
+so that observing Tr[Ŵρ] < 0 for a state ρ certifies that ρ is GME. Since the biseparable states form a convex set
+whose extreme points are pure states |a⟩A ⊗ |b⟩B that are product with respect to some bipartition A|B, it suffices
+to verify this condition on such pure product states.
+  Throughout this section we denote by
+                                                      Fψ2 = ⟨ψ|ρ|ψ⟩                                                (S49)
+the squared fidelity of ρ with a pure target state |ψ⟩, where Fψ is the fidelity defined in the main text. All witnesses
+below act on the computational subspace {|0⟩k , |1⟩k } of each phonon mode k, in which the density matrices are
+reconstructed.
+
+
+                                              A.   Fidelity-based witnesses
+
+  For a target state |ψ⟩, the operator
+                                    Ŵψ = cψ 1 − |ψ⟩⟨ψ|,        cψ = max ⟨ψ|σ|ψ⟩,                                  (S50)
+                                                                      σ∈bisep
+                                                                                               √
+is a GME witness by construction, and Tr[Ŵψ ρ] = cψ − Fψ2 [84]. Observing Fψ2 > cψ , i.e. Fψ > cψ , therefore certifies
+GME. The constant cψ is the maximal overlap of |ψ⟩ with a pure product state across some bipartition, and is given
+by the square of the largest Schmidt coefficient of |ψ⟩, maximized over all bipartitions [84].
+   Graph states. For a connected graph state |GN ⟩, the reduced state on either side of any bipartition is maximally
+mixed on a support of dimension 2r , where r ≥ 1 because at least one edge of a connected graph crosses the cut. All
+nonzero Schmidt coefficients are therefore equal to 2−r/2 , and bipartitions with r = 1 always exist (e.g. separating a
+single vertex or, for GHZ states, any cut), so that cG = 1/2 [87]. This yields the witness
+                                                Ŵ3 (N ) = 12 1 − |GN ⟩⟨GN |,                                       (S51)
+                                   2
+                                                                √
+which detects GME whenever FG > 1/2, i.e. FG > 1/ 2. Both the N -partite GHZ state and the linear cluster
+state are, up to local unitaries, connected graph states (the GHZ state corresponds to the star graph). Since local
+unitaries leave the set of biseparable states invariant, the bound c = 1/2 holds for the target states as prepared in our
+experiment. For N = 2, both reduce to a Bell state.
+  W states. Across a bipartition in which K modes are separated from the remaining N − K, the W state has the
+Schmidt decomposition
+                                           q                        q
+                                                                      N −K
+                                  |WN ⟩ = K   N |W K ⟩|0 · · · 0⟩ +     N |0 · · · 0⟩|WN −K ⟩,                      (S52)
+so that cW = maxK max(K, N − K)/N = (N − 1)/N , attained for K = 1 by the states |0⟩k |WN −1 ⟩ [84, 85]. The
+corresponding witness
+                                                      N −1
+                                             Ŵ1 (N ) =     1 − |WN ⟩⟨WN |                                        (S53)
+                                                       N
+                          2
+                                                     p
+detects GME whenever FW      > (N − 1)/N , i.e. FW > (N − 1)/N . The large overlap of |WN ⟩ with biseparable states
+makes this threshold considerably more demanding than for graph states, and it approaches unity as N grows. Since
+the bound is attained, Ŵ1 (N ) is optimal among witnesses of the form c 1 − |WN ⟩⟨WN |; improving on it requires using
+more information about the state than its fidelity alone.
+                                                                                                                      S8
+
+                                            B.    Tailored witness for W states
+
+  Following Ref. [85], we consider the N biseparable states
+                                         |BSk ⟩ = |0⟩k ⊗ |WN −1 ⟩,        k = 1, . . . , N,                        (S54)
+in which mode k carries no excitation and a single excitation is delocalized over the remaining N − 1 modes. These
+are precisely the biseparable states attaining the maximal overlap (N − 1)/N with |WN ⟩. We define the operator
+                                                                        N
+                                                                        X
+                                        Q̂(N, β) = |WN ⟩⟨WN | − β             |BSk ⟩⟨BSk |,                        (S55)
+                                                                        k=1
+
+with β ≥ 0. The first term rewards overlap with the target state, while the second penalizes overlap with the
+biseparable states |BSk ⟩. Compared to Ref. [85], we have set the prefactor of the first term to one without loss of
+generality, since rescaling Q̂ by a positive constant rescales the resulting witness by the same constant; our β thus
+corresponds to the ratio β/α in Ref. [85].
+  The biseparable bound
+                            γ(N, β) = max Tr[Q̂(N, β) σ] = max max ⟨a|⟨b|Q̂(N, β)|a⟩|b⟩                            (S56)
+                                        σ∈bisep                     A|B |a⟩,|b⟩
+
+can be computed efficiently as follows. Since Q̂ is supported on the single-excitation subspace, ⟨ψ|Q̂|ψ⟩ depends only
+                                                                                                                  √
+on the single-excitation amplitudes
+                          √         vj = ⟨1j |ψ⟩, where |1j ⟩ denotes one excitation in mode j. Using ⟨WN |ψ⟩ = S/ N
+                                              P
+and ⟨BSk |ψ⟩ = (S − vk )/ N − 1, with S = j vj , one finds
+                                                                    
+                                                    2   1      N −2         β X          2
+                               ⟨ψ|Q̂(N, β)|ψ⟩ = |S|       −β           −            |vj | .                      (S57)
+                                                        N      N −1       N −1 j
+
+For a product state |a⟩A |b⟩B , the single-excitation amplitudes are vj = a0 bj for j ∈ B and vj = b0 aj for j ∈ A, where
+a0 (b0 ) is the vacuum amplitude and aj (bj ) the single-excitation amplitudes of |a⟩ (|b⟩). Components with two or
+more excitations within A or B do not contribute to Eq. (S57) and only reduce the available normalization, so they
+can be set to zero. Moreover, for a fixed norm of the single-excitation part within each partition, |S| is maximized
+    P        2
+and j |vj | is left unchanged by choosing all amplitudes within a partition equal in magnitude and phase (Cauchy–
+Schwarz inequality), and the relative phase between the two partitions can be chosen such that the two contributions
+to S add constructively. Whenever the bracket in Eq. (S57) is negative, γ = 0, which is attained by the vacuum state.
+The optimization therefore reduces to
+                     |a⟩ = cos θA |0 · · · 0⟩ + sin θA |WK ⟩,     |b⟩ = cos θB |0 · · · 0⟩ + sin θB |WN −K ⟩,      (S58)
+i.e. to a maximization over two angles for each bipartition size K = 1, . . . , ⌊N/2⌋, equivalent to the four-parameter
+optimization with two normalization constraints of Ref. [85]. For example, we obtain γ(3, 0.298) = 0.2260 and
+γ(4, 0.287) = 0.0832, reproducing the values of Ref. [85] after rescaling, and γ(4, 0.300) = 0.0577.
+   The GME witness is then defined as
+                                            Ŵ2 (N, β) = γ(N, β) 1(2) − Q̂(N, β),                                  (S59)
+
+where 1(2) is the projector onto the subspace with at most two excitations in total [85]. To see that Ŵ2 is positive
+on all biseparable states, let |a′ ⟩ and |b′ ⟩ be the (unnormalized) projections of |a⟩ and |b⟩ onto their vacuum and
+single-excitation components. The state |a′ ⟩|b′ ⟩ has the same single-excitation amplitudes as |a⟩|b⟩, contains at most
+two excitations, and is orthogonal to the remaining components of |a⟩|b⟩. Hence
+                                                                                  2
+                         ⟨a|⟨b|Q̂|a⟩|b⟩ = ⟨a′ |⟨b′ |Q̂|a′ ⟩|b′ ⟩ ≤ γ |a′ ⟩|b′ ⟩       ≤ γ ⟨a|⟨b|1(2) |a⟩|b⟩,       (S60)
+
+where we used γ ≥ 0. By convexity, Tr[Ŵ2 σ] ≥ 0 for every biseparable σ. Restricting the identity to at most
+two excitations is thus the most restrictive choice of this form that preserves validity: a projector onto at most
+one excitation would not suffice, since |a′ ⟩|b′ ⟩ generally contains a two-excitation component. Since Tr[1(2) ρ] ≤ 1,
+Ŵ2 (N, 0) is at least as sensitive as Ŵ1 (N ).
+  Since Ŵ2 (N, β) is a valid GME witness for every β ≥ 0, β can be chosen to minimize Tr[Ŵ2 (N, β)ρ] on the
+experimental state. For the ideal state, ⟨WN |Q̂|WN ⟩ = 1 − β(N − 1), and the most negative value is obtained for
+β = 0. Nonzero β becomes advantageous for imperfect states whose overlap with the states |BSk ⟩ is reduced relative
+to their overlap with |WN ⟩.
+                                                                                                                              S9
+
+                                         C.    Local-filtering-optimized witnesses
+
+  The detection capability of any of the above witnesses can be improved by local filtering [85, 86]. Let
+
+                                                        F̂ = Â1 ⊗ · · · ⊗ ÂN ,                                           (S61)
+
+where each Âk is an arbitrary complex 2 × 2 matrix acting on the computational subspace of mode k, and let Ŵ be
+any GME witness. The filtered operator
+
+                                                            Ŵ ′ = F̂ † Ŵ F̂                                              (S62)
+                                                                      P        (k)   (k)
+is again a GME witness. Indeed, for every biseparable σ =                k pk σAk ⊗ σBk , the operator
+                                                                                        
+                                                       pk F̂Ak σAk F̂A† k ⊗ F̂Bk σBk F̂B† k ,
+                                                                (k)               (k)
+                                                   X
+                                     F̂ σ F̂ † =                                                                           (S63)
+                                                   k
+              N
+with F̂Ak =       j∈Ak Âj and analogously for Bk , is positive and biseparable up to normalization, so that
+
+
+                                                   Tr Ŵ ′ σ = Tr Ŵ F̂ σ F̂ † ≥ 0.
+                                                                           
+                                                                                                                           (S64)
+
+The only requirement is that F̂ has product form with respect to the N modes; the Âk need be neither unitary nor
+invertible. Equivalently, Tr[Ŵ ′ ρ] < 0 states that the filtered state ρF = F̂ ρF̂ † /Tr[F̂ ρF̂ † ], which can be obtained from
+ρ with nonzero probability by local operations, is GME. Since local operations cannot create GME, ρ itself must be
+GME. Because rescaling F̂ by a positive constant rescales Tr[Ŵ ′ ρ] and its statistical uncertainty by the same factor,
+we fix the normalization by Tr[F̂ ρF̂ † ] = 1, so that Tr[Ŵ ′ ρ] = Tr[ŴρF ], and assess the significance of a violation
+through its ratio to the statistical uncertainty, which is independent of this choice. Local filtering can compensate
+for specific imperfections of the prepared state, such as unequal populations of the branches of the superposition or
+residual local phases. In particular, the local virtual phase rotations used in the main text to compensate the relative
+phases of the target state are a special, unitary, case of local filtering.
+   TheNsame argument justifies the restriction to the computational subspace of each phonon mode. The projector
+P̂ = k (|0⟩k ⟨0| + |1⟩k ⟨1|) is itself a local filter, so that GME of the (renormalized) projected state implies GME of
+the full multimode state, provided that the tomographic reconstruction faithfully represents this projected state.
+   If all Âk are invertible, the filtering is reversible by the local filter F̂ −1 . For pure states, invertible local operators
+are precisely the transformations relating states within the same class under stochastic local operations and classical
+communication (SLOCC) [53], and in Ref. [86] filtered witnesses were used to discriminate between SLOCC classes.
+We emphasize that here we use the filtered witnesses only to certify GME, and not membership in a particular SLOCC
+class.
+                                                                                                                        S10
+
+                   IV.   DEFINITION OF MULTIMODE W , GHZ AND CLUSTER STATES
+
+  We consider a system of N bosonic modes, each described by annihilation and creation operators âk and â†k
+(k = 1, . . . , N ) satisfying the canonical commutation relations
+
+                                      [âk , â†k′ ] = δk,k′ ,    [âk , âk′ ] = [â†k , â†k′ ] = 0.                 (S65)
+
+Acting on the vacuum state |0 . . . 0⟩, the creation operators generate Fock states according to
+                                                            √
+                                               â†k |nk ⟩k = nk + 1 |nk + 1⟩k ,                                        (S66)
+
+where |nk ⟩k denotes the Fock state with nk excitations in mode k, and n̂k ≡ â†k âk is the corresponding number
+operator. The multimode Fock basis is given by
+                                                                        N
+                                                                       Y   (â†k )nk
+                                        |n⟩ = |n1 n2 . . . nN ⟩ ≡           √        |0 . . . 0⟩.                      (S67)
+                                                                       k=1
+                                                                               nk !
+
+   In the following, we restrict attention to states defined within the lowest two Fock levels nk ∈ {0, 1} for each mode,
+which allows a direct correspondence with N -qubit states. Within this subspace, we introduce three important classes
+of genuinely multipartite entangled states: W states, GHZ states, and cluster states. For N = 2, all three reduce, up
+to local unitaries, to a Bell state.
+
+
+                                                            A.    W states
+
+  The N -partite W state is defined as
+                                        N                         N
+                                    1 X †                     1 X
+                           |WN ⟩ = √       âk |0 . . . 0⟩ = √       |1k ⟩,                |1k ⟩ ≡ â†k |0 . . . 0⟩,   (S68)
+                                     N k=1                     N k=1
+
+i.e. a uniform superposition of all computational basis states containing exactly one excitation.
+   The W state belongs entirely to the single-excitation subspace of the total number operator
+                                                                      N
+                                                                      X
+                                                            N̂tot =         n̂k ,                                      (S69)
+                                                                      k=1
+
+and satisfies
+
+                                                         N̂tot |WN ⟩ = |WN ⟩.                                          (S70)
+
+As a consequence, all components of |WN ⟩ share the same total excitation number. As we will see, this property
+underlies the robustness of W states against collective phase noise generated by N̂tot .
+  W states are genuinely multipartite entangled for all N ≥ 2 and exhibit the characteristic feature that, for
+N ≥ 3, entanglement persists after tracing out one subsystem: the reduced state of the remaining N − 1 modes,
+N −1                    1
+ N |WN −1 ⟩⟨WN −1 | + N |0 . . . 0⟩⟨0 . . . 0|, with |0 . . . 0⟩ here the vacuum of the remaining N − 1 modes, remains gen-
+uinely multipartite entangled [53]. This makes W states particularly robust against the loss of individual modes, in
+the sense of tracing them out, which is distinct from the local energy loss treated in Sec. V.
+
+
+                                                          B.     GHZ states
+
+  The N -partite Greenberger–Horne–Zeilinger (GHZ) state is defined as
+                                                       1                        
+                                            |GHZN ⟩ = √ |0 . . . 0⟩ + |1 . . . 1⟩ .                                    (S71)
+                                                        2
+This corresponds to a coherent superposition of the vacuum state and the state with one excitation in every mode.
+When these two states label matrix elements, we abbreviate them as 0N and 1N , e.g. ρ0N ,1N ≡ ⟨0 . . . 0|ρ|1 . . . 1⟩.
+                                                                                                                         S11
+
+  The two components of |GHZN ⟩ belong to different eigenspaces of the total number operator:
+
+                                     N̂tot |0 . . . 0⟩ = 0,       N̂tot |1 . . . 1⟩ = N |1 . . . 1⟩.                   (S72)
+
+Thus, |GHZN ⟩ is not an eigenstate of N̂tot but a superposition of two sectors with excitation-number difference
+|∆n| = N .
+  GHZ states exhibit maximal nonclassical correlations, achieving the largest possible violation of multipartite Bell-
+type (Mermin) inequalities. However, they are extremely fragile: tracing out a single mode renders the remaining
+state separable. Similarly, GHZ states are highly sensitive to collective phase noise: a fluctuating common phase
+ϕ, imprinted on all modes by e−iϕN̂tot , generates a relative phase N ϕ between the two branches, so that for zero-
+                                                                                    2 2
+mean Gaussian-distributed ϕ with variance σϕ2 the coherence decays as ⟨eiN ϕ ⟩ = e−N σϕ /2 , leading to a characteristic
+superdecoherence with a decay exponent scaling as N 2 .
+
+
+                                                        C.    Cluster states
+
+  Cluster states form a distinct class of multipartite entangled states that play a central role in measurement-based
+quantum computation. They are most naturally defined as stabilizer states on a graph; for a general graph these are
+usually referred to as graph states, the term cluster state being commonly reserved for lattice graphs [59].
+  Consider a graph G = (V, E) with vertices V = {1, . . . , N } corresponding to modes and edges E specifying inter-
+actions. The graph state associated with G is defined (in the qubit subspace nk ∈ {0, 1}) as the unique simultaneous
++1 eigenstate of the stabilizer operators
+                                                     Y
+                                        K̂k = σ̂x(k)     σ̂z(j) ,  k = 1, . . . , N,                            (S73)
+                                                        j∈N (k)
+
+                                                                         (k)
+where N (k) denotes the set of neighbors of vertex k, and σ̂x,z act on the {|0⟩k , |1⟩k } subspace of mode k.      √
+  Equivalently, a graph state can be constructed by preparing all modes in the superposition state |+⟩ = (|0⟩+|1⟩)/ 2
+and applying controlled-phase (CZ) gates,
+                                            CZij |ni ⟩i |nj ⟩j = (−1)ni nj |ni ⟩i |nj ⟩j ,                             (S74)
+between all pairs of modes connected by an edge:
+                                                                 Y
+                                                  |GN ⟩ =                CZij |+⟩⊗N ,                                  (S75)
+                                                              {i,j}∈E
+
+which is the state denoted |GN ⟩ in the main text.
+   Unlike W states, which have a fixed total excitation number, and GHZ states, which span two excitation-number
+sectors, graph states are equal-magnitude superpositions of all 2N computational basis states, and therefore contain
+all excitation numbers 0, . . . , N . Their entanglement structure is highly nontrivial and depends on the underlying
+graph. Graph states are robust against local measurements: a σ̂z measurement of a mode removes the corresponding
+vertex and its edges, projecting the remaining modes onto the graph state of the reduced graph, up to local Pauli
+corrections [58, 59], a key feature enabling measurement-based quantum computation.
+
+  A particularly important subclass of cluster states is given by linear cluster states, corresponding to a one-
+dimensional chain graph with vertices V = {1, . . . , N } and edges E = {{1, 2}, {2, 3}, . . . , {N − 1, N }}. The associated
+stabilizer generators take the explicit form
+                                      K̂1 = σ̂x(1) σ̂z(2) ,
+                                      K̂k = σ̂z(k−1) σ̂x(k) σ̂z(k+1) ,         k = 2, . . . , N − 1,
+                                     K̂N = σ̂z(N −1) σ̂x(N ) .                                                         (S76)
+
+The linear cluster state |CLlin
+                             N ⟩ is defined as the unique common +1 eigenstate of all K̂k .                     √
+  Equivalently, |CLlin
+                    N  ⟩ can be prepared by initializing each mode in the superposition state |+⟩ = (|0⟩ + |1⟩)/ 2 and
+applying controlled-phase (CZ) gates sequentially between nearest-neighbor modes along the chain,
+                                                              N
+                                                              Y −1
+                                                |CLlin
+                                                   N ⟩=              CZk,k+1 |+⟩⊗N .                                   (S77)
+                                                              k=1
+                                                                                                                         S12
+                                                                                                            √
+The sequential protocol described in the main text, with the qubit initialized
+                                                                           √      in |+⟩q = (|g⟩q + |e⟩q )/ 2, the isometry
+|g⟩q |0⟩k → |+⟩q |0⟩k , |e⟩q |0⟩k → |−⟩q |1⟩k , with |−⟩q = (|g⟩q − |e⟩q )/ 2, applied to modes 1, . . . , N − 1, and a final
+iSWAP to mode N , prepares this state up to the local phase |1⟩N → −i|1⟩N on mode N , which is removed by the
+local virtual rotations described in the main text.
+   Linear cluster states implement a “quantum wire”: sequential single-mode measurements allow a logical qubit to
+be transported along the chain while applying arbitrary single-qubit rotations, whereas universal measurement-based
+quantum computation requires cluster states on two-dimensional graphs [61]. Their entanglement structure is less
+symmetric than that of GHZ or W states, but they exhibit high resilience under local measurements: measuring an
+interior mode in the σ̂z basis removes that site together with its two edges, splitting the chain into two independent,
+shorter linear cluster states (up to local Pauli corrections depending on the measurement outcome), while measuring
+an endpoint mode instead yields a single linear cluster state on the remaining N − 1 modes. Propagating quantum
+information along the chain, as in a cluster-state quantum wire, instead relies on sequential measurements in the
+equatorial (x–y) plane of the Bloch sphere, starting from the end of the chain that carries the logical qubit; each
+measurement teleports the logical qubit to the next site, up to a known single-qubit unitary and outcome-dependent
+Pauli corrections [61]. This property makes linear cluster states an important building block for scalable architectures
+based on bosonic or phononic modes.
+                                                                                                                           S13
+
+       V.    DECOHERENCE OF MULTIMODE STATES UNDER LOCAL LOSS AND DEPHASING
+
+  For each mode k, local energy relaxation and pure dephasing are described by the jump operators
+                                q
+                           (k)      (k)
+                         L̂1 = γ1 âk                              (amplitude damping),                                (S78a)
+                                q
+                                     (k)
+                         L̂(k)
+                           φ =    2γφ n̂k                          (pure dephasing).                                   (S78b)
+
+       (k)                    (k) ∗                               ∗
+Here, γ1 = 1/T1,k and γφ = 1/T2,k    − 1/(2T1,k ), with T1,k and T2,k the energy relaxation and Ramsey decoherence
+times of mode k given in the main text.
+  The master equation for the density operator ρ is
+                            N h
+                            X    (k)
+                                                             i                                      1
+                     ρ̇ =       γ1 D[âk ]ρ + 2γφ(k) D[n̂k ]ρ ,     where          D[L̂]ρ = L̂ρL̂† − {L̂† L̂, ρ}.        (S79)
+                                                                                                    2
+                            k=1
+
+Because each jump operator acts on a single mode,
+                                                 all channels commute and can be treated independently: the
+                                        NN
+resulting dynamics factorizes as ρ(t) =  k=1 Φ̂k [ρ(0)], where Φ̂k is the single-mode amplitude- and phase-damping
+                      (k)    (k)
+channel with rates γ1 , γφ .
+   Each mode is truncated to {|0⟩k , |1⟩k }, which is exact since Eq. (S79) never populates higher Fock states. We
+compute analytic fidelity decays for the target states ψ ∈ {WN , GHZN , CLlin   N } and for general graph states, allowing
+     (k)       (k)
+all γ1 and γφ to be distinct.
+   A useful rule implied by Eq. (S79) is that, for two computational basis states |m⟩ = |m1 . . . mN ⟩ and |n⟩ = |n1 . . . nN ⟩
+with mk , nk ∈ {0, 1}, the coherence ρmn = ⟨m|ρ|n⟩ decays under pure dephasing as
+                                                                       
+                                                             X
+                                             ρ̇mn φ = −          γφ(k)  ρmn ,                                         (S80)
+                                                                k:mk ̸=nk
+
+                                                         P (k)
+while amplitude damping contributes the decay rate 12 k γ1 (mk +nk ). This combined rule gives the exact decay rate
+whenever the equation of motion for ρmn is closed, i.e. receives no population feed-in from other matrix elements under
+the dynamics, as is the case for all single-excitation elements of |WN ⟩⟨WN | and for the coherence of |GHZN ⟩⟨GHZN |
+below. It is convenient to define, for two modes j, k,
+                                                          (j)     (k)
+                                                         γ1 + γ 1
+                                                 Γjk ≡                  + γφ(j) + γφ(k) ,                                (S81)
+                                                            2
+which will recur throughout this section. For states with a richer entanglement structure, such as the cluster state,
+several matrix elements are instead fed by population transfer from other coherences over time and no longer follow
+a single exponential; in that case the full closed form must be obtained from the explicit channel decomposition, as
+done in Sec. V D below.
+
+
+                                                          A.    Notation
+
+  Throughout this section, Fψ2 (t) = ⟨ψ|ρ(t)|ψ⟩ denotes the square of the fidelity F defined in the main text, with
+respect to the target state |ψ⟩, with ρ(0) = |ψ⟩⟨ψ|. We use the convention σ̂z |0⟩ = |0⟩, σ̂z |1⟩ = −|1⟩, and define for
+each mode k the population and coherence decay factors
+                                                                                             (k)
+                                                (k)                                         γ1
+                                    pk (t) ≡ e−γ1 t ,    rk (t) ≡ e−λk t ,        λk ≡         + γφ(k) ,                 (S82)
+                                                                                             2
+
+so that Γjk = λj + λk in Eq. (S81) and e−Γjk t = rj rk . For identical rates on all modes we drop the
+mode
+P     index, p = e−γ    1t
+                       P and r = e
+                                       −(γ1 /2+γφ )t
+                                                     . As in the main text, the normalized coherence is C(t) =
+  m̸=n Mmn |ρmn (t)| /   m̸=n Mmn |ρmn (0)|, where Mmn = 1 if ρmn is non-zero in the ideal state and Mmn = 0
+otherwise, and for W states we also use the pairwise coherences ckl (t) = |ρ1k ,1l (t)| / |ρ1k ,1l (0)|.
+                                                                                                                                      S14
+
+                                                         B.     W states
+
+  Under Eq. (S79), the single-excitation sector only decays into the vacuum, which is orthogonal to |WN ⟩. The
+equations of motion for the single-excitation elements are therefore closed, and the rule of Eq. (S80) and below gives
+ρ1k ,1k (t) = pk /N and ρ1k ,1l (t) = rk rl /N for k ̸= l. Hence
+
+                                 N                                                                   −1 X
+                             1 hX        X      i                                                    N
+                2
+               FW   (t) =     2
+                                  pk + 2   rk rl ,            ckl (t) = e−Γkl t ,      CWN (t) =            e−Γkl t .               (S83)
+                  N
+                            N                                                                        2
+                                k=1         k<l                                                              k<l
+
+
+                              = 14 (p1 + p2 ) + 21 e−Γ12 t and CW2 = e−Γ12 t ; for N = 3, FW   = 91                                 −Γkl t
+                        2                                                                  2
+                                                                                                            P              P                
+For N = 2, this gives FW    2                                                                3                   k pk + 2   k<l e
+          1         −Γkl t
+            P
+and CW3 = 3 k<l e          . For identical rates,
+
+                                      1 h −γ1 t                        i
+                          2
+                         FW   (t) =      e      + (N − 1) e−(γ1 +2γφ )t ,            CWN (t) = e−(γ1 +2γφ )t .                      (S84)
+                            N
+                                      N
+The coherence decay rate is thus independent of N , and for N → ∞ the squared fidelity approaches the coherence
+decay e−(γ1 +2γφ )t .
+
+
+                                                       C.     GHZ states
+
+  The coherence ρ0N ,1N cannot be fed by any other element, and the populations follow from the independent decay
+of each excitation: ρ1N ,1N = 12 k pk , ρ0N ,0N = 12 + 21 k (1 − pk ), and ρ0N ,1N = 12 k rk . All other populations
+                                Q                        Q                             Q
+generated by the decay are orthogonal to the target, so that
+                                           N                N               N
+                                  1h    Y        Y i 1Y                                                    P
+                     2
+                    FGHZ  (t) =      1+   1 − pk + pk +   rk ,                             CGHZN (t) = e−    k λk t   .             (S85)
+                        N
+                                  4                     2
+                                          k=1               k=1            k=1
+
+
+                              = 14 1 + (1 − p)N + pN + 21 rN and CGHZN = e−N (γ1 /2+γφ )t , which for N = 2, 3 gives
+                       2
+                                                         
+For identical rates, FGHZ N
+        = 12 1 − p + p2 + r2 and FGHZ        = 21 1 − 32 p + 32 p2 + r3 . Under local noise the GHZ coherence decays with
+  2
+                                       2
+                                                                      
+FGHZ  2                                    3
+an exponent linear in N . This is distinct from the quadratic “superdecoherence” of Sec. IV, which arises only for
+collective dephasing.
+                                                                                                         √
+  Comparing Eqs. (S83) and (S85) shows that, for arbitrary local rates, CGHZ2 = CW2 and CGHZ3 = c12 c13 c23 , since
+both sides equal r1 r2 and r1 r2 r3 , respectively. Local loss and dephasing therefore give R2 = R3 = 1 in Eqs. (10) and
+(11) of the main text.
+
+
+                                          D.      Cluster and general graph states
+
+   For a graph state |GN ⟩ on the graph G = (V, E), a closed form valid for arbitrary mode-dependent rates follows
+from the stabilizer expansion
+
+                                                         1 X                          Y
+                                        |GN ⟩⟨GN | =         ĝA ,           ĝA ≡         K̂v ,                                    (S86)
+                                                        2N
+                                                              A⊆V                    v∈A
+
+
+with K̂v the stabilizer generators of Eq. (S73). Up to a sign, ĝA acts as σ̂x or σ̂y on the modes in A, as σ̂z on the modes
+in Nodd (A)\A, where Nodd (A) is the set of vertices with an odd number of neighbors in A, and as the identity elsewhere.
+The single-mode channel Φ̂k generated by Eq. (S79) acts on the Pauli operators as Φ̂k (σ̂x,y ) = rk σ̂x,y , Φ̂k (σ̂z ) = pk σ̂z ,
+                                                                                       (T )      (T )   Q        (k)
+and Φ̂k (1) = 1 + (1 − pk )σ̂z . The last term generates additional operators ĝA σ̂z , with σ̂z ≡ k∈T σ̂z and T a
+nonempty set of modes on which ĝA acts trivially. These have the same σ̂x,y support as ĝA . Since a stabilizer element
+of a graph state is uniquely determined by this support, they are not in the stabilizer group and have zero expectation
+value in |GN ⟩. Using ⟨GN |ĝA |GN ⟩ = 1, we obtain
+
+                                        2            1 X Y                       Y
+                                       FG   (t) =          rk (t)                         pk (t).                                   (S87)
+                                          N
+                                                    2N
+                                                       A⊆V k∈A            k∈Nodd (A)\A
+                                                                                                                       S15
+
+                                                                            2
+Only A = ∅ survives for t → ∞, giving FG           2
+                                                     N
+                                                         → 2−N = |⟨0 . . . 0|GN ⟩| . For pure dephasing (pk = 1), Eq. (S87)
+             2
+                   Q
+reduces to FGN = k (1 + rk )/2 for any graph.
+  For the linear chain, Nodd (A) \ A contains the modes outside A with exactly one nearest neighbor in A. Summing
+over the subsets A gives
+                                      h                               i
+                        2           1
+                     FCL  lin (t) =
+                                    4   1 + r 1 p2 +  p 1 r2 + r 1 r2   ,                                             (S88)
+                          2
+                                      h                                                                    i
+                        2           1
+                     FCL  lin (t) =
+                                    8 1 + r1 p2 + p2 r3 + p1 r2 p3 + r1 r3 + r1 r2 p3 + p1 r2 r3 + r1 r2 r3 ,         (S89)
+                          3
+
+
+where, for N = 3, the terms correspond to A = ∅, {1}, {3}, {2}, {1, 3}, {1, 2}, {2, 3}, {1, 2, 3}. The expressions  are
+                                                                                                        1
+                                                                                                2
+                                                                                                                     2
+symmetric under the reflection 1 ↔ N of the chain. For identical rates, they reduce to FCL        lin = 4 1 + 2pr + r
+                                                                                                  2
+                1
+       2
+                            2      2
+                                                  
+and FCL   lin = 8 1 + 2pr + p r + r   + 2pr2 + r3 . These results illustrate why Eq. (S80) alone is not sufficient for
+          3
+cluster states: the terms containing pk originate from population transfer |1⟩k → |0⟩k that feeds matrix elements with
+nonzero overlap with the target.
+
+
+                                        E.   Comparison of the three families
+
+                                                                                         P (k)             P (k)
+  At short times, Eqs. (S83), (S85) and (S87) give, with the mode-averaged rates γ̄1 = N1 k γ1 and γ̄φ = N1 k γφ ,
+                                    h                i
+                         2
+                              ≃ 1 − γ̄1 + 2(NN−1) γ̄φ t,      2        2
+                                                                           ≃ 1 − N2 γ̄1 + γ̄φ t,
+                                                                                             
+                        FW N
+                                                            FGHZ N
+                                                                   ≃ FG  N
+                                                                                                             (S90)
+
+where the second expression holds for any connected graph state. For N = 2 all three families decay identically to
+first order, while for N ≥ 3 the W state has the smallest initial fidelity loss, and the GHZ and connected graph states
+have the same initial slope.
+   At long times the ordering changes, because the relaxed vacuum state has overlap 1/2 with |GHZN ⟩ and 2−N with
+|GN ⟩, but none with |WN ⟩: FW     2
+                                     N
+                                               2
+                                       → 0, FGHZ  N
+                                                    → 1/2, and FG  2
+                                                                     N
+                                                                       → 2−N . For identical rates and pure amplitude
+                            2                  2
+damping, for example, FWN drops below FGHZN for γ1 t ≳ 0.74 (N = 3) and γ1 t ≳ 1.02 (N = 4). The fidelity at long
+times is therefore dominated by the vacuum overlap and is not a meaningful measure of the robustness of multipartite
+coherence, which is instead captured by the coherences C(t) used in the main text.
+                                                                                  2        2
+   Finally, the linear cluster state does not exceed the GHZ state in fidelity, FCL lin ≤ FGHZN , in all cases we evaluated
+                                                                                    N
+(N = 3, 4, 5, identical rates with 0 ≤ γφ /γ1 ≤ 5, and pure dephasing). For pure dephasing this follows from Jensen’s
+                       N
+inequality, (1 + r)/2        ≤ (1 + rN )/2. This fidelity ordering should not be confused with the robustness of the
+entanglement of cluster states under local measurements (Sec. IV), which is a distinct property.
+                                                                                                                                    S16
+
+                         VI.    CORRELATED PHASE NOISE AND THE RATIO METHOD
+
+   In this section we derive the results used in Sec. V of the main text: the factorization of phase noise from local
+decoherence, the coherence decay of WN and GHZN states under correlated Gaussian phase noise, the ratios RN , the
+limiting regimes of purely collective noise, and the analysis of the measured decay times. Throughout, ⟨·⟩ denotes
+                                                                                                         P
+the average over noise realizations ξ(t), ρmn = ⟨m|ρ|n⟩ with |m⟩ = |m1 . . . mN ⟩, d = m − n, N̂tot = k n̂k , and
+        (k)      (k)
+λk = γ1 /2 + γφ is the local coherence decay rate of mode k defined in Sec. V of these supplementary.
+
+
+                                  A.    Factorization of phase noise and local decoherence
+
+                                                                                                                     P                 
+     We start from the master equation Eq. (8) of the main text, ρ̇ξ = Ht [ρξ ] + Lloc [ρξ ], with Ht [ρ] = −i           k ξk (t)n̂k , ρ
+and Lloc the local generator of Eq. (S79). The noise ξ(t) = (ξ1 , . . . , ξN ) is classical and arbitrary in strength, temporal
+correlations, and inter-mode correlations.
+     For a phase vector θ, let Uθ [ρ] = e−iθ·n̂ ρ eiθ·n̂ . Since eiθ·n̂ âk e−iθ·n̂ = e−iθk âk , the phase cancels in âk ρâ†k and in
+â†k âk , while n̂k commutes with θ · n̂. Hence Uθ Lloc Uθ−1 = Lloc for all θ, so that Ht commutes with Lloc and with Ht′
+at all times. For each noise realization,
+                                                                                             Z t
+                                       ρξ (t) = eLloc t UΦ(t) [ρ(0)],         Φk (t) =             ξk (t′ ) dt′ .                 (S91)
+                                                                                              0
+
+The rotation multiplies ρmn by e−id·Φ . The local dynamics only couples matrix elements with the same d, because
+âk lowers mk and nk together and D[n̂k ] is diagonal in the Fock basis. All elements contributing to ρmn (t) therefore
+carry the same phase factor, and averaging over the noise gives
+
+                                    ρmn (t) = e−id·Φ(t) ρ(0)
+                                                         mn (t),                    ρ(0) (t) = eLloc t [ρ(0)],                    (S92)
+
+where ρ(0) (t) denotes the solution of Eq. (8) with ξ = 0. This result holds for arbitrary local rates and arbitrary noise
+statistics.
+
+
+                                           B.    Coherences of WN and GHZN states
+
+  Local factor. For every coherence of |WN ⟩ (d = ek − el , with ek the kth unit vector) and of |GHZN ⟩ (d =
+(1, . . . , 1)), each mode is excited in at most one of the two Fock states, i.e. mk + nk = d2k . Moreover, no element with
+the same d and higher occupation is populated, so the equation of motion is closed (Sec. V) and
+                                                                     P     2
+                                                                −
+                                                    ρ(0)
+                                                     mn (t) = e
+                                                                        k dk λk t   ρmn (0).                                      (S93)
+
+  Noise factor. For Gaussian  phase noise with covariance matrix Kkl (t) = ⟨δΦk (t) δΦl (t)⟩, δΦk = Φk − ⟨Φk ⟩, one
+has ⟨e−id·Φ ⟩ = exp − 21 k,l dk dl Kkl . Deterministic phases ⟨Φk ⟩ only rotate the coherences and drop out of their
+                         P            
+absolute values. Combining both factors,
+
+                                       |ρmn (t)|      h X            1X              i
+                                                 = exp −  d2k λk t −    dk dl Kkl (t) .                                           (S94)
+                                       |ρmn (0)|                     2
+                                                                 k                     k,l
+
+
+For the pairwise WN coherences and the GHZN coherence this gives
+                                             h                                    i
+                                ckl (t) = exp − (λk + λl ) t − 21 Kkk + Kll − 2Kkl ,                                              (S95)
+                                             h X              X         X      i
+                            CGHZN (t) = exp −       λk t − 21     Kkk −     Kkl .                                                 (S96)
+                                                             k                 k               k<l
+                                                                                                                P
+The WN coherences depend only on the phase differences Φk − Φl , the GHZ coherence on the total phase k Φk .
+The total coherence of Eq. (7) of P  the main text is CW2 = c12 for N = 2. For N = 3 it is the mean of the ckl weighted
+by |ρ1k ,1l (0)|, which reduces to 31 k<l ckl for equal initial coherences.
+                                                                                                                         S17
+
+                                                        C.        Ratios RN
+
+  In the product of all N2 pairwise coherences, each local rate λk and each single-mode variance Kkk appears exactly
+                          
+N − 1 times. Therefore
+                                                 CGHZN (t)                h   N X             i
+                                RN (t) ≡  Q               1/(N −1) = exp − N − 1     Kkl (t)                         (S97)
+                                               k<l ckl (t)                         k<l
+
+is independent of all local loss and dephasing rates and of all single-mode phase variances. For N = 2, 3 it reduces to
+Eqs. (10) and (11) of the main text. Two limits are relevant:
+    1. Independent noise. If the ξk are mutually independent, ⟨e−id·Φ ⟩ = k ⟨e−idk Φk ⟩. Since ⟨e−iΦk ⟩ = ⟨e+iΦk ⟩ ,
+                                                                               Q
+       each mode contributes the same factor to numerator and denominator, and RN = 1 for arbitrary, not necessarily
+       Gaussian, noise statistics and spectra.
+                                                                                             Rt
+    2. Collective noise. If ξk (t) = ξ(t) for all k, all phases equal the common phase Φ(t) = 0 ξ(t′ ) dt′ , all entries of K
+       equal ⟨δΦ(t)2 ⟩, and RN (t) = exp[−N 2 ⟨δΦ(t)2 ⟩/2], the GHZ superdecoherence factor discussed in Sec. VI D.
+If the covariances grow linearly in time, Kkl (t) = 2Dkl t, the symmetric matrix D acts as a dephasing-rate matrix
+whose off-diagonal elements are the correlated dephasing rates. Equation (S97) then gives RN = e−ΓN t with
+
+                                     2N X                                                           X
+                             ΓN =         Dkl ,              i.e.     Γ2 = 4D12 ,         Γ3 = 3          Dkl .        (S98)
+                                    N −1
+                                           k<l                                                      k<l
+
+
+Note that Dk̸=l can be negative for anticorrelated noise. With Ẑk = 1 − 2n̂k , D coincides with γC, where γ and C
+are the overall Rdephasing rate and the dephasing coefficient matrix of Ref. [91]. For stationary noise, Dkl = Skl (0)/2,
+                  ∞
+with Skl (ω) = −∞ dτ eiωτ ⟨δξk (τ ) δξl (0)⟩ the cross-spectral density of the mode-frequency fluctuations [98].
+
+
+                                                 D.   Purely collective noise
+
+  For collective noise, Ĥnoise = ξ(t)N̂tot (with ℏ = 1), we take ξ(t) to be a zero-mean, stationary Gaussian process
+                                                                                                          Rt
+with autocorrelation function R(τ ) = ⟨ξ(t)ξ(t + τ )⟩, variancePσ 2 = R(0), and accumulated phase Φ(t) = 0 ξ(t′ ) dt′ .
+A coherence whose total excitation numbers differ by ∆n = k dk then decays as
+                                                                Z t Z t                  Z t
+             ρmn (t)        h∆n2       2
+                                          i
+                                                              2
+              (0)
+                     = exp −     ⟨Φ(t)   ⟩  ,          ⟨Φ(t) ⟩ = dt1 dt2 R(t1 − t2 ) = 2     dτ (t − τ )R(τ ).         (S99)
+             ρmn (t)          2                                       0        0                            0
+
+
+For exponentially correlated (Ornstein–Uhlenbeck) noise, R(τ ) = σ 2 e−ν|τ | with correlation time 1/ν,
+
+                                                              2σ 2
+                                                ⟨Φ(t)2 ⟩ =         νt − 1 + e−νt .
+                                                                                
+                                                                 2
+                                                                                                                      (S100)
+                                                               ν
+
+Differentiating Eq. (S99) and using [N̂tot , [N̂tot , ρ]]mn = ∆n2 ρmn gives the time-convolutionless master equation
+                                                       Z t                                  
+                                       ρ̇ = Lloc ρ −           R(τ ) dτ     N̂tot , [N̂tot , ρ] .                     (S101)
+                                                          0
+
+It is exact because the noise Hamiltonians at different times commute and the cumulant expansion of Gaussian noise
+terminates at second order.
+   Markovian regime (νt ≫ 1). The rate in Eq. (S101) saturates, giving the Lindblad equation
+                                                                   Z ∞
+                                                                                  2σ 2
+                               ρ̇ = Lloc ρ + Γc D[N̂tot ]ρ, Γc = 2     R(τ ) dτ =      ,                   (S102)
+                                                                    0              ν
+
+and ⟨Φ(t)2 ⟩ ≃ Γc (t − 1/ν). Coherences decay at rate ∆n2 Γc /2. This defines the collective-dephasing rate Γc of the
+main text, ⟨δΦ(t)2 ⟩ = Γc t, up to the constant offset −Γc /ν. A single-mode coherence (∆n = 1) decays at Γc /2, which
+is the contribution of collective noise to the pure-dephasing rate of each mode.
+                                                                                                                            S18
+
+   Quasi-static regime (νt ≪ 1). The detuning is constant within a shot and varies only between shots, so that
+⟨Φ(t)2 ⟩ ≃ σ 2 t2 . Coherences decay as exp[−∆n2 σ 2 t2 /2], a Gaussian decay that no time-independent Lindblad equation
+can describe.
+   All coherences of |WN ⟩ have ∆n = 0, so W states are decoherence-free under collective noise of any spectrum.
+More generally, the same holds for any state supported on a single eigenspace of N̂tot . The GHZ coherence has
+                                                                                              2   2
+|∆n| = N , the largest value in the computational subspace, and acquires the factor e−N ⟨Φ(t) ⟩/2 on top of the local
+                                               2
+decay.
+√        In the Markovian regime this is e−N Γc t/2 , while in the quasi-static regime it is a Gaussian with 1/e time
+  2/(N σ). For comparison, independent dephasing with rate γφ per mode gives e−N γφ t , whereas collective noise with
+                                                    2
+the same single-mode rate, Γc /2 = γφ , gives e−N γφ t , the GHZ superdecoherence. Since the pairwise WN coherences
+                                                    2    2
+are unaffected, Eq. (S97) reproduces RN = e−N ⟨Φ ⟩/2 , i.e. ΓN = N 2 Γc /2 and, from Eq. (S98), Dkl = Γc /2 for all
+k, l.
+
+
+                                     E.      Analysis of the measured decay times
+
+  Each normalized coherence (CW2 , CW3 , ckl , CGHZ2 , CGHZ3 ) is fitted with A e−t/τ + B. The offset B accounts for the
+positive bias of |ρmn | estimated from noisy tomographic data, which leaves a residual floor at long delays. Only the
+decay times τ , reported with their one-standard-deviation fit uncertainties στ in Fig. 3 of the main text, enter the
+analysis below. Normalizing to t = 0 removes state-preparation and measurement errors, which are identical for all
+delays.
+  Within the exponential description, Eq. (S97) relates the decay rates of numerator and denominator,
+                                              1           1                        1       1X 1
+                                   Γ2 =             −           ,   Γ3 =               −         ,                        (S103)
+                                           τGHZ2         τW2               τGHZ3           2 τkl
+                                                                                               k<l
+
+with τkl the decay time of ckl . Assuming independent fit errors, we propagate uncertainties as
+
+                                          στ2GHZ2       στ2W2                  στ2GHZ3         1 X στ2kl
+                                σΓ2 2 =    4        +    4      ,   σΓ2 3 =         4      +          4 .                 (S104)
+                                          τGHZ          τW                         τGHZ        4   τkl
+                                              2            2                           3        k<l
+
+The three τkl are extracted from the same set of density matrices, so treating their errors as independent is an
+approximation.
+   The second term of Γ3 is the purely local GHZ3 decay rate predicted from the pairwise coherences, without free
+                                                              −1 −1
+parameters. The corresponding lifetime is τloc = 21 k<l τkl
+                                                      P         
+                                                                    , and the fraction of the measured GHZ3 decay rate
+it accounts for is τGHZ3 /τloc .
+   The initial slope of CW3 is the (weighted) mean of the three pairwise rates. Agreement between 1/τW3 and
+1
+  P
+3    k<l 1/τkl therefore checks the pairwise fits. Note that τW3 itself is not used in Eq. (S103).
+   Upper limits on a quantity X with estimate X̄ and P    uncertainty σX are one-sided at 95 % confidence, X < X̄ +
+1.645 σX . Using Eq. (S98), we bound D12 = Γ2 /4 and k<l Dkl = Γ3 /3; these require no assumption on the spatial
+                                                                                         (N )               (2)
+structure of the noise. For purely collective noise, each data set gives an estimate Γc = 2ΓN /N 2 , i.e. Γc = Γ2 /2
+      (3)                  (N )
+and Γc = 2Γ3 /9, with σΓc = 2σΓN /N 2 . The N = 2 and N = 3 estimates come from independent data sets, so we
+combine them into the inverse-variance weighted mean
+                              P      (N )                                                                     −1/2
+                               N wN Γc
+                                                                                                X
+                                                                    (N ) −2
+                         Γ̄c = P          ,              wN = σΓc              ,       σΓ̄c =            wN           .   (S105)
+                                 N wN                                                                N
+
+Individual estimates are not truncated at the physical boundary Γc ≥ 0 before averaging, to avoid biasing the mean.
+The resulting values are summarized in Table II of the main text.
+  A bound on Γc translates into a bound Γc /2 on the collective contribution to the pure-dephasing rate of each mode.
+                                                                                                           ∗
+Unlike an estimate from single-mode Ramsey measurements, which requires subtracting 1/(2T1,k ) from 1/T2,k    in order
+to obtain the local pure-dephasing rate, this bound does not depend on the calibration of the single-mode relaxation
+times, since all local contributions cancel in RN .
+

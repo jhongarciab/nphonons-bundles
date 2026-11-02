@@ -1,0 +1,980 @@
+                                                      Correlated Dephasing in a Piezoelectrically Transduced Silicon Phononic Waveguide
+
+                                                                                   Oliver A. Hitchcock,1, 2, ∗ Felix M. Mayor,2 Wentao Jiang,2
+                                                                             Matthew P. Maksymowych,2 Sultan Malik,2 and Amir H. Safavi-Naeini2, †
+                                                                             1
+                                                                               Department of Physics, Stanford University, Stanford, California 94305, USA
+                                                            2
+                                                                Department of Applied Physics and Ginzton Laboratory, Stanford University, Stanford, California 94305, USA
+                                                                                                       (Dated: February 25, 2025)
+                                                                        Nanomechanical waveguides offer a multitude of applications in quantum and classical technolo-
+                                                                     gies. Here, we design, fabricate, and characterize a compact silicon single-mode phononic waveguide
+                                                                     actuated by a thin-film lithium niobate piezoelectric element. Our device directly transduces be-
+arXiv:2502.16426v1 [cond-mat.mes-hall] 23 Feb 2025
+
+
+
+
+                                                                     tween microwave frequency photons and phonons propagating in the silicon waveguide, providing
+                                                                     a route for coupling to superconducting circuits. We probe the device at millikelvin temperatures
+                                                                     through a superconducting microwave resonant matching cavity to reveal harmonics of the silicon
+                                                                     waveguide and extract a piezoelectric coupling rate g/2π = 1.1 MHz and a mechanical coupling rate
+                                                                     f /2π = 5 MHz. Through time-domain measurements of the silicon mechanical modes, we observe
+                                                                     energy relaxation timescales of T1,in ≈ 500 µs, pure dephasing timescales of Tϕ ≈ 60 µs and dephas-
+                                                                     ing dynamics that indicate the presence of an underlying frequency noise process with a non-uniform
+                                                                     spectral distribution. We measure phase noise cross-correlations between silicon mechanical modes
+                                                                     and observe detuning-dependent positively-correlated frequency fluctuations. Our measurements
+                                                                     provide valuable insights into the dynamics and decoherence characteristics of hybrid piezoelectric-
+                                                                     silicon acoustic devices, and suggest approaches for mitigating and circumventing noise processes
+                                                                     for emerging quantum acoustic systems.
+
+
+                                                                        I.   INTRODUCTION                                that limit acoustic coherence times [23, 24]. Moreover,
+                                                                                                                         both methods rely on transducers with dimensions com-
+                                                        Guided waves of light and sound are ubiquitous in                parable to those of single-mode GHz acoustic waveguides.
+                                                     modern technology. Compared to electromagnetic waves,               While these micron-scale transducers help mitigate scat-
+                                                     acoustic waves propagate at much lower velocities, en-              tering into spurious modes, they inherently possess very
+                                                     abling miniaturization of gigahertz frequency devices and           low capacitance resulting in significant impedance mis-
+                                                     offering opportunities for on-chip integration [1–3]. In-           matches with conventional microwave circuits and lead-
+                                                     deed, acoustic resonators and filters form the backbone             ing to inefficient electrical excitation.
+                                                     of timekeeping and signal-processing technologies [4–6],               Here, we address these challenges by presenting a
+                                                     and can operate in the quantum regime when cooled to                mechanical waveguide device that combines the strong
+                                                     millikelvin temperatures [7, 8]. Coupling such gigahertz            piezoelectricity of thin-film lithium niobate [25] with the
+                                                     (GHz) phonons to superconducting circuits has already               potentially long coherence times of silicon nano-acoustic
+                                                     opened pathways toward hybrid quantum information                   resonators [26]. To leverage the respective advantages
+                                                     processing and sensing [9–13]. Realizing their full po-             of these different materials, we heterogeneously integrate
+                                                     tential, however, demands waveguides that confine and               the lithium niobate with silicon through a transfer print
+                                                     selectively excite only the desired acoustic mode over a            technique [27, 28]. We mitigate the impedance mismatch
+                                                     large bandwidth without scattering into spurious chan-              problem with the strong piezoelectricity of lithium nio-
+                                                     nels [14]. While cavity optomechanics has been used to              bate and resonant enhancement via an electromagnetic
+                                                     transduce modes of nanoscale phononic waveguides [15–               resonator. We then characterize the device with mi-
+                                                     17], its integration with microwave superconducting cir-            crowave spectroscopy to extract the relevant system pa-
+                                                     cuits remains a challenge that is yet to be addressed.              rameters, and use time-domain ringdowns to measure de-
+                                                     In contrast to cavity optomechanics, direct piezoelec-              coherence and correlated dephasing dynamics.
+                                                     tric or capacitive electrostatic actuation [18] of phononic            The silicon waveguide is engineered similarly to that
+                                                     waveguides offers direct compatibility with integrated mi-          presented in Ref. [16]. A one-dimensional (1D) phononic
+                                                     crowave circuits and emerging superconducting quantum               crystal with a full bandgap is terminated on one side
+                                                     machines [19]. However, each approach faces signifi-                to realize a 1D edge defect. Proper design of the de-
+                                                     cant challenges. Electrostatic actuation requires small             fect can realize a single-mode phononic crystal that
+                                                     vacuum gaps and high bias voltages for efficient acous-             eliminates scattering to spurious mechanical polariza-
+                                                     tic excitation, which can lead to mechanical instabili-             tions within the waveguide. This design results in a
+                                                     ties [20, 21]. Conversely, piezoelectric transduction is hin-       waveguide that supports only longitudinal modes with
+                                                     dered by crystal defects [22] and fabrication complexities          group velocities vg = 5200 m s−1 between frequencies of
+                                                                                                                         2.6 GHz to 3.0 GHz. By terminating the waveguide at a
+                                                                                                                         length of L = 700 µm, we produce standing waves with
+                                                     ∗ oliver.hitchcock@stanford.edu
+                                                                                                                         a free spectral range (FSR) of ωFSR /2π ≈ 3.7 MHz. The
+                                                     † safavi@stanford.edu
+                                                                                                                         simulated mechanical bands of this single-mode waveg-
+                                                                                                                                                  2
+
+(a)                                                            (b)                                   (c)                            (d)
+
+       piezomechanics
+       waveguide chip                                                                                           silicon
+
+
+
+
+                                 tunable                                                              lithium
+      2mm                                                                                             niobate
+                                 microwave chip                                                                       aluminum
+                                                               200um
+                                                                                                                              5um
+
+(e)                       tunable                             silicon waveguide modes                (f)
+                         microwave
+                           mode
+                                         piezoelectric
+                                             mode
+                                                                       a1
+                                                         f1                             γ1
+                    κe               g
+      50 Ω                   c                b          fk            ak
+                                                                                        γk
+                                                         fk
+                        κi               γb
+                                                                       aN
+                                                                                        γN
+
+FIG. 1. Piezoelectrically transduced silicon phononic waveguide. (a) Optical microscope image showing the piezome-
+chanics chip and the high-impedance microwave resonator chip. (b) A false color scanning electron micrograph (SEM) showing
+an array of piezoelectrically transduced waveguide devices, with the lithium niobate (purple), silicon (cyan) and aluminum elec-
+trodes (yellow). (c) An angled SEM showing a single waveguide device near the piezoelectric transducer region. (d) Simulated
+mechanical bands of the single-mode waveguide. The single-mode region is delimited by the two dashed lines. (e) Coupled
+mode model for the device. (f) Simulated mechanical mode profile of the single-mode waveguide.
+
+
+uide are shown in Fig. 1(d). We heterogeneously in-                                     bate mode b at a frequency ωb has an intrinsic loss rate
+tegrate a block of thin-film lithium niobate with an                                    of γb and is piezoelectrically coupled at rate g to the
+area of approximately 1 µm2 at one end of the silicon                                   microwave mode c with frequency ωc , giving rise to a
+phononic waveguide. This block of lithium niobate serves                                piezoelectric coupling term, Hpe /ℏ = g(c† b + h.c.). The
+as a transducer that directly converts between microwave                                full Hamiltonian is,
+frequency electromagnetic and mechanical excitations.
+                                                                                                                     ωa,k a†k ak + Hpe + Hmech , (1)
+                                                                                                                   X
+We design the frequency of the lithium niobate trans-                                    H/ℏ = ωc c† c + ωb b† b +
+ducer mode b to be ωb /2π = 2.8 GHz, coinciding with                                                                      k
+the single-mode region of the silicon phononic waveg-                                   from which we derive the one-port scattering parameter
+uide. Aluminum electrodes provide the electrical in-                                    S11 , which describes the reflection coefficient when the
+terface with the piezoelectric block. The micron-sized                                  system is probed at the microwave mode:
+block has very little capacitance Ck ≈ 0.2 fF and is
+                                                                                                                         κe
+poorly matched to a 50 Ω transmission line. We there-                                        S11 (ω) = 1 − −1          −1                 .   (2)
+                                                                                                          χc + g /(χb − i k fk2 χa,k )
+                                                                                                                  2
+                                                                                                                              P
+fore connect the aluminum electrodes via wirebond to
+a tunable high-impedance (Z ≈ 500 Ω) microwave res-                                     Here, χ−1                               −1
+                                                                                                 c = −i(ω −ωc )+(κe +κi )/2, χb = −i(ω −ωb )+
+onator on a separate chip [Fig. 1(a)]. The microwave                                                   −1
+                                                                                        (γb )/2 , and χa,k = −i(ω−ωa,k )+(γi,k )/2 are the inverses
+resonator compensates for the impedance mismatch be-
+                                                                                        of the susceptibilities for the microwave, lithium niobate
+tween the transducer and the transmission lines, and
+                                                                                        and silicon waveguide modes, respectively. These terms
+is made of a niobium-titanium-nitride (NbTiN) ladder
+                                                                                        capture how each mode responds to the input frequency
+structure which allows for in-situ tuning of the frequency
+                                                                                        ω. This model and the associated scattering parameter
+via an external magnetic coil [29, 30]. The lithium nio-
+                                                                                        forms the basis of our analysis of the system.
+bate transducer section of the device is shown in Fig. 1(c)
+and the simulated displacement of the transducer is
+shown in Fig. 1(f). An overview showing the extent of                                          II.         DEVICE CHARACTERIZATION
+the waveguide is shown in Fig. 1(b).
+   We model the device using coupled mode theory as                                        We cool the device to 10 mK and probe it by sending
+represented schematically in Fig. 1(e). The terminated                                  in a microwave tone and measuring the reflected signal as
+silicon waveguide gives rise to a series of standing-wave                               a function of frequency. Simultaneously, we apply a DC
+modes ak with frequencies ωa,k and intrinsic loss rates                                 current, swept from 0 mA to −20 mA, to an off-chip coil
+γi,k . These modes are mechanically coupled at rates fk                                 placed directly above the sample (corresponding roughly
+to the lithium niobate piezoelectric mode b and the in-                                 to a magnetic field of 0 mT to 0.9 mT) to sweep the c
+teraction leads to aPcollection of beam splitter coupling                               mode frequency. We observe a mode of the NbTiN res-
+terms, Hmech /ℏ =      fk (b† ak + h.c.). The lithium nio-                              onator that is overcoupled to a transmission line with
+                                                                                                                                                                             3
+
+(a)                                                                |S11 | [dB]       (b)                                         (d)
+                      0                                                                     1
+
+                                                                            -35
+
+
+
+
+                                                                                  |S 11|
+                      -5                                                                   0.5
+                                                                            -40                                                      107
+ coil current [mA]
+
+
+
+
+                     -10                                                                    0
+                                                                            -45                  2.8        2.82         2.84
+
+
+
+
+                                                                                                                                Qe
+                                                                                     (c)
+                                                                                             0                                            6
+                                                                            -50                                                      10
+                     -15                                                                   -10
+
+
+
+
+                                                                                  S11
+                                                                                           -20
+                                                                            -55
+                                                                                           -30
+                     -20
+                                                                            -60
+                                                                                           -40                                       105
+                           2.76   2.78       2.8     2.82   2.84                                 2.8        2.82         2.84           2.75           2.8            2.85
+                                         frequency [GHz]                                               frequency [GHz]                         mode frequency [GHz]
+
+
+FIG. 2. Device characterization. (a) Reflection magnitude as the microwave mode frequency is tuned by the superconducting
+coil. Sharp lines correspond to resonances in the mechanical waveguide. (b) Reflection magnitude and (c) phase versus frequency
+at 10 mK are shown with the background removed (blue) and fit to the coupled mode model (yellow). (d) Coupling enhancement
+as a function of mode frequency as the microwave mode is tuned. Each colored curve represents the fit Qe ’s for mechanical
+modes at a different current in the tuning coil. Overlaying all curves reveals a region of enhanced coupling near the bare lithium
+niobate mode frequency ωb /2π ≈ 2.81 GHz. A fit to the minimum Qe value for each coil current is shown in red.
+
+
+extrinsic linewidth κe /2π = (8 ± 1) MHz, and tunes                                                the microwave mode c, and measure the extrinsic quality
+from 2.85 GHz to 2.75 GHz. As the microwave mode                                                   factor Qe of the hybridized mechanical modes to obtain
+is tuned, we observe a series of narrow dips [Fig. 2(a)]                                           Qe versus ak mode frequency for each c mode frequency.
+that become more prominent as they are brought closer                                              In this measurement, we expect to see a reduction in
+to resonance with the c mode. The narrow dips corre-                                               Qe for ak modes close to the microwave resonance. We
+spond to the high-Q standing wave modes, ak , in the                                               show the resulting Qe versus ak frequency for different
+nanomechanical waveguide that are hybridized with the                                              coil currents (leading to differing ωc ) as the different col-
+LN transducer. The mechanical modes are spaced by                                                  ored curves in Fig. 2(d). The Qe ’s decrease as the mode
+ωFSR /2π = (3.3 ± 0.2) MHz and have an enhanced reflec-                                            frequency is brought closer to ωc and the out-coupling
+tion response when in the proximity of the microwave                                               is resonantly enhanced (Appendix E). We see that the
+mode due to the resonant enhancement in their out-                                                 location of the dip for each curve corresponds to the c
+coupling rate (Appendix E). Fig. 2(b,c) shows the magni-                                           mode frequency. By selecting the minimal Qe for each
+tude and phase response at a coil current of −10 mA cor-                                           curve, we observe the envelope of minimum Qe which
+responding to the black dashed line in Fig. 2(a). In ad-                                           is itself minimized at a certain frequency. This is due
+dition to the broad shallow dip of the c mode, we clearly                                          to an additional resonant enhancement in the extrinsic
+see the narrow ak mechanical modes that become more                                                coupling rate that results from the proximity of silicon
+strongly coupled to the output channel when near the                                               waveguide mode frequencies to the bare lithium niobate
+broad microwave mode at ωc /2π = 2.82 GHz.                                                         mode frequency ωb . We fit this curve of increased out-
+                                                                                                   coupling to a Lorentzian [red curve in Fig. 2(d)], which
+  To observe the narrow features corresponding to the ak                                           yields a value of ωb /2π = 2.814 GHz and agrees with
+modes, they must be hybridized with the piezoelectric el-                                          fits to the diagonalized Hamiltonian of the coupled mode
+ement b. However, we do not observe any feature that                                               model (Appendix D). The linewidth of this Lorentzian,
+corresponds unambiguously with the b mode as the de-                                               γWG /2π = 48.8 MHz, corresponds to the loss rate of
+vice is in a regime where the mechanical coupling exceeds                                          the LN mode into the silicon waveguide, had the sili-
+the FSR, γWG > ωFSR . In this regime, many waveg-                                                  con waveguide been extended out to infinite length, i.e.,
+uide modes are simultaneously strongly coupled to the                                              the continuum limit for the mode spectrum. This cou-
+b mode [31]. In principle, a shift in the frequencies of                                           pling rate is a property of the mechanical coupling at the
+the ak modes can be used to determine the frequency                                                LN transducer-waveguide interface, independent of the
+of the b mode, however this dispersive effect is masked                                            length of the waveguide.
+by the disorder in the ak mode frequencies of our de-
+vice. Instead of looking for a dispersive shift in the ak                                            To determine the coupling rates g and fk , we fit the
+mode frequencies, we try to measure the dissipation in-                                            magnitude and phase of the reflection spectrum to the
+duced by coupling the ak modes to the lossy microwave                                              coupled mode model [Eq. (2)]. For simplicity, we assume
+mode through the b mode. We sweep the frequency of                                                 a constant fk across all modes. We use our model to
+                                                                                                                                                         4
+
+fit spectra taken at different microwave frequencies ωc       (a)                                          (b)
+using otherwise common parameters for the fits and use                                                                 103
+a range of initial guesses to estimate the uncertainties               104
+
+in the parameters. An example fit result overlaid with
+                                                                       103
+one spectrum is shown in Fig. 2(b). Our approach yields
+f¯k /2π = (5.0 ± 0.2) MHz and g/2π = (1.1 ± 0.1) MHz.                  102
+Notably, the fit value   ¯
+                  p of fk is in good agreement with the
+                                                                                                                       102
+
+
+
+
+                                                                                                           time [ s]
+                                                             phonons
+prediction fk = ωFSR γWG /2π ≈ 5.1 MHz when using                      101
+the measured FSR and fit γWG from the Qe envelope
+analysis.                                                              100
+
+                                                                       10-1
+                                                                                                                                                 T1,in
+   III.   DECOHERENCE AND CORRELATED                                                    |a| 2                          101
+                                                                       10-2                                                                      T
+                DEPHASING                                                              | a |    2
+
+                                                                            -3
+                                                                       10
+                                                                             0   200     400        600   800                102      103         104
+   To characterize and disentangle the effects of loss and
+                                                                                       time [ s]                                   n [phonons]
+dephasing in the mechanical waveguide, we probe the de-
+vice in time domain. This allows us to separate the en-
+ergy relaxation from the pure dephasing for each mode        FIG. 3. Energy and amplitude decay for individual
+and to investigate correlated frequency fluctuations be-     modes. (a) Ringdown of the cavity field magnitude (green)
+tween mechanical modes in the waveguide, providing in-       and cavity field amplitude (blue) with fits (black) for a waveg-
+sight into the underlying microscopic processes.             uide mode shows energy decay is described by a simple expo-
+                                                             nential, whereas amplitude decay requires an additional ex-
+   Consider the evolution of a modal field amplitude un-
+                                                             ponential term that is quadratic in time. (b) Timescales of
+dergoing energy dissipation at rate κ andRfrequency fluc-    intrinsic energy decay T1,in and pure dephasing Tϕ versus in-
+tuations δω(t) leading to a phase ϕ(t) = t δω(t′ )dt′ ,      tracavity phonon number. Points represent individual modes
+                                                             probed at different RF drive powers, while error bars show the
+                  a(t) = a0 e−κt/2 e−iϕ(t) .           (3)   standard error of the mean from 24 repeated measurements.
+                                                             The mode measured in (a) is shown for different intracav-
+If we sample the magnitude of the cavity field ampli-        ity powers as the data points connected by lines in (b), with
+tude during the ringdown we obtain the energy ringdown       the highest intracavity population datapoint corresponding
+which depends only on the total energy decay rate,           to the data from (a). Shaded regions in (b) correspond to
+                                                             95% confidence bounds on parameters for fits to power laws
+                   ⟨|a(t)|2 ⟩ = |a0 |2 e−κt .          (4)   of T1,in ∝ ⟨n⟩0.12 and Tϕ ∝ ⟨n⟩0.26
+
+On the other hand, averaging the field amplitude Eq. (3)
+before taking its magnitude, as is done in coherent spec-
+troscopy experiments, leads to a different ring down,        and the intrinsic part 1/T1,in . We use separate coher-
+                                                             ent spectroscopy measurements to obtain κe which we
+             |⟨a(t)⟩|2 = |a0 |2 e−κt |⟨e−iϕ(t) ⟩|2 .   (5)   subtract from the inferred κ and get the resulting T1,in
+                                                             [green points in Fig. 3(b)]. We fit the amplitude decay
+The decay of Eq. (5) depends on the details of the fre-      to a function of form B0 exp(−κt − Γt − ∆2 t2 ) + Bbg
+quency noise process, as encapsulated in the stochas-        with κ fixed from the energy decay fit. The two de-
+tic function ϕ(t). But in general, |⟨a(t)⟩|2 will decay      coherence rates Γ and ∆ arise from frequency fluctua-
+faster than ⟨|a(t)|2 ⟩. Gaussian white frequency noise       tion processes that are fast and slow respectively (Ap-
+results in exponential decay of the average amplitude        pendix H). We define our pure dephasing time scale Tϕ
+|⟨a(t)⟩|2 ∼ e−(κ+κϕ )t , where κϕ is the increase in the     as (∆Tϕ )2 + ΓTϕ = 1, i.e., the time after which coher-
+decay rate caused by frequency fluctuations. Other noise     ences decay by e−1 due to both slow and fast frequency
+processes can give rise to different time dependencies,      noise [blue points in Fig. 3(b)]. The estimation of the
+such as those quadratic in time (Appendix H).                intracavity phonon number associated with each mea-
+   The energy and amplitude ringdown measurement re-         surement is detailed in Appendix I. For the measurement
+sults are shown as the green and blue points respec-         shown in Fig. 3(a), we find T1,in = 534 µs, Tϕ = 107 µs
+tively in Fig. 3(a) for a mechanical mode at a frequency     and ⟨n⟩ ≈ 1 × 104 . As evident from Fig. 3(a), the am-
+of ωa /2π = 2.7996 GHz with the microwave mode de-           plitude decay is much faster than the energy decay, sug-
+tuned by approximately 50 MHz, where any dephasing           gesting Tϕ that are significantly smaller than T1,in . We
+induced by coupling to a noisy microwave mode is ex-         fix the microwave mode frequency at ωc /2π ≈ 2.85 GHz,
+pected to be small. We fit the energy decay to a func-       and measure both time scales for 17 nearby modes as a
+tion of the form A0 exp(−κt) + Abg , yielding the en-        function of incident power. We find that intrinsic en-
+ergy decay rate κ. The energy decay rate κ contains          ergy relaxation timescales exceed dephasing by approx-
+both the extrinsic part due to coupling to microwaves κe     imately a factor of 10. We also observe on average a
+                                                                                                                                                                                                                         5
+
+    (a)                                                           (c) 1                                                                                 (d)
+                       100                                                                                                                                                                                        1
+normalized amplitude
+
+                                                                                                                                                               2.84
+                                                                                                                                                                                                                  0.8
+                       10-2
+
+
+
+
+                                                               |S 11|
+                                                                                   0.5                                                                                                                            0.6
+                                                                                                                                                               2.83
+                            -4
+
+
+
+
+                                                                                                                                        mode frequency [GHz]
+                       10                                                                                                                                                                                         0.4
+
+                                                                                          0                                                                    2.82                                               0.2
+                                                                                                   2.8          2.82        2.84
+       10-6                                                                                              frequency [GHz]
+     (b) 0                       100     200       300   400      (e)                                                                                                                                             0
+        100                            time [ s]                                          1                                                                    2.81
+normalized amplitude
+
+
+
+
+                                                                 cross correlation [ ]
+                                                                                                                                                                                                                  -0.2
+                            -2
+                       10
+                                                                                                                                                                2.8                                               -0.4
+                                                                                         0.5
+                       10-4                                                                                                                                                                                       -0.6
+                                                                                                                                                               2.79
+                                                                                                                                                                                                                  -0.8
+                       10-6                                                               0
+                                                                                                                                                                                                                  -1
+                             0   100     200       300   400                                   0           20          40          60                                 2.79   2.8   2.81   2.82      2.83   2.84
+                                       time [ s]                                                                /2 [MHz]                                                     mode frequency [GHz]
+
+
+FIG. 4. Equal-Time Cross-Correlation. (a) Equal-time cross-correlation field ringdown (black) between far detuned modes
+at frequencies ω1 and ω4 (∆ω14 /2π = 40 MHz) reveals predominantly uncorrelated phase noise when compared with the
+expected signals for perfectly correlated (uncorrelated) phase noise shown in green (blue). (b) Equal-time cross-correlation
+field ringdown between near detuned modes at frequencies ω3 and ω4 (∆ω34 /2π = 4 MHz) reveals the presence of correlated
+phase noise. (c) Spectrum obtained with microwave mode frequency ωc /2π ≈ 2.82 GHz, highlighting four waveguide modes
+at ω1 /2π = 2.793 GHz (yellow triangle), ω2 /2π = 2.826 GHz (orange square), ω3 /2π = 2.829 GHz (purple star) and ω4 /2π =
+2.833 GHz (blue diamond). (d) Matrix showing cross-correlation strengths Φ for each combination of waveguide modes. Φ
+is determined by comparing the fitted correlated dephasing timescale to the timescale associated with perfectly uncorrelated
+dephasing, averaged over experimental occurrence and nine microwave mode frequencies. (e) Equal-time cross-correlation
+strength averaged over detuning ∆ω between modes.
+
+
+weaker intracavity power dependence for the energy de-                                                                                  the equal-time cross-correlation for two modes that are
+cay time, T1,in ∝ ⟨n⟩0.12 , as compared to the dephasing                                                                                closer in frequency indicated by the purple star and blue
+time, Tϕ ∝ ⟨n⟩0.26 , both plotted in Fig. 3(b).                                                                                         diamond from Fig. 4(c). On the same plots, we also
+   In addition to measurements on a single mode, we                                                                                     show the average of energy (amplitude) decay curves for
+take measurements of products of field amplitudes, which                                                                                the two modes in green (blue), which corresponds to a
+tells us about correlations between frequency noise af-                                                                                 hypothetical perfectly correlated (uncorrelated) case of
+fecting different modes. Consider the equal-time cross-                                                                                 Φ = 1 (Φ = 0). We fit the cross-correlated data to the
+correlation which consists of products of amplitudes of                                                                                 same functional form as the amplitude decay. In gen-
+different modes aj , ak :                                                                                                               eral, the equal-time cross-correlation signal decays more
+                                                               κj +κk                                                                   slowly than for uncorrelated dephasing, indicating some
+                       |⟨aj (t)a∗k (t)⟩| = |aj,0 a∗k,0 |e−
+                                     |⟨e−i[ϕj (t)−ϕk (t)]t ⟩|.    2   t
+                                                                                                                                        correlation in the phase noise between different waveg-
+                                                             (6)                                                                        uide modes.
+The last term in the expression is the difference in phase
+noise between the two modes. If both modes have pre-                                                                                       We measure and fit the cross-correlation signal for
+cisely the same frequency fluctuations, i.e., perfectly cor-                                                                            all pairs of modes and obtain the corresponding Φ. In
+related frequency noise, we would expect the argument                                                                                   Fig. 4(d) we plot Φ as a function of a pair of mode
+of the exponential to be zero. We define a correlation                                                                                  indices for a collection of 19 modes. To obtain more
+strength metric Φ in Appendix J, which for the perfectly                                                                                data, we measure each Φ for nine different values of
+correlated case would lead to Φ = 1. For the uncorrelated                                                                               the microwave mode frequency and combine the results.
+case, where the two modes have independent frequency                                                                                    Highlighted on this map are several mode pairs from
+or phase noise, the correlation strength would be given                                                                                 Fig. 4(a,b,c). The diagonal of this map represents the
+by Φ = 0.                                                                                                                               equal-time self-correlation, which by definition is equal to
+   Our goal is to estimate Φ between different pairs of                                                                                 Φ = 1. From this map, we see that near-detuned modes
+modes in our device through measurement. Fig. 4(c)                                                                                      tend to have higher cross-correlation strengths than far-
+shows an example spectrum with four modes highlighted                                                                                   detuned modes. This trend becomes clearer when we av-
+by colored shapes for later reference. Fig. 4(a) shows the                                                                              erage the cross-correlation strengths over detuning [red
+equal-time cross-correlation (black) for two modes with                                                                                 points in Fig. 4(e)], error bars indicate the standard de-
+large frequency difference indicated by the yellow trian-                                                                               viation of all mode pair measurements [gray points in
+gle and blue diamond from Fig. 4(c). Fig. 4(b) shows                                                                                    Fig. 4(e)] for that particular detuning. We find that the
+                                                                                                                        6
+
+cross-correlation strengths have a large amount of vari-     mon bath of TLS, near-detuned modes would be pre-
+ance, but on average diminish with increased detuning.       dominantly influenced by a single TLS and are therefore
+                                                             correlated, whereas far-detuned modes are influenced by
+                                                             different TLS whose fluctuations are uncorrelated. This
+                IV.   CONCLUSIONS                            result is consistent with work on surface acoustic wave
+                                                             resonators measured over long timescales [33]. Further-
+                                                             more, there is considerable evidence that TLS defects
+   We have measured decoherence and demonstrated ev-
+                                                             are present on the surfaces and material interfaces of de-
+idence of correlated dephasing dynamics between differ-
+                                                             vices [26, 34, 35]. Careful choice of materials and im-
+ent modes in a single-mode silicon acoustic waveguide.
+                                                             proved fabrication techniques, in particular the removal
+We engineered a heterogeneously integrated lithium nio-
+                                                             of silicon native oxide, will reduce the density of these de-
+bate actuated silicon mechanical waveguide which com-
+                                                             fects along with the associated loss and dephasing they
+bines the strong piezoelectricity of lithium niobate and
+                                                             induce.
+the low losses of silicon. We characterize the device to
+                                                                Importantly, we note that while reducing the sources
+find a piezoelectric coupling g/2π = 1.1 MHz and me-
+                                                             of frequency noise in the system is advantageous for the
+chanical coupling f /2π = 5 MHz. For different modes in
+                                                             coherence of individual modes, the non-Markovian prop-
+the system, we measure energy decay ⟨|a|⟩2 to extract in-
+                                                             erties of the frequency noise open opportunities for tech-
+trinsic decay timescales exceeding 100 µs and amplitude
+                                                             niques that extend the coherence times, such as dynam-
+decay |⟨a⟩|2 to extract pure dephasing timescales exceed-
+                                                             ical decoupling [36, 37]. Meanwhile, strong frequency
+ing 10 µs. We measure products of field amplitudes to
+                                                             noise correlations may also prove useful for extending
+determine equal-time cross-correlation strengths between
+                                                             coherence times by encoding information in multiple
+different modes and find evidence of correlated frequency
+                                                             modes, e.g. dual-rail or delay line schemes [38]. Further
+noise with strengths that depends on the relative detun-
+                                                             optimization of the device parameters, and operation as a
+ing between the modes.
+                                                             delay line and integration with superconducting qubits or
+   Our results introduce a new device to the toolbox of
+                                                             other nonlinear circuits such as asymmetrically threaded
+phononic circuit elements that allows them to interface
+                                                             squids [39, 40] for circuit quantum acoustodynamics will
+with microwave superconducting circuits, with poten-
+                                                             be explored in future work.
+tial uses in memory, information routing and sensing.
+The frequencies of the device can be engineered between
+∼ 100 MHz and ∼ 5 GHz to suit one’s application with
+                                                                            ACKNOWLEDGMENTS
+reasonable changes to the silicon waveguide and lithium
+niobate dimensions. The FSR of the device can be arbi-
+trarily modified by designing the length of the waveguide,      We thank T. Makihara, K.K.Ss Multani, C.J. Sara-
+limited only by the physical size of the chip. The piezo-    balis, R.N. Patel, M. Roukes, M. Dykman, M. Yuk-
+electric coupling rate can be increased through better       sel, and S. Gyger for helpful discussions, K.A. Ville-
+impedance matching by switching to flip-chip packaging,      gas Rosales at Quantum Machines for technical sup-
+increasing the volume of piezoelectric that experiences      port. The authors gratefully acknowledge support from
+an electric field, or increasing the impedance of the ex-    Amazon Web Services Inc., the Air Force Office of Sci-
+ternal microwave circuit. The mechanical coupling rate       entific Research and Office of Naval Research Phonon-
+γWG is determined by modal overlap at the interface be-      ics MURI program (award FA9550-23-1-0338), the Na-
+tween the transducer and waveguide regions of the device,    tional Science Foundation CAREER Program (award
+therefore, this interface can be optimized through modal     ECCS-1941826), and the U.S. Army Research Office
+engineering to provide a path toward increased mechan-       (ARO)/Laboratory for Physical Sciences (LPS) through
+ical coupling.                                               the Modular Quantum Gates (ModQ) program (Grant
+   The main limitations of our current device, which will    W911NF-23-1-0254). This work was also supported by
+be the subject of future work, are the energy and phase      the U.S. Department of Energy through grant DE-AC02-
+coherence times, and the coupling rates. Assuming con-       76SF00515 and the Q-NEXT Center. Additional support
+servative values for low phonon occupations based on our     was provided by a Moore Inventor Fellowship. Part of
+measurements, T1,in = 100 µs, Tϕ = 10 µs, would im-          this work was performed at the Stanford Nano Shared
+ply intrinsic energy and pure dephasing attenuation per      Facilities (SNSF) and at the Stanford Nanofabrication
+length of 0.7 dB m−1 and 7 dB m−1 respectively. We sus-      Facility (SNF), supported by the National Science Foun-
+pect that a combination of resonator design, fabrication     dation under award ECCS-2026822.
+imperfections and near-resonant two-level-system (TLS)
+defects contribute to energy loss, whereas frequency noise
+is primarily the result of coupling to an ensemble of TLS                Appendix A: Device fabrication
+defects that are distributed in frequency [32]. TLS as
+a source of frequency noise is consistent with our ob-          The fabrication of the device relies on hybrid integra-
+servations of equal-time cross-correlated dephasing be-      tion of thin film lithium niobate and thin film silicon via
+tween different modes. For modes coupled to a com-           the same transfer printing technique used for microwave
+                                                                                                                                                                                                                 7
+
+to optical quantum frequency transduction devices [28].          (a)                                                                                               (b)
+                                                                                               Cwb Lwb Rwb                                                                                              x
+We start with a lithium niobate (LN) on silicon dioxide                           Z
+                                                                                                     Cp            Cp                  Ck                                                           z
+insulator (LNOI) chip. The LN transducer is patterned
+                                                                                                                                                                                                        y
+with hydrogen silsequioxane (HSQ) and a 100kV electron                                                                             R0 L0         C0
+beam lithography (EBL) system (JEOL JBX-6300FS)                  (c)
+and etched by argon ion milling (Intlvac Nanoquest).                                                                                                               (d)
+
+
+
+
+                                                             conductance [S]
+
+
+
+
+                                                                                                          susceptance [S]
+                                                                                                                                                                                       1000
+
+The 250 nm thick LN is cleaned and partially released                                                                                                                              3 900
+
+
+
+
+                                                                                                                                                                       g/2 [MHz]
+                                                                                                                                                                                     800
+
+                                                                                                                            10-5
+                                                                                                                                                                                       700
+
+in hydrofluoric acid (HF) before it is transferred onto a                      10-5                                                                                                2 600
+piranha cleaned 220 nm silicon on insulator (SOI) chip                                                                                                                                 500
+                                                                                                                                                                                   1 400
+using a PDMS stamping technique [27]. The transferred
+                                                                                                                            10-10                                                  0
+sample is annealed at 500 ◦ C, then cleaned with a piranha                       2.8          2.9                               2.8    2.9                                             0      1    2        3
+solution. The silicon waveguide is patterned with EBL                            frequency [GHz]                               frequency [GHz]                                 wirebond length [mm]
+and etched in a Cl2 /HBr chemistry (Lam Research TCP             (e)                                                                              (f)                                             |S11| [dB]
+9400). The device electrodes are patterned with EBL,                                                                                                             800
+
+
+
+
+                                                                                                                                            LN block size [nm]
+                                                                                                                                                                                                         -0.02
+whereas the large wirebond contacts are defined via pho-
+                                                                                                                                                                                                         -0.04
+tolithography (Heidelberg MLA150). Each metal deposi-                                 [010]                                                                      850
+                                                                                                                                                                                                         -0.06
+tion involves evaporating aluminum (Plassys MEB550S)             [100]                                                                                                                                   -0.08
+followed by liftoff in 80 ◦ C Remover PG. The final step                                                                                                                                                 -0.1
+                                                                                                                                                                 900
+of the fabrication involves releasing the structure in an-                                                                                                                                               -0.12
+hydrous HF (SPTS uetch). The finished devices are                                                                                                                 2.75 2.8 2.85 2.9 2.95
+glued into a PCB along with the separately fabricated                                                                                                                   frequency [GHz]
+microwave resonator chip [28, 30] and connected by cross-
+chip wirebonds (West Bond 7476E).                              Supplementary Figure 1. Simulated piezoelectric and
+                                                               mechanical coupling rates. (a) Equivalent circuit model
+                                                               for a high impedance microwave transmission line coupled
+            Appendix B: Device parameters                      via a wirebond to the piezoelectric transducer. (b) COMSOL
+                                                               transducer geometry with aluminum (yellow), lithium niobate
+                                                               (purple) and silicon (blue) as well as the LN crystal axes ori-
+  Table I presents a summary of several key device pa-
+                                                               entation. (c) Simulated admittance and fit to the transducer
+rameters obtained through spectroscopic microwave mea-         equivalent circuit. (d) Piezoelectric coupling versus wirebond
+surements of the device and fitting to the coupled mode        length and microwave transmission line impedance, compared
+model.                                                         to the measured device’s g and approximate wirebond length
+                                                               (shaded grey region). (e) Simulated piezoelectric waveguide
+Parameter         Value                  Description           geometry and mode displacement profile. (f) Simulated S11
+                                                               as the piezoelectric block size is swept, showing an avoided
+  ωc /2π 2.75 GHz to 2.9 GHz      microwave frequency          crossing with the waveguide.
+  κe /2π      (8 ± 1) MHz       microwave extrinsic loss
+  κi /2π   (250 ± 100) kHz       microwave intrinsic loss
+  g/2π      (1.1 ± 0.1) MHz       piezoelectric coupling   section of the device as a lossy LC circuit described by
+  ωb /2π  (2.81 ± 0.05) GHz    lithium niobate frequency
+                                                           an admittance,
+  γb /2π      (10 ± 5) kHz         lithium niobate loss               "                            −1 #−1
+ γWG /2π     (47 ± 2) MHz    mechanical waveguide coupling                1                1      1
+                                                             Y (ω) =         + iωC0 +         +             . (C1)
+                                                                                                    iωCk                                       iωL0                                R0
+               TABLE I. Device parameters
+                                                                We simulate the low frequency response of the struc-
+                                                               ture to estimate the coupling capacitance and find Ck ≈
+                                                               0.2 fF. We then use the frequencies of the zero and pole
+                                                               in the admittance caused by the resonance [blue points
+Appendix C: Simulated device and equivalent circuit            in Fig. 1(c)] to estimate the equivalent circuit parame-
+                                                               ters C0 , L0 . We insert these estimates as the initial guess
+  We simulate the piezoelectric coupling rate, g, and the      for a least squares fit to the full admittance [red curve
+mechanical coupling rate, f , using finite element method      in Fig. 1(c)] and obtain values of Ck = 0.224 fF, C0 =
+(FEM) in COMSOL Multiphysics as part of the design             2.76 fF, L0 = 1.056 µH, R0 = 100 MΩ. This implies a
+process and for comparison with measurements. To sim-          characteristic impedance for the piezomechanics equiva-
+ulate the piezoelectric coupling rate, g, we begin with a      lent circuit of Z0 = 19.5 kΩ. We then construct a full
+simplified geometry including only the transducer section      circuit model [Fig. 1(a)] that incorporates the wirebond
+of the device [Fig. 1(b)], comprising a lithium niobate        and the microwave mode idealized as a high-impedance
+block (purple) on silicon (blue) with aluminum electrodes      transmission line. As the length of the wirebond and
+(yellow) and set an arbitrary material loss. We model this     the impedance of the microwave transmission line is
+                                                                                                                               8
+
+swept, we calculate the resulting piezoelectric coupling          (a)                              (b)
+rate g [Fig. 1(d)]. From optical images, we estimate                    107                          107
+the length of the wirebond to be Lwb ≈ 1.1 mm and
+from fits to the microwave mode spectra we find the
+characteristic impedance of the microwave mode to be
+                                                                        106                          106
+
+
+
+
+                                                                  Qe
+Z ≈ (500 ± 100) Ω. These values predict a piezoelectric
+coupling rate of gsim /2π ≈ 1.1 MHz, which agrees with
+fits to measured data using the full coupled mode model.
+   To simulate the mechanical coupling rate, f , we com-
+bine the transducer section [Fig. 1(b)] with a truncated                105                          105
+                                                                           2.76     2.8     2.84        2.76    2.8   2.84
+(15 periods) silicon single-mode waveguide geometry,
+                                                                              frequency [GHz]              frequency [GHz]
+shown in Fig. 1(e). The waveguide is separately opti-
+mized in the infinite extent limit to have a large frac-
+tional bandgap at the frequencies of interest. By sweep-        Supplementary Figure 2. Coupling envelope fit. (a)
+ing the dimensions of the transducer (tuning the trans-         Measured Qe versus dressed mode frequency for different
+ducer frequency) and simulating the admittance versus           microwave ωc (colored curves).     (b) Theory Qe versus
+frequency, we calculate |S11 | versus transducer frequency      dressed mode frequency generated from fitting the diagonal-
+and observe an avoided crossing between the transducer          ized Hamiltonian to the data (a).
+and waveguide mode [Fig. 1(f)], allowing us to extract
+a mechanical coupling rate which can then be scaled
+to the waveguide length corresponding to our device,            Appendix E: Coupling enhancement and frequency
+fsim /2π = 5.25 MHz, roughly agreeing with the measured                 noise due to a microwave mode
+data.
+                                                                  A system consisting of a transmission line coupled to
+                                                                a dressed mechanical mode, b, with frequency ωb and
+                                                                extrinsic (intrinsic) loss rates γe (γi ), has dynamics that
+    Appendix D: Fitting the Qe envelope to the                  are captured by the following input-output relations,
+            diagonalized Hamiltonian
+                                                                                                         √
+                                                                                             aout = ain + γe b,              (E1)
+ The Hamiltonian for the system can be expressed in                               d             γ     √
+matrix form as,                                                                      b = − iωb +    b − γe ain .             (E2)
+                                                                                  dt             2
+             
+               ω̃c ig 0      0   0 ···
+                                                               For a frame rotating at ωb and in steady state we have,
+              ig ω̃b if    if  if · · ·                                                                √
+             
+                0  if ω̃     0   0
+                                                                                            aout = ain + γe b,              (E3)
+                       a,1               
+         H =  0 if 0 ω̃a,2 0             ,             (D1)
+                                                                                               
+                                                                                       γi + γe         √
+                                                                                                  b = − γe ain .             (E4)
+                                          
+              0 if 0        0 ω̃a,3                                                       2
+                                          
+                                         
+                .. ..                ..
+                 . .                    .
+                                                                Solving for aout /ain yields the reflection signal that would
+                                                                be obtained from measuring such a device on resonance,
+where we have defined complex bare eigenfrequencies
+             κ
+ω̃j = iωj + 2j . Diagonalizing this Hamiltonian, we ob-                                   aout       2γe
+tain the complex dressed eigenmodes, ω̃j′ , yielding out-                                      =1−         .                 (E5)
+                                                                                          ain      γe + γi
+coupling Qe of the waveguide modes dressed by the mi-
+crowave and LN coupling. We then perform a nonlin-              In the case that the mechanical mode is very weakly cou-
+ear least squares regression, minimizing the cost function      pled, γe ≪ γ, the reflection signal from the device is small
+Eq. (D2) for the fit parameters x = {κ, ω̃b , f, g},            and in practice is dominated by noise.
+                                                                   If instead, a new mode c with frequency ωc and ex-
+    min C(x) =
+                 XX
+                            log(Qe (ωa , ωj′ , x))              trinsic (intrinsic) loss rates κe (κi ) is inserted between
+     x                                                          the transmission line and the mechanical mode and cou-
+                 ωa   ωj′                                (D2)   pled at rate g to the mechanical mode. The input-output
+                                                    2
+                            − log(Qdata (ωa , ωj′ )) ,
+                                                     
+                                   e
+                                                                relations become,
+                                                                                                            √
+                                                                                               aout = ain + κe c,            (E6)
+   This approach yields values for the fit parameters of,
+f /2π = 5.63 MHz, g/2π = 1.03MHz, κ/2π = 8.05MHz,                             d            κ            √
+                                                                                 c = − i∆ +     c − igb − κe ain ,           (E7)
+ωb /2π = 2.809GHz, γb /2π = 12kHz. The data and fit                           dt             2
+Qe versus frequency curves are shown in Fig. 2(a) and                                       d        γ 
+                                                                                                        i
+                                                                                               b=−        b − igc,           (E8)
+Fig. 2(b) respectively.                                                                    dt          2
+                                                                                                                        9
+
+where we have chosen to work in the frame rotating at          to all frequencies and removed from the stitched spec-
+rate ωb and have defined ∆ = ωc − ωb . In steady state,        trum. This spectrum can now be fitted to the complex
+these equations are,                                           S11 signal [Eq. (2)].
+                                   √                             In order to constrain the parameter space and increase
+                      aout = ain + κe c,          (E9)         the success of nonlinear least squares curve fitting to the
+                    κ             √                          spectra, we start by running a particle swarm to roughly
+               i∆ +      c = −igb − κe ain ,     (E10)
+                                                               optimize a few parameters of the system x = {g, f, ωFSR }
+                   γ2 
+                      i                                        by minimizing the cost function,
+                         b = −igc.               (E11)
+                     2                                                                   XX
+                                                                            min C(x) =          |ωj − ωjdata |        (F1)
+We solve for c, substitute and simplify to obtain an ex-                     x
+                                                                                          ωc   ωj
+pression for the field b,
+                              !             √                  which serves to coarsely align the dressed eigenmode fre-
+                       κe               −ig κe                 quencies, ωj , of the diagonalized Hamiltonian. We then
+    aout = 1 −                  a in +            b, (E12)
+                    i∆ + κ2              i∆ + κ2               run a second particle swarm to perform a more detailed
+                            
+                              !           √                    optimization of the bare waveguide mode frequencies us-
+             γi       g2               ig κe                   ing the same cost function, precisely aligning the dressed
+                +               b=             ain . (E13)
+                    i∆ + κ2           i∆ + κ2
+                            
+             2                                                 eigenfrequencies to those in the spectra. Once the dressed
+                                                               frequencies of the model and data agree, we perform a
+Inspecting Eq. (E13), we note the similar form to the          nonlinear least squares curve fit optimization of all sys-
+single mode case Eq. (E4), but with a new term whose           tem parameters with respect to the cost function.
+imaginary part shifts the frequency ∆ωb , and real part                        XX                                     2
+                                                                                                            data
+modifies the effective extrinsic coupling γe,eff /2,              min C(x) =           ℜ{S11 (ωi , x)} − ℜ{S11   (ωi )}
+                                                                  x
+                                                                              ωc    i
+                                2
+                             g ∆                                                                         data
+                                                                                   + ℑ{S11 (ωi , x)} − ℑ{S11   (ωi )}
+                                                                                                                     2
+                  ∆ωb = 2            ,                (E14)
+                          ∆ + (κ/2)2                                                                                  (F2)
+                             g2 κ
+                  γe,eff = 2         .                (E15)
+                          ∆ + (κ/2)2
+                                                                         Appendix G: Experimental Setup
+Note that the effective extrinsic coupling is described by a
+Lorentzian of width κ and peak value 4g 2 /κ, and that any        An overview of the experimental setup is shown in
+frequency noise in the microwave mode is imparted on the       Fig. 3. A Yokogawa GS200 is used as a current source
+mechanical mode through ∆ → ∆0 + δωc . In the limit            to tune the off-chip superconducting magnetic coil.
+that the two modes are far detuned, and the frequency          Cryogenic circulators (Quinstarr QCY-G0250401AM)
+fluctuations are relatively small, ∆0 ≫ κ ≫ δωc , the me-      are used for isolation at the 10 mK stage.          Cryo-
+chanical mode fluctuations are δωb ≈ δωc (g 2 /∆20 ). This     genic (Low Noise Factory LNF-LNC0.3 14A) and room-
+model captures the increased out-coupling as well as ex-       temperature (Narda-MITEQ LNA-40-00101200-17-10P)
+cess frequency noise in mechanical modes which may re-         low noise amplifiers provide a gain of 35 dB and 40 dB
+sult from the addition of the high-impedance microwave         respectively for the measurement. A band pass filter
+mode.                                                          (Keenlion KBF-2/4-Q7S)is used to filter out any spuri-
+                                                               ous harmonics that may arise due to the amplifiers. The
+                                                               frequency domain measurements are performed with a
+    Appendix F: Coupled mode spectrum fitting                  Vector Network Analyzer (Rohde and Schwartz ZNB20).
+                                                                  The time domain measurements are performed with
+   In this section we detail the approach used to fit to the   a Quantum Machines OPX and Octave system. The
+coupled mode model of the system. The main challenges          measurements begin by synthesizing an IF frequency
+for fitting the data to the model stem from the large num-     ≈ 100 MHz, which is then upconverted to an RF fre-
+ber of fit parameters and the combination of narrow and        quency corresponding to the resonances of the device,
+broad features that must simultaneously be captured by         ≈ 2.8 GHz. We synthesize four such tones, each cor-
+the model. To obtain spectra suitable for fitting, we first    responding to a distinct mode, and reflect them off the
+take a spectrum with a wide, coarse frequency span that        device for Tdrive = 1 ms, driving the modes into steady
+captures the broad, over-coupled microwave mode and            state. After the drive is finished, we allow the mode res-
+allows us to fit the background resulting from cabling,        onances to ring down while sampling the downconverted
+amplifiers, and other microwave elements in the measure-       reflected field with the OPX ADC. The signal is simul-
+ment chain. We then take a series of spectra with narrow,      taneously demodulated in τdemod = 8 µs slices at each
+fine frequency spans centered around each of the high-Q        of the four drive frequencies, yielding (I, Q) quadrature
+mechanical modes. We stitch together the coarse and            pairs for each mode as a function of ring down time.
+fine datasets, then the fitted background is interpolated      These (I, Q) pairs are then combined and averaged in
+                                                                                                                                    10
+
+real time to yield the cavity ring down energy, amplitude                 To further simplify this expression, we must assume prop-
+and equal-time cross-correlation dynamics.                                erties of the moments of the noise distribution underlying
+                                                                          ϕ(t).
+                                                                            If ϕ(t) is zero-mean, then all odd moments vanish and
+                       QM                                                 we obtain,
+                       OPX
+                                                 R&S                                                  X (−1)k
+                       QM                        ZNB20                                 ⟨e−iϕ(t) ⟩ =                ⟨ϕ(t)(2k) ⟩.   (H4)
+                       Octave                                                                              (2k)!
+                                                                                                       k
+    10 MHz
+    Rb Clock                                                              If ϕ(t) is zero-mean and follows a Gaussian distribution
+                                                         BPF              then all the even higher order moments are ⟨ϕ(t)(2k) ⟩ =
+          Yokogawa                 RSA500A               2-4 GHz          ⟨ϕ(t)2 ⟩k (2k − 1)!!, which leads to the expression,
+          GS200
+                                                                                                                    2
+
+                                                         LNA                                ⟨e−iϕ(t) ⟩ = e−⟨ϕ(t) ⟩/2 ,            (H5)
+                                                         +45 dB
+                                                                          that depends only on the second moment of the noise
+               50 K           -3 dB                                       process. If the frequency content of the noise process is
+                                                                          described by a spectral density Sϕ (ω), the variance of the
+               4K             -20 dB    HEMT
+                                        +35 dB                            phase noise will be given by:
+                                                                                                  Z ∞
+               1K             -3 dB
+                                                                                       ⟨ϕ(t)2 ⟩ =     dωSδω (ω)F (t, ω),        (H6)
+               100 mK         -20 dB                                                                  −∞
+               10 mK          -20 dB                                                         2
+                                                                          where F (t) = 4 sin (ωt/2)/ω 2 is the filter function corre-
+                                                                          sponding to free decay and Sδω (ω) is the spectral density
+                                                                          of frequency noise. For white noise (frequency indepen-
+                                                                          dent spectral density), Eq. (H6) evaluates to ⟨ϕ(t)2 ⟩ =
+                                        a     DUT                         κϕ t, with κϕ = 2πSδω (0), causing the field to decay as
+                          c     b
+                                                                          an exponential linear in time.
+                                                                             If however, the spectral density of the phase noise
+                                                                          has a more complicated functional form, the field de-
+                superconducting coil                                      cay can occur with higher powers of time. For example,
+                                                                          a Lorentzian spectral density Sδω (ω) = A2 τ /(1 + (ωτ )2 )
+                                                                          arising from an Ornstein-Uhlenbeck process, where A and
+                                                                          τ represent the strength and correlation time of the noise
+                                                                          respectively, produces a phase noise variance of:
+Supplementary Figure 3. Experimental Setup. a. Mea-
+sured Qe versus dressed mode frequency for different mi-                             ⟨ϕ(t)2 ⟩ = πA2 τ 2 (t/τ − 1 + e−t/τ ).       (H7)
+crowave ωa (colored curves). b. Theory Qe versus dressed
+mode frequency obtained from fitting the diagonalized Hamil-              In the regime of fast phase fluctuations τ ≪ t, the vari-
+tonian to the data.                                                       ance limits to the white noise spectrum previously dis-
+                                                                          cussed, scaling linearly in time, ⟨ϕ(t)2 ⟩ ∼ t. In con-
+                                                                          trast, slow phase fluctuations τ ≫ t result in a quali-
+                                                                          tatively different variance which scales quadratically in
+ Appendix H: Observable decays for frequency and
+                                                                          time, ⟨ϕ(t)2 ⟩ ∼ t2 [41].
+             phase noise processes
+                                                                             The functional form of the amplitude damping term
+                                                                          can also be solved for random telegraph noise [42], which
+  As discussed in the main text, the ringdown of a mode                   in the limit of fast switching coincides with the Gaus-
+will be given generally by,                                               sian result, whereas in the slow switching limit produces
+                    a(t) = a0 e−κt/2 e−iϕ(t) ,                     (H1)   coherent oscillations which can for short timescales be
+               Rt                                                         expanded to produce amplitude damping terms that are
+where ϕ(t) = 0 δω(t′ )dt′ , which can be averaged over                    quadratic in time.
+many samples of the noise,
+                ⟨a(t)⟩ = a0 e−κt/2 ⟨e−iϕ(t) ⟩.                     (H2)        Appendix I: Phonon number estimation for
+We focus on the phase term, which we begin by Taylor                                   ringdown measurements
+expanding as,
+                                   X ik                                     To estimate the initial intracavity phonon number
+                ⟨e   −iϕ(t)
+                              ⟩=                  k
+                                             ⟨ϕ(t) ⟩.              (H3)   for a ringdown measurement, we begin with a spectro-
+                                        k!                                scopic measurement of the mode lineshape which we fit
+                                    k
+                                                                                                                                         11
+
+to a Lorentzian and extract the corresponding κe . The                   where f (t) is an arbitrary function that captures the de-
+usual method of calculating the steady-state intracavity                 phasing dynamics. We can also Taylor expand the de-
+phonon number from input-output theory requires the to-                  phasing term in the correlated field and rewrite it as,
+tal spectroscopic linewidth, which is not equal to the en-
+ergy decay rate measured by a ringdown due to the pres-                                                        ⟨ϕ1 (t)2 ⟩ ⟨ϕ2 (t)2 ⟩
+                                                                                ⟨e−i(ϕ1 (t)−ϕ2 (t)) ⟩ = 1 −              −
+ence of frequency noise. For our ringdown measurement,                                                             2             2
+we obtain both energy and amplitude decay parameters,                                                   + ⟨ϕ1 (t)ϕ2 (t)⟩ + · · ·        (J6)
+from which we calculate a T2 time. We invert this to
+                                                                                                        = e−f12 (t)                     (J7)
+obtain an estimate of the total linewidth κtotal = 1/T2 ,
+which then enters into our estimate of the phonon num-                   where f12 (t) captures the correlated dephasing dynamics
+ber:                                                                     and is related to the individual dephasings by,
+                              P   4κe
+                      ⟨n⟩ =     × 2 .                            (I1)        f12 (t) = f1 (t) + f2 (t) − (⟨ϕ1 (t)ϕ2 (t)⟩ + · · · )      (J8)
+                              ℏω κtotal
+                                                                         note that if the phase noise is uncorrelated, then the cor-
+Here, P is the power in watts incident on the device, ω                  related terms in the above expression vanish and the cor-
+is the resonant frequency of the mode.                                   related field will dephase consistent with the individual
+                                                                         modes, however, the presence of correlated phase noise
+                                                                         will serve to reduce the rate of dephasing in the correlated
+      Appendix J: Phase noise cross correlation                          signal, f12 (t) < f1 (t) + f2 (t).
+                                                                            To quantify the degree of correlation, we find the time
+  In this section we outline the method used to quantify                 Tϕ,xc such that
+the cross correlation strength in frequency/phase noise
+between two modes. The individual mode fields and the                                   ⟨a1 (t)a∗2 (t)⟩
+                                                                                     p                         = e−f12 (t) = e−1        (J9)
+correlated field averaged over many realizations of the                               ⟨|a1 (t)|2 ⟩⟨|a2 (t)|2 ⟩
+noise are,
+                                                                         similarly, we find the timescale for the case of uncorre-
+         ⟨a1 (t)⟩ = a1,0 e−κ1 t/2 ⟨e−iϕ1 (t) ⟩                  (J1)     lated, independent phase noise, Tϕ,I
+         ⟨a2 (t)⟩ = a2,0 e−κ2 t/2 ⟨e−iϕ2 (t) ⟩                  (J2)              |⟨a1 (t)⟩⟨a∗2 (t)⟩|
+                                                                                                             = e−f1 (t)−f2 (t) = e−1   (J10)
+   ⟨a1 (t)a∗2 (t)⟩ = a1,0 a2,0 e−(κ1 +κ2 )t/2 ⟨e−i(ϕ1 (t)−ϕ2 (t)) ⟩
+                                                                              p
+                                                                                  ⟨|a1 (t)|2 ⟩⟨|a2 (t)|2 ⟩
+                                                                  (J3)
+                                                                         by comparing these two timescales, we define the corre-
+if we Taylor expand the dephasing term and assume only                   lation strength metric,
+that ϕ(t) is a zero mean process, then we can rewrite the
+amplitude decay as,                                                                                              Tϕ,I
+                                                                                                    Φ=1−                               (J11)
+                                                                                                                 Tϕ,xc
+                                    ⟨ϕ(t)2 ⟩
+                ⟨e−iϕ(t) ⟩ = 1 −             + ···              (J4)     for perfectly correlated dephasing Φ → 1, for perfectly
+                                       2
+                                                                         uncorrelated dephasing Φ → 0 and for anti-correlated
+                            = e−f (t)                           (J5)     dephasing Φ < 0.
+
+
+
+
+ [1] M. Gad-el Hak, The MEMS Handbook, Mechanical and                         G. Giedke, J. I. Cirac, K. Srinivasan, M. Wu, K. C. Bal-
+     Aerospace Engineering Series (CRC Press, 2001).                          ram, C. Bäuerle, T. Meunier, C. J. B. Ford, P. V. San-
+ [2] K. L. Ekinci and M. L. Roukes, Nanoelectromechani-                       tos, E. Cerda-Méndez, H. Wang, H. J. Krenner, E. D. S.
+     cal systems, Review of Scientific Instruments 76, 061101                 Nysten, M. Weiß, G. R. Nash, L. Thevenard, C. Gour-
+     (2005).                                                                  don, P. Rovillain, M. Marangolo, J.-Y. Duquesne, G. Fis-
+ [3] A. N. Cleland and M. L. Roukes, Fabrication of high                      cherauer, W. Ruile, A. Reiner, B. Paschke, D. Deny-
+     frequency nanometer scale mechanical resonators from                     senko, D. Volkmer, A. Wixforth, H. Bruus, M. Wiklund,
+     bulk Si crystals, Applied Physics Letters 69, 2653 (1996).               J. Reboud, J. M. Cooper, Y. Fu, M. S. Brugger, F. Re-
+ [4] D. Morgan, Surface Acoustic Wave Filters: With Appli-                    hfeldt, and C. Westerhausen, The 2019 surface acoustic
+     cations to Electronic Communications and Signal Pro-                     waves roadmap, Journal of Physics D: Applied Physics
+     cessing, Electronic communications (Academic Press,                      52, 353001 (2019).
+     2007).                                                               [7] R. Manenti, M. J. Peterer, A. Nersisyan, E. B. Mag-
+ [5] C. Campbell, Surface Acoustic Wave Devices and Their                     nusson, A. Patterson, and P. J. Leek, Surface acoustic
+     Signal Processing Applications (Academic Press, 2012).                   wave resonators in the quantum regime, Phys. Rev. B
+ [6] P. Delsing, A. N. Cleland, M. J. A. Schuetz, J. Knörzer,                93, 041411 (2016).
+                                                                                                                            12
+
+ [8] A. D. O’Connell, M. Hofheinz, M. Ansmann, R. C. Bial-            Sarabalis, M. Jankowski, T. P. McKenna, N. R. Lee, and
+     czak, M. Lenander, E. Lucero, M. Neeley, D. Sank,                A. H. Safavi-Naeini, Surface modification and coherence
+     H. Wang, M. Weides, J. Wenner, J. M. Martinis, and               in lithium niobate saw resonators, Scientific Reports 14,
+     A. N. Cleland, Quantum ground state and single-phonon            6663 (2024).
+     control of a mechanical resonator, Nature 464, 697          [25] R. S. Weis and T. K. Gaylord, Lithium niobate: Sum-
+     (2010).                                                          mary of physical properties and crystal structure, Ap-
+ [9] Y. Chu, P. Kharel, W. H. Renninger, L. D. Burkhart,              plied Physics A 37, 191 (1985).
+     L. Frunzio, P. T. Rakich, and R. J. Schoelkopf, Quantum     [26] G. S. MacCabe, H. Ren, J. Luo, J. D. Cohen, H. Zhou,
+     acoustics with superconducting qubits, Science 358, 199          A. Sipahigil, M. Mirhosseini, and O. Painter, Nano-
+     (2017).                                                          acoustic resonator with ultralong phonon lifetime, Sci-
+[10] Y. Chu, P. Kharel, T. Yoon, L. Frunzio, P. T. Rakich, and        ence 370, 840 (2020).
+     R. J. Schoelkopf, Creation and control of multi-phonon      [27] M. A. Meitl, Z.-T. Zhu, V. Kumar, K. J. Lee, X. Feng,
+     fock states in a bulk acoustic-wave resonator, Nature            Y. Y. Huang, I. Adesida, R. G. Nuzzo, and J. A. Rogers,
+     563, 666 (2018).                                                 Transfer printing by kinetic control of adhesion to an
+[11] M. Bild, M. Fadel, Y. Yang, U. von Lüpke, P. Mar-               elastomeric stamp, Nature Materials 5, 33 (2006).
+     tin, A. Bruno, and Y. Chu, Schrödinger cat states of       [28] W. Jiang, F. M. Mayor, S. Malik, R. Van Laer, T. P.
+     a 16-microgram mechanical oscillator, Science 380, 274           McKenna, R. N. Patel, J. D. Witmer, and A. H. Safavi-
+     (2023).                                                          Naeini, Optically heralded microwave photon addition,
+[12] K. J. Satzinger, Y. P. Zhong, H.-S. Chang, G. A. Peairs,         Nature Physics 19, 1423 (2023).
+     A. Bienfait, M.-H. Chou, A. Y. Cleland, C. R. Conner,       [29] X. Han, W. Fu, C. Zhong, C.-L. Zou, Y. Xu, A. A.
+     É. Dumur, J. Grebel, I. Gutierrez, B. H. November, R. G.        Sayem, M. Xu, S. Wang, R. Cheng, L. Jiang, and
+     Povey, S. J. Whiteley, D. D. Awschalom, D. I. Schuster,          H. X. Tang, Cavity piezo-mechanics for superconducting-
+     and A. N. Cleland, Quantum control of surface acoustic-          nanophotonic quantum interface, Nature Communica-
+     wave phonons, Nature 563, 661 (2018).                            tions 11, 3237 (2020).
+[13] A. Y. Cleland, E. A. Wollack, and A. H. Safavi-Naeini,      [30] S. Malik, W. Jiang, F. M. Mayor, T. Makihara, and
+     Studying phonon coherence with a quantum sensor, Na-             A. H. Safavi-Naeini, Flexible integration of gigahertz
+     ture Communications 15, 4979 (2024).                             nanomechanical resonators with a superconducting mi-
+[14] A. H. Safavi-Naeini, D. V. Thourhout, R. Baets, and              crowave resonator using a bonded flip-chip method, Ap-
+     R. V. Laer, Controlling phonons and photons at the               plied Physics Letters 123, 104001 (2023).
+     wavelength scale: integrated photonics meets integrated     [31] N. M. Sundaresan, Y. Liu, D. Sadri, L. J. Szőcs, D. L.
+     phononics, Optica 6, 213 (2019).                                 Underwood, M. Malekakhlagh, H. E. Türeci, and A. A.
+[15] K. Fang, M. H. Matheny, X. Luan, and O. Painter, Op-             Houck, Beyond strong coupling in a multimode cavity,
+     tical transduction and routing of microwave phonons in           Phys. Rev. X 5, 021035 (2015).
+     cavity-optomechanical circuits, Nature Photonics 10, 489    [32] M. P. Maksymowych, M. Yuksel, O. A. Hitchcock,
+     (2016).                                                          N. R. Lee, F. M. Mayor, W. Jiang, M. L. Roukes, and
+[16] R. N. Patel, Z. Wang, W. Jiang, C. J. Sarabalis, J. T.           A. H. Safavi-Naeini, Frequency fluctuations in nanome-
+     Hill, and A. H. Safavi-Naeini, Single-mode phononic wire,        chanical resonators due to quantum defects (2025),
+     Phys. Rev. Lett. 121, 040501 (2018).                             arXiv:2501.08289 [cond-mat.mes-hall].
+[17] A. Zivari, N. Fiaschi, R. Burgwal, E. Verhagen,             [33] N. Tubsrinuan, J. H. Cole, P. Delsing, and G. Anders-
+     R. Stockill, and S. Gröblacher, On-chip distribution of         son, Correlated frequency noise in a multimode acoustic
+     quantum information using traveling phonons, Science             resonator, Phys. Rev. B 109, L241301 (2024).
+     Advances 8, eadd2811 (2022).                                [34] M. Chen, J. C. Owens, H. Putterman, M. Schäfer, and
+[18] A. Bozkurt, H. Zhao, C. Joshi, H. G. LeDuc, P. K. Day,           O. Painter, Phonon engineering of atomic-scale defects in
+     and M. Mirhosseini, A quantum electromechanical in-              superconducting quantum circuits, Science Advances 10,
+     terface for long-lived phonons, Nature Physics 19, 1326          eado6240 (2024).
+     (2023).                                                     [35] R. G. Gruenke-Freudenstein, E. Szakiel, G. P. Mul-
+[19] Y. Chu and S. Gröblacher, A perspective on hybrid               tani, T. Makihara, A. G. Hayden, A. Khalatpour,
+     quantum opto- and electromechanical systems, Applied             E. A. Wollack, A. Akoto-Yeboah, S. Salmani-Rezaie,
+     Physics Letters 117, 150503 (2020).                              and A. H. Safavi-Naeini, Surface and bulk two-level sys-
+[20] H. Zhao, A. Bozkurt, and M. Mirhosseini, Electro-optic           tem losses in lithium niobate acoustic resonators (2025),
+     transduction in silicon via gigahertz-frequency nanome-          arXiv:2501.08291 [cond-mat.mes-hall].
+     chanics, Optica 10, 790 (2023).                             [36] J. Bylander, S. Gustavsson, F. Yan, F. Yoshihara,
+[21] A. B. Bozkurt, O. Golami, Y. Yu, H. Tian, and                    K. Harrabi, G. Fitch, D. G. Cory, Y. Nakamura, J.-S.
+     M. Mirhosseini, A mechanical quantum memory for mi-              Tsai, and W. D. Oliver, Noise spectroscopy through dy-
+     crowave photons (2024), arXiv:2412.08006 [quant-ph].             namical decoupling with a superconducting flux qubit,
+[22] W. A. Phillips, Two-level states in glasses, Reports on          Nature Physics 7, 565 (2011).
+     Progress in Physics 50, 1657 (1987).                        [37] K. C. Miao, J. P. Blanton, C. P. Anderson, A. Bourassa,
+[23] E. A. Wollack, A. Y. Cleland, P. Arrangoiz-Arriola, T. P.        A. L. Crook, G. Wolfowicz, H. Abe, T. Ohshima, and
+     McKenna, R. G. Gruenke, R. N. Patel, W. Jiang, C. J.             D. D. Awschalom, Universal coherence protection in a
+     Sarabalis, and A. H. Safavi-Naeini, Loss channels affect-        solid-state spin qubit, Science 369, 1493 (2020), pub-
+     ing lithium niobate phononic crystal resonators at cryo-         lisher: American Association for the Advancement of Sci-
+     genic temperature, Applied Physics Letters 118, 123501           ence.
+     (2021).                                                     [38] K. Wan, S. Choi, I. H. Kim, N. Shutty, and P. Hayden,
+[24] R. G. Gruenke, O. A. Hitchcock, E. A. Wollack, C. J.             Fault-tolerant qubit from a constant number of compo-
+                                                                                                                             13
+
+     nents, PRX Quantum 2, 040345 (2021).                               (2024).
+[39] R. Lescanne, M. Villiers, T. Peronnin, A. Sarlette,           [41] M. Fanciulli, Electron Spin Resonance and Related Phe-
+     M. Delbecq, B. Huard, T. Kontos, M. Mirrahimi, and                 nomena in Low-Dimensional Structures (Springer Berlin,
+     Z. Leghtas, Exponential suppression of bit-flips in a qubit        Heidelberg, 2009).
+     encoded in an oscillator, Nature Physics 16, 509 (2020).      [42] C. Neuenhahn, B. Kubala, B. Abel, and F. Marquardt,
+[40] T. Makihara, N. Lee, Y. Guo, W. Guan, and A. Safavi-               Recent progress in open quantum systems: Non-gaussian
+     Naeini, A parametrically programmable delay line for               noise and decoherence in fermionic systems, physica sta-
+     microwave photons, Nature Communications 15, 4640                  tus solidi (b) 246, 1018 (2009).
+

@@ -1,0 +1,738 @@
+                                                         Time-resolved spectral diffusion of a multimode mechanical memory∗
+
+                                             Niccolò Fiaschi,1, † Lorenzo Scarpelli,1 Alexander Rolf Korsch,2, 3, 1 Amirparsa Zivari,1 and Simon Gröblacher1, ‡
+                                                                         1
+                                                                        Kavli Institute of Nanoscience, Department of Quantum Nanoscience,
+                                                                           Delft University of Technology, 2628CJ Delft, The Netherlands
+                                                                     2
+                                                                       Department of Physics, Fudan University, Shanghai 200433, P.R. China
+                                                           3
+                                                             Department of Physics, School of Science, Westlake University, Hangzhou 310030, P.R. China
+                                                             High-frequency phonons hold great promise as carriers of quantum information on-chip and as
+                                                          quantum memories. Due to their coherent interaction with several systems, their compact mode vol-
+                                                          ume, and slow group velocity, multiple experiments have recently demonstrated coherent transport
+                                                          of information on-chip using phonon modes, interconnecting distinct quantum devices. Strongly
+                                                          confined phonons in waveguide-like geometries are particularly interesting because of their long life-
+                                                          time. However, spectral diffusion has been observed to substantially limit their coherence times [1–3].
+                                                          Coupling to two-level systems is suspected to be a major contributor to the diffusion; however, to
+arXiv:2501.12056v2 [quant-ph] 24 Jun 2025
+
+
+
+
+                                                          date, the origin and underlying mechanisms are still not fully understood. Here, we perform a time-
+                                                          domain study on two adjacent mechanical modes (separated by around 5 MHz) and show that the
+                                                          frequency positions of the two modes are not correlated in time, in agreement with our theoretical
+                                                          model and Monte-Carlo simulations. This result is an important step in fully understanding the
+                                                          microscopic mechanisms of dephasing in mechanical quantum buses and memories.
+
+
+                                                                 INTRODUCTION                                   tual nature remains elusive, efforts in understanding the
+                                                                                                                microscopic characteristics of these TLS are ongoing [16].
+                                               Over the past years, several groundbreaking experi-                 In this work, we take a new approach to studying the
+                                            ments have shown that high-frequency phonons can be                 time dynamics of the spectral diffusion of two spectrally
+                                            effectively used as carriers of quantum information on-             close mechanical modes (centered at ∼5 GHz and spaced
+                                            chip. In particular, surface acoustic waves (SAWs) have             by ∼5 MHz) of the same optomechanical device, with a
+                                            enabled quantum state transfer and remote entanglement              time resolution of a few µs. We find that the frequency
+                                            between two superconducting qubits [4]. SAWs have re-               positions of the two mechanical modes are not correlated
+                                            ceived most of the early interest since they represent a            in time. Even with the measurements operating in a
+                                            mature platform for coherent control of quantum infor-              continuous fashion, leading to an effective thermal bath
+                                            mation on-chip, having also allowed to realize a beam-              elevated from the 50 mK environment, our result helps
+                                            splitter [5] and a phase shifter [6]. However, SAWs have            in understanding the effect of TLSs on mechanical res-
+                                            inherently limited coherence time due to their short life-          onators, developing a method for fast time resolution of
+                                            time on the order of µs [7]. More strongly confined                 TLSs induced frequency shifts. To support our findings
+                                            phonons in waveguide-like systems are a promising al-               and for a better understanding of the TLS to mechan-
+                                            ternative to overcoming these limitations and allow for             ical modes interaction, we further develop a theoretical
+                                            on-chip distribution of quantum information [8, 9]. In              model and perform Monte-Carlo simulations of the fre-
+                                            this type of system, the coherence of the information that          quency shift – in good qualitative agreement with the
+                                            travels in the waveguide is ultimately limited by the spec-         measured data. The model confirms the coupling mech-
+                                            tral diffusion, i.e. the frequency jitter of the mechanical         anism, strength and TLSs spectral distribution. The de-
+                                            mode. This phenomenon was initially observed and stud-              veloped method can help the design of mechanical sys-
+                                            ied in single-mode optomechanical cavities [1], where the           tems, providing a tool to estimate the spectral diffusion
+                                            coherence time of the single mechanical mode is on the or-          for any mechanical mode.
+                                            der of 100 µs [2, 3]. The generally accepted interpretation
+                                            of this phenomenon involves a bath of two-level systems
+                                            (TLS) that interact with the mechanical mode(s) [1, 3].                                     METHODS
+                                            Similar types of defects are widely studied in supercon-
+                                            ducting circuits since they are a major source of energy
+                                            loss and decoherence [10–13]. Engineering the phononic                 The device used in this work, identical to the one
+                                            environment that interacts with the TLS can be used to              of [8], consists of an optomechanical cavity coupled to a
+                                            investigate and control the TLS [14, 15]. While their ac-           phononic waveguide, where the free-standing end acts as
+                                                                                                                a mechanical mirror. The hybridized mechanical modes
+                                                                                                                of the structure form a series of Fabry-Pérot modes, with
+                                                                                                                similar spatial profile, closely spaced by ∼5 MHz around a
+                                            ∗ This work was published in Phys. Rev. Lett. 134, 243604 (2025).   central frequency of ∼5 GHz. The optical cavity features
+                                            † nfiaschi@berkeley.edu
+                                                                                                                a single mode for the optical field with a resonance in the
+                                            ‡ s.groeblacher@tudelft.nl
+                                                                                                                telecom band around ∼1550 nm. Fig. 1a shows a scan-
+                                                                                                                                2
+
+
+
+
+FIG. 1. Setup and device characterization. a) SEM image of a device nominally identical to the one used in the
+measurements. The optomechanical cavity is highlighted in red, the photonic and phononic mirror in blue, and the single-mode
+(for in-plane symmetric modes) mechanical waveguide (and photonic mirror) in green. The total length of the waveguide
+∼200 µm. b) Schematic of the theoretical model for the Monte-Carlo simulations. The mechanical modes A and B at frequency
+νA , νB are coupled to a bath of N TLS. Each TLS has frequency νi and coupling rate gi,A , gi,B , with i being the index of the
+TLS, to mode A and B respectively. Note that the coupling rate for the two modes is, in general, different for each TLS. The
+bath shifts the frequency of mode A by δA and of B by δB . c) Sketch of the method used for resolving the spectral diffusion of
+a single mode mechanical mode in time (orange line, averaged PSD). See the text for details. d) Scheme of the experimental
+setup. The laser is routed to the device at the base plate of the dilution refrigerator via a fiber circulator and a lensed fiber.
+The light coming out of the device is amplified with an Erbium Doped Fiber Amplifier (EDFA) and sent to a fast photodiode.
+The signal from the photodiode is split with RF splitters and analyzed with four synchronized Real-Time Spectrum Analyzers
+(RSA1, 2, 3, and 4). All RSAs are triggered externally via a TTL signal from a DAC card, which allows sub-µs synchronization.
+e) Mechanical spectrum of the device with several visible modes. The modes measured in this paper are called mode A (shaded
+in orange) and mode B (shaded in blue).
+
+
+ning electron microscope (SEM) image of a device nomi-             One RSA (RSA1, with RBW depicted by the green line in
+nally identical to the one used in this work. We model our         the figure), has the filter detuned by -RBW/2 = -100 kHz
+system as two mechanical modes of the cavity-waveguide             from the mechanical mode. In this way, the frequency jit-
+system (modes A and B), which are dispersively coupled             ter is mapped onto an amplitude modulation of the sig-
+to a bath of TLS. The dispersive coupling results in a fre-        nal measured by RSA1. The dark orange line depicts a
+quency shift of the mechanical modes, which depends on             sketch of the time trace of the frequency jitter, while the
+the instantaneous occupation, coupling strength, and de-           dark green line is the corresponding amplitude variation
+tuning of the TLS to that particular mode. Differences             of the signal measured (and the dashed lines are the time
+in coupling strengths and detunings for the two modes              axes). As the measured power is also proportional to the
+result in different frequency shifts and lead to uncorre-          thermal mechanical population, a change in the ampli-
+lated frequency jitters (see Fig. 1b for a schematic of the        tude of the mechanical peak will also cause a change in
+model and the SI section 9 [17] for more details).                 the amplitude of the measured signal. For this reason,
+                                                                   the second RSA (RSA2, RBW in dark gray) has the fil-
+  To resolve the mechanical frequency of the device in             ter on resonance with the mechanical mode, such that
+time, we use a frequency demodulation scheme, with its             its sensitivity to the frequency jitter is negligible. In this
+main working principle illustrated in Fig. 1c. For each            way, we can measure the amplitude fluctuations of the
+mode, we first measure its power spectral density (PSD)            signal with RSA2 and the amplitude and frequency fluc-
+and average it over several scans (orange curve). We then          tuations with RSA1. Normalizing the signal from RSA1
+use two real-time spectrum analyzers (RSAs) in zero-               with the one from RSA2 then allows us to extract the fre-
+span mode to acquire the total power filtered from the             quency position of the mechanical mode in time, even if
+resolution bandwidth (RBW) filter as a function of time.
+                                                                                                                         3
+
+ a                                                                    b                         c
+           AA                                                                       A                             A
+
+
+
+                                 AB                                                 A                             B
+
+
+
+                                        BA                                          B                             A
+
+
+
+                                                       BB                           B                             B
+
+
+
+
+FIG. 2. Frequency jitter in time. a) Time traces for mode A (orange measured on RSA1 and light orange on RSA3)
+and B (blue measured on RSA1 and light blue on RSA3). From top to bottom: the synchronized measurements are for the
+configurations AA, AB, BA, and BB measured from RSA1 and RSA3, respectively (using RSA2 and RSA4 for the amplitude
+normalization). AA and BB have clearly (almost) identical time traces, while AB and BA show uncorrelated time traces. b)
+and c) Histogram of the frequency shift modes AA, AB, BA, BB (from top to bottom) for a trace with 10 ms length. The
+dashed black line is the averaged mechanical spectrum (independently) measured with the corresponding RSA, which is in good
+agreement with the histogram. All data here are measured at 50 mK.
+
+
+the signal is modulated in amplitude and frequency. We         on resonance with them. The RSAs are synchronized in
+use two RSAs in this configuration for each mechanical         the data acquisition via a TTL signal that triggers all the
+mode in all the measurements.                                  RSAs simultaneously, with a relative delay of sub-µs.
+                                                                  After the scan of the optical resonance (cf. SI sec-
+   The setup for the frequency demodulation is schemat-
+                                                               tion 1 [17]), we measure the PSD of the device over a
+ically shown in Fig. 1d. A continuous wave (CW) laser,
+                                                               broad range of frequencies to identify the two mechani-
+red detuned from the optical resonance by the average
+                                                               cal modes of interest, which is plotted in Fig. 1e. We see
+mechanical frequency of the modes of interest (≈ 5 GHz),
+                                                               that the device has a comb of mechanical modes due to
+is routed to the device at the mixing chamber of a dilu-
+                                                               the hybridization of the single-mode mechanical cavity
+tion refrigerator (temperature of around 50 mK) via a
+                                                               with the Fabry-Pérot cavity formed by the long waveg-
+circulator and a lensed fiber (coupling efficiency of 10%).
+                                                               uide with its free-standing end [8]. The shaded regions
+The CW light is partially absorbed by the device, cre-
+                                                               in the plot highlight the two modes used in this work.
+ating a thermal population in the mechanical modes of
+                                                               The resonances have a FWHM = 20 kHz (see SI section
+interest. This population is read via the beam-splitter
+                                                               1 [17] for details). We use optomechanical induced trans-
+interaction with the same CW laser, which creates side-
+                                                               parency (OMIT) to determine the optomechanical cou-
+bands detuned from the laser carrier by the mechanical
+                                                               pling of each mode, finding 0.3 MHz for A and 0.2 MHz
+frequencies [8]. Throughout all measurements, the in-
+                                                               for B. We also measure a phonon lifetime of around 1 ms
+stantaneous photon number in the optomechanical cavity
+                                                               (see SI section 2 [17]).
+is approx. 3,000 (see SI section 1 [17] for more informa-
+tion). The output of the circulator is amplified with an          For an initial characterization of the frequency diffu-
+erbium doped fiber amplifier (EDFA) to boost the signal        sion, we use RSA1 and RSA3 to take synchronized fast
+on a fast photodetector. The output of the detector is         frequency scans of the peaks (PSD), similar to the pro-
+split with three power splitters and sent to 4 RSAs (1-4).     cedure reported in [2]. To obtain sufficient information
+RSA1 and 3 are detuned by -RBW/2 = -100 kHz from the           of the peak, the fastest possible scan takes 200 µs (RBW
+measured mechanical mode, while RSA2 and 4 are always          = 10 kHz). In this configuration, approximately half of
+                                                                                                                       4
+
+the scans have more than one prominent peak (see SI          The small discrepancy in the FHWM of the distribution
+section 3 [17]). This indicates that the time scale of the   should arise mainly from the noise in the measurement
+jitter is much faster than the scanning time. We over-       of the amplitude from RSA2 and 4. The small discrep-
+come this limitation by using a frequency demodulation       ancy in the center of the distribution is attributed to slow
+scheme, which allows to use larger RBW and, therefore,       frequency drifts of the mechanical modes [2].
+have finer time resolution.                                     To quantitatively assess if the time traces are corre-
+                                                             lated or not, we calculate the correlation function in the
+                                                             four configurations (see SI section 7 [17] and [18]), and
+                       RESULTS                               we show the results for zero delay (τ = 0) in Fig. 3.
+                                                             It is clearly visible from the matrix that AA and BB
+   We use the four RSAs to measure (synchronized) time       have a strong correlation, while AB and BA have un-
+traces of the two mechanical modes in four configura-        correlated values. We would like to note that a more
+tions: AA, AB, BA, and BB. RSA1 (3) is detuned by            detailed study with different RBWs could be beneficial
+−RBW/2 = −100 kHz from the mode A (A), A (B), B              in extracting short-delay coherence time. To validate the
+(A) and B (B), respectively, while RSA2 and 4 are always     measurements and gain some additional information on
+on resonance with the mode measured by RSA1 and 3,           the frequency jitter mechanism, we develop a theoreti-
+respectively. Each time trace is 10 ms long. For this        cal model and use it to run Monte-Carlo simulations to
+measurement the choice of the RBW is crucial: we set         obtain the frequency diffusion of two mechanical modes
+a 200 kHz RBW filter as a trade-off for having a large       shifted by a bath of TLS (see SI section 9 [17]). For
+enough time resolution (∼1/RBW = 5 µs) while still           our model, we use a COMSOL simulation to calculate
+maintaining a good signal to noise ratio, high dynami-       the coupling rates between the mechanical modes of the
+cal range and high sensitivity. The RBW is also chosen       device and each TLS of the bath. We find that each me-
+to be much bigger than the average frequency shift to        chanical mode can couple very differently to the same
+avoid signal distortion. We report an average signal-to-     TLS bath. We then calculate, for each time step of the
+noise ratio of 10 for mode A (with a maximum value of        simulation, the frequency shift of the mechanical mode
+80) and 5 for B (with a maximum value of 30). The            arising from the dispersive coupling with each TLS. We
+peak fluctuates in the linear part (in the detuned case)     find good qualitative agreement between the measured
+and on the flat part (in the resonant case) of the filter.   data and the model, finding a frequency jitter in time
+For the chosen filter, a typical frequency fluctuation of    with amplitude and time-scale comparable with the one
+10 kHz (FWHM/2) gives a 0.7% relative change in am-          measured and with the same pattern of correlation, as
+plitude for the filter at resonance with the mechanical      can be seen in Fig. 2a and SI section 9 [17] Fig. 8d, and
+mode and a 7% relative change for the filter detuned by      Fig. 3 and SI section 9 [17] Fig. 9.
+−RBW/2. With the amplitude of the signal from RSA2              In order to get a better understanding of the nature
+and 4, we normalize the trace measured from RSA1 and         of the TLS, we perform the same experiment at a tem-
+3 (see SI section 6 [17]). We then use the filter shape to   perature of 800 mK (see SI section 8 [17]), and perform
+convert the amplitude fluctuations into frequency fluctu-    Monte-Carlo simulations up to 4 K (see SI section 9 [17]),
+ations (see SI section 5 [17]). The result of the measure-   and in both cases the correlation results are practically
+ments is reported in Fig. 2a, where we plot the frequency    identical. This indicates that a considerable part of the
+shift in time, from top to bottom, for the four configu-     frequency diffusion is caused by far detuned TLS, which
+rations AA, AB, BA, and BB, in orange (blue) and light       are only partially affected by the higher temperature [3],
+orange (light blue) for mode A (B). In this plot, we show    as the TLS with frequency close to the mechanical modes
+a 200 µs long segment of the measured trace. It is clearly   of interest are mostly saturated.
+visible that the AA and BB configurations have highly
+correlated traces, while the AB and BA configurations
+have uncorrelated time traces of the two modes. The                               DISCUSSION
+(common mode) frequency jitter, which can be caused
+by laser frequency shifts and changes in laser power, is        In our experiment, we show that two mechanical
+much smaller than the measured frequency shifts (see SI      modes, even if spectrally close and with similar mode
+section 4 [17]). We further show in Fig. 2b and c, the       shapes, have an uncorrelated spectral diffusion for time
+histogram of the frequency shift for the complete time       scales greater than a few microseconds. This leads us
+traces. The letters in the plot refer to which mode is       to conclude that when using two devices in a dual-rail
+analyzed. The dashed black line is the mechanical PSD        scheme [19, 20] or a single device with multiple mechani-
+as measured from the RSAs in scanning mode (averag-          cal modes [9] the resulting coherence times would be sim-
+ing for approx. 30 s for each measurement). Note that        ilar. The uncorrelated traces and the developed model
+the two (independent) measurements are in very good          show that the two modes are coupled very differently to
+agreement, confirming the validity of the method used.       the same surface defect (TLS) bath, which, most likely,
+                                                                                                                                                                   5
+
+                                                                                                    financially supported by the European Research Council
+                                                                                                    (ERC CoG Q-ECHOS, 101001005) and is part of the re-
+                                                                                                    search program of the Netherlands Organization for Sci-
+                $                   %                                                               entific Research (NWO), supported by the NWO Fron-
+                                                                                                    tiers of Nanoscience program, as well as through a Vrij
+                                                                                                 Programma (680-92-18-04) grant.
+                                                                                                    Conflict of interests: The authors declare no com-
+     $                                                                                              peting interests.
+
+
+
+
+                                                              & R U U H O D W L R Q  > + ] A  @
+                                                                                                    Author contributions: N.F. devised and planned the
+                                                                                                    experiment, built the setup and performed the measure-
+                                                                                                 ments, with help from A.R.K. A.Z. fabricated the de-
+                                                                                                    vice. N.F., L.S. and S.G. analyzed the data and wrote
+                                                                                                 the manuscript. S.G. supervised the project.
+     %                                                                                                 Data Availability: Source data for the plots are avail-
+                                                                                                 able on Zenodo [21].
+
+                                                     
+
+                                                                                                     [1] S. M. Meenehan, J. D. Cohen, S. Gröblacher, J. T. Hill,
+                                                                                                         A. H. Safavi-Naeini, M. Aspelmeyer, and O. Painter, Sil-
+                                                                                                         icon optomechanical crystal resonator at millikelvin tem-
+FIG. 3. Correlation of the frequency jitter. Correlation
+                                                                                                         peratures, Phys. Rev. A 90, 011803 (2014).
+for zero delay (τ = 0, as defined in SI section 7 [17] and [18])
+                                                                                                     [2] A. Wallucks, I. Marinković, B. Hensen, R. Stockill, and
+for the mechanical mode configurations AA, AB, BA, and
+                                                                                                         S. Gröblacher, A quantum memory at telecom wave-
+BB using the full traces of Fig. 2 with 10 ms length. The
+                                                                                                         lengths, Nat. Phys. 16, 772 (2020).
+AA and BB combinations show strong correlations, while the
+                                                                                                     [3] G. S. MacCabe, H. Ren, J. Luo, J. D. Cohen, H. Zhou,
+AB and BA combinations are uncorrelated. All data here are
+                                                                                                         A. Sipahigil, M. Mirhosseini, and O. Painter, Nano-
+measured at 50 mK.
+                                                                                                         acoustic resonator with ultralong phonon lifetime, Sci-
+                                                                                                         ence 370, 840 (2020).
+                                                                                                     [4] A. Bienfait, K. J. Satzinger, Y. P. Zhong, H.-S. Chang,
+are the cause of the jittering [3]. From the model, we                                                   M.-H. Chou, C. R. Conner, E. Dumur, J. Grebel, G. A.
+estimate that each TLS can have a difference in coupling                                                 Peairs, R. G. Povey, and A. N. Cleland, Phonon-mediated
+rate to the two mechanical modes of up to two orders of                                                  quantum state transfer and remote qubit entanglement,
+magnitude. Our results shed further light on the cause                                                   Science 364, 368 (2019).
+of the frequency diffusion in mechanical oscillators and                                             [5] H. Qiao, É. Dumur, G. Andersson, H. Yan, M.-H. Chou,
+could be used to design higher coherence time multi mode                                                 J. Grebel, C. R. Conner, Y. J. Joshi, J. M. Miller, R. G.
+                                                                                                         Povey, X. Wu, and A. N. Cleland, Splitting phonons:
+devices (that have mostly common mode frequency shift,
+                                                                                                         Building a platform for linear mechanical quantum com-
+for example). Additional experiments are, however, re-                                                   puting, Science 380, 1030 (2023).
+quired to fully understand the underlying mechanisms                                                 [6] L. Shao, D. Zhu, M. Colangelo, D. Lee, N. Sinclair,
+and to open the way to long coherence-time mechanical                                                    Y. Hu, P. T. Rakich, K. Lai, K. K. Berggren, and
+quantum memories without the use of dynamical decou-                                                     M. Lončar, Electrical control of surface acoustic waves,
+pling methods. In particular, a detailed and systematic                                                  Nat. Electron. 5, 348 (2022).
+analysis via surface treatments of the silicon is neces-                                             [7] G. Andersson, A. L. O. Bilobran, M. Scigliuzzo, M. M.
+                                                                                                         de Lima, J. H. Cole, and P. Delsing, Acoustic spectral
+sary, or the use of alternative materials such as GaP or
+                                                                                                         hole-burning in a two-level system ensemble, npj Quan-
+silicon nitride. We can further conclude that, in order                                                  tum Information 7, 15 (2021).
+to reach long coherence times in mechanical quantum                                                  [8] A. Zivari, R. Stockill, N. Fiaschi, and S. Gröblacher, Non-
+memories, it is necessary to saturate the TLS over a very                                                classical mechanical states guided in a phononic waveg-
+wide frequency range (≳ 20 GHz), for example, through                                                    uide, Nat. Phys. 18, 789 (2022).
+an AC electric field. For this reason, the use of acous-                                             [9] A. Zivari, N. Fiaschi, R. Burgwal, E. Verhagen,
+tic metamaterials –phononic shields–, given their limited                                                R. Stockill, and S. Gröblacher, On-chip distribution of
+                                                                                                         quantum information using traveling phonons, Sci. Adv.
+bandgap (∼ 2 GHz), have been only partially beneficial
+                                                                                                         8, eadd2811 (2022).
+for the coherence time [2, 3].                                                                      [10] P. V. Klimov, J. Kelly, Z. Chen, M. Neeley, A. Megrant,
+                                                                                                         B. Burkett, R. Barends, K. Arya, B. Chiaro, Y. Chen,
+  Acknowledgments We would like to thank Robert                                                          A. Dunsworth, A. Fowler, B. Foxen, C. Gidney,
+Stockill and Raymond Schouten for valuable discussions                                                   M. Giustina, R. Graff, T. Huang, E. Jeffrey, E. Lucero,
+and Clinton Potts for support. We further acknowledge                                                    J. Y. Mutus, O. Naaman, C. Neill, C. Quintana,
+assistance from the Kavli Nanolab Delft. This work is                                                    P. Roushan, D. Sank, A. Vainsencher, J. Wenner, T. C.
+                                                                    6
+
+     White, S. Boixo, R. Babbush, V. N. Smelyanskiy,
+     H. Neven, and J. M. Martinis, Fluctuations of energy-
+     relaxation times in superconducting qubits, Phys. Rev.
+     Lett. 121, 090502 (2018).
+[11] S. Mittal, K. Adachi, N. Frattini, M. Urmey, S.-X. Lin,
+     A. Emser, C. Metzger, L. Talamo, S. Dickson, D. Carl-
+     son, S. Papp, C. Regal, and K. Lehnert, Annealing re-
+     duces si3 n4 microwave-frequency dielectric loss in super-
+     conducting resonators, Phys. Rev. Applied 21, 054044
+     (2024).
+[12] A. Bozkurt, H. Zhao, C. Joshi, H. G. LeDuc, P. K. Day,
+     and M. Mirhosseini, A quantum electromechanical inter-
+     face for long-lived phonons, Nat. Phys. 19, 1326 (2023).
+[13] Z.-H. Zhang, K. Godeneli, J. He, M. Odeh, H. Zhou,
+     S. Meesala, and A. Sipahigil, Acceptor-induced bulk di-
+     electric loss in superconducting circuits on silicon, Phys.
+     Rev. X 14, 041022 (2024).
+[14] M. Chen, J. C. Owens, H. Putterman, M. Schäfer,
+     and O. Painter, Phonon engineering of atomic-scale de-
+     fects in superconducting quantum circuits, Sci. Adv. 10,
+     eado6240 (2024).
+[15] M. Odeh, K. Godeneli, E. Li, R. Tangirala, H. Zhou,
+     X. Zhang, Z.-H. Zhang, and A. Sipahigil, Non-markovian
+     dynamics of a superconducting qubit in a phononic
+     bandgap, Nat. Phys. (2025).
+[16] C. Müller, J. H. Cole, and J. Lisenfeld, Towards under-
+     standing two-level-systems in amorphous solids: insights
+     from quantum circuits, Rep. Prog. Phys. 82, 124501
+     (2019).
+[17] See Supplemental Material at [url will be inserted by pub-
+     lisher], for additional data and simulations (including ref-
+     erences [1, 3, 8, 18, 20, 22–26]).
+[18] R. Kubo, A stochastic theory of line shape, in Advances
+     in Chemical Physics (John Wiley and Sons, Ltd, 1969)
+     pp. 101–127.
+[19] R. Riedinger, A. Wallucks, I. Marinković, C. Löschnauer,
+     M. Aspelmeyer, S. Hong, and S. Gröblacher, Remote
+     quantum entanglement between two micromechanical os-
+     cillators, Nature 556, 473 (2018).
+[20] N. Fiaschi, B. Hensen, A. Wallucks, R. Benevides, J. Li,
+     T. P. M. Alegre, and S. Gröblacher, Optomechanical
+     quantum teleportation, Nat. Photon. 15, 817 (2021).
+[21] See https://doi.org/10.5281/zenodo.15584323 .
+[22] M. Aspelmeyer, T. J. Kippenberg, and F. Marquardt,
+     Cavity optomechanics, Rev. Mod. Phys. 86, 1391 (2014).
+[23] K. Cui, Z. Huang, N. Wu, Q. Xu, F. Pan, J. Xiong,
+     X. Feng, F. Liu, W. Zhang, and Y. Huang, Phonon lasing
+     in a hetero optomechanical crystal cavity, Photon. Res.
+     9, 937 (2021).
+[24] W. A. Phillips, Two-level states in glasses, Rep. Prog.
+     Phys. 50, 1657 (1987).
+[25] A. Y. Cleland, E. A. Wollack, and A. H. Safavi-Naeini,
+     Studying phonon coherence with a quantum sensor, Nat.
+     Commun. 15, 4979 (2024).
+[26] A. Berthelot, I. Favero, G. Cassabois, C. Voisin, C. De-
+     lalande, P. Roussignol, R. Ferreira, and J. M. Gérard,
+     Unconventional motional narrowing in the optical spec-
+     trum of a semiconductor quantum dot, Nat. Phys. 2, 759
+     (2006).
+                                                                                                                          7
+
+        SUPPLEMENTARY INFORMATION                               the ones with a clear single peak, obtaining between 100
+                                                                and 150 single peaks for each combination. We use the
+           1.   Optical and mechanical resonances               maximum values of the peaks for each pair of scans as
+                                                                measurement of the mechanical frequencies, creating two
+   To measure the optical resonance we scan the laser fre-      vectors. We then use the correlation distance between
+quency and measure the reflected power from the device          the vectors to asses if the mechanical frequencies are cor-
+on a photodiode (see Fig. S1a). From a Lorentzian fit we        related. For two vectors ⃗u and ⃗v we use the correlation
+can extract a resonance wavelength of around 1535 nm            distance C as defined in the Python package SciPy
+and a linewidth of 1.1 GHz. We then measure the (aver-
+aged) PSD of the two mechanical modes, Fig. S1b and c,                                     (⃗u − ⃗ū) · (⃗v − ⃗v̄ )
+as a function of the intracavity photon number, which is                         C =1−                                .
+                                                                                         ||⃗u − ⃗ū||2 ||⃗v − ⃗v̄ ||2
+proportional to the power sent to the device (see Fig. S1d
+for the actual values). As expected, the optomechan-              With this definition, two perfectly correlated (anti-
+ical spring effect and phonon lasing shift the mechani-         correlated) vectors have a correlation distance of 0 (2),
+cal resonances and decrease the linewidth with increased        while two uncorrelated vectors have a correlation dis-
+intracavity photon number [1, 22, 23]. The measured             tance of 1. We report the results of the correlations be-
+mechanical linewidths as a function of the intracavity          tween the measured peak positions in Fig. S3b, where
+photon number are shown in Fig. S1d. In the measure-            we show that the combination AA and BB are correlated
+ment in the main text the intracavity photon number is          while AB and BA are uncorrelated.
+around 3,000, which is the lowest value we could use to
+still obtain a high enough signal to noise ratio for the time
+traces of mode B (the mode with lower optomechanical                              4.   Common mode jitter
+coupling, g0 ).
+                                                                   Fluctuations in laser power and detuning from the op-
+                                                                tical resonance cause a (common mode) frequency shift
+                          2.   Lifetime                         of the mechanical modes. We estimate this jitter us-
+                                                                ing the distribution of laser power and frequencies. We
+   To determine the lifetime of the phonons in the device       measure the laser power (renormalized to 1) and its fre-
+we send a series of pairs of red-detuned pulses (pump and       quency in time and we report the normalized histogram
+probe [20]). The pump pulse (the first one to arrive at         of these two quantities in Fig. S4a and c. The standard
+the device), creates a thermal population in the cavity,        deviations of the distributions are approx. 2 × 10−4 and
+while the probe pulse measures the thermal occupation           0.42 MHz, respectively. We also measure the mechanical
+of the cavity. We repeat the pair of pulses every 50 ms.        frequencies as function of the intracavity photon num-
+Sweeping the delay between the pulses, we measure the           ber and as function of the detuning of the laser from the
+decay of the thermal population created from the first          optical resonance. As shown in Fig. S4b and d, we can
+pulse and extract the lifetime of the phonons. The data         extract a maximum (common mode) frequency jitter of
+are shown in Fig. S2, with a measured lifetime of T1 ≈          the mechanical modes of ≈ 20 Hz given by the laser power
+1 ms.                                                           fluctuations, and of ≈ 30 Hz given by the laser frequency
+                                                                fluctuations. Theses frequency shifts are much smaller
+                                                                than the one reported in the main text and can therefore
+                     3.   Fast RSA scans                        not explain the (uncorrelated) frequency diffusion of the
+                                                                modes.
+   The correlations of the frequency positions of the two
+mechanical modes can be measured by performing syn-
+chronized fast scans on the RSAs. Ideally, if the jitter                    5.    Characterization of RSA filter
+is slower than the sweep time of the scan, only one peak
+should be visible. From this measurement the positions             It is critical to know the filter shape of the RSA pre-
+of the peak can be measured and the correlation can be          cisely, in order to being able to convert faithfully from
+calculated. As shown in Fig. S3a, we see that for small         the amplitude measurement to a frequency. We use an
+RBW the spectra mostly exhibit multiple peaks however,          external microwave source at a (fixed) frequency around
+indicating that the scan sweeps are too slow. For large         5 GHz. We measure time traces of 1 ms at several de-
+RBW of around 10 kHz our scan is fast enough (with a            tunings of the filter from the microwave frequency and
+sweep time of 200 µs) and has sufficient resolution to dis-     then average the traces and plot them as a function of
+tinguish single peaks inside the average envelope. With         the detuning in Fig. S5. From the Gaussian fit we find
+this last bandwidth we take 300 scans for each combi-           a FWHM of the filter functions of about 200 kHz for all
+nation of peaks (AA, AB, BA and BB) and post-select             RSAs used, consistent with the RBW of 200 kHz.
+                                                                                                                                 8
+
+a                              b                            c                                    d
+
+
+
+
+FIG. S1. a) Optical resonance of the optomechanical cavity. The resonance is centered at roughly 1535 nm and has a linewidth
+of 1.1 GHz. b) and c) Averaged mechanical PSD of mode A (in orange) and B (in blue), where each measurement is integrated
+for 30 s. Each spectrum is measured with different intracavity photon number (increasing intracavity photon number for lighter
+colors, see d for the actual values). Optomechanical spring effect and phonon lasing, shift the resonances and decrease the
+linewidth with increased intracavity photon number. d) Linewidth of the mechanical peaks (A in orange and B in blue), as
+a function of the intracavity photon number. In the measurement in the main text the intracavity photon number is about
+3, 000.
+
+
+                                                                 two modes. This clearly excludes common mode ampli-
+                                                                 tude fluctuations which can come from changes in laser
+                                                                 power or frequency, amplification of the EDFA, or losses
+                                                                 in the optical path (from vibration of the lensed fiber
+                                                                 given by the pulse tube of the dilution refrigerator, for
+                                                                 example). Since the amplitude of the signal is directly
+                                                                 proportional to the (thermal) population of the mode,
+                                                                 we are measuring the thermal Brownian motion in time.
+                                                                 This is clearly visible as their histograms are an expo-
+                                                                 nential distribution in frequency, perfectly following the
+                                                                 probability distribution of a thermal state (cf. Fig. S6b
+                                                                 and c for the full 10 ms trace for all four cases).
+
+
+FIG. S2. Normalized click rates of the probe pulse as a func-                               7.   Correlation
+tion of the delay between the two pulses (pump and probe).
+The rates are directly proportional to the thermal population
+of the device allowing to measure the lifetime of the phonons       To quantitatively assess the correlations in the four
+in the structure. From the exponential fit (orange line) we      configurations, we calculate correlation functions. For
+extract a T1 ≈ 1 ms.                                             this, we use the complete traces taken from the RSAs,
+                                                                 with a total length of 10 ms. We then divide each trace
+                                                                 into segments, which are defined as subsequent points of
+                 6.   Amplitude fluctuations                     the trace that have only physical values of the frequency
+                                                                 jitter (nonphysical values can arise from the noisy cal-
+   In our measurements we consistently see that the am-          ibration of the y-axis, particularly when the amplitude
+plitude of the signals fluctuates in time, even in the case      measured with RSA2 and RSA4 is comparable with the
+of the filter of the RSA on resonance with the mechanical        noise floor). We report that around 2/3 of the total data
+modes. In Fig. S6a we report a time trace (for the same          points have physical values. The correlation function for
+time as Fig. 2), for the four configurations (AA, AB, BA         each segment is defined as
+and BB) as measured from RSA2 and RSA4 with the                                    Nj
+filter on resonance. In this configuration, from the fre-
+                                                                                   X
+                                                                       Cj (τ ) =         (Sj (ti ) − Ŝ)(Sj (ti + τ ) − Ŝ),   (S1)
+quency jitter, we can expect a 0.7% change in amplitude                            i=0
+for a frequency fluctuation of FWHM/2. However, in
+the data we see that the amplitude variations span an            where Sj is the segment j, with Nj points, of the fre-
+order of magnitude and are not correlated between the            quency shift in time and Ŝ the average value [18]. We
+                                                                                                                              9
+
+ a                                                            b
+
+
+
+
+FIG. S3. a) Fast scans of the mechanical modes A (in orange) and b (in blue) around their central frequencies using a RBW
+of 1 kHz, 3 kHz, 5 kHz and 10 kHz from top to bottom. The bottom scans are the fastest and have a sweep time of ≈200 µs. It
+is visible that, most of the time, the scans with finer RBW (and so slower sweep time) measure the mechanical peak several
+times in a single sweep. For the 10 kHz case, most of the time the scans show a single prominent peak. The dashed lines are
+the mechanical spectrum with 3000 averages. b) Correlation distance matrix between the modes A and B. The AA and BB
+correlations are very close to zero, showing a very strong autocorrelation, while the AB and BA are very close to unity, showing
+that are uncorrelated.
+
+
+a                                b                              c                              d
+
+
+
+
+FIG. S4. a) Histogram of the normalized power of the laser. The standard deviation of the distribution is approx. 2 × 10−4 .
+The measurement was taken with an integration time of 100 ms and lasted in total one minute, much longer than the time of
+a single measurement reported in the main text. b) Frequency shift of the mechanical peaks as a function of the intracavity
+photon number, for mode A (orange) and mode B (blue). From the linear fit (solid line, same color as the datapoints) and
+the distribution of laser power reported in a), we can extract a maximum (common mode) frequency jitter given by the power
+fluctuation of the laser of 20 Hz, much smaller than the frequency jitter of the mechanical modes. c) Normalized histogram of
+the frequency jitter of the laser. The standard deviation of the distribution is approx. 0.42 MHz. The measurement was taken
+with a rate of 5 Hz and lasted 3 minutes, again much longer than the time of the single measurements reported in the main
+text, which leads to an upper bound of the laser frequency shift. d) Frequency shift of the mechanical frequencies of mode
+A (orange) and B (blue) as a function of the laser detuning from the optical resonance. From the linear fit (solid line, same
+color as the datapoints) and the distribution of laser frequencies reported in c), we can extract a maximum (common mode)
+frequency jitter given by the frequency fluctuations of 30 Hz, also much smaller than the frequency jitter of the mechanical
+modes. In both b) and d) the differences in the slopes are given by the different g0 of the two modes.
+
+
+then average between the calculated correlations of all             segments (each with a weight given by the number of
+                                                                                                                             10
+
+                                                                 We simulate two modes (mode A’ and B’) at frequencies
+                                                                 νA’ = 4.847 GHz and νB’ = 4.870 GHz. These two modes
+                                                                 are Fabry-Pérot modes, just like the ones measured in the
+                                                                 main text (cf. Fig. S8a). Using the density per unit en-
+                                                                 ergy and volume of bulk glass (10−45 state/J/m3 [3, 24]),
+                                                                 we calculate a TLS density of around 600 states/GHz in
+                                                                 the simulated device volume within a depth of 10 nm from
+                                                                 the surface [3] (total volume that hosts the TLSs is ap-
+                                                                 prox. 1 µm3 ). We can therefore expect roughly 1.2 × 104
+                                                                 TLS with frequencies between νT LS,min = 0.5 GHz and
+                                                                 νT LS,max = 20 GHz. Here we limit the upper frequency
+                                                                 to 20 GHz to reduce the number of interacting TLS and
+                                                                 to save on computational time. Due to the slow in-
+                                                                 crease of the maximum frequency shift of the mechan-
+FIG. S5. Average value of 1 ms traces with different detuning    ical mode with the chosen maximum TLS frequency, the
+of the filter center with respect to a microwave source, for a
+RBW of 200 kHz. From the Gaussian fit, we obtain a FWHM
+                                                                 simulation results are qualitatively similar even for higher
+of 200 kHz for all RSAs.                                         νT LS,max . We randomly choose 1.2 × 104 (fixed) frequen-
+                                                                 cies νi from a uniform distribution between 0.5 GHz and
+                                                                 20 GHz, where i is the TLS number index. We then ran-
+points of the segment).                                          domly choose 1.2 × 104 points (defined by xi , yi , zi coor-
+                                                                 dinates) that are (uniformly) distributed on every surface
+                                                                 of the simulation with a maximum depth of 10 nm. Each
+           8.   Frequency fluctuations at 800 mK                 point is the position of a single TLS. We show part of
+                                                                 the simulated device and the points chosen (red dots) in
+  To study the behavior of the frequency jitter in more          Fig. S8b. Note that, due to the highly symmetric na-
+detail, we perform the same measurement reported in              ture of the device, we can simulate only 1/4 of it and use
+Fig. 2 at an elevated temperature of the mixing chamber          symmetries to get the mechanical mode of the complete
+plate of 800 mK. As can be seen in Fig. S7, the behavior         device. We evaluate the strain for each point for both me-
+and the correlations are practically identical to the ones       chanical modes A’ and B’ (si,A’ and si,B’ ). The coupling
+measure at 50 mK, which we believe is due to the high            of each TLS to the modes A’ and B’ is then defined as
+power of the CW laser used causing heating of the device,        gi,A’ = gav si,A’ /sav,A’ and gi,B’ = gav si,B’ /sav,B’ , where
+and increasing its effective temperature to around 1 K.          gav = 100 kHz [3, 25] and sav,A’ , sav,B’ are the average
+                                                                 strain for mode A’ and B’. We plot the gi,A’ and gi,B’
+                                                                 in Fig. S8c for 1,000 of the TLS considered (for simplic-
+                9.   Monte-Carlo simulation                      ity). We note that 40% of the total TLS have a relative
+                                                                 ratio in coupling strength between the two mechanical
+   In order to obtain a better understanding of the un-          modes that is larger than 2 (or smaller than 0.5). This is
+derlying TLS dynamics, we perform a Monte-Carlo simu-            given by the different mode shape, and hence strain, of
+lation frequency shifts of two mechanical modes coupled          the two modes, as is visible from Fig. S8a. Note that for
+to a bath of TLS. We use COMSOL to calculate the cou-            mechanical modes that have higher spatial overlap inte-
+pling rate of each mechanical mode to the TLS, where             gral (i.e., closer frequencies), the difference in coupling
+each TLS is assumed to dispersively couple to each me-           strengths to the TLSs will be smaller and the expected
+chanical mode. In particular, we calculate the TLS state-        cross-correlation will be higher.
+dependent frequency shifts of each mode for each time               To perform the Monte-Carlo simulation, we define the
+step. We then convolute the results with the RSAs fil-           rates at which each TLS decays to the ground state
+ter and calculate the correlation between the time traces.       (Γdown ) and gets excited (Γi,up ). We assume all TLS
+We find that the time traces are only correlated on a very       have the same decay rate (τdown = 1/Γdown = 1 µs)
+fast time scale, and uncorrelated on a time scale longer         and an excitation rate given by the thermal distribu-
+than the inverse of the RSAs filter bandwidth of around          tion (Γi,up /Γdown = 1/(ehνi /kB T )), where T is the bath
+5 µs in our case.                                                temperature, h and kB Planck’s and Boltzmann’s con-
+   We further simulate the mirror, cavity, and waveguide         stants, respectively. In this way we have a population of
+regions of the device using COMSOL. As previously done,          the TLS given by a thermal bath with an average tem-
+the total length of the waveguide is limited to 100 unit         perature T . We choose τdown to be close to literature
+cells to reduce the calculation time [8]. The total length       values [3, 25], and smaller than the inverse of the fil-
+of the waveguide part in the simulation is then 50 µm or         ter bandwidth (1/RBW) since no correlations for longer
+about 1/5 of the actual length of the device measured.           times have been observed. Even if this number is not
+                                                                                                                                11
+
+
+a                                                              b                               c
+           AA                                                                           A                               A
+
+
+
+
+                           AB                                                           A                               B
+
+
+
+
+                                         BA                                             B                               A
+
+
+
+
+                                                      BB                                B                               B
+
+
+
+
+FIG. S6. a) Time traces of the amplitude fluctuations of the signal for mode A (orange, RSA2 and light orange, RSA4) and
+B (blue, RSA2 and light blue, RSA4) with the filters on resonance with the mechanical modes. From top to bottom: the
+synchronized measurements are for the configurations AA, AB, BA and BB measured with RSA2 and RSA4 respectively, and
+are for the same time as the data in Fig. 2. AA and BB have (almost) identical time traces, while AB and BA show uncorrelated
+time traces even for the amplitude of the modes. These fluctuations are the time-resolved Brownian thermal motion. The small
+difference in signal comes from different losses and splitting ratios of the RF power splitters and is compensated in post-analysis
+to convert the y-axis to frequency in Fig. 2. The partially transparent traces are the background measurements taken 200 MHz
+from the mechanical modes of interest (at a frequency with no visible peaks). b) and c) Histogram of the amplitude fluctuations
+as measured from RSA2 and RSA4 for the modes AA, AB, BA, BB (from top to bottom) for a trace with 10 ms length. The
+histograms follow the probability distribution of a thermal state.
+
+
+necessarily well defined, we see that the results are qual-        Carlo simulation gives qualitatively identical results for
+itatively the same for any values. Moreover, since we              the range of temperature that we can simulate (0.2 K to
+measure fluctuations in the modes frequencies on the or-           4 K), with the only difference of the expected decrease
+der of µs we can expect that the TLS have a time dy-               in linewidth with higher temperature given by the satu-
+namic on this order of magnitude (a much faster dynamic            ration of the TLS close in frequency to the mechanical
+will average out in our measurement). While some of the            modes. We note that the linewidth monotonically de-
+TLS within the bandgap of the phononic shield can of               creases with the temperature as in this simple model we
+course have much longer τdown [3], such TLS would only             do not consider thermal broadening of the mechanical
+give a slower frequency shift and would not change the             modes. We note that the trend follows a phenomenolog-
+correlation results presented here. We choose a temper-            ical decay of T −0.5 , comparable to previously measured
+ature of T = 1 K since the results at 800 mK are qual-             results [1], showing that this model captures the inter-
+itatively the same. However, we note that the Monte-               action between the mechanical modes and the TLS bath
+                                                                                                                             12
+
+                                                                  frequency given by the dispersive coupling of the me-
+                                                                  chanical mode with all the TLSs. For mode A’ it will
+                   AA                                             be δA’ = Σi (gi,A’ )2 /∆i,A’ σz,i , summing over all TLSs,
+                  800mK                                           where ∆i,A’ = νA’ − νi is the detuning between the ith-
+                                                                  TLS and mode A’. Similarly, we perform the calcula-
+                                                                  tion for B’. We report the time trace for the frequency
+                                                                  shift of a single trajectory in Fig. S8d. The frequency
+                                                                  shifts on short time scale are given by telegraphic noise
+                                                                  from the population jumps of the TLS (see Fig. S8e).
+                                                                  These quantum jumps occur on an effective time scale of
+                                                                  τ ∼ 1/Γdown + 1/Γup, av ∼ 500 ns, where Γup, av is the
+                                                                  average excitation rate. Only using a detection scheme
+                     AB                                           faster than τ could allow to resolve theses quantum jumps
+                   800mK                                          in time. In Fig. S8f, we report the histogram of the time
+                                                                  traces of all 10 trajectories, with and without convolu-
+                                                                  tion with the detection response. The histogram width
+                                                                  of 5 kHz is very close to the measured linewidth (re-scaled
+                                                                  by a factor 5 to account for the smaller number of TLS
+                                                                  considered). Note that this model explains also the dif-
+                        BA                                        ferences in linewidth for modes close in frequency. In
+                      800mK                                       fact a small number of TLS can more strongly interact
+                                                                  with one mode compared to others. In the particular
+                                                                  case reported in Fig. S8, the mode A’ has a much larger
+                                                                  linewidth.
+
+                                                                     We now calculate the correlations of two time traces of
+                                          BB                      the frequency shift of mode A’ and B’ in the four possi-
+                                         800mK                    ble configurations, A’A’, A’B’, B’A’, and B’B’, similar to
+                                                                  the main text. To re-normalize we divide the calculated
+                                                                  correlations within the same trajectory with the one of
+                                                                  different trajectories, since the latter one is completely
+                                                                  uncorrelated. We subtract 1 to obtain a value of uncor-
+FIG. S7. Time traces of the frequency jitter for mode A (or-      related signal of 0 to be consistent with the main text. In
+ange, RSA1 and light orange, RSA3) and B (blue, RSA1 and          Fig. S9, for all the configurations, we show the correla-
+light blue, RSA3) with the temperature of the mixing cham-        tions between the time traces, as well as the correlations
+ber plate of the dilution refrigerator at 800 mK. From top to     between the time traces convoluted with the RSA band-
+bottom: the synchronized measurements are for the configura-      width. We see a fast correlation between the time traces,
+tions AA, AB, BA and BB measured from RSA1 and RSA3
+                                                                  with a time scale of τ , in all four cases. The (small) corre-
+respectively (using RSA2 and RSA4 for the amplitude nor-
+malization). The qualitative behavior does not change com-        lations in the A’B’ and B’A’ cases is due to the subgroup
+pared to the measurements at 50 mK reported in Fig. 2.            of TLS which have similar coupling rates and similar de-
+                                                                  tunings for both mechanical modes, causing a correlated
+                                                                  shift of the mechanical frequencies. Note that, even if a
+quite well. We define the time step dt of the simulation          faster measurement could resolve the (small) cross corre-
+so that all TLS in each time step have a small probability        lation, the two mechanical modes positions will decohere
+(<0.05) of decaying (Pi,down = (1 − σz,i )dt/τdown ) or get-      very fast. For longer times, the correlation is lost and
+ting excited (Pi,up = σz,i dt/τi,up ), where σz,i = 0, 1 is the   the convoluted signal shows a reduced peak correlation
+ith-TLS state z projection (0 for ground state, 1 for ex-         (at zero delay) since it is effectively averaged with an
+cited state) [26]. At each time step, each TLS can decay          uncorrelated signal (having 1/RBW > τ ). In particu-
+with probability Pi,down (where Pi,down << 1), can get            lar, in the cases A’B’ and B’A’ the convoluted signals
+excited with probability Pi,up (where Pi,up << 1), or can         show no sensible correlations since the peak value of the
+maintain its state with probability (1 − Pi,down − Pi,up ).       correlation between the time traces is extremely small,
+We then compute for each time step the total shift in             consistent with our experimental observations.
+                                                                                                                              13
+
+
+
+
+FIG. S8. a) Simulations of the displacement of the mechanical modes A’ (top) and B’ (bottom). Note how the modes have
+their maximum and minimum displacements in different spatial positions. b) Section of the simulated structure. The red
+dots are the positions of the points used to evaluate the strain, each corresponding to the positions of a single TLS. They are
+randomly distributed and have a maximum depth of 10 nm from every surface. c) Plot of the calculated coupling strength
+between mechanical modes A’ and B’ and the TLS, where each point is a single TLS. For simplicity, we only plot 1,000 points.
+Note how the coupling strengths gA’ and gB’ can vary substantially. d) Simulated frequency shift of mode A’ (in orange, top)
+and B’ (in blue, bottom) due to the dispersive coupling with the TLS bath. The dark lines are the signal with RSA filter (RBW
+= 200 kHz), and the light solid lines are unfiltered. e) Zoom-in of the time traces reported on d, where the fast dynamics of the
+frequency shift becomes visible. The RSA filter smoothens the telegraphic noise coming from the TLS. f) Histograms of the
+full simulation (10 trajectories) for mode A’ (in orange, top) and B’ (in blue, bottom), as before. Again, dark colors are used
+for the histograms of the time traces passing the RSA filter and light ones for the unfiltered traces. Note that the secondary
+peaks given by single TLS shifting the frequency of the mechanical modes that are visible in A’, are averaged out by the RSA
+filter.
+                                                                   14
+
+
+           Simulation
+            ' '
+
+
+
+           Simulation
+            ' '
+
+
+
+           Simulation
+            ''
+
+
+           Simulation
+            ' '
+
+
+
+
+FIG. S9. a) Calculated correlations for the full simulation
+(10 trajectories) of the signal reported in Fig. S8 for the pos-
+sible configuration A’A’, A’B’, B’A’, and B’B’ (from top to
+bottom). Light line for the time trace and dark line for the
+time trace convoluted with the RSA filter. Note how all time
+traces show a correlation with a fast decay. However only the
+autocorrelation shows a peak sensibly higher than the uncor-
+related background at 0 delay in the signal convoluted with
+the RSA filter.
+
