@@ -1,0 +1,11 @@
+validacion N=6: n(t) mesolve [6.00000000e+00 5.09883536e-03 1.33961423e-04]  c e^{-g t} = [np.float64(0.00013396070651400333), np.float64(3.5310521784587386e-06), np.float64(9.307452768394313e-08)]  (g=0.3636, c_full=0.1928)
+N=8
+  ER             #grafos=35  c_full medio=0.344  c_i(min..max medios)=0.006..0.451  c_W medio=0.040 | frac(i: c_full<c_i)=0.16  frac(c_full<c_W)=0.00  g_min medio=0.551
+  BA m=2         #grafos=20  c_full medio=0.372  c_i(min..max medios)=0.009..0.400  c_W medio=0.091 | frac(i: c_full<c_i)=0.11  frac(c_full<c_W)=0.00  g_min medio=0.611
+  WS             #grafos=20  c_full medio=0.364  c_i(min..max medios)=0.008..0.417  c_W medio=0.020 | frac(i: c_full<c_i)=0.08  frac(c_full<c_W)=0.00  g_min medio=1.249
+  C9-like impar  #grafos= 1  c_full medio=0.156  c_i(min..max medios)=0.000..0.273  c_W medio=0.000 | frac(i: c_full<c_i)=0.57  frac(c_full<c_W)=0.00  g_min medio=0.198
+N=9
+  ER             #grafos=35  c_full medio=0.362  c_i(min..max medios)=0.002..0.471  c_W medio=0.031 | frac(i: c_full<c_i)=0.13  frac(c_full<c_W)=0.00  g_min medio=0.704
+  BA m=2         #grafos=20  c_full medio=0.353  c_i(min..max medios)=0.006..0.401  c_W medio=0.087 | frac(i: c_full<c_i)=0.08  frac(c_full<c_W)=0.00  g_min medio=0.594
+  WS             #grafos=20  c_full medio=0.334  c_i(min..max medios)=0.007..0.377  c_W medio=0.016 | frac(i: c_full<c_i)=0.09  frac(c_full<c_W)=0.00  g_min medio=1.187
+  C9-like impar  #grafos= 1  c_full medio=0.139  c_i(min..max medios)=0.006..0.222  c_W medio=0.000 | frac(i: c_full<c_i)=0.33  frac(c_full<c_W)=0.00  g_min medio=0.121
