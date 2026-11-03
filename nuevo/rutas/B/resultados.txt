@@ -1,0 +1,22 @@
+gam, gph (en wb): publicado ['6.19e-05', '4.70e-04']  mejorado ['7.05e-06', '4.70e-05']
+param     lam     Om       kap_m    | pureza P2 flujo Hz  Om_eff/wb     
+publicado 0.0027  0.100    0.4      MHz | 0.957     34.8      5.15e-07      
+publicado 0.0067  0.100    0.4      MHz | 0.992     1.29e+03  3.17e-06      
+publicado 0.0110  0.100    0.4      MHz | 0.994     9.35e+03  8.56e-06      
+publicado 0.0300  0.100    0.4      MHz | 0.897     4.18e+05  6.36e-05      
+publicado 0.1000  0.100    0.4      MHz | 0.689     1.46e+06  7.04e-04      
+publicado 0.0027  0.100    10.0     MHz | 0.234     8.23      5.15e-07      
+publicado 0.0067  0.100    10.0     MHz | 0.653     150       3.17e-06      
+publicado 0.0110  0.100    10.0     MHz | 0.835     944       8.56e-06      
+publicado 0.0300  0.100    10.0     MHz | 0.973     4.69e+04  6.36e-05      
+publicado 0.1000  0.100    10.0     MHz | 0.984     1.36e+06  7.04e-04      
+mejorado  0.0027  0.100    0.4      MHz | 0.994     75.8      5.15e-07      
+mejorado  0.0067  0.100    0.4      MHz | 0.999     2.83e+03  3.17e-06      
+mejorado  0.0110  0.100    0.4      MHz | 0.999     1.89e+04  8.56e-06      
+mejorado  0.0300  0.100    0.4      MHz | 0.977     1.7e+05   6.36e-05      
+mejorado  0.1000  0.100    0.4      MHz | 0.943     1.99e+05  7.04e-04      
+mejorado  0.0027  0.100    10.0     MHz | 0.265     7.87      5.15e-07      
+mejorado  0.0067  0.100    10.0     MHz | 0.689     153       3.17e-06      
+mejorado  0.0110  0.100    10.0     MHz | 0.856     978       8.56e-06      
+mejorado  0.0300  0.100    10.0     MHz | 0.976     4.05e+04  6.36e-05      
+mejorado  0.1000  0.100    10.0     MHz | 0.981     1.98e+05  7.04e-04      
