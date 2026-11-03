@@ -4,3 +4,8 @@ Parametros: U=0.1 kappa, N=30, J escalado por el autovalor maximo de la adyacenc
 Resultado (study1/study2): con no linealidad debil la mediana de g2 es 0.6-0.8 en todos los grafos; el grafo completo y el hub de la estrella no dan antibunching en ningun nodo;
 los pocos nodos con g2<0.1 tienen poblacion 0.1-0.6 % (anillo: 1e-7) de la del nodo mas poblado, es decir, son zeros de interferencia sin flujo util.
 Conclusion: en este regimen la topologia no da un bloqueo controlable; resultado negativo. No explorado: no linealidad fuerte (U>=kappa), forzamiento no debil, emisores JC, otros tamanos.
+
+## Barrido 2: no linealidad fuerte (study3.py), g2 minimo en el nodo forzado
+Referencia de una cavidad sola: U=1k -> 0.172; U=5k -> 0.0098.
+Redes (anillo, ER, BA, WS): g2 minimo entre 0.185 y 0.45 (U=1k) y 0.011-0.063 (U=5k): la red solo empeora el bloqueo (dilucion).
+Grafo completo: igual a una cavidad (0.177/0.010). Unica mejora: hub de la estrella con J~=3: 0.117 (U=1k) y 0.006 (U=5k); sin explicar, no explorado.
