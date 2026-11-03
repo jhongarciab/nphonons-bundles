@@ -14,3 +14,10 @@ Grafo completo: igual a una cavidad (0.177/0.010). Unica mejora: hub de la estre
 Gamma = gamma*B B^T = gamma*Q (laplaciano sin signo). Comprobado en 6 familias x 20 realizaciones: #estados perfectamente oscuros = #componentes conexas bipartitas (incluye nodos aislados).
 Tasa minima no nula (en unidades de gamma, N=60): ER 1.0, BA 0.58, WS 0.96, arbol 0.013, completo 58 (Dicke). Bipartito + k aristas que rompen la bipartitud: 0.003 (k=2), 0.027 (k=5), 0.082 (k=10), 0.30 (k=20).
 Es modelo propio (reservorios por arista); novedad NO verificada. Excitacion unica solamente.
+
+## Barrido 4: varias excitaciones (multi.py, trap.py), inversion total inicial, L_e=sqrt(g)(s_i+s_j) por arista
+Nucleo comun de los L_e (estados oscuros en todos los sectores): bipartito -> dim 2 (vacio + 1 estado oscuro de 1 excitacion); no bipartito -> dim 1 (solo vacio). N=6.
+Excitacion media atrapada a tiempo largo (N=4/6/8): camino 0.141/0.137/0.128; ciclo par 0.115/0.120; estrella 0.224/0.197; K(N/2,N/2) 0.115/0.123; ciclo+cuerda (no bip) 0.000.
+Es decir ~12-22 % de probabilidad de quedar atrapado en el estado oscuro (n_inf = P_dark), casi independiente de N entre 4 y 8; cero en no bipartitos.
+No hay rafaga superradiante: la intensidad es maxima en t=0 (reservorios independientes por arista).
+N=8 solo completado para el camino (423 s); el resto no se corrio. Sin comprobar tamanos mayores.
