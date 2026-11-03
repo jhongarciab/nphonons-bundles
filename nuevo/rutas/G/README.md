@@ -9,3 +9,8 @@ Conclusion: en este regimen la topologia no da un bloqueo controlable; resultado
 Referencia de una cavidad sola: U=1k -> 0.172; U=5k -> 0.0098.
 Redes (anillo, ER, BA, WS): g2 minimo entre 0.185 y 0.45 (U=1k) y 0.011-0.063 (U=5k): la red solo empeora el bloqueo (dilucion).
 Grafo completo: igual a una cavidad (0.177/0.010). Unica mejora: hub de la estrella con J~=3: 0.117 (U=1k) y 0.006 (U=5k); sin explicar, no explorado.
+
+## Barrido 3: emisores en los nodos, reservorio compartido por arista (dark.py)
+Gamma = gamma*B B^T = gamma*Q (laplaciano sin signo). Comprobado en 6 familias x 20 realizaciones: #estados perfectamente oscuros = #componentes conexas bipartitas (incluye nodos aislados).
+Tasa minima no nula (en unidades de gamma, N=60): ER 1.0, BA 0.58, WS 0.96, arbol 0.013, completo 58 (Dicke). Bipartito + k aristas que rompen la bipartitud: 0.003 (k=2), 0.027 (k=5), 0.082 (k=10), 0.30 (k=20).
+Es modelo propio (reservorios por arista); novedad NO verificada. Excitacion unica solamente.
