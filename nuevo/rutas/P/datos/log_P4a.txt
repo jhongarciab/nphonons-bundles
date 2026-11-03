@@ -1,0 +1,23 @@
+BS {'RWA': (np.float64(69.00000000187852), np.float64(5.741357071734309)), 'Rabi': (np.float64(69.0048518333538), np.float64(5.741684626399901))}
+km 0.5 local P2 0.9342294170031799 vestida P2 0.9343687616706432 ncanales 36
+km 1 local P2 0.9562536697967962 vestida P2 0.956623269586428 ncanales 36
+km 2 local P2 0.9798432314829755 vestida P2 0.9805092906517543 ncanales 36
+km 4 local P2 0.9955245165837449 vestida P2 0.9960647453179804 ncanales 36
+km 8.3 local P2 0.9997984006489419 vestida P2 0.9998738070705042 ncanales 36
+km 12 local P2 0.9999851211642788 vestida P2 0.9999934603630249 ncanales 36
+km 20 local P2 0.9999999454126609 vestida P2 0.9999999891323805 ncanales 36
+N=3 Dq0/2pi 137.99999999999997 V3 gap/2 1.0381456150240533 6g^3/a^2 1.1064297416509137
+T1_1.14 max P3 (T=3us) 0.6527167334941856 km 0.7208434242404262 off 0.0
+T1_10 max P3 (T=3us) 0.903691489074318 km 0.7208434242404262 off 0.0
+T1_inf max P3 (T=3us) 0.9491629776269501 km 0.4650301358752224 off 0.0
+cal N=3 cost 0.011377001109457496
+pk [1.93061963e-03 6.43464148e-03 2.60086983e-03 9.88623004e-01
+ 7.80045065e-05]
+ideal P3(T=.5,1,2,3)= [np.float64(0.4584), np.float64(0.8597), np.float64(0.9322), np.float64(0.936)] P2 [np.float64(0.3798), np.float64(0.1147), np.float64(0.0559), np.float64(0.0532)]
+T1 only 1.14 P3(T=.5,1,2,3)= [np.float64(0.315), np.float64(0.554), np.float64(0.5917), np.float64(0.5924)] P2 [np.float64(0.2465), np.float64(0.0817), np.float64(0.0521), np.float64(0.053)]
+T1 only 5 P3(T=.5,1,2,3)= [np.float64(0.4195), np.float64(0.7737), np.float64(0.8354), np.float64(0.8377)] P2 [np.float64(0.3423), np.float64(0.1058), np.float64(0.0576), np.float64(0.0583)]
+T1 only 10 P3(T=.5,1,2,3)= [np.float64(0.4384), np.float64(0.8152), np.float64(0.882), np.float64(0.885)] P2 [np.float64(0.3604), np.float64(0.1101), np.float64(0.0571), np.float64(0.0566)]
+T1 only 50 P3(T=.5,1,2,3)= [np.float64(0.4543), np.float64(0.8505), np.float64(0.9219), np.float64(0.9255)] P2 [np.float64(0.3758), np.float64(0.1137), np.float64(0.0562), np.float64(0.054)]
+PUB P3(T=.5,1,2,3)= [np.float64(0.0567), np.float64(0.0887), np.float64(0.0988), np.float64(0.1047)] P2 [np.float64(0.1477), np.float64(0.1918), np.float64(0.2105), np.float64(0.2197)]
+IMP P3(T=.5,1,2,3)= [np.float64(0.339), np.float64(0.6385), np.float64(0.6906), np.float64(0.693)] P2 [np.float64(0.3549), np.float64(0.2357), np.float64(0.2054), np.float64(0.2053)]
+IMP T1=50 P3(T=.5,1,2,3)= [np.float64(0.3793), np.float64(0.6889), np.float64(0.737), np.float64(0.7393)] P2 [np.float64(0.3869), np.float64(0.2378), np.float64(0.2065), np.float64(0.2048)]

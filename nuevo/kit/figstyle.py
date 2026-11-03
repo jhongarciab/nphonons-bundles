@@ -88,3 +88,11 @@ def levels(ax, energies, x0=0.0, w=0.8, labels=None, colors=None, lw=1.8, fs=8):
 
 def clean(ax):
     ax.set_xticks([]); ax.set_yticks([]); ax.axis('off')
+
+
+def finish(fig):
+    """quita las etiquetas menores de ejes logaritmicos (evita 2x10^-2, 3x10^-2 ... apiladas)"""
+    from matplotlib.ticker import NullFormatter
+    for ax in fig.axes:
+        if ax.get_xscale() == 'log': ax.xaxis.set_minor_formatter(NullFormatter())
+        if ax.get_yscale() == 'log': ax.yaxis.set_minor_formatter(NullFormatter())
