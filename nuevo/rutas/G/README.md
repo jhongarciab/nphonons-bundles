@@ -21,3 +21,10 @@ Excitacion media atrapada a tiempo largo (N=4/6/8): camino 0.141/0.137/0.128; ci
 Es decir ~12-22 % de probabilidad de quedar atrapado en el estado oscuro (n_inf = P_dark), casi independiente de N entre 4 y 8; cero en no bipartitos.
 No hay rafaga superradiante: la intensidad es maxima en t=0 (reservorios independientes por arista).
 N=8 solo completado para el camino (423 s); el resto no se corrio. Sin comprobar tamanos mayores.
+
+## Barrido 5: exacto por sectores (trap2.py), escalado (scale.py), cuasi-bipartito (near.py), flujo sintetico (flux.py)
+trap2.py reproduce los resultados de mesolve (N=4,6,8) a 4 cifras y llega a N=14 (27 s/grafo). Sin trayectorias: H_eff conserva n, los saltos bajan n en 1; sigma_n por Lyapunov en la base propia de Gamma_n.
+P_trap (inversion total, grafos bipartitos): decrece lentamente con N: camino 0.137/0.128/0.121/0.116/0.112 (N=6..14); ciclo par 0.120/0.115/0.111/0.108/0.105; estrella 0.197/0.178/0.165/0.156/0.150. No se ve limite asintotico.
+Cuasi-bipartito (N=10, 5 realizaciones, k aristas que crean ciclos impares): con k>=1 la excitacion retenida cae a ~1e-4 (ciclo) o ~1e-2 (camino) a t=50 y a 0 a t=200: el atrapamiento es todo-o-nada y fragil, sin dependencia gradual con la distancia a la bipartitud.
+Flujo sintetico: fase phi en una arista de C8 -> dark exacto solo con phi=0 (C9: phi=pi); retenida a t=200: 0.115 (0), 0.112 (0.1), 0.087 (0.3), 0.038 (0.6), 0.005 (1.0); a t=1000 solo sobreviven phi<~0.3.
+Condicion general (algebra): dark de 1 excitacion existe sii cada ciclo tiene flujo = pi*longitud mod 2pi. Novedad no verificada.
