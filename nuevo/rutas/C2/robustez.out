@@ -1,0 +1,39 @@
+referencia: eta=0.892
+-- error de tiempo de llegada (paquete corrido respecto al control), en unidades 1/wb
+   dt= -60  eta=0.823
+   dt= -30  eta=0.874
+   dt= -15  eta=0.887
+   dt=  +0  eta=0.892
+   dt= +15  eta=0.887
+   dt= +30  eta=0.873
+   dt= +60  eta=0.819
+-- escala de amplitud del control (Om)
+   x0.8  eta=0.813
+   x0.9  eta=0.872
+   x1.0  eta=0.892
+   x1.1  eta=0.873
+   x1.2  eta=0.819
+-- desintonia paquete-cavidad (detuning dc, en unidades de kappa=0.011)
+   dc=-0.010 (=-0.91 kappa)  eta=0.526
+   dc=-0.005 (=-0.45 kappa)  eta=0.766
+   dc=+0.000 (=+0.00 kappa)  eta=0.892
+   dc=+0.005 (=+0.45 kappa)  eta=0.766
+   dc=+0.010 (=+0.91 kappa)  eta=0.526
+-- compensacion imperfecta del corrimiento Stark por el laser (fraccion no compensada f; shift = f*Delta_I/g^2 * G^2, Delta_I=1.35, g=0.057)
+   f=0.00  eta=0.892
+   f=0.02  eta=0.891
+   f=0.05  eta=0.887
+   f=0.10  eta=0.874
+-- forma del paquete (control optimizado para gaussiano, paquete distinto con misma energia y ancho comparable)
+   gauss    eta=0.892
+   sech     eta=0.885
+   exp_dec  eta=0.450
+   exp_gro  eta=0.440
+-- separacion entre paquetes (captura directa, gauss Tp=100): P0,P1,V_c
+   sep= 450  P0=0.803 P1=0.870 V_c=0.930  leak=5.5e-03  F_h~(1+V_c^2)/2=0.933
+   sep= 600  P0=0.772 P1=0.878 V_c=0.901  leak=8.6e-04  F_h~(1+V_c^2)/2=0.906
+   sep= 890  P0=0.878 P1=0.878 V_c=0.851  leak=3.1e-05  F_h~(1+V_c^2)/2=0.862
+
+real	0m25.844s
+user	0m47.751s
+sys	0m0.036s

@@ -1,0 +1,15 @@
+# Segunda parte de la tesis: captura directa de un qubit fononico itinerante en dos excitones oscuros con puerto fijo (modelo efectivo)
+Modelo: una excitacion por rama, fuente en cascada -> cavidad (kappa_e fijo, kappa_i=1e-3) -> estados oscuros d1,d2 con acoplo Raman efectivo G(t)=Om(t) g/Delta_I (G_max=0.012 wb ~ Om 0.3 wb), desfase comun gph=4e-4 (chi=1), fuga fuera de resonancia entre ranuras (Dss=0.25).
+Archivos: captura.py (un paquete, un estado oscuro; condicion analitica), qubit.py (dos intervalos con coherencia entre ramas), comparacion.py/.out, robustez.py/.out.
+## Resultados
+1. Condicion analitica de captura perfecta con puerto fijo y sin perdidas: G(t) = -sqrt(kappa) d(delta)/dt / u(t), delta^2(t) = int_0^t u^2 - u^2/kappa >= 0 (el paquete no puede crecer mas rapido que e^{kappa t}). Derivacion propia; no contrastada con la literatura de captura en cavidad.
+2. Un paquete gaussiano (Tp=100-200): sin perdida intrinseca la captura llega a 0.98-1.00; con kappa_i/kappa_e=0.1 y G_max=0.012 queda en 0.89-0.91 (limite por perdida intrinseca; el control optimizado no mejora al ideal).
+3. Dos intervalos, misma entrada para ambos protocolos, separacion = ventana de carga+190(pi)+100 (minima para dos etapas):
+   gauss Tp=60/100/150: directa P=0.82/0.88/0.88 ; dos etapas conmutable 0.41/0.25/0.13 ; dos etapas puerto fijo 0.19/0.12/0.07.
+   exp creciente (forma optima del dos-etapas) Tp=100: directa 0.78 ; dos etapas conmutable 0.81 ; fijo 0.35.  Tp=200: directa 0.77 ; conmutable 0.69 ; fijo 0.30.
+   => con puerto fijo el protocolo de dos etapas es mucho peor; con puerto conmutable y forma de entrada optima (exp. creciente) el de dos etapas es comparable o algo mejor (0.81 vs 0.78 a Tp=100); la ventaja directa depende de la forma del paquete.
+4. Coherencia: a igual separacion V_c es igual en ambos protocolos (lo fija la entrada). La captura directa admite paquetes mas cercanos: gauss Tp=100: sep=450 -> V_c=0.93 (P0=0.80, fuga 5.5e-3), 600 -> 0.90, 890 -> 0.85 (F_h~(1+V_c^2)/2 = 0.93/0.91/0.86; aproximacion: lectura simetrica, P0~P1, sin decoherencia durante la espera).
+5. Selectividad: poblacion en la ranura no direccionada <=5.5e-3 (sep=450), 3e-5 (sep=890).
+6. Robustez (gauss Tp=100, G optimizado, eta ref 0.892): tiempo de llegada +-30 -> 0.873 ; amplitud +-10 % -> 0.87 ; desintonia paquete-cavidad +-0.45 kappa -> 0.77, +-0.9 kappa -> 0.53 (la mas critica) ; compensacion Stark incompleta 10 % -> 0.874 ; forma sech 0.885, exponenciales 0.44-0.45 (hay que reoptimizar G).
+## Limites (importante)
+Modelo efectivo con eliminacion adiabatica del brillante; NO validado contra el modelo Raman completo (G,B,D) con fuente en cascada; chirp ideal que compensa el corrimiento Stark; solo una excitacion; lectura (emision) no simulada: se asume simetrica por reciprocidad; sin tiempo de espera; fuga entre ranuras con razon g2/g1 aproximada; separacion entre paquetes dependiente de la forma. Los numeros F_h son estimaciones de la visibilidad de captura, no del canal completo.

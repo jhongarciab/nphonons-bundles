@@ -1,0 +1,11 @@
+separacion entre paquetes = ventana de carga + 190 (pi) + 100 (guarda); ke=1e-02 ki=1e-03 Gmax=0.012
+forma    Tp    | indiv.opt  | directa (P0,P1,V)          | dos etapas conmutable      | dos etapas puerto fijo    
+gauss    60    | 0.832      | 0.816 0.825  V=0.886       | 0.409 0.410  V=0.887       | 0.193 0.194  V=0.886      
+gauss    100   | 0.892      | 0.878 0.878  V=0.851       | 0.249 0.248  V=0.845       | 0.122 0.122  V=0.845      
+gauss    150   | 0.907      | 0.882 0.882  V=0.811       | 0.127 0.127  V=0.796       | 0.067 0.066  V=0.796      
+exp_gro  100   | 0.782      | 0.778 0.779  V=0.813       | 0.808 0.806  V=0.812       | 0.348 0.348  V=0.811      
+exp_gro  200   | 0.787      | 0.767 0.768  V=0.706       | 0.695 0.693  V=0.692       | 0.300 0.299  V=0.691      
+
+real	2m31.300s
+user	4m24.948s
+sys	0m0.053s
