@@ -1,0 +1,5 @@
+g1=0.0572 Delta_I=1.350 C=0.0095
+eta efectivo = 0.892
+escala G x1.00: eta completo = 0.830 (D1) ; fuente residual 0.019 ; <b+b>=0.0088  (53s)
+escala G x0.90: eta completo = 0.831 (D1) ; fuente residual 0.019 ; <b+b>=0.0088  (50s)
+escala G x1.10: eta completo = 0.793 (D1) ; fuente residual 0.019 ; <b+b>=0.0084  (45s)

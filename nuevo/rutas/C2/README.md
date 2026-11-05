@@ -13,3 +13,13 @@ Archivos: captura.py (un paquete, un estado oscuro; condicion analitica), qubit.
 6. Robustez (gauss Tp=100, G optimizado, eta ref 0.892): tiempo de llegada +-30 -> 0.873 ; amplitud +-10 % -> 0.87 ; desintonia paquete-cavidad +-0.45 kappa -> 0.77, +-0.9 kappa -> 0.53 (la mas critica) ; compensacion Stark incompleta 10 % -> 0.874 ; forma sech 0.885, exponenciales 0.44-0.45 (hay que reoptimizar G).
 ## Limites (importante)
 Modelo efectivo con eliminacion adiabatica del brillante; NO validado contra el modelo Raman completo (G,B,D) con fuente en cascada; chirp ideal que compensa el corrimiento Stark; solo una excitacion; lectura (emision) no simulada: se asume simetrica por reciprocidad; sin tiempo de espera; fuga entre ranuras con razon g2/g1 aproximada; separacion entre paquetes dependiente de la forma. Los numeros F_h son estimaciones de la visibilidad de captura, no del canal completo.
+
+## Actualizacion: validacion contra el modelo completo y canal completo (validar_completo.py, canal.py)
+Punto 1, modelo Raman COMPLETO (exc 4 niveles x modo NC=3 x fuente en cascada, chirp ideal que compensa el corrimiento Stark, G(t) del modelo efectivo mapeado a Om(t)=G Delta_I/g1; validar.out): paquete gaussiano Tp=100 a D1: eta completo = 0.830 (escala G x1.0), 0.831 (x0.9), 0.793 (x1.1) frente a 0.892 del efectivo -> el efectivo sobreestima ~0.06 (7 %). No se reoptimizo el control en el modelo completo.
+Errores corregidos en el camino: (a) en el modelo completo la fuente no tenia la energia w del modo (daba eta=0.000); (b) en el canal el acoplo del sumidero debe usar la energia ACUMULADA, gamma_c = w^2/(eps + int_0^t w^2) (la primera version usaba la restante y daba s~0.25); (c) la comparacion de dos etapas tenia ventanas solapadas (ya corregido arriba).
+Punto 2, canal completo en el efectivo (captura directa de los dos paquetes, espera, lectura con G invertido, sumideros adaptados; canal.out), gauss Tp=100, ke=1e-2, ki=1e-3:
+  separacion 450: s=(P0+P1)/2 = 0.683, V=0.867, F_h=(1+V)/2=0.934 ; separacion 890: s=0.754, V=0.725, F_h=0.862. Espera 0 o 2000: identico (chi=1, estado oscuro sin perdida en el modelo).
+  Consistencia: V(890)=0.725 ~ V_c^2 = 0.851^2 (lectura simetrica).
+  Con la correccion del modelo completo (~0.93 por etapa) s bajaria a ~0.59 y ~0.66 (estimacion, supone el mismo error en la lectura).
+  Referencia (memoria, dos etapas, puertos reales, otras condiciones): s~0.7, F_h 0.83-0.88.
+Limites: lectura y canal solo en el modelo efectivo; sin biexciton; sin decaimiento del estado oscuro durante la espera; control no reoptimizado en el modelo completo; F_h=(1+V)/2 supone P0~P1.
