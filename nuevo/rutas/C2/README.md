@@ -23,3 +23,13 @@ Punto 2, canal completo en el efectivo (captura directa de los dos paquetes, esp
   Con la correccion del modelo completo (~0.93 por etapa) s bajaria a ~0.59 y ~0.66 (estimacion, supone el mismo error en la lectura).
   Referencia (memoria, dos etapas, puertos reales, otras condiciones): s~0.7, F_h 0.83-0.88.
 Limites: lectura y canal solo en el modelo efectivo; sin biexciton; sin decaimiento del estado oscuro durante la espera; control no reoptimizado en el modelo completo; F_h=(1+V)/2 supone P0~P1.
+
+## Calculos en paralelo (mapa.py, validar_D2.py, canal2.py)
+1. Mapa de captura (gauss, ki=1e-3, Gmax=0.012; mapa_a.out, mapa_b.out): la eficiencia optimizada converge a kappa_e/(kappa_e+kappa_i) para paquetes largos: ke=0.005: 0.83 (Tp=250); 0.01: 0.909; 0.02: 0.952; 0.04: 0.975 (Tp>=100). Con paquetes cortos (Tp=50) cae (0.59-0.93) porque G_max limita; con ke pequeno hace falta Tp grande (ke=0.005 -> 0.75 a Tp=100).
+2. Segundo estado oscuro en el modelo completo (validar_D2_*.out; g2=0.0613, Delta_I=1.6, C=0.0282, Gmax=0.011): eta completo = 0.829/0.844/0.822 (escala G x0.9/1.0/1.1) frente a 0.892 efectivo -> sobreestimacion ~0.05.
+3. Canal completo con la MISMA entrada y el mismo ruido (canal2.out; ke=1e-2, ki=1e-3, Tp=100; sep minima del dos-etapas): resumen con chi=1:
+   entrada gauss : directa s=0.754 F_h=0.862 ; dos etapas (conmutable) s=0.198 F_h=0.857 ; pasivo s=0.096 (T=0), 0.013 (2000), 0 (8000).
+   entrada exp_gro: directa s=0.586 F_h=0.830 ; dos etapas s=0.643 F_h=0.843 ; pasivo s=0.217 (T=0), 0.029 (2000), 0 (8000).
+   La espera no cambia s ni F_h con chi=1 (estado oscuro sin perdida en el modelo); con chi<1 F_h cae igual en ambos protocolos: gauss directa chi=0.9: 0.843/0.821/0.763 (T=0/2000/8000); chi=0: 0.710/0.608/0.515.
+   Lectura: frente al pasivo la memoria oscura conserva s a esperas largas; frente al dos-etapas la ventaja de la captura directa depende de la forma de la entrada: gana mucho con paquetes gaussianos y no gana (0.59 vs 0.64) con el paquete exponencial creciente que el dos-etapas necesita; con puerto fijo el dos-etapas falla.
+Limites: modelo efectivo (sobreestima ~0.05-0.06 por captura segun el modelo completo; en el canal se aplicarian dos etapas); control no reoptimizado en el completo; sin transferencia de poblacion d1<->d2 por ruido local; el pasivo es analitico simple con primer bin esperando 'sep' mas.

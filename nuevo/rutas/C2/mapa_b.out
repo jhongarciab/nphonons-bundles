@@ -1,0 +1,3 @@
+ki=1e-3 Gmax=0.012 forma gauss; filas ke, columnas Tp: (eta optimizada | eta ideal sin perdida intrinseca)
+ke=0.020  Tp=50: 0.921|0.892  Tp=100: 0.952|0.999  Tp=150: 0.952|1.000  Tp=250: 0.952|1.000
+ke=0.040  Tp=50: 0.926|0.922  Tp=100: 0.975|1.000  Tp=150: 0.975|1.000  Tp=250: 0.975|1.000
